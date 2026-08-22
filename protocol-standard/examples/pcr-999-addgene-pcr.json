@@ -97,112 +97,85 @@
   ],
   "steps": [
     {
-      "id": "s1", "number": 1, "phase": "Primer Design and PCR Setup",
+      "id": "s1", "number": 1, "phase": "Primer Preparation",
       "action": "Design primers using a tool such as Primer3. Primers should be complementary to sequences flanking the target region, annealing upstream (5') and downstream (3') of the DNA segment to be amplified.",
       "tableIds": ["t4"],
-      "expectedResult": "Primers designed with appropriate length, GC content, and Tm."
+      "expectedResult": "Primers designed and diluted to 10 uM working stock."
     },
     {
-      "id": "s2", "number": 2, "phase": "Primer Design and PCR Setup",
-      "action": "Place thin-walled PCR tubes on ice.",
+      "id": "s2", "number": 2, "phase": "Primer Preparation",
+      "action": "Prepare primer stocks: reconstitute lyophilized primers to 100 uM by adding dH2O (in uL) equal to nanomoles x 10. Then prepare 10 uM working stocks by 1:10 dilution (100 uL of 100 uM stock + 900 uL dH2O).",
+      "materialIds": ["m4", "m5", "m7"],
+      "tableIds": ["t4"],
+      "expectedResult": "Forward and reverse primers at 10 uM working concentration."
+    },
+    {
+      "id": "s3", "number": 3, "phase": "Reaction Setup",
+      "action": "Place thin-walled PCR tubes on ice. Label tubes for each sample, including a no-template control (NTC) and a positive control.",
       "equipmentIds": ["e2", "e4"],
-      "expectedResult": "PCR tubes chilled and ready for reagent addition."
+      "expectedResult": "Labeled PCR tubes on ice ready for reagent addition."
     },
     {
-      "id": "s3", "number": 3, "phase": "Primer Design and PCR Setup",
-      "action": "Set up 50 uL reaction on ice: add 2 uL template DNA (10-500 ng), 5 uL 10X Taq buffer with MgCl2, 1 uL dNTP mix (10 mM each), 2.5 uL forward primer (10 uM), 2.5 uL reverse primer (10 uM), 0.2 uL Taq DNA polymerase (5 U/uL), and 36.8 uL sterile dH2O.",
-      "materialIds": ["m1", "m2", "m3", "m4", "m5", "m6", "m7"],
-      "tableIds": ["t1"],
-      "criticalNotes": "Keep all reagents on ice during setup.",
-      "expectedResult": "50 uL reaction assembled in PCR tube."
+      "id": "s4", "number": 4, "phase": "Reaction Setup",
+      "action": "For multiple reactions, prepare a master mix: multiply each reagent volume by the number of reactions plus 10% extra. Combine water, buffer, dNTPs, and Taq polymerase in a single tube. Mix gently by pipetting. Do NOT include primers in the master mix.",
+      "materialIds": ["m7", "m2", "m3", "m6"],
+      "tableIds": ["t1", "t3"],
+      "criticalNotes": "Add polymerase last. Do NOT vortex — mix by gentle pipetting. Keep on ice at all times.",
+      "expectedResult": "Homogeneous master mix on ice, ready for aliquoting."
     },
     {
-      "id": "s4", "number": 4, "phase": "Primer Design and PCR Setup",
-      "action": "Place reaction tubes in the PCR machine.",
-      "equipmentIds": ["e1"],
-      "expectedResult": "Tubes seated in thermal cycler block."
-    },
-    {
-      "id": "s5", "number": 5, "phase": "Primer Design and PCR Setup",
-      "action": "Set the annealing temperature to approximately 5 degrees C below the primer melting temperature (Tm).",
+      "id": "s5", "number": 5, "phase": "Reaction Setup",
+      "action": "Add forward primer (2.5 uL) and reverse primer (2.5 uL) to each PCR tube individually.",
+      "materialIds": ["m4", "m5"],
       "parameters": [
-        { "type": "temperature", "value": 55, "unit": "°C", "rawText": "Annealing: Tm minus 5 degrees C (typically ~55 degrees C)" }
+        { "type": "volume", "value": 2.5, "unit": "uL", "rawText": "2.5 uL each primer (10 uM stock)" }
       ],
-      "expectedResult": "Annealing temperature configured."
+      "expectedResult": "Primers dispensed into individual reaction tubes."
     },
     {
-      "id": "s6", "number": 6, "phase": "Primer Design and PCR Setup",
-      "action": "Set the extension step to 1-2 minutes per kilobase of expected product length, depending on polymerase proofreading capability.",
+      "id": "s6", "number": 6, "phase": "Reaction Setup",
+      "action": "Add 45 uL of master mix to each tube (50 uL total minus 2.5 uL forward primer minus 2.5 uL reverse primer). Then add template DNA last. For NTC, add sterile dH2O instead of template.",
+      "materialIds": ["m1", "m7"],
       "parameters": [
-        { "type": "time", "value": 1, "valueMax": 2, "unit": "min/kb", "rawText": "1-2 minutes per kilobase" }
+        { "type": "volume", "value": 45, "unit": "uL", "rawText": "45 uL master mix per tube" },
+        { "type": "volume", "value": 2, "unit": "uL", "rawText": "2 uL template DNA (10-500 ng)" }
       ],
-      "expectedResult": "Extension time configured based on amplicon size."
+      "criticalNotes": "Add template last. Load NTC last to minimize contamination risk.",
+      "expectedResult": "All 50 uL reactions assembled with template added last."
     },
     {
-      "id": "s7", "number": 7, "phase": "Thermal Cycling",
-      "action": "Initial denaturation: heat to 94 degrees C for 2 minutes to fully denature the template DNA and break hydrogen bonds between complementary base pairs.",
-      "equipmentIds": ["e1"],
-      "parameters": [
-        { "type": "temperature", "value": 94, "unit": "°C", "rawText": "94 degrees C" },
-        { "type": "time", "value": 2, "unit": "min", "rawText": "2 minutes" }
-      ],
-      "expectedResult": "Template DNA fully denatured into single strands."
+      "id": "s7", "number": 7, "phase": "Reaction Setup",
+      "action": "Secure tube caps. Gently tap tubes to mix contents and briefly centrifuge to collect liquid at the bottom and remove bubbles.",
+      "equipmentIds": ["e5"],
+      "expectedResult": "Liquid collected at tube bottom, no air bubbles."
     },
     {
       "id": "s8", "number": 8, "phase": "Thermal Cycling",
-      "action": "Denature at 94 degrees C for 30 seconds.",
+      "action": "Place tubes in the PCR machine. Set the annealing temperature to approximately 5 degrees C below the primer melting temperature (Tm). Set extension time to 1-2 minutes per kilobase of expected amplicon length.",
       "equipmentIds": ["e1"],
+      "tableIds": ["t2"],
       "parameters": [
-        { "type": "temperature", "value": 94, "unit": "°C", "rawText": "94 degrees C" },
-        { "type": "time", "value": 30, "unit": "sec", "rawText": "30 seconds" }
+        { "type": "temperature", "value": 94, "unit": "°C", "rawText": "Initial denaturation: 94 degrees C for 2 min" },
+        { "type": "temperature", "value": 55, "unit": "°C", "rawText": "Annealing: ~55 degrees C (Tm - 5 degrees C) for 30 sec" },
+        { "type": "temperature", "value": 72, "unit": "°C", "rawText": "Extension: 72 degrees C for 1 min/kb" }
       ],
-      "expectedResult": "Double-stranded DNA separated into single strands."
+      "expectedResult": "Thermal cycler programmed and running."
     },
     {
       "id": "s9", "number": 9, "phase": "Thermal Cycling",
-      "action": "Anneal primers at 55 degrees C (or 5 degrees C below Tm) for 30 seconds. Forward and reverse primers bind to their complementary sequences on the single-stranded template; DNA polymerase binds to the primer-template duplex.",
-      "equipmentIds": ["e1"],
-      "parameters": [
-        { "type": "temperature", "value": 55, "unit": "°C", "rawText": "55 degrees C (Tm minus 5 degrees C)" },
-        { "type": "time", "value": 30, "unit": "sec", "rawText": "30 seconds" }
-      ],
-      "expectedResult": "Primers annealed to complementary template sequences."
-    },
-    {
-      "id": "s10", "number": 10, "phase": "Thermal Cycling",
-      "action": "Extend DNA at 72 degrees C for 1 minute per kilobase. Taq polymerase synthesizes new DNA strands by adding dNTPs complementary to the template, starting from the 3' end of each primer.",
-      "equipmentIds": ["e1"],
-      "parameters": [
-        { "type": "temperature", "value": 72, "unit": "°C", "rawText": "72 degrees C" },
-        { "type": "time", "value": 1, "unit": "min/kb", "rawText": "1 minute per kilobase" }
-      ],
-      "expectedResult": "New DNA strands synthesized from primers."
-    },
-    {
-      "id": "s11", "number": 11, "phase": "Thermal Cycling",
-      "action": "Repeat steps 8-10 (denature, anneal, extend) for 25-30 cycles.",
+      "action": "Run the cycling program: initial denaturation at 94 degrees C for 2 min, then 25-30 cycles of denaturation (94 degrees C, 30 sec), annealing (55 degrees C, 30 sec), and extension (72 degrees C, 1 min/kb), followed by a final extension at 72 degrees C for 5 min.",
       "equipmentIds": ["e1"],
       "tableIds": ["t2"],
       "repeat": {
         "count": 30,
         "over": "thermocycles",
-        "notes": "25-30 cycles; adjust based on template abundance"
+        "notes": "25-30 cycles; adjust based on template abundance and amplicon size"
       },
-      "expectedResult": "Target DNA amplified exponentially over 25-30 cycles."
+      "expectedResult": "Cycling complete; PCR products amplified."
     },
     {
-      "id": "s12", "number": 12, "phase": "Thermal Cycling",
-      "action": "Final extension at 72 degrees C for 5 minutes to ensure complete synthesis of all partially extended products.",
-      "equipmentIds": ["e1"],
-      "parameters": [
-        { "type": "temperature", "value": 72, "unit": "°C", "rawText": "72 degrees C" },
-        { "type": "time", "value": 5, "unit": "min", "rawText": "5 minutes" }
-      ],
-      "expectedResult": "All newly synthesized strands fully extended."
-    },
-    {
-      "id": "s13", "number": 13, "phase": "Post-run Verification",
-      "action": "Run 2 uL of PCR product on an agarose gel to check size and concentration of the PCR product.",
+      "id": "s10", "number": 10, "phase": "Post-run Verification",
+      "action": "Run 2 uL of PCR product on an agarose gel with an appropriate DNA size ladder to verify band size and concentration.",
       "equipmentIds": ["e3", "e6"],
       "parameters": [
         { "type": "volume", "value": 2, "unit": "uL", "rawText": "2 uL product loaded on gel" }
@@ -212,53 +185,7 @@
         { "parameter": "NTC", "description": "No target-size band in no-template control" },
         { "parameter": "Positive control", "description": "Expected band present" }
       ],
-      "expectedResult": "Single band at expected size confirmed on gel."
-    },
-    {
-      "id": "s14", "number": 14, "phase": "Master Mix Preparation",
-      "action": "Multiply each reagent volume by the number of PCR reactions needed, plus 10% extra to account for pipetting error.",
-      "tableIds": ["t3"],
-      "expectedResult": "Master mix volumes calculated for N + 10% reactions."
-    },
-    {
-      "id": "s15", "number": 15, "phase": "Master Mix Preparation",
-      "action": "Combine calculated volumes in a single tube: 10X Taq buffer, dNTP mix, template DNA, sterile dH2O, and Taq DNA polymerase. For example, for 7 reactions: 38.5 uL buffer, 7.7 uL dNTPs, 15.4 uL template, 283.3 uL water, 1.54 uL Taq polymerase.",
-      "materialIds": ["m2", "m3", "m1", "m7", "m6"],
-      "tableIds": ["t3"],
-      "criticalNotes": "Add polymerase last. Do NOT vortex.",
-      "expectedResult": "All shared reagents combined in master mix tube."
-    },
-    {
-      "id": "s16", "number": 16, "phase": "Master Mix Preparation",
-      "action": "Mix the master mix contents gently by pipetting up and down. Keep the tube on ice.",
-      "equipmentIds": ["e4"],
-      "criticalNotes": "Do NOT vortex — mix by gentle pipetting only.",
-      "expectedResult": "Homogeneous master mix on ice."
-    },
-    {
-      "id": "s17", "number": 17, "phase": "Master Mix Preparation",
-      "action": "Add 2.5 uL forward primer and 2.5 uL reverse primer to each thin-walled PCR tube individually. Do NOT add primers to the master mix.",
-      "materialIds": ["m4", "m5"],
-      "equipmentIds": ["e2"],
-      "parameters": [
-        { "type": "volume", "value": 2.5, "unit": "uL", "rawText": "2.5 uL each primer (10 uM stock)" }
-      ],
-      "criticalNotes": "Primers are added individually to each tube, NOT included in the master mix.",
-      "expectedResult": "Forward and reverse primers dispensed into each reaction tube."
-    },
-    {
-      "id": "s18", "number": 18, "phase": "Master Mix Preparation",
-      "action": "Add 45 uL of master mix to each PCR tube (50 uL total reaction volume minus 2.5 uL forward primer minus 2.5 uL reverse primer).",
-      "parameters": [
-        { "type": "volume", "value": 45, "unit": "uL", "rawText": "45 uL master mix per tube" }
-      ],
-      "expectedResult": "Each tube contains 50 uL total reaction volume."
-    },
-    {
-      "id": "s19", "number": 19, "phase": "Master Mix Preparation",
-      "action": "Secure tube tops and tap gently to mix contents. Place tubes in the PCR machine and run the cycling program.",
-      "equipmentIds": ["e1", "e5"],
-      "expectedResult": "All reaction tubes sealed, mixed, and loaded into thermal cycler."
+      "expectedResult": "Single band at expected size in sample lanes; clean NTC; positive control confirmed."
     }
   ],
   "controls": [
