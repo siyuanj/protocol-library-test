@@ -1,5 +1,38 @@
 # 当前交接状态
 
+## PCR-001 转化 + Viewer 更新 + GitHub Pages 部署（2026-08-21 / 本地 20:38 CST）
+
+（工作线：**Viewer UI 完善 + 新测试数据转化 + GitHub Pages 部署**。与下方 v0.3 in-vivo 验证、v0.2 压力测试是不同工作线。）
+
+### 这次做了什么
+
+- **用户决定**：① Tab 标签改英文并居中；② Tab 3 改名 "Materials & Setup"，Tab 4 改名 "Notes & Safety"；③ Overview 也要显示侧边导航栏；④ 创建 GitHub 仓库并启用 Pages；⑤ 用新测试数据 PCR-001 替换列表中无法显示的条目。
+- **助手执行**：
+  - `protocol-standard/renderer/viewer.html`：Tab 标签改英文（Overview / Procedure / Materials & Setup / Notes & Safety）；标题和 Tab 居中（`justify-content:center`）；Overview Tab 也显示侧边 outline；移除 7 个无法加载的 stress-test 协议条目，保留 6 个可用条目（PCR-001 排首位）。
+  - `protocol-standard/examples/pcr-001-standard-pcr.json`（新建）：从用户提供的 `PCR-001_standard_pcr.pdf`（LabOS Protocol Library，4 页 SOP）转化为 canonical schema v0.3 JSON。7 材料（含 storage 如 "Store at -20°C; keep on ice; do NOT vortex"）、5 设备、3 表格（Reaction Setup recipe / Cycling Program / Primer Design Checklist）、10 步骤 3 阶段（Reaction Setup / Thermal Cycling / Post-run QC）、3 controls、4 troubleshooting 条目、3 sources（2 Addgene URL + 1 本地 PDF）。
+  - GitHub 仓库 `siyuanj/protocol-library-test`（public）：初始提交 + Pages 部署 workflow（`.github/workflows/deploy-pages.yml`）+ `.nojekyll`。
+  - 已 push 至 main，Pages 自动重新部署。
+
+### 现在真实状态（本次实跑）
+
+- Viewer 在 localhost:4173 四个 Tab 均正常渲染，PCR-001 内容完整，0 console error。
+- GitHub Pages 在线地址：`https://siyuanj.github.io/protocol-library-test/protocol-standard/renderer/viewer.html`
+- Git commit `68784c3`，已 push 到 origin/main。
+
+### 还没验证的（下一个会话从这里怀疑）
+
+- GitHub Pages 重新部署后是否能正常加载 PCR-001 JSON（路径 `../examples/pcr-001-standard-pcr.json` 依赖相对路径）。
+- 用户 zip 中还有 PCR-002 至 PCR-006 共 5 个协议未转化。
+- PCR-001 JSON 中 Template DNA 的 `amount` 未指定（标 `needsReview: true`），因 PDF 原文给的是范围（1-10 ng plasmid / 10-500 ng gDNA）。
+- Viewer 的 outline 在 Overview Tab 显示的条目取决于 `buildOutline()` 对 `h4[id]` 和 `.ov-phase[id]` 的查询，未做全部协议类型的边界测试。
+
+### 要用户定的
+
+- 是否继续转化 PCR-002 至 PCR-006。
+- 仓库是否改名或转为 private。
+- 现有 5 个旧协议（Western Blot / RT-qPCR / Cell Culture / Gel Filtration / Protein Concentration）是否保留在列表中。
+
+
 ## v0.3 in-vivo 构造验证：PK 动物实验协议编码完成（2026-08-21 / 本地 13:37 CST）
 
 （工作线：Protocol Library 核心标准的 **schema v0.3 in-vivo/ethics 构造端到端验证**。任务：用 v0.3 原生构造把一份真实的啮齿类单剂量 PK（IV vs PO，连续采血）协议编码，证明 studyDesign/compliance 修复了 v0.2「无伦理/设计层」的缺口。与上方 v0.2 test-set、Section 1&2&3、LabRecord 部署是不同工作线。）

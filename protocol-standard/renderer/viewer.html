@@ -109,6 +109,21 @@ h3{font-size:14px;color:#5b6b7b;margin:16px 0 6px;text-transform:uppercase;lette
 .tl-flow{margin-top:5px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .tl-arrow{color:#5b6b7b;font-weight:700;font-size:14px}
 
+/* ---- step detail sections (procedure tab) ---- */
+.step-section{margin-top:10px}
+.step-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#5b6b7b;margin-bottom:4px}
+.step-tbl-kind{font-weight:400;color:#86a2b1;text-transform:lowercase;letter-spacing:normal;margin-left:6px}
+.step-tbl{width:100%;border-collapse:collapse;font-size:13px;margin:2px 0 4px}
+.step-tbl th{text-align:left;background:#f8f9fb;border:1px solid #e8ecf0;padding:5px 8px;font-size:11px;color:#5b6b7b;font-weight:700}
+.step-tbl td{border:1px solid #e8ecf0;padding:5px 8px}
+.step-list{margin:0;padding-left:16px;font-size:13px;list-style:none}
+.step-list li{margin:3px 0;line-height:1.45;position:relative;padding-left:12px}
+.step-list li::before{content:"·";position:absolute;left:0;color:#86a2b1;font-weight:700}
+.step-callout{display:flex;gap:8px;align-items:flex-start;margin-top:8px;padding:8px 12px;border-radius:8px;font-size:13px;line-height:1.45}
+.step-callout-icon{flex-shrink:0;font-size:14px;margin-top:1px}
+.step-warning{background:#fff8ef;border:1px solid #f0d9a8;color:#8a5a1a}
+.step-danger{background:#fef2f2;border:1px solid #f0b8b8;color:#c62828}
+
 /* ---- info cards for procedure header ---- */
 .info-section{scroll-margin-top:60px}
 .info-card{background:#fff;border:1px solid #e0e4ea;border-radius:10px;padding:16px 20px;margin-bottom:16px}
@@ -217,6 +232,24 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
     (s.containerIds||[]).forEach(function(id){out.push(chip(id,"chip-eq"))});
     (s.tableIds||[]).forEach(function(id){out.push(chip((L.tbl[id]&&L.tbl[id].title)||id,"chip-tbl"))});
     return out.join(" ");
+  }
+  function paramVal(p){
+    if(p.rawText)return p.rawText;
+    if(p.valueText)return p.valueText;
+    if(p.value!=null){var pre=p.comparator==="min"?"≥ ":p.comparator==="max"?"≤ ":p.comparator==="approx"?"~ ":"";var t=pre+p.value;if(p.valueMax!=null&&p.valueMax!==p.value)t+="–"+p.valueMax;if(p.unit)t+=" "+p.unit;if(p.perUnit)t+=" /"+p.perUnit;return t}
+    return p.unit||p.type||"";
+  }
+  function stepMats(s,L){
+    var r=[];
+    if(s.materialUses&&s.materialUses.length){
+      s.materialUses.forEach(function(u){var b=L.m[u.materialId]||{};r.push({name:b.name||u.materialId,amount:u.amount!=null?u.amount:b.amount,unit:u.unit||b.unit,workingConcentration:b.workingConcentration||"",specification:b.specification||"",storage:b.storage||"",needsReview:u.needsReview||b.needsReview})});
+    }else if(s.materialIds){
+      s.materialIds.forEach(function(id){if(L.m[id])r.push(L.m[id])});
+    }
+    return r;
+  }
+  function stepEquips(s,L){
+    var r=[];(s.equipmentIds||[]).forEach(function(id){if(L.e[id])r.push(L.e[id])});return r;
   }
   function byPhase(p){
     var order=[],g={};
@@ -341,16 +374,70 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
     ph.order.forEach(function(key){
       if(key) h.push('<div class="tl-phase" id="sec-phase-'+slug(key)+'"><span>'+esc(key)+'</span></div>');
       ph.g[key].forEach(function(s){
-        var params=(s.parameters||[]).map(fmtParam).join(" ");
-        var refs=refChips(s,L);
         h.push('<div class="tl-item'+(s.needsReview?' tl-review':'')+'">');
         h.push('<div class="tl-dot">'+esc(s.number||"")+'</div>');
         h.push('<div class="tl-card">');
+        /* -- action + repeat -- */
         h.push('<div class="tl-action">'+(s.optional?'<span class="tl-opt">optional</span> ':'')+esc(s.action));
-        if(s.repeat){var r=s.repeat.count?"↺×"+s.repeat.count:(s.repeat.untilCondition?"until "+s.repeat.untilCondition:"↺");h.push(' <span class="tl-repeat">'+esc(r)+'</span>')}
+        if(s.repeat){var rp=s.repeat.count?"×"+s.repeat.count:(s.repeat.untilCondition?"until "+s.repeat.untilCondition:"↺");h.push(' <span class="tl-repeat">↺ '+esc(rp)+'</span>');if(s.repeat.notes)h.push(' <span style="font-size:12px;color:#5b6b7b">'+esc(s.repeat.notes)+'</span>')}
         h.push('</div>');
-        if(params) h.push('<div class="tl-row">'+params+'</div>');
-        if(refs) h.push('<div class="tl-row" style="opacity:.9">'+refs+'</div>');
+        /* -- critical notes (warning callout) -- */
+        if(s.criticalNotes) h.push('<div class="step-callout step-warning"><span class="step-callout-icon">⚠</span><span>'+esc(s.criticalNotes)+'</span></div>');
+        /* -- safety notes (danger callout) -- */
+        if(s.safetyNotes) h.push('<div class="step-callout step-danger"><span class="step-callout-icon">☣</span><span>'+esc(s.safetyNotes)+'</span></div>');
+        /* -- materials -- */
+        var mats=stepMats(s,L);
+        if(mats.length){
+          h.push('<div class="step-section"><div class="step-label">Materials</div>');
+          if(mats.length>=3){
+            h.push('<table class="step-tbl"><thead><tr><th>Reagent</th><th>Amount</th><th>Specification</th><th>Storage / Handling</th></tr></thead><tbody>');
+            mats.forEach(function(m){
+              var amt=m.amount!=null?esc(m.amount+(m.unit?" "+m.unit:"")):(m.workingConcentration?esc(m.workingConcentration):"—");
+              h.push('<tr'+(m.needsReview?' class="row-review"':'')+'><td>'+esc(m.name)+(m.needsReview?' <span class="review">review</span>':'')+'</td><td>'+amt+'</td><td>'+esc(m.specification||"")+'</td><td>'+esc(m.storage||"")+'</td></tr>');
+            });
+            h.push('</tbody></table>');
+          }else{
+            h.push('<ul class="step-list">');
+            mats.forEach(function(m){
+              var d=[];if(m.amount!=null)d.push(m.amount+(m.unit?" "+m.unit:""));else if(m.workingConcentration)d.push(m.workingConcentration);if(m.specification)d.push(m.specification);if(m.storage)d.push(m.storage);
+              h.push('<li><b>'+esc(m.name)+'</b>'+(d.length?' — '+esc(d.join(" · ")):'')+(m.needsReview?' <span class="review">review</span>':'')+'</li>');
+            });
+            h.push('</ul>');
+          }
+          h.push('</div>');
+        }
+        /* -- equipment -- */
+        var eqs=stepEquips(s,L);
+        if(eqs.length){
+          h.push('<div class="step-section"><div class="step-label">Equipment</div><ul class="step-list">');
+          eqs.forEach(function(e){h.push('<li><b>'+esc(e.name)+'</b>'+(e.settings?' — '+esc(e.settings):'')+(e.model?' ('+esc(e.model)+')':'')+'</li>')});
+          h.push('</ul></div>');
+        }
+        /* -- parameters -- */
+        if(s.parameters&&s.parameters.length){
+          h.push('<div class="step-section"><div class="step-label">Parameters</div>');
+          if(s.parameters.length>=3){
+            h.push('<table class="step-tbl"><thead><tr><th>Type</th><th>Value</th></tr></thead><tbody>');
+            s.parameters.forEach(function(pr){h.push('<tr'+(pr.needsReview?' class="row-review"':'')+'><td>'+esc(pr.type||"")+'</td><td>'+esc(paramVal(pr))+(pr.formula?' <span class="pill-formula" title="'+esc(pr.formula)+'">ƒ</span>':'')+(pr.needsReview?' <span class="review">review</span>':'')+'</td></tr>')});
+            h.push('</tbody></table>');
+          }else{
+            s.parameters.forEach(function(pr){h.push('<div style="margin:2px 0">'+fmtParam(pr)+'</div>')});
+          }
+          h.push('</div>');
+        }
+        /* -- referenced tables (render inline) -- */
+        if(s.tableIds&&s.tableIds.length){
+          s.tableIds.forEach(function(tid){
+            var t=L.tbl[tid];if(!t)return;
+            h.push('<div class="step-section"><div class="step-label">'+esc(t.title)+(t.kind?' <span class="step-tbl-kind">'+esc(t.kind)+'</span>':'')+'</div>');
+            h.push('<table class="step-tbl"><thead><tr>');
+            (t.columns||[]).forEach(function(c){h.push('<th>'+esc(c)+'</th>')});
+            h.push('</tr></thead><tbody>');
+            (t.rows||[]).forEach(function(row){h.push('<tr>');row.forEach(function(cell){h.push('<td>'+esc(cell)+'</td>')});h.push('</tr>')});
+            h.push('</tbody></table></div>');
+          });
+        }
+        /* -- input/output flow -- */
         if((s.inputIds&&s.inputIds.length)||(s.outputIds&&s.outputIds.length)){
           h.push('<div class="tl-flow">');
           if(s.inputIds&&s.inputIds.length) h.push(s.inputIds.map(function(id){return chip(nmeOf(id,L),"chip-in")}).join(" "));
@@ -358,19 +445,30 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
           if(s.outputIds&&s.outputIds.length) h.push(s.outputIds.map(function(id){return chip(nmeOf(id,L),"chip-out")}).join(" "));
           h.push('</div>');
         }
+        /* -- command -- */
         if(s.command) h.push('<div class="tl-cmd"><code>'+esc(s.command)+'</code></div>');
+        /* -- branches -- */
         if(s.branches&&s.branches.length){s.branches.forEach(function(b){h.push('<div class="tl-branch">⎋ '+esc(b.condition)+(b.targetStepId?' → '+esc(b.targetStepId):'')+(b.action?': '+esc(b.action):'')+'</div>')})}
-        if(s.expectedResult) h.push('<div class="tl-expect">✓ '+esc(s.expectedResult)+'</div>');
+        /* -- acceptance criteria -- */
         if(s.acceptanceCriteria&&s.acceptanceCriteria.length){
-          s.acceptanceCriteria.forEach(function(a){
-            var line="✓ "+esc(a.parameter||a.description||"");
-            if(a.value!=null){var pre=a.comparator==="min"?"≥ ":a.comparator==="max"?"≤ ":"";line+=": "+pre+a.value+(a.unit?" "+a.unit:"")}
-            if(a.classification) line+=" ("+esc(a.classification)+")";
-            h.push('<div class="tl-accept">'+line+'</div>');
-          });
+          h.push('<div class="step-section"><div class="step-label">Acceptance Criteria</div>');
+          if(s.acceptanceCriteria.length>=2){
+            h.push('<table class="step-tbl"><thead><tr><th>Check</th><th>Requirement</th></tr></thead><tbody>');
+            s.acceptanceCriteria.forEach(function(a){
+              var req=a.description||"";if(!req&&a.value!=null){var pre=a.comparator==="min"?"≥ ":a.comparator==="max"?"≤ ":"";req=pre+a.value+(a.unit?" "+a.unit:"")}
+              h.push('<tr><td>'+esc(a.parameter||"")+'</td><td>'+esc(req)+'</td></tr>');
+            });
+            h.push('</tbody></table>');
+          }else{
+            s.acceptanceCriteria.forEach(function(a){
+              var line=a.parameter||a.description||"";if(a.value!=null){var pre=a.comparator==="min"?"≥ ":a.comparator==="max"?"≤ ":"";line+=": "+pre+a.value+(a.unit?" "+a.unit:"")}
+              h.push('<div class="tl-accept">✓ '+esc(line)+'</div>');
+            });
+          }
+          h.push('</div>');
         }
-        if(s.criticalNotes) h.push('<div class="tl-note">! '+esc(s.criticalNotes)+'</div>');
-        if(s.safetyNotes) h.push('<div class="tl-note" style="color:#c62828">⚠ '+esc(s.safetyNotes)+'</div>');
+        /* -- expected result -- */
+        if(s.expectedResult) h.push('<div class="tl-expect">✓ '+esc(s.expectedResult)+'</div>');
         h.push('</div></div>');
       });
     });
