@@ -1,0 +1,235 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "PCR-1000: Addgene Standard PCR Protocol (Detailed)",
+    "protocolId": "PCR-1000",
+    "version": "0.1",
+    "family": "PCR",
+    "category": "PCR & Amplification",
+    "discipline": "Biology",
+    "purpose": "Amplify a defined DNA region in vitro by Polymerase Chain Reaction (PCR) using a heat-resistant DNA polymerase originally isolated from Thermus aquaticus (Taq). The reaction exploits repeated cycles of heating and cooling: denaturation separates the double-stranded template, annealing allows two synthetic oligonucleotide primers to hybridize upstream (5') and downstream (3') of the target, and extension lets the polymerase synthesize new complementary strands from free deoxyribonucleotides (dNTPs provided in equal molar ratio). Each cycle approximately doubles the target, yielding thousands of copies from a single starting molecule. This protocol describes a standard 50 uL Taq-style endpoint PCR reaction based on the Addgene PCR protocol.",
+    "scope": "Standard endpoint PCR using Taq polymerase. Not validated for qPCR quantitation, RT-PCR, or high-fidelity cloning workflows. For related procedures see Addgene protocols on primer design, plasmid cloning by PCR, gel electrophoresis, restriction digest of plasmid DNA, and DNA ligation.",
+    "estimatedTime": "~2-3 hours (setup + cycling + gel verification)",
+    "beforeYouBegin": [
+      "Keep all reagents on ice during setup to maintain enzyme activity.",
+      "Use thin-walled PCR tubes for optimal heat transfer in the thermal cycler.",
+      "Design primers using tools such as Primer3. Ensure primers are 18-24 nt, 40-60% GC content, with Tm within 5 degrees C of each other. Each primer must hybridize to a complementary sequence at the 3' end of the target region and serve as the starting point for DNA elongation.",
+      "For multiple reactions, prepare a master mix containing all shared components (except primers and template) with 10% extra volume to account for pipetting loss.",
+      "Use a clean workspace with dedicated pre-PCR pipettes and aerosol-resistant tips.",
+      "Taq polymerase synthesizes DNA at approximately 1-2 kilobases per minute — use this rate to set extension times based on expected amplicon size."
+    ],
+    "tags": ["PCR", "endpoint PCR", "DNA amplification", "Taq", "thermal cycling", "Addgene"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Template DNA", "role": "sample", "amount": 2, "unit": "uL", "specification": "10-500 ng total; plasmid DNA, genomic DNA, cDNA, or purified amplicon. Contains the DNA region to be amplified; must have sequences complementary to both primers flanking the target segment.", "storage": "Keep on ice during setup" },
+    { "id": "m2", "name": "10X Taq buffer with MgCl2", "role": "buffer", "amount": 5, "unit": "uL", "specification": "Provides the optimal chemical environment for the polymerase. Contains divalent cations (Mg2+) that stabilize primer-template interactions and are essential cofactors for polymerase activity. Note: higher MgCl2 concentrations can increase polymerase error rate — do not add excess MgCl2 unless troubleshooting requires it.", "storage": "Store at -20 degrees C; keep on ice during use" },
+    { "id": "m3", "name": "dNTP mix (10 mM each nucleotide)", "role": "reagent", "workingConcentration": "10 mM each", "amount": 1, "unit": "uL", "specification": "Equal molar ratio of dATP, dTTP, dGTP, dCTP; final 200 uM each in reaction. These are the building blocks of the new DNA strand — the polymerase adds them individually to the growing chain in an order complementary to the template.", "storage": "Store at -20 degrees C; avoid repeated freeze-thaw" },
+    { "id": "m4", "name": "Forward primer", "role": "reagent", "workingConcentration": "10 uM stock", "amount": 2.5, "unit": "uL", "specification": "Final 0.5 uM in reaction. A short single-stranded DNA oligonucleotide (typically 18-24 nt) that hybridizes to a complementary sequence at the 3' end of the target region on one strand. Serves as the starting point for DNA elongation by the polymerase.", "storage": "Store at -20 degrees C; keep on ice during use" },
+    { "id": "m5", "name": "Reverse primer", "role": "reagent", "workingConcentration": "10 uM stock", "amount": 2.5, "unit": "uL", "specification": "Final 0.5 uM in reaction. A short single-stranded DNA oligonucleotide (typically 18-24 nt) that hybridizes to a complementary sequence at the 3' end of the target region on the opposite strand. Together with the forward primer, defines the boundaries of the amplified product.", "storage": "Store at -20 degrees C; keep on ice during use" },
+    { "id": "m6", "name": "Taq DNA polymerase", "role": "enzyme", "workingConcentration": "5 U/uL", "amount": 0.2, "unit": "uL", "specification": "Heat-resistant DNA polymerase originally isolated from the thermophilic bacterium Thermus aquaticus. Withstands repeated denaturation at 94 degrees C without losing activity. Optimal polymerization activity at approximately 70-72 degrees C. Synthesizes new DNA at approximately 1-2 kilobases per minute. 1 U per 50 uL reaction.", "storage": "Store at -20 degrees C; keep on ice; do NOT vortex" },
+    { "id": "m7", "name": "Sterile dH2O", "role": "solvent", "amount": 36.8, "unit": "uL", "specification": "Molecular biology grade; nuclease-free. Fills the remaining reaction volume to 50 uL; provides the aqueous solvent and contributes to buffer capacity.", "storage": "Room temperature" },
+    { "id": "m8", "name": "25 mM MgCl2 (optional)", "role": "reagent", "amount": 1, "unit": "uL", "specification": "For optimization if PCR fails; add to increase Mg2+ concentration. Caution: excess MgCl2 can increase polymerase error rate and promote non-specific amplification.", "storage": "Store at -20 degrees C", "needsReview": true },
+    { "id": "m9", "name": "DMSO (optional)", "role": "reagent", "amount": 1, "unit": "uL", "specification": "For GC-rich templates; aids denaturation of secondary structures that resist melting at standard denaturation temperatures.", "storage": "Room temperature", "needsReview": true }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "PCR machine (thermal cycler)", "settings": "See cycling program table" },
+    { "id": "e2", "name": "Thin-walled PCR tubes", "settings": "0.2 mL thin-walled tubes for optimal heat transfer" },
+    { "id": "e3", "name": "Agarose gel electrophoresis apparatus", "settings": "For post-run product verification" },
+    { "id": "e4", "name": "Ice bucket / cold block", "settings": "Keep reagents cold during setup" },
+    { "id": "e5", "name": "Microcentrifuge", "settings": "Brief spin to collect liquid" },
+    { "id": "e6", "name": "Gel documentation system", "settings": "UV or blue-light imaging" }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "50 uL Reaction Setup",
+      "kind": "recipe",
+      "columns": ["Component", "Stock concentration", "Volume (uL)", "Final condition", "Function"],
+      "rows": [
+        ["Template DNA", "Variable", "2", "10-500 ng", "Contains the target DNA region to be amplified; must be complementary to primers"],
+        ["10X Taq buffer with MgCl2", "10X", "5", "1X", "Provides optimal chemical environment; Mg2+ stabilizes primer-template duplex and is a polymerase cofactor"],
+        ["dNTP mix", "10 mM each", "1", "200 uM each", "Building blocks (dATP, dTTP, dGTP, dCTP) added individually to new strand by polymerase"],
+        ["Forward primer", "10 uM", "2.5", "0.5 uM", "Hybridizes to template 3' of target on one strand; starting point for elongation"],
+        ["Reverse primer", "10 uM", "2.5", "0.5 uM", "Hybridizes to template 3' of target on opposite strand; defines amplicon boundary"],
+        ["Taq DNA polymerase", "5 U/uL", "0.2", "1 U/reaction", "Heat-resistant enzyme (from T. aquaticus) that drives DNA synthesis at ~70 degrees C"],
+        ["Sterile dH2O", "—", "36.8", "To 50 uL total", "Fills remaining volume; provides aqueous solvent and buffer capacity"]
+      ],
+      "note": "Volumes are for a single 50 uL reaction. For master mix preparation, multiply each volume by (N + 10%) where N is the number of reactions."
+    },
+    {
+      "id": "t2",
+      "title": "Cycling Program",
+      "kind": "program",
+      "columns": ["Step", "Temperature", "Time", "Cycles", "What happens"],
+      "rows": [
+        ["Initial denaturation", "94 degrees C", "2 min", "1", "Heat breaks hydrogen bonds between complementary base pairs, fully denaturing the double-stranded template into single strands"],
+        ["Denaturation", "94 degrees C", "30 sec", "25-30", "Re-denatures all double-stranded DNA (template and newly synthesized products) each cycle"],
+        ["Annealing", "55 degrees C (Tm - 5 degrees C)", "30 sec", "25-30", "Forward and reverse primers hybridize to their complementary single-stranded template sequences; DNA polymerase binds to the primer-template duplex"],
+        ["Extension", "72 degrees C", "1 min per kb", "25-30", "Taq polymerase synthesizes new DNA strands by adding dNTPs complementary to the template, extending from the 3' end of each annealed primer at ~1-2 kb/min"],
+        ["Final extension", "72 degrees C", "5 min", "1", "Ensures all partially extended products are completed to full length"],
+        ["Hold", "4 degrees C", "Indefinite", "1", "Short-term hold; prevents enzyme activity and sample degradation"]
+      ],
+      "note": "Annealing temperature should be set approximately 5 degrees C below the primer melting temperature (Tm). Extension time depends on amplicon size: Taq polymerase synthesizes DNA at approximately 1-2 kilobases per minute."
+    },
+    {
+      "id": "t3",
+      "title": "Master Mix Calculation Example (7 reactions)",
+      "kind": "recipe",
+      "columns": ["Component", "Per reaction (uL)", "x 7.7 (uL)"],
+      "rows": [
+        ["10X Taq buffer", "5", "38.5"],
+        ["dNTP mix", "1", "7.7"],
+        ["Template DNA", "2", "15.4"],
+        ["Sterile dH2O", "36.8", "283.3"],
+        ["Taq DNA polymerase", "0.2", "1.54"]
+      ],
+      "note": "Multiply reagent volumes by (number of reactions + 10% overage). Primers are added individually to each tube and are NOT included in the master mix."
+    },
+    {
+      "id": "t4",
+      "title": "Primer Dilution Guide",
+      "kind": "other",
+      "columns": ["Step", "Procedure"],
+      "rows": [
+        ["100 uM stock preparation", "Add dH2O in uL equal to (nanomoles x 10) to the lyophilized primer pellet"],
+        ["10 uM working stock", "Dilute 1:10 from 100 uM stock (100 uL stock + 900 uL dH2O)"]
+      ]
+    },
+    {
+      "id": "t5",
+      "title": "Primer Design Checklist",
+      "kind": "other",
+      "columns": ["Parameter", "Recommendation", "Notes"],
+      "rows": [
+        ["Primer length", "18-24 nt", "Longer primers may be required for cloning tails; calculate Tm from the annealing region only"],
+        ["GC content", "40-60%", "Avoid very low GC, long single-base runs (e.g. AAAA), and strong hairpin structures"],
+        ["Primer-pair Tm", "Within 5 degrees C", "Use one consistent Tm calculator for both primers to ensure comparable annealing"],
+        ["3' end", "Target-specific and stable", "Avoid 3' complementarity between forward and reverse primers to prevent primer dimer; a weak GC clamp (1-2 G/C at 3' end) can improve binding"],
+        ["Amplicon size", "Assay dependent", "Routine endpoint PCR: 100 bp to several kb; longer products need enzyme-specific extension time optimization"]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1", "number": 1, "phase": "Primer Preparation",
+      "action": "Design primers using a tool such as Primer3. Each primer must hybridize to a complementary sequence at the 3' end of the target region and serve as the starting point for DNA elongation by the polymerase. Two unique single-stranded oligonucleotide primers are required: one annealing upstream (5') and one downstream (3') of the DNA segment to be amplified.",
+      "tableIds": ["t4", "t5"],
+      "expectedResult": "Primers designed and diluted to 10 uM working stock."
+    },
+    {
+      "id": "s2", "number": 2, "phase": "Primer Preparation",
+      "action": "Prepare primer stocks: reconstitute lyophilized primers to 100 uM by adding dH2O (in uL) equal to nanomoles x 10. Then prepare 10 uM working stocks by 1:10 dilution (100 uL of 100 uM stock + 900 uL dH2O).",
+      "materialIds": ["m4", "m5", "m7"],
+      "tableIds": ["t4"],
+      "expectedResult": "Forward and reverse primers at 10 uM working concentration."
+    },
+    {
+      "id": "s3", "number": 3, "phase": "Reaction Setup",
+      "action": "Place thin-walled PCR tubes on ice. Label tubes for each sample, including a no-template control (NTC) and a positive control.",
+      "equipmentIds": ["e2", "e4"],
+      "expectedResult": "Labeled PCR tubes on ice ready for reagent addition."
+    },
+    {
+      "id": "s4", "number": 4, "phase": "Reaction Setup",
+      "action": "For multiple reactions, prepare a master mix: multiply each reagent volume by the number of reactions plus 10% extra to account for pipetting error. Combine sterile dH2O, 10X Taq buffer with MgCl2, dNTP mix, and Taq DNA polymerase in a single tube. Mix gently by pipetting up and down. Do NOT include primers or template DNA in the master mix — primers are added to individual tubes because different reactions may use different primer pairs.",
+      "materialIds": ["m7", "m2", "m3", "m6"],
+      "tableIds": ["t1", "t3"],
+      "criticalNotes": "Add polymerase last. Do NOT vortex — mix by gentle pipetting only. Keep on ice at all times.",
+      "expectedResult": "Homogeneous master mix on ice, ready for aliquoting."
+    },
+    {
+      "id": "s5", "number": 5, "phase": "Reaction Setup",
+      "action": "Add forward primer (2.5 uL of 10 uM stock) and reverse primer (2.5 uL of 10 uM stock) to each PCR tube individually. Primers are not included in the master mix so that different primer pairs can be used in parallel reactions from the same mix.",
+      "materialIds": ["m4", "m5"],
+      "parameters": [
+        { "type": "volume", "value": 2.5, "unit": "uL", "rawText": "2.5 uL each primer (10 uM stock); final 0.5 uM in reaction" }
+      ],
+      "expectedResult": "Primers dispensed into individual reaction tubes."
+    },
+    {
+      "id": "s6", "number": 6, "phase": "Reaction Setup",
+      "action": "Add 45 uL of master mix to each tube (50 uL total minus 2.5 uL forward primer minus 2.5 uL reverse primer). Then add template DNA (2 uL, 10-500 ng) last. For the NTC, add sterile dH2O instead of template DNA. The template contains the DNA region to be amplified and must have sequences complementary to both primers.",
+      "materialIds": ["m1", "m7"],
+      "parameters": [
+        { "type": "volume", "value": 45, "unit": "uL", "rawText": "45 uL master mix per tube" },
+        { "type": "volume", "value": 2, "unit": "uL", "rawText": "2 uL template DNA (10-500 ng)" }
+      ],
+      "criticalNotes": "Add template last to minimize contamination risk. Load NTC last.",
+      "expectedResult": "All 50 uL reactions assembled with template added last."
+    },
+    {
+      "id": "s7", "number": 7, "phase": "Reaction Setup",
+      "action": "Secure tube caps. Gently tap tubes to mix contents and briefly centrifuge to collect liquid at the bottom and remove air bubbles.",
+      "equipmentIds": ["e5"],
+      "expectedResult": "Liquid collected at tube bottom, no air bubbles."
+    },
+    {
+      "id": "s8", "number": 8, "phase": "Thermal Cycling",
+      "action": "Place tubes in the PCR machine. Set the annealing temperature to approximately 5 degrees C below the primer melting temperature (Tm). Set extension time to 1-2 minutes per kilobase of expected amplicon length — Taq polymerase synthesizes DNA at approximately 1-2 kilobases per minute. During denaturation (94 degrees C), heat breaks hydrogen bonds between complementary base pairs, separating double-stranded DNA into single strands. During annealing (~55 degrees C), the primers hybridize to their complementary sequences and DNA polymerase binds to the primer-template duplex. During extension (72 degrees C), Taq polymerase adds dNTPs to the 3' end of each primer, synthesizing new strands complementary to the template.",
+      "equipmentIds": ["e1"],
+      "tableIds": ["t2"],
+      "parameters": [
+        { "type": "temperature", "value": 94, "unit": "°C", "rawText": "Initial denaturation: 94 degrees C for 2 min — denatures template, breaks hydrogen bonds" },
+        { "type": "temperature", "value": 55, "unit": "°C", "rawText": "Annealing: ~55 degrees C (Tm - 5 degrees C) for 30 sec — primers bind template, polymerase binds duplex" },
+        { "type": "temperature", "value": 72, "unit": "°C", "rawText": "Extension: 72 degrees C for 1 min/kb — polymerase synthesizes new strand at ~1-2 kb/min" }
+      ],
+      "expectedResult": "Thermal cycler programmed and running."
+    },
+    {
+      "id": "s9", "number": 9, "phase": "Thermal Cycling",
+      "action": "Run the cycling program: initial denaturation at 94 degrees C for 2 min (fully denatures template), then 25-30 cycles of denaturation (94 degrees C, 30 sec), annealing (55 degrees C, 30 sec — primers hybridize to single-stranded template and polymerase binds), and extension (72 degrees C, 1 min/kb — Taq synthesizes new complementary strands from dNTPs), followed by a final extension at 72 degrees C for 5 min to ensure all partially extended products are completed to full length.",
+      "equipmentIds": ["e1"],
+      "tableIds": ["t2"],
+      "repeat": {
+        "count": 30,
+        "over": "thermocycles",
+        "notes": "25-30 cycles; adjust based on template abundance and amplicon size"
+      },
+      "expectedResult": "Cycling complete; target DNA amplified exponentially — each cycle approximately doubles the amount of target sequence."
+    },
+    {
+      "id": "s10", "number": 10, "phase": "Post-run Verification",
+      "action": "Run 2 uL of PCR product on an agarose gel with an appropriate DNA size ladder to verify band size and concentration. A single discrete band at the expected amplicon size indicates successful amplification. The NTC lane should be clean (no target-size band), confirming no contamination. The positive control should show the expected band, confirming that the master mix, cycling program, and detection method are all working.",
+      "equipmentIds": ["e3", "e6"],
+      "parameters": [
+        { "type": "volume", "value": 2, "unit": "uL", "rawText": "2 uL product loaded on gel" }
+      ],
+      "acceptanceCriteria": [
+        { "parameter": "Sample band", "description": "Single band at expected amplicon size", "comparator": "exact" },
+        { "parameter": "NTC", "description": "No target-size band in no-template control — confirms no contamination" },
+        { "parameter": "Positive control", "description": "Expected band present — confirms master mix, cycling, and detection are functional" }
+      ],
+      "expectedResult": "Single band at expected size in sample lanes; clean NTC; positive control confirmed."
+    }
+  ],
+  "controls": [
+    { "name": "No-template control (NTC)", "description": "Replace template DNA with sterile dH2O to detect reagent, water, primer, or setup contamination. No target-size band expected." },
+    { "name": "Positive control", "description": "Use a known template that reliably amplifies to verify that the assay, master mix, template handling, cycling program, and detection method are all working correctly. Expected band should appear." }
+  ],
+  "expectedOutputs": [
+    "Single band at the expected amplicon size on agarose gel.",
+    "Clean NTC lane (no target-size band).",
+    "Positive control band at expected size.",
+    "Complete run record with sample map, reagent lots, cycling program, and gel image."
+  ],
+  "troubleshooting": [
+    { "problem": "No band / PCR failure", "cause": "Wrong annealing temperature, missing component, degraded template, inhibitors in template preparation, insufficient extension time for long amplicons", "solution": "Verify setup against the reaction table; lower annealing temperature step-wise or run a gradient; add 1 uL 25 mM MgCl2 and/or 1 uL DMSO per reaction; use fresh enzyme; dilute template to reduce inhibitors; increase extension time for products > 1 kb" },
+    { "problem": "Non-specific products / multiple bands", "cause": "Annealing temperature too low, excess template or primer concentration, nonspecific primer binding to off-target sequences", "solution": "Increase annealing temperature step-wise by 1-2 degrees C; reduce template or primer concentration; consider hot-start polymerase; redesign primers with stricter specificity criteria" },
+    { "problem": "Smear on gel", "cause": "Overcycling, degraded template DNA, nonspecific amplification, overloaded gel lane", "solution": "Reduce cycle number (try 25 instead of 30); improve template quality (repurify or use fresh prep); optimize annealing temperature; load less product on gel" },
+    { "problem": "Primer dimer", "cause": "3' complementarity between primers, excess primer concentration relative to template", "solution": "Reduce primer concentration to 0.2-0.3 uM; redesign primers to minimize 3' complementarity between forward and reverse primers" },
+    { "problem": "Weak band from GC-rich template", "cause": "Strong secondary structures in GC-rich regions resist denaturation at standard temperatures", "solution": "Increase denaturation time; add 1 uL DMSO per reaction to aid melting of secondary structures; consider specialized GC-rich PCR kits or higher denaturation temperature (98 degrees C with appropriate polymerase)" }
+  ],
+  "safety": [
+    "Ethidium bromide or alternative DNA stains may be mutagenic — wear gloves when handling gels and follow institutional disposal rules.",
+    "UV transilluminators emit UV radiation — use eye and skin protection."
+  ],
+  "sources": [
+    { "id": "src1", "kind": "url", "title": "Addgene PCR Protocol", "url": "https://www.addgene.org/protocols/pcr/", "license": "Addgene educational use", "licenseVerified": false },
+    { "id": "src2", "kind": "url", "title": "Addgene Primer Design Protocol", "url": "https://www.addgene.org/protocols/primer-design/", "license": "Addgene educational use", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}
