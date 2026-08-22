@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "Mammalian Tissue Protein Extraction with T-PER Reagent",
+    "protocolId": "pwp-001-link",
+    "version": "0.1",
+    "family": "Protein extraction",
+    "category": "tissue protein extraction",
+    "discipline": "protein biochemistry",
+    "purpose": "Prepare a total-protein tissue lysate using the T-PER conditions described on the linked Thermo Fisher cell-lysis page.",
+    "scope": "Applies to mammalian tissue, including heart, liver, kidney, lung, and spleen, using T-PER with mechanical or manual homogenization.",
+    "createdAt": "2026-08-22",
+    "modifiedAt": "2026-08-22",
+    "tags": ["protein extraction", "T-PER", "tissue lysis", "link-derived"]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "T-PER Tissue Protein Extraction Reagent",
+      "role": "reagent",
+      "specification": "Non-denaturing detergent in 25 mM bicine and 150 mM NaCl, pH 7.6",
+      "workingConcentration": "1:10–1:20 (w/v) relative to tissue",
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "m2",
+      "name": "Mammalian tissue sample",
+      "role": "sample",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "m3",
+      "name": "BCA protein assay reagents",
+      "role": "kit",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Chilled Dounce or benchtop tissue homogenizer",
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "e2",
+      "name": "Centrifuge",
+      "sourceReferences": [{"sourceId": "src1"}]
+    }
+  ],
+  "software": [],
+  "samples": [],
+  "containers": [],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "T-PER tissue extraction conditions stated on the linked page",
+      "kind": "recipe",
+      "columns": ["Operation", "Condition"],
+      "rows": [
+        ["Tissue resuspension", "1:10–1:20 (w/v) T-PER reagent"],
+        ["Disruption", "Chilled Dounce or benchtop tissue homogenizer"],
+        ["Clarification", "10,000 × g for 5 min"],
+        ["Protein assay", "BCA protein assay"]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Sample preparation",
+      "action": "Weigh the mammalian tissue and resuspend it in T-PER reagent.",
+      "materialIds": ["m1", "m2"],
+      "tableIds": ["t1"],
+      "parameters": [
+        {
+          "type": "ratio",
+          "valueText": "1:10–1:20",
+          "unit": "w/v",
+          "rawText": "Resuspend tissue in 1:10 to 1:20 w/v T-PER reagent.",
+          "sourceReferences": [{"sourceId": "src1"}]
+        }
+      ],
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Homogenization",
+      "action": "Disrupt the tissue in the T-PER suspension using a chilled Dounce or benchtop tissue homogenizer.",
+      "equipmentIds": ["e1"],
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Clarification",
+      "action": "Centrifuge the homogenate and collect the supernatant.",
+      "equipmentIds": ["e2"],
+      "parameters": [
+        {
+          "type": "speed",
+          "value": 10000,
+          "unit": "×g",
+          "rawText": "10,000 × g",
+          "sourceReferences": [{"sourceId": "src1"}]
+        },
+        {
+          "type": "time",
+          "value": 5,
+          "unit": "min",
+          "rawText": "5 min",
+          "sourceReferences": [{"sourceId": "src1"}]
+        }
+      ],
+      "expectedResult": "Clarified tissue protein supernatant.",
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Quantification",
+      "action": "Determine protein concentration in the collected supernatant using a BCA protein assay.",
+      "materialIds": ["m3"],
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    }
+  ],
+  "controls": [],
+  "expectedOutputs": [],
+  "troubleshooting": [],
+  "safety": [],
+  "biosafetyLevel": null,
+  "limitations": "The linked page supplies the T-PER extraction ratio and clarification conditions but does not specify tissue mass, inhibitor use, or assay setup.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "url",
+      "title": "Cell Lysis Buffers",
+      "url": "https://www.thermofisher.com/us/en/home/life-science/protein-biology/protein-purification-isolation/cell-lysis-fractionation/cell-lysis-total-protein-extraction.html",
+      "license": "Not stated",
+      "licenseVerified": false
+    }
+  ]
+}

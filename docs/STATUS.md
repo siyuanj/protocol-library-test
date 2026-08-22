@@ -1,5 +1,34 @@
 # 当前交接状态
 
+## PDF 与官方链接的独立转化对照（2026-08-22 / 本地）
+
+### 这次做了什么
+
+- **用户决定**：为检验信息压缩是否影响转化，既有 7 份 001 JSON 保留为 PDF 基线；从附件中提取出的官方 source link 及其官方关联页面另行独立转化。链接组不得读取附件 PDF 正文或既有 JSON。
+- **助手执行**：新增 7 份 `*-link.json`（PCR/GAM/EGB/NAP/PWP/MC/QQC）。数据字段只来自官方链接或其直接关联的厂商/机构页面；例如 QIAGEN 和 NanoDrop 的厂商链接本身指向官方说明书，未回看附件。官方页面未给出的载体专属克隆条件、限制酶温度/时间、样品与空白液具体身份等均省略或标记 `needsReview`。
+- **助手执行**：`protocol-standard/renderer/viewer.html` 的原有 7 项全部改为 `codex-pdf/`；新增一一对应的 `codex-link/` 项，供 Viewer 中并列对照。
+
+### 现在真实状态（本次实跑）
+
+- 链接组 7 份 JSON 合计 **38 steps、37 materials、12 equipment、8 tables、9 sources、30 needsReview**（本次 PowerShell 汇总）。
+- `node protocol-standard/renderer/validate.mjs`：**46/46 protocols valid**。
+- `node protocol-standard/renderer/validate-schema.mjs`：**46/46 files pass full JSON Schema**。
+- 本地 HTTP 验证：`renderer/viewer.html` 返回 **HTTP 200**、含 **14** 个 `codex-pdf/` 或 `codex-link/` 条目；7 份 link JSON 均返回 **HTTP 200** 且可被 JSON 解析。
+
+### 卡在哪
+
+- 无当前技术阻塞。
+
+### 还没验证的（下一个会话从这里怀疑）
+
+- 这是一项来源路径对照，并不单独证明“PDF 转化”造成信息丢失：链接页面可能是不同版本、不同产品变体或不同粒度的资料。后续比较应按字段覆盖率、数值一致性、`needsReview` 数和来源版本逐项核对。
+- 当前只验证了 Viewer 文件和 JSON 的 HTTP 可加载性，尚未对 14 个下拉项逐一做浏览器交互与视觉回归。
+- 所有新来源仍为 `licenseVerified:false`；本仓库未保存或镜像链接页面/说明书正文。
+
+### 要用户定的
+
+- 对照结论通过后，是否以 `codex-link/` 组替换 PDF 组，或长期保留两组作为来源差异测试集。
+
 ## 压缩包各分类 001 协议转化 + Viewer 接入（2026-08-22 / 本地）
 
 ### 这次做了什么
@@ -13,7 +42,7 @@
   - `examples/mc-001-restriction-enzyme-digestion.json`
   - `examples/qqc-001-nanodrop-nucleic-acid-quantification.json`
 - **助手判断**：压缩包的 `PCR-001_standard_pcr.pdf` SHA-256 为 `083D242F...C7E31E625`，与既有 JSON 所引本地 PDF SHA-256 `919CF20C...8608A33F` 不同；为保持此批来源一致，已重写 `examples/pcr-001-standard-pcr.json` 为压缩包中的 NEB Q5 高保真 PCR 版本，而不是保留旧 Taq 通用版。
-- **助手执行**：`renderer/viewer.html` 的 protocols 数组新增/更新 7 个以 `codex/` 开头的条目（PCR/GAM/EGB/NAP/PWP/MC/QQC 001）。所有温度、时间、体积、浓度仅在 PDF 明示时编码；未选定的试剂、仪器条件和分支均以 `needsReview` 或省略处理。表格采用 `tables`（8 张，包括运行记录模板及 MC-001 反应设置）；循环用 `step.repeat`。
+- **助手执行**：`renderer/viewer.html` 的 protocols 数组曾新增/更新 7 个以 `codex/` 开头的条目（PCR/GAM/EGB/NAP/PWP/MC/QQC 001）；后续独立对照工作已将其改名为 `codex-pdf/`，详见上节。所有温度、时间、体积、浓度仅在 PDF 明示时编码；未选定的试剂、仪器条件和分支均以 `needsReview` 或省略处理。表格采用 `tables`（8 张，包括运行记录模板及 MC-001 反应设置）；循环用 `step.repeat`。
 
 ### 现在真实状态（本次实跑）
 

@@ -1,0 +1,333 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "QIAprep Spin Miniprep Kit High-Yield Protocol",
+    "protocolId": "nap-001-link",
+    "version": "0.1",
+    "family": "Nucleic acid purification",
+    "category": "plasmid DNA miniprep",
+    "discipline": "molecular biology",
+    "purpose": "Purify up to 30 µg plasmid DNA from a high-density bacterial culture using the QIAprep Spin Miniprep Kit high-yield protocol.",
+    "scope": "The linked QIAGEN protocol is optimized for high-copy plasmids from 5 mL 2x YT cultures grown to high density.",
+    "createdAt": "2026-08-22",
+    "modifiedAt": "2026-08-22",
+    "tags": ["plasmid", "miniprep", "QIAGEN", "link-derived"]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Bacterial culture carrying plasmid",
+      "role": "sample",
+      "amount": 5,
+      "unit": "mL",
+      "specification": "2x YT culture",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1", "page": 1}]
+    },
+    {
+      "id": "m2",
+      "name": "Buffer P1",
+      "role": "buffer",
+      "storage": "2–8 °C after addition of RNase A, as specified by the kit protocol.",
+      "sourceReferences": [{"sourceId": "src1", "page": 1}]
+    },
+    {
+      "id": "m3",
+      "name": "Buffer P2",
+      "role": "buffer",
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "m4",
+      "name": "Buffer N3",
+      "role": "buffer",
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "m5",
+      "name": "QIAprep spin column",
+      "role": "consumable",
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "m6",
+      "name": "Buffer PB",
+      "role": "buffer",
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "m7",
+      "name": "Buffer PE",
+      "role": "buffer",
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "m8",
+      "name": "Buffer EB",
+      "role": "buffer",
+      "specification": "10 mM Tris·Cl, pH 8.5",
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Table-top microcentrifuge",
+      "settings": "13,000 rpm (~17,900 × g) unless otherwise stated",
+      "sourceReferences": [{"sourceId": "src1", "page": 1}]
+    }
+  ],
+  "software": [],
+  "samples": [],
+  "containers": [],
+  "tables": [],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Culture",
+      "action": "Inoculate 5 mL 2x YT with the bacterial strain and incubate the culture.",
+      "materialIds": ["m1"],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 37,
+          "unit": "°C",
+          "rawText": "37°C",
+          "sourceReferences": [{"sourceId": "src1", "page": 1}]
+        },
+        {
+          "type": "time",
+          "value": 12,
+          "valueMax": 16,
+          "unit": "h",
+          "rawText": "12–16 h",
+          "sourceReferences": [{"sourceId": "src1", "page": 1}]
+        }
+      ],
+      "criticalNotes": "Avoid overgrowth, which the source states can reduce plasmid yield.",
+      "sourceReferences": [{"sourceId": "src1", "page": 1}]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Harvest",
+      "action": "Pellet the 5 mL overnight culture by centrifugation.",
+      "materialIds": ["m1"],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "speed",
+          "value": 6800,
+          "comparator": "min",
+          "unit": "×g",
+          "rawText": ">8000 rpm (6800 × g)",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        },
+        {
+          "type": "time",
+          "value": 3,
+          "unit": "min",
+          "rawText": "3 min",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        },
+        {
+          "type": "temperature",
+          "value": 15,
+          "valueMax": 25,
+          "unit": "°C",
+          "rawText": "room temperature (15–25°C)",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        }
+      ],
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Resuspension",
+      "action": "Completely resuspend the cell pellet in Buffer P1 and transfer to a microcentrifuge tube.",
+      "materialIds": ["m2"],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 250,
+          "unit": "µL",
+          "rawText": "250 µL Buffer P1",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        }
+      ],
+      "criticalNotes": "Ensure no cell clumps remain.",
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Lysis",
+      "action": "Add Buffer P2, invert 10–12 times, and incubate.",
+      "materialIds": ["m3"],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 250,
+          "unit": "µL",
+          "rawText": "250 µL Buffer P2",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        },
+        {
+          "type": "count",
+          "valueText": "10–12",
+          "unit": "inversions",
+          "rawText": "invert 10–12 times",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        },
+        {
+          "type": "time",
+          "value": 5,
+          "unit": "min",
+          "rawText": "Do not allow lysis to proceed for more than 5 min.",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        }
+      ],
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Neutralization",
+      "action": "Add Buffer N3 immediately and mix thoroughly by inverting 10–12 times until the solution is colorless.",
+      "materialIds": ["m4"],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 350,
+          "unit": "µL",
+          "rawText": "350 µL Buffer N3",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        }
+      ],
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Clarification",
+      "action": "Centrifuge the neutralized lysate.",
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "time",
+          "value": 10,
+          "unit": "min",
+          "rawText": "Centrifuge for 10 min.",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        }
+      ],
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Binding",
+      "action": "Apply the supernatant to the QIAprep spin column and centrifuge, then discard the flow-through.",
+      "materialIds": ["m5"],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "time",
+          "value": 30,
+          "valueMax": 60,
+          "unit": "s",
+          "rawText": "Centrifuge for 30–60 s.",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        }
+      ],
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Wash",
+      "action": "Wash the column with Buffer PB and centrifuge as in step 7.",
+      "materialIds": ["m5", "m6"],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 500,
+          "unit": "µL",
+          "rawText": "500 µL Buffer PB",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        }
+      ],
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "Wash",
+      "action": "Wash the column with Buffer PE, centrifuge as in step 7, transfer the column, and centrifuge to remove residual wash buffer.",
+      "materialIds": ["m5", "m7"],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 750,
+          "unit": "µL",
+          "rawText": "750 µL Buffer PE",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        },
+        {
+          "type": "time",
+          "value": 1,
+          "unit": "min",
+          "rawText": "Centrifuge for 1 min to remove residual wash buffer.",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        }
+      ],
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "phase": "Elution",
+      "action": "Place the column in a clean microcentrifuge tube, add Buffer EB to the center of the membrane, let it stand, and centrifuge.",
+      "materialIds": ["m5", "m8"],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 60,
+          "unit": "µL",
+          "rawText": "60 µL Buffer EB",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        },
+        {
+          "type": "time",
+          "value": 1,
+          "unit": "min",
+          "rawText": "Let stand for 1 min, then centrifuge for 1 min.",
+          "sourceReferences": [{"sourceId": "src1", "page": 2}]
+        }
+      ],
+      "expectedResult": "Eluted plasmid DNA.",
+      "sourceReferences": [{"sourceId": "src1", "page": 2}]
+    }
+  ],
+  "controls": [],
+  "expectedOutputs": [],
+  "troubleshooting": [],
+  "safety": [],
+  "biosafetyLevel": null,
+  "limitations": "This record is limited to the high-yield QIAprep kit protocol linked from QIAGEN; strain, plasmid, and antibiotic details are not provided.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "kit-insert",
+      "title": "QIAprep Spin Miniprep Kit High-Yield Protocol",
+      "url": "https://www.qiagen.com/en-US/resources/download/Protocols/qiaprep-spin-miniprep-high-yield-protocol",
+      "license": "Not stated",
+      "licenseVerified": false
+    }
+  ]
+}

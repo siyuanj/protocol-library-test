@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "Restriction Digest Protocol",
+    "protocolId": "mc-001-link",
+    "version": "0.1",
+    "family": "Molecular cloning",
+    "category": "restriction enzyme digestion",
+    "discipline": "molecular biology",
+    "purpose": "Digest DNA with a restriction enzyme using the NEB 50 µL reaction setup.",
+    "scope": "The enzyme-specific incubation temperature, incubation time, and heat-inactivation suitability must be selected for the enzyme used.",
+    "createdAt": "2026-08-22",
+    "modifiedAt": "2026-08-22",
+    "tags": ["restriction digest", "molecular cloning", "link-derived"]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "DNA substrate",
+      "role": "sample",
+      "amount": 1,
+      "unit": "µg",
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "m2",
+      "name": "10X NEBuffer",
+      "role": "buffer",
+      "workingConcentration": "1X final",
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "m3",
+      "name": "Restriction enzyme",
+      "role": "enzyme",
+      "specification": "Use 5–10 units per µg DNA as the source recommendation.",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "m4",
+      "name": "Nuclease-free water",
+      "role": "solvent",
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "m5",
+      "name": "EDTA stop solution or loading dye",
+      "role": "reagent",
+      "sourceReferences": [{"sourceId": "src1"}]
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Microcentrifuge",
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "e2",
+      "name": "Temperature-controlled incubator or heat block",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    }
+  ],
+  "software": [],
+  "samples": [],
+  "containers": [],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "NEB 50 µL restriction digest reaction",
+      "kind": "recipe",
+      "columns": ["Component", "Amount", "Final concentration or note"],
+      "rows": [
+        ["DNA", "1 µg", "—"],
+        ["10X NEBuffer", "5 µL", "1X"],
+        ["Restriction enzyme", "1 µL", "5–10 units per µg DNA recommended"],
+        ["Nuclease-free water", "to 50 µL", "—"]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Reaction setup",
+      "action": "Assemble the digestion reaction according to table t1, then mix by pipetting and briefly centrifuge.",
+      "materialIds": ["m1", "m2", "m3", "m4"],
+      "equipmentIds": ["e1"],
+      "tableIds": ["t1"],
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Digestion",
+      "action": "Incubate at the temperature and for the time specified for the selected restriction enzyme.",
+      "equipmentIds": ["e2"],
+      "criticalNotes": "The linked protocol does not supply a universal digestion temperature or time; use the selected enzyme's specifications.",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Optional stop",
+      "action": "If the digest will not be used in another reaction, stop it with EDTA stop solution or loading dye.",
+      "optional": true,
+      "materialIds": ["m5"],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 10,
+          "unit": "µL",
+          "rawText": "Add 10 µL per 50 µL reaction.",
+          "sourceReferences": [{"sourceId": "src1"}]
+        }
+      ],
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Optional cleanup",
+      "action": "If compatible with the selected enzyme, heat-inactivate before downstream use; otherwise use an appropriate cleanup method.",
+      "optional": true,
+      "equipmentIds": ["e2"],
+      "parameters": [
+        {
+          "type": "temperature",
+          "valueText": "65 or 80",
+          "unit": "°C",
+          "rawText": "The source lists 65°C or 80°C for 20 min as appropriate for the enzyme.",
+          "needsReview": true,
+          "sourceReferences": [{"sourceId": "src1"}]
+        },
+        {
+          "type": "time",
+          "value": 20,
+          "unit": "min",
+          "rawText": "20 min when heat inactivation is appropriate.",
+          "needsReview": true,
+          "sourceReferences": [{"sourceId": "src1"}]
+        }
+      ],
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    }
+  ],
+  "controls": [],
+  "expectedOutputs": [],
+  "troubleshooting": [],
+  "safety": [],
+  "biosafetyLevel": null,
+  "limitations": "This link-derived record intentionally leaves enzyme-specific conditions unresolved.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "url",
+      "title": "Restriction Digest Protocol",
+      "url": "https://www.neb.com/en/protocols/restriction-digest-protocol",
+      "license": "Not stated",
+      "licenseVerified": false
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "NanoDrop One Nucleic Acid Quantification",
+    "protocolId": "qqc-001-link",
+    "version": "0.1",
+    "family": "Nucleic acid quantification",
+    "category": "UV absorbance measurement",
+    "discipline": "molecular biology",
+    "purpose": "Measure purified dsDNA, ssDNA, or RNA concentration and absorbance purity ratios using a NanoDrop One instrument.",
+    "scope": "Pedestal or cuvette measurements using the NanoDrop One Nucleic Acids application; the linked user guide's microvolume procedure uses 1–2 µL.",
+    "createdAt": "2026-08-22",
+    "modifiedAt": "2026-08-22",
+    "tags": ["NanoDrop", "nucleic acid", "quantification", "quality control", "link-derived"]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Blanking solution",
+      "role": "buffer",
+      "specification": "Use the same buffer used to resuspend the analyte, with similar pH and ionic strength.",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src2", "page": 28}]
+    },
+    {
+      "id": "m2",
+      "name": "Purified dsDNA, ssDNA, or RNA sample",
+      "role": "sample",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src2", "page": 25}]
+    },
+    {
+      "id": "m3",
+      "name": "Laboratory wipe",
+      "role": "consumable",
+      "sourceReferences": [{"sourceId": "src2", "page": 26}]
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "NanoDrop One microvolume UV-Vis spectrophotometer",
+      "sourceReferences": [{"sourceId": "src1"}]
+    }
+  ],
+  "software": [],
+  "samples": [],
+  "containers": [],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Values reported for dsDNA, ssDNA, and RNA measurements",
+      "kind": "results",
+      "columns": ["Reported value", "Description"],
+      "rows": [
+        ["Nucleic acid concentration", "Concentration reported for the selected application."],
+        ["A260/A280", "Absorbance purity ratio."],
+        ["A260/A230", "Absorbance purity ratio."],
+        ["A260 and A280", "Absorbance values."],
+        ["Factor and baseline correction", "Reported when applicable."]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Instrument preparation",
+      "action": "Lift the NanoDrop One arm and clean the upper and lower pedestals with a new laboratory wipe.",
+      "materialIds": ["m3"],
+      "equipmentIds": ["e1"],
+      "safetyNotes": "Do not use a squirt or spray bottle near the instrument, and do not use hydrofluoric acid on the pedestals.",
+      "sourceReferences": [{"sourceId": "src2", "page": 25}]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Method selection",
+      "action": "From the Home screen, select the Nucleic Acids tab and select dsDNA, ssDNA, or RNA; specify baseline correction if desired.",
+      "equipmentIds": ["e1"],
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src2", "page": 26}]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Blanking",
+      "action": "Apply blanking solution to the lower pedestal and lower the arm, then start the Blank measurement.",
+      "materialIds": ["m1"],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 1,
+          "valueMax": 2,
+          "unit": "µL",
+          "rawText": "Pipette 1–2 µL blanking solution onto the lower pedestal.",
+          "sourceReferences": [{"sourceId": "src2", "page": 26}]
+        }
+      ],
+      "sourceReferences": [{"sourceId": "src2", "page": 26}]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Measurement",
+      "action": "Clean both pedestals, apply sample to the pedestal, lower the arm, and start measurement according to the Auto-Measure setting.",
+      "materialIds": ["m2", "m3"],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 1,
+          "valueMax": 2,
+          "unit": "µL",
+          "rawText": "Pipette 1–2 µL sample solution onto the pedestal.",
+          "sourceReferences": [{"sourceId": "src2", "page": 26}]
+        }
+      ],
+      "repeat": {
+        "count": null,
+        "over": "each additional sample",
+        "notes": "Clean the pedestals before the next sample measurement."
+      },
+      "expectedResult": "The instrument displays the spectrum and reported values in table t1.",
+      "sourceReferences": [{"sourceId": "src2", "page": 26}]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Review and shutdown",
+      "action": "Review the reported values, end the experiment when measurements are complete, and clean both pedestals.",
+      "equipmentIds": ["e1"],
+      "tableIds": ["t1"],
+      "sourceReferences": [{"sourceId": "src2", "page": 26}]
+    }
+  ],
+  "controls": [],
+  "expectedOutputs": [],
+  "troubleshooting": [],
+  "safety": [],
+  "biosafetyLevel": null,
+  "limitations": "Sample identity, blank composition, and acceptance criteria are experiment-specific and are not selected in this link-derived record.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "url",
+      "title": "NanoDrop One Operator Manual (Manual Repository)",
+      "url": "https://knowledge1.thermofisher.com/Manual_Repository/269-309102_-_EN_-_Rev_I_-_NanoDrop_One_Operator_Manual",
+      "license": "Not stated",
+      "licenseVerified": false
+    },
+    {
+      "id": "src2",
+      "kind": "url",
+      "title": "NanoDrop One User Guide",
+      "url": "https://documents.thermofisher.com/TFS-Assets/MSD/manuals/nanodrop-one-user-guide-EN-309102-REV-A.pdf",
+      "license": "Not stated",
+      "licenseVerified": false
+    }
+  ]
+}

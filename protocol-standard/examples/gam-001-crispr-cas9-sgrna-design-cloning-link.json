@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "Design and Clone a gRNA for a CRISPR Experiment",
+    "protocolId": "gam-001-link",
+    "version": "0.1",
+    "family": "Genome engineering",
+    "category": "CRISPR gRNA design and cloning",
+    "discipline": "molecular biology",
+    "purpose": "Plan a CRISPR manipulation, select and assess gRNA candidates, and prepare a vector-specific cloning plan using Addgene guidance.",
+    "scope": "This is a design-level protocol. The Addgene guide identifies vector-specific cloning instructions as required for the actual oligo insertion procedure.",
+    "createdAt": "2026-08-22",
+    "modifiedAt": "2026-08-22",
+    "tags": ["CRISPR", "Cas9", "gRNA", "sgRNA", "design", "link-derived"]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Target genomic sequence",
+      "role": "sample",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "m2",
+      "name": "gRNA targeting oligonucleotides",
+      "role": "reagent",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "m3",
+      "name": "gRNA expression vector",
+      "role": "reagent",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "m4",
+      "name": "Selected Cas enzyme or expression system",
+      "role": "enzyme",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    }
+  ],
+  "equipment": [],
+  "software": [
+    {
+      "id": "sw1",
+      "name": "gRNA design software",
+      "needsReview": true
+    }
+  ],
+  "samples": [],
+  "containers": [],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Design choices summarized from Addgene guidance",
+      "kind": "other",
+      "columns": ["Desired manipulation", "Cas system example", "Targeting guidance"],
+      "rows": [
+        ["Knockout", "Cas9 or Cas9 nickase", "Target a constitutively expressed region, a 5′ exon, or an essential protein domain."],
+        ["HDR", "Cas9 or Cas9 fusion", "Select a cut site as close as possible to the desired edit; the guide states ideally less than 10 bp away."],
+        ["CRISPRi", "dCas9 or dCas9-repressor fusion", "Target the promoter region."],
+        ["CRISPRa", "dCas9-activator fusion", "Target the transcription start site region."]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Experiment definition",
+      "action": "Define the desired genetic manipulation and select an appropriate Cas system using table t1.",
+      "materialIds": ["m4"],
+      "tableIds": ["t1"],
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Target selection",
+      "action": "Select the genetic element to target according to the intended manipulation.",
+      "materialIds": ["m1"],
+      "tableIds": ["t1"],
+      "criticalNotes": "For HDR, the guide recommends a cut site as close as possible to the intended edit, ideally less than 10 bp away.",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "gRNA design",
+      "action": "Use gRNA design software to identify candidate guides and assess predicted on-target and off-target activity.",
+      "materialIds": ["m1"],
+      "softwareIds": ["sw1"],
+      "criticalNotes": "The guide advises checking the genomic target sequence in the sample to identify mismatches from the reference sequence.",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Cloning plan",
+      "action": "Select a gRNA expression vector and obtain the protocol associated with that specific vector.",
+      "materialIds": ["m3"],
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "gRNA cloning",
+      "action": "For vectors that support it, synthesize, anneal, and insert targeting oligos by standard restriction-ligation cloning using the vector-specific protocol.",
+      "materialIds": ["m2", "m3"],
+      "criticalNotes": "The linked guide states that the exact cloning strategy depends on the selected gRNA vector; no volumes, enzymes, temperatures, or times are supplied here.",
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Delivery and validation",
+      "action": "Choose the Cas/gRNA expression and delivery system for the target cell type, deliver the components, and validate the intended edit.",
+      "materialIds": ["m4"],
+      "needsReview": true,
+      "sourceReferences": [{"sourceId": "src1"}]
+    }
+  ],
+  "controls": [],
+  "expectedOutputs": [],
+  "troubleshooting": [],
+  "safety": [],
+  "biosafetyLevel": null,
+  "limitations": "This link-derived record does not supply a vector-specific cloning recipe or experimental parameters; it preserves the source's requirement to consult the selected vector's protocol.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "url",
+      "title": "Plan Your CRISPR Experiment",
+      "url": "https://www.addgene.org/guides/crispr/plan-your-experiment/",
+      "license": "Not stated",
+      "licenseVerified": false
+    },
+    {
+      "id": "src2",
+      "kind": "article",
+      "title": "How to Design Your gRNA for CRISPR Genome Editing",
+      "url": "https://blog.addgene.org/how-to-design-your-grna-for-crispr-genome-editing",
+      "license": "Not stated",
+      "licenseVerified": false
+    }
+  ]
+}
