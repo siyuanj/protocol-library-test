@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Immunofluorescence (IF) staining of cultured cells",
+    "protocolId": "lr-testset-immunofluorescence",
+    "version": "0.1",
+    "family": "Immunofluorescence / ICC",
+    "category": "Cell Biology / Imaging",
+    "purpose": "Localize a target antigen in adherent cultured cells by fixing and permeabilizing the cells, labeling with a primary antibody and a fluorophore-conjugated secondary antibody, counterstaining nuclei with DAPI, and imaging by fluorescence microscopy.",
+    "scope": "Indirect immunofluorescence of adherent mammalian cells grown on glass coverslips, using paraformaldehyde fixation, Triton X-100 permeabilization for intracellular targets, and a rabbit primary detected by a goat-anti-rabbit Alexa Fluor 488 secondary. Not covering methanol fixation, tissue sections, or live-cell surface-only staining.",
+    "estimatedTime": "~4-6 h (or overnight if primary antibody incubated at 4 C)",
+    "beforeYouBegin": [
+      "Grow cells on glass coverslips (or chambered slides) to the desired confluency before starting.",
+      "Choose a primary antibody validated for ICC/IF; match the secondary antibody host and specificity to the primary (this protocol pairs a rabbit primary with a goat-anti-rabbit secondary).",
+      "Keep samples protected from light from the secondary-antibody step onward to preserve fluorophore signal."
+    ],
+    "tags": ["immunofluorescence", "ICC", "immunocytochemistry", "fixation", "DAPI", "Alexa Fluor 488", "microscopy"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Paraformaldehyde (4% in PBS)", "role": "reagent", "workingConcentration": "4% (w/v)", "specification": "4% paraformaldehyde in PBS; fixative.", "hazard": "Toxic; suspected carcinogen; use in a fume hood.", "rawText": "4% paraformaldehyde/PBS, 20 min. at room temperature", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "m2", "name": "PBS", "role": "buffer", "specification": "Phosphate-buffered saline, pH 7.4; wash and diluent.", "rawText": "Rinse cells twice with PBS, then wash 3 x 5 min. with PBS" },
+    { "id": "m3", "name": "Triton X-100 (0.1% in PBS)", "role": "reagent", "workingConcentration": "0.1% (v/v)", "specification": "Non-ionic detergent for permeabilization of intracellular targets.", "rawText": "Permeabilize samples with 0.1-0.5% Triton X-100 in PBS (5 min)", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "m4", "name": "Blocking buffer", "role": "buffer", "workingConcentration": "5% serum (or 2% BSA)", "specification": "Normal serum from the secondary-antibody host species (e.g. 5% normal goat serum) or 2% BSA in PBS; may include 0.1% Triton X-100. Exact blocker is user-selected.", "rawText": "blocking buffer (e.g. 5% normal goat serum, 0.3% Triton X-100, 1x PBS) (30 min, room temperature)", "needsReview": true, "sourceReferences": [{ "sourceId": "src2" }, { "sourceId": "src1" }] },
+    { "id": "m5", "name": "Primary antibody (rabbit, target-specific)", "role": "antibody", "workingConcentration": "supplier-recommended dilution", "specification": "Rabbit anti-target primary antibody validated for ICC/IF. Target and exact dilution are assay-specific.", "storage": "4 C or -20 C per vendor", "rawText": "Incubate with primary antibodies diluted in blocking buffer for 1-2 hours at room temperature or overnight at 4C", "needsReview": true, "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "m6", "name": "Secondary antibody - Goat anti-Rabbit IgG (H+L), Alexa Fluor 488", "role": "antibody", "workingConcentration": "1:500-1:1000 (or ~1 ug/mL)", "specification": "Cross-adsorbed goat anti-rabbit IgG (H+L), Alexa Fluor 488 conjugate.", "vendor": "Invitrogen / Molecular Probes (Thermo Fisher)", "catalogNumber": "A-11008", "rrid": "AB_143165", "storage": "4 C, protect from light", "rawText": "fluorochrome-conjugated secondary antibodies at appropriate dilution (typically 1:500 - 1:1000) ... (1 h, room temperature in the dark)", "sourceReferences": [{ "sourceId": "src2" }, { "sourceId": "src1" }] },
+    { "id": "m7", "name": "DAPI", "role": "reagent", "workingConcentration": "1 ug/mL", "specification": "4',6-diamidino-2-phenylindole; nuclear counterstain.", "hazard": "Potential mutagen; handle with gloves.", "rawText": "1 ug/ml DAPI (5 min, room temperature)", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "m8", "name": "Anti-fade mounting medium", "role": "reagent", "specification": "Mounting medium with anti-fade agent (DAPI-containing versions available).", "rawText": "Place a drop of mounting medium containing anti-fade onto a slide", "sourceReferences": [{ "sourceId": "src1" }, { "sourceId": "src2" }] }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Fluorescence (or confocal) microscope", "settings": "Filter sets/laser lines for DAPI (~358/461 nm) and Alexa Fluor 488 (~495/519 nm)", "needsReview": true },
+    { "id": "e2", "name": "Humidified staining chamber", "settings": "Room temperature or 4 C; prevents coverslips from drying during incubations", "needsReview": true }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "Adherent cultured cells on coverslip", "role": "input", "organism": "Mammalian cell line (specific line not fixed by this protocol)", "description": "Cells grown on a glass coverslip to be fixed and stained.", "needsReview": true },
+    { "id": "sp2", "name": "Fixed and permeabilized cells", "role": "intermediate", "description": "Cells after PFA fixation and Triton X-100 permeabilization, ready for antibody labeling." },
+    { "id": "sp3", "name": "Stained, mounted coverslip", "role": "output", "description": "Immunolabeled cells mounted on a slide, ready for fluorescence imaging." }
+  ],
+  "containers": [
+    { "id": "c1", "name": "Glass coverslip (cells cultured on)", "type": "coverslip", "wells": null },
+    { "id": "c2", "name": "Microscope slide", "type": "slide", "wells": null }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Fixation", "action": "Fix cells in 4% paraformaldehyde.", "materialIds": ["m1"], "containerIds": ["c1"], "inputIds": ["sp1"], "outputIds": ["sp2"], "parameters": [{ "type": "concentration", "value": 4, "unit": "%", "rawText": "4% paraformaldehyde/PBS" }, { "type": "time", "value": 20, "unit": "min", "rawText": "20 min." }, { "type": "temperature", "value": null, "unit": "degC", "rawText": "at room temperature" }], "expectedResult": "Cell structure preserved.", "safetyNotes": "Use PFA in a fume hood.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s2", "number": 2, "phase": "Fixation", "action": "Rinse cells with PBS.", "materialIds": ["m2"], "containerIds": ["c1"], "parameters": [{ "type": "count", "value": 2, "unit": "x", "rawText": "Rinse cells twice with PBS" }], "expectedResult": "Residual fixative removed.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s3", "number": 3, "phase": "Permeabilization", "action": "Permeabilize cells with 0.1% Triton X-100 in PBS.", "materialIds": ["m3"], "containerIds": ["c1"], "parameters": [{ "type": "concentration", "value": 0.1, "unit": "%", "rawText": "0.1-0.5% Triton X-100 in PBS" }, { "type": "time", "value": 5, "unit": "min", "rawText": "5 min" }], "expectedResult": "Membranes permeabilized for intracellular antibody access.", "criticalNotes": "Omit or reduce Triton for membrane/surface antigens.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s4", "number": 4, "phase": "Blocking", "action": "Block in blocking buffer.", "materialIds": ["m4"], "containerIds": ["c1"], "equipmentIds": ["e2"], "parameters": [{ "type": "time", "value": 30, "unit": "min", "rawText": "30 min" }, { "type": "temperature", "value": null, "unit": "degC", "rawText": "room temperature" }], "expectedResult": "Non-specific binding sites blocked.", "criticalNotes": "Use serum from the same host species as the secondary antibody (goat serum for a goat secondary).", "sourceReferences": [{ "sourceId": "src2" }, { "sourceId": "src1" }] },
+    { "id": "s5", "number": 5, "phase": "Primary antibody", "action": "Incubate with primary antibody diluted in blocking buffer.", "materialIds": ["m5"], "containerIds": ["c1"], "equipmentIds": ["e2"], "inputIds": ["m5", "sp2"], "parameters": [{ "type": "volume", "value": 50, "valueMax": 100, "unit": "uL", "rawText": "50-100 uL per 96-well plate" }, { "type": "time", "value": 1, "valueMax": 2, "unit": "h", "rawText": "1-2 hours at room temperature" }, { "type": "temperature", "value": null, "unit": "degC", "rawText": "room temperature or overnight at 4C" }], "pausePoint": true, "expectedResult": "Primary antibody bound to target.", "criticalNotes": "Alternatively incubate overnight at 4 C. Dilution is antibody-specific.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s6", "number": 6, "phase": "Primary antibody", "action": "Wash with PBS.", "materialIds": ["m2"], "containerIds": ["c1"], "parameters": [{ "type": "count", "value": 3, "unit": "x", "rawText": "wash 3 x 5 min. with PBS" }, { "type": "time", "value": 5, "unit": "min", "rawText": "5 min" }], "expectedResult": "Unbound primary removed.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s7", "number": 7, "phase": "Secondary antibody", "action": "Incubate with fluorophore-conjugated secondary antibody in the dark.", "materialIds": ["m6"], "containerIds": ["c1"], "equipmentIds": ["e2"], "parameters": [{ "type": "ratio", "value": null, "unit": "dilution", "rawText": "1:500 - 1:1000 in blocking buffer" }, { "type": "time", "value": 1, "unit": "h", "rawText": "1 h, room temperature in the dark" }, { "type": "temperature", "value": null, "unit": "degC", "rawText": "room temperature" }], "expectedResult": "Secondary antibody bound; target now fluorescent.", "criticalNotes": "Protect from light from this step onward.", "sourceReferences": [{ "sourceId": "src2" }, { "sourceId": "src1" }] },
+    { "id": "s8", "number": 8, "phase": "Secondary antibody", "action": "Wash with PBS (protected from light).", "materialIds": ["m2"], "containerIds": ["c1"], "parameters": [{ "type": "count", "value": 3, "unit": "x", "rawText": "wash 3 x 5 min. with PBS" }, { "type": "time", "value": 5, "unit": "min", "rawText": "5 min" }], "expectedResult": "Unbound secondary removed.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s9", "number": 9, "phase": "Counterstain", "action": "Counterstain nuclei with DAPI.", "materialIds": ["m7"], "containerIds": ["c1"], "parameters": [{ "type": "concentration", "value": 1, "unit": "ug/mL", "rawText": "1 ug/ml DAPI" }, { "type": "time", "value": 5, "unit": "min", "rawText": "5 min, room temperature" }], "expectedResult": "Nuclei stained.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s10", "number": 10, "phase": "Counterstain", "action": "Wash with PBS.", "materialIds": ["m2"], "containerIds": ["c1"], "parameters": [{ "type": "count", "value": 1, "unit": "x", "rawText": "rinse with PBS" }], "expectedResult": "Excess DAPI removed.", "needsReview": true, "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s11", "number": 11, "phase": "Mounting", "action": "Mount the coverslip onto a slide with anti-fade mounting medium (cells facing the medium).", "materialIds": ["m8"], "containerIds": ["c1", "c2"], "inputIds": ["sp2"], "outputIds": ["sp3"], "parameters": [], "expectedResult": "Sample mounted and ready to image.", "criticalNotes": "Avoid trapping bubbles; a DAPI-containing mountant can replace the separate DAPI step.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s12", "number": 12, "phase": "Imaging", "action": "Image on a fluorescence or confocal microscope using DAPI and Alexa Fluor 488 channels.", "equipmentIds": ["e1"], "inputIds": ["sp3"], "parameters": [], "expectedResult": "Target-specific fluorescence localized in cells; nuclei labeled by DAPI.", "sourceReferences": [{ "sourceId": "src2" }] }
+  ],
+  "controls": [
+    { "name": "No-primary (secondary-only) control", "description": "Omit the primary antibody to reveal non-specific secondary-antibody binding / autofluorescence." },
+    { "name": "Isotype control", "description": "Primary replaced by matched isotype at the same concentration to assess non-specific primary binding.", "needsReview": true },
+    { "name": "DAPI-only / unstained control", "description": "Establishes background and channel bleed-through references." }
+  ],
+  "expectedOutputs": [
+    "Fluorescence micrographs showing target-specific Alexa Fluor 488 signal with expected subcellular localization.",
+    "DAPI-labeled nuclei for cell counting and co-localization reference."
+  ],
+  "troubleshooting": [
+    { "problem": "High background / non-specific signal", "cause": "Insufficient blocking; secondary too concentrated; inadequate washing", "solution": "Extend/optimize blocking; titrate secondary; add washes; include no-primary control" },
+    { "problem": "Weak or no specific signal", "cause": "Epitope masked by fixation; primary too dilute; incompatible antibody", "solution": "Try methanol fixation or antigen retrieval; increase primary; verify ICC/IF validation" },
+    { "problem": "Rapid photobleaching", "cause": "No anti-fade; over-exposure", "solution": "Use anti-fade mountant; minimize light exposure; reduce excitation intensity" }
+  ],
+  "safety": [
+    "Paraformaldehyde is toxic and a suspected carcinogen - handle in a fume hood with gloves.",
+    "DAPI is a potential mutagen - handle with gloves and dispose per institutional rules.",
+    "Cultured cells may be biohazardous - handle at the appropriate biosafety level."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "Values are grounded in two general-purpose vendor IF protocols (Biotium, src1; Abcam ICC, src2); the specific primary antibody, its dilution, the exact blocking agent, cell line, and microscope filter configuration are experiment-specific and marked needsReview. Triton X-100 permeabilization is appropriate for intracellular targets and should be omitted for surface/membrane epitopes.",
+  "sources": [
+    { "id": "src1", "kind": "url", "title": "Protocol: Immunofluorescence Staining of Cells for Microscopy (Biotium)", "url": "https://biotium.com/tech-tips/protocol-immunofluorescence-staining-of-cells-for-microscopy/", "license": "Vendor protocol page; reuse terms not specified", "licenseVerified": false },
+    { "id": "src2", "kind": "url", "title": "Immunocytochemistry (ICC) protocol (Abcam)", "url": "https://www.abcam.com/en-us/technical-resources/protocols/icc-protocol", "license": "Vendor protocol page; reuse terms not specified", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

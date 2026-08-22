@@ -1,0 +1,517 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Gibson Assembly (Isothermal DNA Assembly, NEB Gibson Assembly Master Mix E2611)",
+    "protocolId": "lr-test-gibson-assembly",
+    "version": "0.1",
+    "family": "DNA assembly / cloning",
+    "category": "Molecular Biology",
+    "purpose": "Join two or more overlapping DNA fragments (inserts + linearized vector) into a single seamless, covalently sealed construct in one isothermal reaction at 50 C, then transform the assembled DNA into E. coli.",
+    "scope": "Gibson Assembly using NEB Gibson Assembly Master Mix (E2611) for 2-6 fragments sharing 15-25 nt terminal overlaps, in a 20 uL reaction. Primer/overlap design and downstream colony screening are summarized but not detailed. NEBuilder HiFi (E2621) and long/repeat-rich assemblies may need different conditions.",
+    "estimatedTime": "~1-1.5 h reaction (15-60 min at 50 C) plus fragment prep and transformation",
+    "beforeYouBegin": [
+      "Design primers so adjacent fragments share 15-25 nt overlaps (NEB recommends the NEBuilder web tool).",
+      "PCR-amplify fragments and linearize the vector with a high-fidelity polymerase; quantify by agarose gel or NanoDrop.",
+      "Compute pmols with pmols = (ng x 1000) / (bp x 650). Use 50-100 ng vector with 2-3 fold molar excess insert (5x excess if insert <200 bp).",
+      "Keep total volume of unpurified PCR fragments <=20% of the reaction; column-purify when assembling >=3 fragments or fragments >5 kb.",
+      "Set the reaction up on ice."
+    ],
+    "tags": [
+      "Gibson assembly",
+      "isothermal assembly",
+      "cloning",
+      "DNA assembly",
+      "NEB E2611",
+      "seamless cloning"
+    ]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Gibson Assembly Master Mix (2X)",
+      "role": "kit",
+      "vendor": "New England Biolabs",
+      "catalogNumber": "E2611",
+      "amount": 10,
+      "unit": "uL",
+      "specification": "Single-buffer mix of a 5' exonuclease (creates 3' overhangs), a high-fidelity DNA polymerase (fills gaps), and Taq DNA ligase (seals nicks)",
+      "storage": "-20 C",
+      "rawText": "Gibson Assembly Master Mix (2X): 10 ul per 20 ul reaction",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "The Gibson Assembly Master Mix includes three different enzymatic activities ... exonuclease ... DNA polymerase ... DNA ligase."
+        }
+      ]
+    },
+    {
+      "id": "m2",
+      "name": "Linearized vector (backbone)",
+      "role": "reagent",
+      "amount": 50,
+      "amountMax": 100,
+      "unit": "ng",
+      "specification": "PCR-amplified or restriction-linearized; 50-100 ng per reaction",
+      "rawText": "Optimized cloning efficiency is 50-100 ng of vectors with 2-3 fold of excess inserts.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "m3",
+      "name": "DNA insert fragment(s)",
+      "role": "reagent",
+      "workingConcentration": "2-3 fold molar excess over vector (5x if <200 bp)",
+      "specification": "PCR products with 15-25 nt overlaps to adjacent fragments; for >=3 fragments use equimolar ratios",
+      "rawText": "concentration of assembly fragments should be 2-3 times higher than the concentration of vector. Use 5 times more of inserts if size is less than 200 bps.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "m4",
+      "name": "Deionized H2O",
+      "role": "solvent",
+      "specification": "Milli-Q or equivalent; brings reaction to final volume",
+      "rawText": "Deionized H2O: 10-X ul"
+    },
+    {
+      "id": "m5",
+      "name": "Positive control DNA",
+      "role": "standard",
+      "vendor": "New England Biolabs",
+      "specification": "Control fragments supplied with the kit; control reagents provided for 5 experiments",
+      "rawText": "Positive Control: Total Amount of Fragments 10 ul; Control reagents are provided for 5 experiments."
+    },
+    {
+      "id": "m6",
+      "name": "Competent E. coli (e.g. NEB 5-alpha)",
+      "role": "other",
+      "specification": "Chemically competent or electrocompetent cells for transformation of the assembled product",
+      "rawText": "Transform into E. coli or use directly in other applications.",
+      "needsReview": true
+    },
+    {
+      "id": "m7",
+      "name": "High-fidelity DNA polymerase",
+      "role": "enzyme",
+      "specification": "For PCR amplification of fragments and linearization of the vector",
+      "rawText": "PCR amplify fragments using a high-fidelity DNA polymerase."
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Thermocycler",
+      "settings": "50 C; 15 min (2-3 fragments) or 60 min (4-6 fragments)"
+    },
+    {
+      "id": "e2",
+      "name": "Agarose gel electrophoresis rig / NanoDrop spectrophotometer",
+      "settings": "Fragment and vector QC and quantitation (A260)"
+    }
+  ],
+  "samples": [
+    {
+      "id": "sp1",
+      "name": "PCR-amplified insert fragment(s)",
+      "role": "input",
+      "description": "dsDNA fragments with 15-25 nt terminal overlaps to adjacent pieces"
+    },
+    {
+      "id": "sp2",
+      "name": "Linearized vector",
+      "role": "input",
+      "description": "Backbone with overlaps to the terminal fragments"
+    },
+    {
+      "id": "sp3",
+      "name": "Assembled construct",
+      "role": "output",
+      "description": "Double-stranded, fully sealed circular DNA molecule"
+    },
+    {
+      "id": "sp4",
+      "name": "Transformant colonies",
+      "role": "output",
+      "organism": "Escherichia coli",
+      "description": "Colonies carrying the assembled construct after transformation"
+    },
+    {
+      "id": "sp5",
+      "name": "Positive-control assembly",
+      "role": "control",
+      "description": "Assembly of the kit-supplied control fragments"
+    }
+  ],
+  "containers": [
+    {
+      "id": "c1",
+      "name": "0.2 mL thin-wall PCR tube",
+      "type": "tube",
+      "wells": null
+    },
+    {
+      "id": "c2",
+      "name": "Transformation / recovery tube",
+      "type": "tube",
+      "wells": null
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Gibson Assembly reaction setup (set up on ice)",
+      "columns": [
+        "Component",
+        "2-3 Fragment Assembly",
+        "4-6 Fragment Assembly",
+        "Positive Control"
+      ],
+      "rows": [
+        [
+          "Total amount of fragments",
+          "0.02-0.5 pmol (X uL)",
+          "0.2-1.0 pmol (X uL)",
+          "10 uL"
+        ],
+        [
+          "Gibson Assembly Master Mix (2X)",
+          "10 uL",
+          "10 uL",
+          "10 uL"
+        ],
+        [
+          "Deionized H2O",
+          "10-X uL",
+          "10-X uL",
+          "0"
+        ],
+        [
+          "Total volume",
+          "20 uL",
+          "20 uL",
+          "20 uL"
+        ]
+      ],
+      "note": "Recommended DNA: 0.02-0.5 pmol total for 1-2 fragments into a vector; 0.2-1.0 pmol total for 4-6 fragments. If more than 6 fragments, additional master mix may be needed."
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Fragment preparation",
+      "action": "Design primers so adjacent fragments (and the vector) share 15-25 nt overlapping sequences.",
+      "criticalNotes": "NEB recommends the NEBuilder web tool for overlap/primer design.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Design primers to amplify fragments (and/or vector) with appropriate overlaps."
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Fragment preparation",
+      "action": "PCR-amplify the fragments and prepare the linearized vector (by PCR or restriction digestion) with a high-fidelity DNA polymerase.",
+      "materialIds": [
+        "m7"
+      ],
+      "outputIds": [
+        "sp1",
+        "sp2"
+      ],
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "PCR amplify fragments using a high-fidelity DNA polymerase. Prepare linearized vector ..."
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Fragment preparation",
+      "action": "Confirm and quantify fragments and linearized vector by agarose gel electrophoresis and/or NanoDrop; compute pmols.",
+      "equipmentIds": [
+        "e2"
+      ],
+      "inputIds": [
+        "sp1",
+        "sp2"
+      ],
+      "parameters": [
+        {
+          "type": "other",
+          "value": null,
+          "unit": "pmol",
+          "rawText": "pmols = (weight in ng) x 1,000 / (base pairs x 650 daltons)"
+        }
+      ],
+      "criticalNotes": "50 ng of 5000 bp dsDNA ~ 0.015 pmol; 50 ng of 500 bp dsDNA ~ 0.15 pmol.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Assembly reaction",
+      "action": "On ice, combine DNA fragments + linearized vector, 10 uL Gibson Assembly Master Mix (2X), and deionized H2O to a 20 uL total per the reaction table. Use 0.02-0.5 pmol total DNA for 2-3 fragments (0.2-1.0 pmol for 4-6).",
+      "materialIds": [
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "tableIds": [
+        "t1"
+      ],
+      "inputIds": [
+        "sp1",
+        "sp2",
+        "m1"
+      ],
+      "outputIds": [
+        "sp3"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 10,
+          "unit": "uL",
+          "rawText": "Gibson Assembly Master Mix (2X): 10 ul"
+        },
+        {
+          "type": "volume",
+          "value": 20,
+          "unit": "uL",
+          "rawText": "Total Volume: 20 ul"
+        },
+        {
+          "type": "other",
+          "value": 0.02,
+          "valueMax": 0.5,
+          "unit": "pmol",
+          "rawText": "Total Amount of Fragments: 0.02-0.5 pmol (2-3 fragment assembly)"
+        }
+      ],
+      "criticalNotes": "Keep unpurified PCR fragment volume <=20% of the reaction. Set the reaction up on ice.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Set up the following reaction on ice: ... Gibson Assembly Master Mix (2X) 10 ul ... Total Volume 20 ul."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Assembly reaction",
+      "action": "(Optional) Set up the positive control: 10 uL control DNA + 10 uL Gibson Assembly Master Mix (2X), no water, 20 uL total.",
+      "optional": true,
+      "materialIds": [
+        "m5",
+        "m1"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "tableIds": [
+        "t1"
+      ],
+      "outputIds": [
+        "sp5"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 10,
+          "unit": "uL",
+          "rawText": "Positive Control: Total Amount of Fragments 10 ul; Master Mix 10 ul; H2O 0"
+        }
+      ],
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Assembly reaction",
+      "action": "Incubate in a thermocycler at 50 C: 15 min for 2-3 fragments, or 60 min for 4-6 fragments.",
+      "equipmentIds": [
+        "e1"
+      ],
+      "inputIds": [
+        "sp3"
+      ],
+      "outputIds": [
+        "sp3"
+      ],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 50,
+          "unit": "degC",
+          "rawText": "Incubate ... at 50 C"
+        },
+        {
+          "type": "time",
+          "value": 15,
+          "valueMax": 60,
+          "unit": "min",
+          "rawText": "50 C for 15 minutes (2-3 fragments) to 60 minutes (4-6 fragments)"
+        }
+      ],
+      "branches": [
+        {
+          "condition": "2-3 fragments",
+          "action": "Incubate 15 min at 50 C"
+        },
+        {
+          "condition": "4-6 fragments",
+          "action": "Incubate 60 min at 50 C"
+        }
+      ],
+      "criticalNotes": "Extended incubation up to 60 min may improve efficiency in some cases.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Incubate samples in a thermocycler at 50 C for 15 minutes when 2 or 3 fragments are being assembled or 60 minutes when 4-6 fragments are being assembled."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Assembly reaction",
+      "action": "Store samples on ice or at -20 C for subsequent transformation.",
+      "pausePoint": true,
+      "inputIds": [
+        "sp3"
+      ],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": -20,
+          "unit": "degC",
+          "rawText": "Store samples on ice or at -20 C"
+        }
+      ],
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Store samples on ice or at -20 C for subsequent transformation."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Transformation",
+      "action": "Transform the assembled product into competent E. coli. For electroporation, dilute the reaction 3-fold and use 1 uL.",
+      "materialIds": [
+        "m6"
+      ],
+      "containerIds": [
+        "c2"
+      ],
+      "inputIds": [
+        "sp3"
+      ],
+      "outputIds": [
+        "sp4"
+      ],
+      "parameters": [
+        {
+          "type": "ratio",
+          "value": 3,
+          "unit": "fold-dilution",
+          "rawText": "dilute the reaction 3-fold"
+        },
+        {
+          "type": "volume",
+          "value": 1,
+          "unit": "uL",
+          "rawText": "use 1 ul for transformation (electroporation)"
+        }
+      ],
+      "criticalNotes": "For chemical transformation NEB recommends ~2 uL of the assembly into 50 uL competent cells (e.g. NEB 5-alpha); exact volume not stated in this source.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "When using ... for electroporation, it is necessary to dilute the reaction 3-fold and use 1 ul for transformation."
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "name": "Positive control",
+      "description": "Kit-supplied control fragments assembled in parallel to confirm reagents and thermocycling are working."
+    },
+    {
+      "name": "Vector-only (no-insert) background control",
+      "description": "Linearized vector processed without inserts; high colony counts indicate uncut/recircularized vector background.",
+      "needsReview": true
+    }
+  ],
+  "expectedOutputs": [
+    "A double-stranded, fully sealed assembled DNA molecule usable directly for transformation, PCR, or RCA.",
+    "Transformant colonies carrying the intended construct, confirmed by colony PCR and/or sequencing."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "Few or no colonies",
+      "cause": "Low-competence cells; too little/too much DNA; poor overlaps",
+      "solution": "Use higher-efficiency cells; keep 0.02-0.5 pmol (2-3 frag); verify 15-25 nt overlaps and correct pmol ratios"
+    },
+    {
+      "problem": "High background of empty vector",
+      "cause": "Incompletely linearized vector",
+      "solution": "Ensure complete vector linearization; run a vector-only control"
+    },
+    {
+      "problem": "Reduced efficiency with many/long fragments",
+      "cause": "Elevated PCR carryover or fragment number",
+      "solution": "Column-purify PCR products; keep fragment volume <=20%; extend incubation toward 60 min"
+    }
+  ],
+  "safety": [
+    "Standard molecular-biology PPE.",
+    "If ethidium bromide or other DNA stains are used for gel QC, handle as mutagens per institutional rules.",
+    "Handle the E. coli cloning host per institutional biosafety guidelines."
+  ],
+  "biosafetyLevel": "not specified",
+  "limitations": "Optimized for 2-6 fragments with 15-25 nt overlaps; efficiency drops as fragment number/length increases. Chemical-transformation volume and antibiotic selection/plating details are protein/vector-specific and not fixed here.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "kit-insert",
+      "title": "Gibson Assembly Master Mix - Assembly (NEB #E2611), V.1",
+      "url": "https://www.protocols.io/view/Gibson-Assembly-Master-Mix-Assembly-E2611-imsupm",
+      "license": "NEB / protocols.io; manufacturer protocol",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

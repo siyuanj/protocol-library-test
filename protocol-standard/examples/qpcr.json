@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "0.1",
+  "metadata": {
+    "title": "RT-qPCR — Relative Gene Expression (MIQE-aligned)",
+    "protocolId": "lr-example-qpcr",
+    "version": "0.1",
+    "family": "qPCR",
+    "category": "Molecular Biology",
+    "purpose": "Measure the relative expression of a target gene by reverse transcription of RNA to cDNA followed by real-time quantitative PCR, quantified against validated reference gene(s).",
+    "scope": "SYBR-Green or hydrolysis-probe RT-qPCR on purified total RNA, using the ddCq relative-quantification method. Reporting follows the MIQE guidelines. Absolute quantification and one-step RT-qPCR are out of scope.",
+    "estimatedTime": "~4-6 h",
+    "beforeYouBegin": [
+      "Work RNase-free: dedicated pipettes/tips, gloves, nuclease-free tubes and water.",
+      "Validate primer amplification efficiency (90-110%, standard-curve slope about -3.1 to -3.6) and single-product specificity before running experimental samples.",
+      "Choose and validate reference gene(s) stable under your conditions (MIQE requires justification of the normaliser)."
+    ],
+    "tags": ["qPCR", "RT-qPCR", "gene expression", "MIQE", "relative quantification"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Total RNA sample", "workingConcentration": "10 ng - 1 ug per RT reaction", "specification": "DNase-treated; RIN/quality recorded", "needsReview": true },
+    { "id": "m2", "name": "DNase I (+ buffer)", "specification": "RNase-free", "needsReview": true },
+    { "id": "m3", "name": "Reverse transcription kit", "specification": "Reverse transcriptase, RT buffer, dNTPs, RNase inhibitor, primers (oligo-dT / random hexamers)", "needsReview": true },
+    { "id": "m4", "name": "cDNA (RT product)", "workingConcentration": "typically 1-2 uL per qPCR well", "specification": "Diluted per optimization" },
+    { "id": "m5", "name": "qPCR master mix", "workingConcentration": "1x final", "specification": "SYBR-Green or probe master mix (polymerase, dNTPs, MgCl2, dye/ROX)", "needsReview": true },
+    { "id": "m6", "name": "Target primers (fwd + rev)", "workingConcentration": "200-500 nM each (final)", "specification": "Validated efficiency 90-110%", "needsReview": true },
+    { "id": "m7", "name": "Reference-gene primers (fwd + rev)", "workingConcentration": "200-500 nM each (final)", "specification": "Validated, stable normaliser", "needsReview": true },
+    { "id": "m8", "name": "Hydrolysis probe (if probe-based)", "workingConcentration": "100-250 nM (final)", "specification": "e.g. FAM/TAMRA", "needsReview": true },
+    { "id": "m9", "name": "Nuclease-free water", "specification": "Molecular-biology grade" }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Spectrophotometer / fluorometer", "settings": "RNA concentration + purity (A260/A280, A260/A230)", "needsReview": true },
+    { "id": "e2", "name": "Capillary electrophoresis (optional)", "settings": "RNA integrity (RIN)", "needsReview": true },
+    { "id": "e3", "name": "Thermal cycler (for RT)", "settings": "Per RT-kit program", "needsReview": true },
+    { "id": "e4", "name": "Real-time PCR instrument", "settings": "See cycling parameters in Procedure", "needsReview": true }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "RNA QC", "action": "Quantify RNA and check purity.", "equipmentIds": ["e1"], "materialIds": ["m1"], "parameters": [{ "type": "ratio", "value": 2.0, "unit": "A260/A280", "rawText": "A260/A280 about 2.0" }], "expectedResult": "RNA pure and sufficient.", "criticalNotes": "Record values as MIQE metadata." },
+    { "id": "s2", "number": 2, "phase": "RNA QC", "action": "Assess RNA integrity (if available).", "equipmentIds": ["e2"], "expectedResult": "Intact RNA (RIN reported).", "criticalNotes": "Degraded RNA biases Cq." },
+    { "id": "s3", "number": 3, "phase": "RNA QC", "action": "DNase-treat RNA if not already done.", "materialIds": ["m2"], "expectedResult": "Genomic-DNA carryover removed.", "criticalNotes": "Confirm with a no-RT control." },
+    { "id": "s4", "number": 4, "phase": "Reverse Transcription", "action": "Assemble the RT reaction with a fixed RNA input across samples.", "materialIds": ["m1", "m3"], "expectedResult": "Homogeneous mix.", "criticalNotes": "Keep reagents on ice; use the same input mass per sample." },
+    { "id": "s5", "number": 5, "phase": "Reverse Transcription", "action": "Run reverse transcription.", "equipmentIds": ["e3"], "parameters": [{ "type": "temperature", "value": null, "unit": "degC", "rawText": "per kit, e.g. 25 degC prime, 42-50 degC extend, 85 degC inactivate", "needsReview": true }], "expectedResult": "cDNA synthesized.", "criticalNotes": "Record exact temps/times used.", "needsReview": true },
+    { "id": "s6", "number": 6, "phase": "Reverse Transcription", "action": "Dilute cDNA as optimized.", "materialIds": ["m4", "m9"], "parameters": [{ "type": "ratio", "value": null, "unit": "dilution", "rawText": "e.g. 1:5 - 1:20" }], "expectedResult": "Working cDNA stock.", "criticalNotes": "Use identical dilution for all samples." },
+    { "id": "s7", "number": 7, "phase": "qPCR Setup & Cycling", "action": "Prepare the qPCR reaction mix.", "materialIds": ["m5", "m6", "m7", "m8", "m9"], "parameters": [{ "type": "volume", "value": 10, "valueMax": 20, "unit": "uL", "rawText": "10-20 uL total per well" }], "expectedResult": "Homogeneous mix.", "criticalNotes": "Prepare a master mix; pipette on a cold block." },
+    { "id": "s8", "number": 8, "phase": "qPCR Setup & Cycling", "action": "Add template and load the plate.", "materialIds": ["m4"], "parameters": [{ "type": "count", "value": 2, "valueMax": 3, "unit": "replicates", "rawText": ">=2-3 technical replicates per sample" }], "expectedResult": "Plate loaded and sealed.", "criticalNotes": "Include NTC and no-RT wells." },
+    { "id": "s9", "number": 9, "phase": "qPCR Setup & Cycling", "action": "Run qPCR, then a melt curve (dye-based).", "equipmentIds": ["e4"], "parameters": [{ "type": "temperature", "value": 95, "unit": "degC", "rawText": "denaturation 95 degC" }, { "type": "count", "value": 40, "unit": "cycles", "rawText": "40 cycles" }], "expectedResult": "Amplification curves + single melt peak.", "criticalNotes": "Report the exact cycling program.", "needsReview": true },
+    { "id": "s10", "number": 10, "phase": "Analysis", "action": "Inspect controls.", "expectedResult": "NTC and no-RT negative.", "criticalNotes": "Positive controls indicate contamination / gDNA carryover." },
+    { "id": "s11", "number": 11, "phase": "Analysis", "action": "Set threshold and extract Cq.", "parameters": [{ "type": "other", "value": null, "unit": "Cq", "rawText": "consistent threshold across runs" }], "expectedResult": "Cq per well.", "criticalNotes": "Report the baseline/threshold method." },
+    { "id": "s12", "number": 12, "phase": "Analysis", "action": "Normalise and compute relative expression.", "parameters": [{ "type": "other", "value": null, "unit": "ddCq", "rawText": "ddCq vs reference gene(s) + calibrator" }], "expectedResult": "Fold-change per target.", "criticalNotes": "State the quantification model and efficiency correction." }
+  ],
+  "controls": [
+    { "name": "NTC (no-template control)", "description": "Master mix + water instead of cDNA; detects contamination." },
+    { "name": "No-RT control (minus reverse transcriptase)", "description": "Detects genomic-DNA amplification." },
+    { "name": "Reference gene(s)", "description": "Validated stable normaliser(s) on the same plate." },
+    { "name": "Inter-run calibrator", "description": "Common sample across plates for run-to-run comparison." },
+    { "name": "Technical + biological replicates", "description": "Report both (MIQE)." }
+  ],
+  "expectedOutputs": [
+    "Cq values per well; a single specific product (single melt peak or single band).",
+    "Negative NTC and no-RT controls.",
+    "Normalised relative expression (fold-change) with amplification efficiency and quantification method reported."
+  ],
+  "troubleshooting": [
+    { "problem": "Amplification in NTC", "cause": "Contamination or primer-dimer", "solution": "Fresh reagents; redesign/optimize primers; clean workspace" },
+    { "problem": "Amplification in no-RT control", "cause": "Genomic-DNA carryover", "solution": "Repeat DNase treatment; design intron-spanning primers" },
+    { "problem": "Multiple melt peaks", "cause": "Non-specific product / primer-dimer", "solution": "Optimize annealing temp / primer concentration; validate primers" },
+    { "problem": "Late / absent Cq", "cause": "Low input; degraded RNA; inhibitors", "solution": "Increase input; check RIN; clean up RNA; dilute to reduce inhibitors" },
+    { "problem": "High replicate variability", "cause": "Pipetting error; low copy number", "solution": "Use a master mix; increase replicates/input" }
+  ],
+  "safety": [
+    "Standard molecular-biology hygiene; some intercalating dyes are mutagenic - handle and dispose per institutional rules."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "Relative quantification depends on a validated stable reference gene and on primer efficiency; kit-, primer-, and instrument-specific values must be set from the actual reagents used. Biosafety level depends on the RNA source.",
+  "sources": [
+    { "id": "src1", "kind": "standard", "title": "MIQE Guidelines: Minimum Information for Publication of Quantitative Real-Time PCR Experiments (Bustin et al., Clin Chem 2009)", "doi": "10.1373/clinchem.2008.112797", "url": "https://doi.org/10.1373/clinchem.2008.112797", "license": "Guideline cited, not reproduced", "licenseVerified": true }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

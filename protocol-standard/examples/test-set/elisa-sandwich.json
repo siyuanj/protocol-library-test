@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Sandwich ELISA (quantitative capture immunoassay)",
+    "protocolId": "lr-testset-elisa-sandwich",
+    "version": "0.1",
+    "family": "ELISA",
+    "category": "Immunoassay / Protein",
+    "purpose": "Quantify a soluble antigen by capturing it between a plate-bound capture antibody and a biotinylated detection antibody, developing with streptavidin-HRP + TMB, and interpolating concentration from a standard curve read at 450 nm.",
+    "scope": "Colorimetric matched-pair (capture + biotinylated detection) sandwich ELISA in a 96-well high-binding plate, biotin/streptavidin-HRP detection, TMB substrate, absorbance readout. The in-repo teaching PDF (src1) is actually an INDIRECT ELISA (antigen adsorbed directly, then primary + HRP secondary); it grounds only the shared buffer recipes (carbonate coating buffer pH 9.6, PBS pH 7.4, PBS-T, 2 M H2SO4 stop) and 37 degC incubation convention. The sandwich architecture, antibody dilutions, and timings come from the published sandwich-ELISA protocol (src2). Not validated here for competitive or direct-ELISA formats.",
+    "estimatedTime": "~1 day active over 2 sessions (overnight capture-antibody coat, then ~4-5 h assay)",
+    "beforeYouBegin": [
+      "Select a validated matched antibody pair (capture + biotinylated detection) and a recombinant antigen standard for the target of interest; these are target-specific and not fixed by this protocol.",
+      "Prepare coating buffer (carbonate-bicarbonate pH 9.6), PBS (pH 7.4), and wash buffer PBS-T (PBS + 0.05% Tween-20) as in Materials.",
+      "Plan the plate layout: standards (7-point + blank) in duplicate and unknown samples in duplicate; see the plate-layout table."
+    ],
+    "tags": ["ELISA", "sandwich ELISA", "immunoassay", "capture antibody", "standard curve", "TMB", "quantitative"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Capture antibody (matched pair)", "role": "antibody", "amount": 1, "amountMax": 4, "unit": "ug/mL", "workingConcentration": "1-4 ug/mL in coating buffer", "specification": "Target-specific capture antibody; adsorbed to the plate. Exact antibody/target and RRID are assay-specific and not fixed by this protocol.", "storage": "4 C (aliquot per vendor)", "rawText": "Dilute the capture antibody in coating buffer (Na2CO3 / NaHCO3, pH 9.6) to the manufacturer's recommended concentration (typically 1-4 ug/mL)", "needsReview": true, "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "m2", "name": "Coating buffer (carbonate-bicarbonate, pH 9.6)", "role": "buffer", "specification": "Na2CO3 0.15 g + NaHCO3 0.293 g, add H2O to 100 mL (pH 9.6)", "rawText": "Coating buffer (Carbonate-Bicarbonate buffer, pH 9.6): Na2CO3 0.15 g, NaHCO3 0.293 g, add H2O to 100 mL (pH 9.6).", "sourceReferences": [{ "sourceId": "src1", "page": 2, "excerpt": "Coating buffer (Carbonate-Bicarbonate buffer, pH 9.6)" }] },
+    { "id": "m3", "name": "PBS (phosphate-buffered saline, pH 7.4)", "role": "buffer", "specification": "NaCl 8.0 g, KCl 0.20 g, KH2PO4 0.24 g, Na2HPO4.12H2O 2.9 g, add H2O to 1000 mL (pH 7.4)", "rawText": "Phosphate buffered saline (PBS): NaCl 8.0 g, KCl 0.20 g, KH2PO4 0.24 g, Na2HPO4.12 H2O 2.9 g, add H2O to 1000 mL (pH 7.4).", "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "m4", "name": "Wash buffer (PBS-T)", "role": "buffer", "specification": "PBS + 0.05% (v/v) Tween-20", "rawText": "Washing buffer (PBS-T): PBS containing 0.05% Tween 20.", "sourceReferences": [{ "sourceId": "src1", "page": 2 }, { "sourceId": "src2" }] },
+    { "id": "m5", "name": "Blocking buffer", "role": "buffer", "workingConcentration": "1% (w/v)", "specification": "1% BSA in PBS (or commercial blocker)", "rawText": "1% BSA in PBS, or commercial blocker", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "m6", "name": "Recombinant antigen standard", "role": "standard", "specification": "Target antigen at a known stock concentration, used to build the standard curve. Identity and stock concentration are assay-specific.", "rawText": "7-point standard curve", "needsReview": true, "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "m7", "name": "Biotinylated detection antibody (matched pair)", "role": "antibody", "workingConcentration": "manufacturer-recommended dilution", "specification": "Target-specific detection antibody, biotin-conjugated; second arm of the matched pair.", "rawText": "100 uL biotinylated detection antibody", "needsReview": true, "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "m8", "name": "Streptavidin-HRP conjugate", "role": "enzyme", "workingConcentration": "manufacturer-recommended dilution", "specification": "Streptavidin-horseradish peroxidase (SABC) for biotin detection.", "rawText": "Streptavidin-HRP (SABC): 100 uL per well", "needsReview": true, "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "m9", "name": "TMB substrate", "role": "reagent", "specification": "3,3',5,5'-tetramethylbenzidine / H2O2 single-component substrate; produces blue product oxidized by HRP.", "hazard": "Irritant; avoid skin/eye contact.", "rawText": "90 uL substrate; 10-20 min at 37 C in the dark", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "m10", "name": "Stop solution (2 M H2SO4)", "role": "reagent", "specification": "2 M sulfuric acid; converts blue TMB product to yellow.", "hazard": "Corrosive; wear gloves and eye protection.", "rawText": "Stopping reagent: 2 M H2SO4.", "sourceReferences": [{ "sourceId": "src1", "page": 2 }, { "sourceId": "src2" }] }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Microplate reader", "settings": "Absorbance at 450 nm", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "e2", "name": "37 C incubator", "settings": "37 C for capture/detection/development incubations", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "e3", "name": "Multichannel pipette / plate washer", "settings": "Dispense/aspirate 100-300 uL per well", "needsReview": true }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "Antigen standard-curve series (7-point + blank)", "role": "control", "derivedFromMaterialId": "m6", "description": "2-fold serial dilutions of the recombinant antigen standard used to build the calibration curve; includes a diluent-only blank." },
+    { "id": "sp2", "name": "Test sample (unknown antigen)", "role": "input", "description": "Serum, plasma, cell-culture supernatant, or lysate containing the antigen at unknown concentration. Matrix and required dilution are sample-specific.", "needsReview": true },
+    { "id": "sp3", "name": "OD450 dataset / interpolated concentrations", "role": "output", "description": "Per-well absorbance at 450 nm and antigen concentrations interpolated from the 4-PL standard curve." }
+  ],
+  "containers": [
+    { "id": "c1", "name": "96-well high-binding microtiter plate", "type": "plate", "wells": 96 }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Standard-curve dilution series (7-point, 2-fold)",
+      "columns": ["Standard point", "Serial dilution", "Fold from top standard"],
+      "rows": [
+        ["S1 (top standard)", "neat (highest)", "1x"],
+        ["S2", "1:2", "2x"],
+        ["S3", "1:4", "4x"],
+        ["S4", "1:8", "8x"],
+        ["S5", "1:16", "16x"],
+        ["S6", "1:32", "32x"],
+        ["S7", "1:64", "64x"],
+        ["Blank", "diluent only", "-"]
+      ],
+      "note": "Absolute concentrations depend on the recombinant antigen standard stock (m6), which the source does not specify (needsReview). Source states a 7-point standard curve; a 2-fold serial dilution is the standard convention shown here."
+    },
+    {
+      "id": "t2",
+      "title": "Plate layout (conventional example)",
+      "columns": ["Row", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      "rows": [
+        ["A", "S1", "S1", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample"],
+        ["B", "S2", "S2", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample"],
+        ["C", "S3", "S3", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample"],
+        ["D", "S4", "S4", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample"],
+        ["E", "S5", "S5", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample"],
+        ["F", "S6", "S6", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample"],
+        ["G", "S7", "S7", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample"],
+        ["H", "Blank", "Blank", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample", "Sample"]
+      ],
+      "note": "Conventional arrangement (NOT specified by either source): columns 1-2 hold the standard curve in duplicate (S1 top -> S7, blank in row H); columns 3-12 hold unknown samples in duplicate. Adapt to the number of samples and required replicates."
+    }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Coating", "action": "Dilute capture antibody in coating buffer and coat the plate; incubate to allow adsorption.", "materialIds": ["m1", "m2"], "equipmentIds": ["e2"], "inputIds": ["m1"], "containerIds": ["c1"], "pausePoint": true, "parameters": [{ "type": "concentration", "value": 1, "valueMax": 4, "unit": "ug/mL", "rawText": "typically 1-4 ug/mL" }, { "type": "volume", "value": 100, "unit": "uL", "rawText": "100 uL per well" }, { "type": "temperature", "value": 4, "unit": "degC", "rawText": "incubate overnight at 4 C" }, { "type": "time", "value": null, "unit": "overnight", "rawText": "overnight" }], "expectedResult": "Capture antibody adsorbed to well surface.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s2", "number": 2, "phase": "Coating", "action": "Wash the plate with PBS-T.", "materialIds": ["m4"], "equipmentIds": ["e3"], "containerIds": ["c1"], "parameters": [{ "type": "count", "value": 3, "unit": "x", "rawText": "3x washes" }, { "type": "volume", "value": 300, "unit": "uL", "rawText": "300 uL per well" }], "expectedResult": "Unbound antibody removed.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s3", "number": 3, "phase": "Blocking", "action": "Block remaining binding sites with blocking buffer.", "materialIds": ["m5"], "equipmentIds": ["e3"], "containerIds": ["c1"], "parameters": [{ "type": "volume", "value": 300, "unit": "uL", "rawText": "300 uL per well" }, { "type": "temperature", "value": null, "unit": "degC", "rawText": "at RT" }, { "type": "time", "value": 2, "unit": "h", "rawText": "2 hours at RT" }], "expectedResult": "Non-specific binding sites saturated.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s4", "number": 4, "phase": "Blocking", "action": "Wash the plate with PBS-T.", "materialIds": ["m4"], "equipmentIds": ["e3"], "containerIds": ["c1"], "parameters": [{ "type": "count", "value": 3, "unit": "x", "rawText": "3x washes" }, { "type": "volume", "value": 300, "unit": "uL", "rawText": "300 uL per well" }], "expectedResult": "Plate ready for samples.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s5", "number": 5, "phase": "Standards & samples", "action": "Prepare the 7-point 2-fold standard-curve dilution series plus a diluent blank.", "materialIds": ["m6"], "tableIds": ["t1"], "inputIds": ["m6"], "outputIds": ["sp1"], "parameters": [{ "type": "count", "value": 7, "unit": "points", "rawText": "7-point standard curve" }, { "type": "ratio", "value": 2, "unit": "fold", "rawText": "2-fold serial dilution" }], "expectedResult": "Standard series ready to load.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s6", "number": 6, "phase": "Standards & samples", "action": "Add standards and samples to wells per the plate layout; incubate to allow antigen capture.", "materialIds": ["m6"], "equipmentIds": ["e2"], "inputIds": ["sp1", "sp2"], "containerIds": ["c1"], "tableIds": ["t2"], "parameters": [{ "type": "volume", "value": 100, "unit": "uL", "rawText": "100 uL per well" }, { "type": "time", "value": 90, "unit": "min", "rawText": "90 min at 37 C" }, { "type": "temperature", "value": 37, "unit": "degC", "rawText": "37 C" }], "expectedResult": "Antigen captured by plate-bound antibody.", "criticalNotes": "Load standards and unknowns in duplicate; include the diluent blank.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s7", "number": 7, "phase": "Standards & samples", "action": "Wash the plate with PBS-T.", "materialIds": ["m4"], "equipmentIds": ["e3"], "containerIds": ["c1"], "parameters": [{ "type": "count", "value": 3, "unit": "x", "rawText": "3x washes" }, { "type": "volume", "value": 300, "unit": "uL", "rawText": "300 uL per well" }], "expectedResult": "Unbound antigen removed.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s8", "number": 8, "phase": "Detection", "action": "Add biotinylated detection antibody and incubate.", "materialIds": ["m7"], "equipmentIds": ["e2"], "containerIds": ["c1"], "parameters": [{ "type": "volume", "value": 100, "unit": "uL", "rawText": "100 uL biotinylated detection antibody" }, { "type": "time", "value": 60, "unit": "min", "rawText": "60 minutes at 37 C" }, { "type": "temperature", "value": 37, "unit": "degC", "rawText": "37 C" }], "expectedResult": "Detection antibody bound to captured antigen.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s9", "number": 9, "phase": "Detection", "action": "Wash the plate with PBS-T.", "materialIds": ["m4"], "equipmentIds": ["e3"], "containerIds": ["c1"], "parameters": [{ "type": "count", "value": 3, "unit": "x", "rawText": "3x washes" }, { "type": "volume", "value": 300, "unit": "uL", "rawText": "300 uL per well" }], "expectedResult": "Unbound detection antibody removed.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s10", "number": 10, "phase": "Detection", "action": "Add streptavidin-HRP conjugate and incubate.", "materialIds": ["m8"], "equipmentIds": ["e2"], "containerIds": ["c1"], "parameters": [{ "type": "volume", "value": 100, "unit": "uL", "rawText": "100 uL per well" }, { "type": "time", "value": 30, "unit": "min", "rawText": "30 minutes at 37 C" }, { "type": "temperature", "value": 37, "unit": "degC", "rawText": "37 C" }], "expectedResult": "HRP localized to captured antigen via biotin-streptavidin.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s11", "number": 11, "phase": "Detection", "action": "Perform final washes with PBS-T.", "materialIds": ["m4"], "equipmentIds": ["e3"], "containerIds": ["c1"], "parameters": [{ "type": "count", "value": 5, "unit": "x", "rawText": "Final wash: 5x with 300 uL per well" }, { "type": "volume", "value": 300, "unit": "uL", "rawText": "300 uL per well" }], "expectedResult": "Background enzyme removed.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s12", "number": 12, "phase": "Development", "action": "Add TMB substrate and develop in the dark.", "materialIds": ["m9"], "equipmentIds": ["e2"], "containerIds": ["c1"], "parameters": [{ "type": "volume", "value": 90, "unit": "uL", "rawText": "90 uL substrate" }, { "type": "time", "value": 10, "valueMax": 20, "unit": "min", "rawText": "10-20 min at 37 C in the dark" }, { "type": "temperature", "value": 37, "unit": "degC", "rawText": "37 C" }], "expectedResult": "Blue color develops in positive wells.", "criticalNotes": "Protect from light; monitor development to avoid saturation.", "sourceReferences": [{ "sourceId": "src2" }] },
+    { "id": "s13", "number": 13, "phase": "Development", "action": "Stop the reaction with 2 M H2SO4.", "materialIds": ["m10"], "containerIds": ["c1"], "parameters": [{ "type": "volume", "value": 50, "unit": "uL", "rawText": "50 uL stop solution" }], "expectedResult": "Color turns from blue to yellow.", "safetyNotes": "2 M H2SO4 is corrosive.", "sourceReferences": [{ "sourceId": "src2" }, { "sourceId": "src1", "page": 2 }] },
+    { "id": "s14", "number": 14, "phase": "Development", "action": "Read absorbance at 450 nm and interpolate sample concentrations from the standard curve.", "equipmentIds": ["e1"], "containerIds": ["c1"], "tableIds": ["t1"], "inputIds": ["sp1", "sp2"], "outputIds": ["sp3"], "parameters": [{ "type": "wavelength", "value": 450, "unit": "nm", "rawText": "Read OD at 450 nm" }], "expectedResult": "OD450 per well; 4-PL curve fit; interpolated antigen concentrations.", "criticalNotes": "Read immediately after stopping.", "sourceReferences": [{ "sourceId": "src2" }] }
+  ],
+  "controls": [
+    { "name": "Standard curve", "description": "7-point recombinant antigen dilution series for quantitative interpolation (4-PL fit)." },
+    { "name": "Blank (diluent only)", "description": "No-antigen well to define background/zero absorbance." },
+    { "name": "No-detection-antibody control", "description": "Omit biotinylated detection antibody to detect non-specific streptavidin-HRP/substrate signal.", "needsReview": true }
+  ],
+  "expectedOutputs": [
+    "Per-well OD450 values.",
+    "A 4-parameter-logistic standard curve relating OD450 to antigen concentration.",
+    "Interpolated antigen concentrations for each unknown sample (mean of replicates)."
+  ],
+  "troubleshooting": [
+    { "problem": "High background across the plate", "cause": "Insufficient blocking or washing; conjugate too concentrated", "solution": "Extend blocking; add washes; titrate detection antibody / streptavidin-HRP" },
+    { "problem": "No or weak signal", "cause": "Mismatched antibody pair; degraded substrate; capture antibody too dilute", "solution": "Confirm the matched pair; use fresh TMB; increase coating concentration" },
+    { "problem": "Poor standard-curve fit / low R^2", "cause": "Pipetting error in serial dilution; edge effects", "solution": "Prepare dilutions carefully; run standards in duplicate; avoid edge wells or add plate lid" }
+  ],
+  "safety": [
+    "2 M H2SO4 stop solution is corrosive - wear gloves and eye protection.",
+    "TMB substrate is an irritant; handle per SDS and dispose of per institutional rules.",
+    "Human/animal sample matrices may be biohazardous - handle at the appropriate biosafety level."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "The in-repo source PDF (src1) is an indirect ELISA, so only its shared buffer recipes and 37 degC / 2 M H2SO4 conventions are grounded here; the sandwich architecture, antibody dilutions, incubation times, TMB substrate, and 450 nm readout come from src2. The specific matched antibody pair, antigen standard identity and absolute standard concentrations, and sample dilutions are assay-specific and marked needsReview. Plate layout (t2) is a conventional example, not taken from a source.",
+  "sources": [
+    { "id": "src1", "kind": "file", "title": "Procedure of ELISA (2023 teaching protocol; indirect ELISA)", "file": "test_protocol/4-ELISA(protocol)-Re.pdf", "license": "Institutional teaching material; reuse terms not specified", "licenseVerified": false },
+    { "id": "src2", "kind": "url", "title": "Sandwich ELISA: Step-by-Step Protocol & Troubleshooting (Assay Genie)", "url": "https://www.assaygenie.com/blog/sandwich-elisa-protocol/", "license": "Vendor protocol page; reuse terms not specified", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

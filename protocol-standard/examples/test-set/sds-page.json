@@ -1,0 +1,644 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "SDS-PAGE (Laemmli Discontinuous Denaturing Polyacrylamide Gel Electrophoresis)",
+    "protocolId": "lr-test-sds-page",
+    "version": "0.1",
+    "family": "Electrophoresis",
+    "category": "Protein",
+    "purpose": "Separate proteins by molecular weight under denaturing conditions on a discontinuous (Laemmli) polyacrylamide gel: proteins are coated with SDS, stacked in a 5% stacking gel, then resolved in a 10% resolving gel and visualized by Coomassie staining.",
+    "scope": "Standard reducing Laemmli SDS-PAGE on a Bio-Rad mini gel system for proteins >~10 kDa. Very small proteins (<10 kDa) need gradient or Tricine-SDS gels and are out of scope. Gel casting recipes given for 10% resolving / 5% stacking; the acrylamide percentage is adjusted for other size ranges.",
+    "estimatedTime": "~2.5-3 h (gel casting + polymerization ~1 h, sample prep ~20 min, run + stain)",
+    "beforeYouBegin": [
+      "Quantify protein (e.g. BCA assay) so equal amounts are loaded per lane.",
+      "Prepare 10x running buffer and 2x SDS sample buffer in advance (see materials).",
+      "Make 10% ammonium persulfate fresh (store at 4 C up to a month); add APS and TEMED only immediately before pouring each gel.",
+      "Change the ddH2O:acrylamide ratio to cast a different resolving-gel percentage."
+    ],
+    "tags": [
+      "SDS-PAGE",
+      "Laemmli",
+      "polyacrylamide",
+      "electrophoresis",
+      "protein",
+      "denaturing"
+    ]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "30% acrylamide/bis (37.5:1)",
+      "role": "reagent",
+      "vendor": "Bio-Rad Laboratories",
+      "specification": "Acrylamide:bisacrylamide 37.5:1 stock",
+      "hazard": "Unpolymerized acrylamide is a potent neurotoxin",
+      "storage": "4 C",
+      "rawText": "30% Acrylamide stock (37.5:1 acrylamide:bisacrylamide)"
+    },
+    {
+      "id": "m2",
+      "name": "1.5 M Tris-HCl, pH 8.8",
+      "role": "buffer",
+      "specification": "Resolving (separating) gel buffer",
+      "rawText": "1.25 ml 1.5 M Tris (pH 8.8)"
+    },
+    {
+      "id": "m3",
+      "name": "1.0 M Tris-HCl, pH 6.8",
+      "role": "buffer",
+      "specification": "Stacking gel buffer",
+      "rawText": "0.375 ml 1 M Tris (pH 6.8)"
+    },
+    {
+      "id": "m4",
+      "name": "20% (w/v) SDS",
+      "role": "reagent",
+      "specification": "Detergent stock for gels and buffers",
+      "rawText": "20% SDS"
+    },
+    {
+      "id": "m5",
+      "name": "10% ammonium persulfate (APS)",
+      "role": "reagent",
+      "workingConcentration": "10% (w/v)",
+      "specification": "Radical initiator; make fresh",
+      "storage": "4 C, up to 1 month",
+      "rawText": "10% ammonium persulfate (make it fresh and store at 4 C up to a month)"
+    },
+    {
+      "id": "m6",
+      "name": "TEMED",
+      "role": "reagent",
+      "vendor": "Life Technologies (Gibco)",
+      "specification": "Polymerization catalyst; add immediately before pouring",
+      "hazard": "Flammable; corrosive; harmful vapor",
+      "rawText": "TEMED (add it right before pour the gel)"
+    },
+    {
+      "id": "m7",
+      "name": "Isopropanol",
+      "role": "solvent",
+      "specification": "Overlay to flatten the resolving gel surface during polymerization",
+      "hazard": "Flammable",
+      "rawText": "Add a small layer of isopropanol to the top of the gel prior to polymerization"
+    },
+    {
+      "id": "m8",
+      "name": "2x SDS protein sample buffer",
+      "role": "buffer",
+      "workingConcentration": "1:1 (v/v) with sample",
+      "specification": "Per 10 mL: 1.25 mL 1 M Tris-HCl pH 6.8, 4.0 mL 10% SDS, 2.0 mL glycerol, 0.5 mL 0.5 M EDTA, 4 mg bromophenol blue, 0.2 mL beta-mercaptoethanol; ddH2O to 10 mL",
+      "hazard": "Contains beta-mercaptoethanol (toxic, foul-smelling) - use a fume hood",
+      "rawText": "2x SDS protein sample buffer: 1.25 ml 1 M Tris-HCl (pH 6.8), 4.0 ml 10% (w/v) SDS, 2.0 ml glycerol, 0.5 ml 0.5 M EDTA, 4 mg bromophenol blue, 0.2 ml b-mercaptoethanol (14.3 M); bring to 10 ml with ddH2O"
+    },
+    {
+      "id": "m9",
+      "name": "10x Tris-glycine-SDS running buffer",
+      "role": "buffer",
+      "workingConcentration": "diluted to 1x for the run",
+      "specification": "Per liter (10x): 30.3 g Tris base, 144.0 g glycine, 10.0 g SDS; = 25 mM Tris, 192 mM glycine, 0.1% SDS at 1x",
+      "rawText": "10x running buffer: 30.3 g Tris-base, 144.0 g glycine, 10.0 g SDS; ddH2O up to 1 liter"
+    },
+    {
+      "id": "m10",
+      "name": "Prestained protein MW marker",
+      "role": "standard",
+      "vendor": "Bio-Rad Laboratories",
+      "specification": "Molecular-weight ladder",
+      "rawText": "Pre-stain Protein MW marker (Bio-Rad Laboratories)"
+    },
+    {
+      "id": "m11",
+      "name": "Coomassie Brilliant Blue stain",
+      "role": "reagent",
+      "specification": "For visualizing >=0.2 ug protein/band; use silver stain for lower amounts",
+      "rawText": "typically use Coomassie blue staining ... Otherwise, use silver staining"
+    },
+    {
+      "id": "m12",
+      "name": "ddH2O",
+      "role": "solvent",
+      "specification": "Gel mixes, rinsing, buffer dilution"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Vertical mini gel electrophoresis cell + power supply",
+      "model": "Bio-Rad Mini-PROTEAN (Tetra) or equivalent",
+      "settings": "200 V constant until the dye front reaches the bottom of the gel"
+    },
+    {
+      "id": "e2",
+      "name": "Heating block",
+      "settings": "95 C"
+    },
+    {
+      "id": "e3",
+      "name": "Table-top microcentrifuge",
+      "settings": "Maximum speed, ~1 min"
+    },
+    {
+      "id": "e4",
+      "name": "Gel casting stand + mini gel cassette (glass plates, spacers, comb)",
+      "settings": "Assembled per manufacturer instructions"
+    }
+  ],
+  "samples": [
+    {
+      "id": "sp1",
+      "name": "Protein sample (quantified lysate/extract)",
+      "role": "input",
+      "description": "Equalized protein amounts per lane based on BCA result"
+    },
+    {
+      "id": "sp2",
+      "name": "Denatured, reduced protein sample",
+      "role": "intermediate",
+      "description": "Sample mixed 1:1 with 2x SDS sample buffer and boiled at 95 C"
+    },
+    {
+      "id": "sp3",
+      "name": "Resolved protein band pattern in gel",
+      "role": "output",
+      "description": "Size-separated proteins after electrophoresis and staining"
+    }
+  ],
+  "containers": [
+    {
+      "id": "c1",
+      "name": "Mini gel cassette (glass plates + spacers)",
+      "type": "cassette",
+      "wells": null
+    },
+    {
+      "id": "c2",
+      "name": "1.5 mL microcentrifuge tubes",
+      "type": "tube",
+      "wells": null
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Gel casting recipes (per gel)",
+      "columns": [
+        "Component",
+        "10% Resolving gel (5 mL)",
+        "5% Stacking gel (3 mL)"
+      ],
+      "rows": [
+        [
+          "ddH2O",
+          "2.0 mL",
+          "2.088 mL"
+        ],
+        [
+          "30% acrylamide/bis (37.5:1)",
+          "1.67 mL",
+          "0.506 mL"
+        ],
+        [
+          "1.5 M Tris-HCl pH 8.8",
+          "1.25 mL",
+          "-"
+        ],
+        [
+          "1.0 M Tris-HCl pH 6.8",
+          "-",
+          "0.375 mL"
+        ],
+        [
+          "20% SDS",
+          "25 uL",
+          "15 uL"
+        ],
+        [
+          "10% APS",
+          "25 uL",
+          "15 uL"
+        ],
+        [
+          "TEMED",
+          "2.5 uL",
+          "1.5 uL"
+        ]
+      ],
+      "note": "Change the ddH2O:acrylamide ratio to cast other resolving-gel percentages. Add APS then TEMED last and pour immediately."
+    },
+    {
+      "id": "t2",
+      "title": "2x SDS protein sample buffer (10 mL)",
+      "columns": [
+        "Component",
+        "Amount"
+      ],
+      "rows": [
+        [
+          "1 M Tris-HCl pH 6.8",
+          "1.25 mL"
+        ],
+        [
+          "10% (w/v) SDS",
+          "4.0 mL"
+        ],
+        [
+          "Glycerol",
+          "2.0 mL"
+        ],
+        [
+          "0.5 M EDTA",
+          "0.5 mL"
+        ],
+        [
+          "Bromophenol blue",
+          "4 mg"
+        ],
+        [
+          "beta-mercaptoethanol (14.3 M)",
+          "0.2 mL"
+        ],
+        [
+          "ddH2O",
+          "to 10 mL"
+        ]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Gel casting",
+      "action": "Assemble a clean, dry gel cassette on the casting stand per manufacturer instructions.",
+      "equipmentIds": [
+        "e4"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Clean and completely dry glass plates, combs, and spacers are required. Assemble gel cassette."
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Gel casting",
+      "action": "Mix the 10% resolving gel (5 mL total), adding APS then TEMED last; pour between the plates to ~0.7 cm below the comb.",
+      "materialIds": [
+        "m1",
+        "m2",
+        "m4",
+        "m5",
+        "m6",
+        "m12"
+      ],
+      "tableIds": [
+        "t1"
+      ],
+      "parameters": [
+        {
+          "type": "concentration",
+          "value": 10,
+          "unit": "%",
+          "rawText": "10% lower gel (separating gel)"
+        },
+        {
+          "type": "volume",
+          "value": 5,
+          "unit": "mL",
+          "rawText": "total volume = 5 ml"
+        }
+      ],
+      "criticalNotes": "Add TEMED right before pouring; mix and transfer quickly before polymerization.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Prepare 10% lower gel: 2 ml ddH2O, 1.67 ml 30% acrylamide/Bis, 1.25 ml 1.5 M Tris (pH 8.8), 25 ul 20% SDS, 25 ul 10% APS, 2.5 ul TEMED."
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Gel casting",
+      "action": "Overlay the resolving gel with a small layer of isopropanol and allow it to polymerize.",
+      "materialIds": [
+        "m7"
+      ],
+      "expectedResult": "Flat, level resolving-gel surface after polymerization.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Gel casting",
+      "action": "Remove isopropanol and rinse with ddH2O; mix the 5% stacking gel (3 mL total), pour to fill, and insert the comb.",
+      "materialIds": [
+        "m1",
+        "m3",
+        "m4",
+        "m5",
+        "m6",
+        "m12"
+      ],
+      "tableIds": [
+        "t1"
+      ],
+      "parameters": [
+        {
+          "type": "concentration",
+          "value": 5,
+          "unit": "%",
+          "rawText": "stacking gel (5%)"
+        },
+        {
+          "type": "volume",
+          "value": 3,
+          "unit": "mL",
+          "rawText": "total volume = 3 ml"
+        }
+      ],
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Prepare stacking gel (5%): 2.088 ml dH2O, 0.506 ml 30% acrylamide/Bis, 0.375 ml 1 M Tris (pH 6.8), 15 ul 20% SDS, 15 ul 10% APS, 1.5 ul TEMED."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Gel casting",
+      "action": "Allow the stacking gel to solidify, then carefully remove the comb.",
+      "pausePoint": true,
+      "criticalNotes": "Cast gels can be stored with combs in place, wrapped in plastic with wet tissue, at 4 C for 1-2 weeks.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Sample preparation",
+      "action": "Normalize protein amounts across samples based on the BCA assay result.",
+      "inputIds": [
+        "sp1"
+      ],
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Sample preparation",
+      "action": "Add an equal volume of 2x SDS sample buffer to each sample, mix, and boil at 95 C.",
+      "materialIds": [
+        "m8"
+      ],
+      "equipmentIds": [
+        "e2"
+      ],
+      "tableIds": [
+        "t2"
+      ],
+      "inputIds": [
+        "sp1"
+      ],
+      "outputIds": [
+        "sp2"
+      ],
+      "parameters": [
+        {
+          "type": "ratio",
+          "value": 1,
+          "valueMax": 1,
+          "unit": "v/v",
+          "rawText": "Add the same volume of 2x protein sample buffer"
+        },
+        {
+          "type": "temperature",
+          "value": 95,
+          "unit": "degC",
+          "rawText": "boil the samples at 95 C"
+        },
+        {
+          "type": "time",
+          "value": 10,
+          "unit": "min",
+          "rawText": "for 10 min"
+        }
+      ],
+      "criticalNotes": "Stored samples in buffer can be reheated at 95 C for 5 min before reuse.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Add the same volume of 2x protein sample buffer ... boil the samples at 95 C heating block module for 10 min."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Sample preparation",
+      "action": "Spin samples at maximum speed and hold at room temperature until loading.",
+      "equipmentIds": [
+        "e3"
+      ],
+      "containerIds": [
+        "c2"
+      ],
+      "parameters": [
+        {
+          "type": "time",
+          "value": 1,
+          "unit": "min",
+          "rawText": "Spin the samples at the maximal speed for 1 min"
+        }
+      ],
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "Electrophoresis",
+      "action": "Mount the cassette in the electrode assembly and tank; fill wells and the inner/outer chambers with 1x running buffer.",
+      "materialIds": [
+        "m9"
+      ],
+      "equipmentIds": [
+        "e1"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Pour some 1x electrophoresis running buffer ... Add enough buffer to fill the wells of the gel."
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "phase": "Electrophoresis",
+      "action": "Load equal amounts of each denatured sample and 10 uL of protein MW marker into the wells.",
+      "materialIds": [
+        "m10"
+      ],
+      "inputIds": [
+        "sp2"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 10,
+          "unit": "uL",
+          "rawText": "load 10 ul of protein MW marker"
+        }
+      ],
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Slowly load the same amount of protein samples into each well as well as load 10 ul of protein MW marker."
+        }
+      ]
+    },
+    {
+      "id": "s11",
+      "number": 11,
+      "phase": "Electrophoresis",
+      "action": "Connect to the power supply and run at 200 V until the bromophenol blue dye front reaches the bottom of the gel.",
+      "equipmentIds": [
+        "e1"
+      ],
+      "outputIds": [
+        "sp3"
+      ],
+      "parameters": [
+        {
+          "type": "voltage",
+          "value": 200,
+          "unit": "V",
+          "rawText": "run at 200 V"
+        },
+        {
+          "type": "time",
+          "value": null,
+          "unit": "min",
+          "rawText": "until the dye front reaches the bottom of the gel (~30-45 min on a mini gel)",
+          "needsReview": true
+        }
+      ],
+      "expectedResult": "Proteins stacked then resolved; dye front at the gel bottom.",
+      "criticalNotes": "The Bio-protocol source states 'connect to the power supply' but does not give voltage/time; 200 V constant is the Bio-Rad Mini-PROTEAN standard.",
+      "sourceReferences": [
+        {
+          "sourceId": "src2"
+        }
+      ]
+    },
+    {
+      "id": "s12",
+      "number": 12,
+      "phase": "Detection",
+      "action": "Stain to visualize protein bands: use Coomassie blue for >=0.2 ug protein/band, otherwise silver stain (down to ~5 ng).",
+      "materialIds": [
+        "m11"
+      ],
+      "inputIds": [
+        "sp3"
+      ],
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "If protein of interest is about 0.2 ug or more, typically use Coomassie blue staining. Otherwise, use silver staining ... as little as 5 ng."
+        }
+      ],
+      "branches": [
+        {
+          "condition": "If protein of interest is >=0.2 ug use Coomassie blue; if lower, use silver staining."
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "name": "Molecular-weight marker",
+      "description": "Prestained ladder in one lane to assign apparent molecular weights."
+    },
+    {
+      "name": "Equal-loading normalization",
+      "description": "Load identical protein amounts (per BCA) in every lane so band intensities are comparable."
+    }
+  ],
+  "expectedOutputs": [
+    "A gel with proteins resolved into discrete bands, sized against the MW marker.",
+    "A stained, imageable record of the band pattern for each sample."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "Gel does not polymerize",
+      "cause": "Old/inactive APS or TEMED omitted",
+      "solution": "Make 10% APS fresh; add both APS and TEMED and pour immediately"
+    },
+    {
+      "problem": "Smeared or distorted bands",
+      "cause": "Overloaded protein; incomplete denaturation; run too fast/hot",
+      "solution": "Reduce load; ensure full boil in sample buffer; keep voltage/temperature moderate"
+    },
+    {
+      "problem": "Poor stacking / fuzzy fronts",
+      "cause": "Stacking gel too short or wrong pH buffers",
+      "solution": "Confirm 1.0 M Tris pH 6.8 (stacking) and 1.5 M Tris pH 8.8 (resolving); pour adequate stacking gel"
+    }
+  ],
+  "safety": [
+    "Unpolymerized acrylamide/bis is a potent neurotoxin - wear gloves and handle stocks and liquid gel with care.",
+    "beta-mercaptoethanol and TEMED give off harmful vapors - work in a fume hood.",
+    "Ammonium persulfate is an irritant; the running buffer contains SDS (irritant)."
+  ],
+  "biosafetyLevel": "not specified",
+  "limitations": "Denaturing, non-quantitative separation for proteins >~10 kDa; resolution of small proteins requires Tricine or gradient gels. Run voltage/time is taken from the Bio-Rad mini-gel standard, not the Bio-protocol source, which omits it.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "article",
+      "title": "Laemmli SDS PAGE (Fanglian He, Bio-protocol Vol 1 Iss 11, e80, 2011)",
+      "url": "https://bio-protocol.org/e80",
+      "license": "Bio-protocol; single-copy academic reuse per Bio-protocol terms",
+      "licenseVerified": false
+    },
+    {
+      "id": "src2",
+      "kind": "book",
+      "title": "Mini-PROTEAN Tetra Cell Instruction Manual (Bio-Rad, cat. 1658000 series)",
+      "url": "https://www.bio-rad.com/webroot/web/pdf/lsr/literature/10007296D.pdf",
+      "license": "Bio-Rad literature",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

@@ -1,0 +1,414 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "molecular-engineering",
+  "sessionTitle": "Plasmid and CRISPR engineering",
+  "packetStatus": "partial",
+  "startedAt": "2026-08-01T19:26:17Z",
+  "writtenAt": "2026-08-01T19:33:59Z",
+  "worker": "codex-molecular-engineering-2026-08-01",
+  "sourcesSearched": [
+    "https://www.protocols.io/",
+    "https://www.neb.com/",
+    "https://www.thermofisher.com/",
+    "https://www.addgene.org/protocols/bacterial-transformation/",
+    "https://portals.broadinstitute.org/gppx/crispick/public",
+    "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0215591"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "site-directed-mutagenesis",
+      "categoryLabel": "Site-directed mutagenesis",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://doi.org/10.17504/protocols.io.besrjed6",
+        "https://www.neb.com/protocols/2013/01/26/q5-site-directed-mutagenesis-kit-protocol-e0554",
+        "https://www.protocols.io/"
+      ],
+      "representative": {
+        "title": "Q5 Site-Directed Mutagenesis Kit Protocol (E0554)",
+        "protocolType": "Site-directed mutagenesis protocol",
+        "assay": "Construct editing and variant generation",
+        "operation": "Whole-plasmid PCR mutagenesis",
+        "source": "Protocols.io / New England Biolabs",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.besrjed6",
+        "sourceRecordId": "besrjed6",
+        "doi": "10.17504/protocols.io.besrjed6",
+        "authors": [
+          "New England Biolabs"
+        ],
+        "published": "2020-04-07",
+        "updated": null,
+        "licenseCode": "CC BY",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://www.protocols.io/view/q5-site-directed-mutagenesis-e0554-besrjed6",
+        "licenseVerifiedAt": "2026-08-01T19:26:17Z",
+        "metadataVerifiedAt": "2026-08-01T19:26:17Z",
+        "specimen": "Plasmid DNA",
+        "organism": null,
+        "platform": "Q5 high-fidelity PCR mutagenesis kit",
+        "methodVariant": "Whole-plasmid amplification",
+        "safetyLevel": "not specified",
+        "confidence": 0.91,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.95,
+          "sourceAuthority": 0.95,
+          "metadataCompleteness": 0.9,
+          "freshness": 0.75,
+          "corroboration": 0.85,
+          "overall": 0.91
+        },
+        "evidenceStatus": "metadata-verified; license evidence present",
+        "selectionNote": "Selected because it is a specific, DOI-backed whole-plasmid mutagenesis record from the kit developer and is distinct from fragment replacement workflows."
+      },
+      "screened": [
+        {
+          "title": "Q5 Site-Directed Mutagenesis Kit Protocol (E0554)",
+          "source": "New England Biolabs",
+          "sourceUrl": "https://www.neb.com/protocols/2013/01/26/q5-site-directed-mutagenesis-kit-protocol-e0554",
+          "sourceRecordId": "E0554",
+          "doi": null,
+          "screenStatus": "duplicate",
+          "reason": "Official manufacturer page corroborates the selected kit protocol but is the same workflow without the independent Protocols.io record metadata."
+        }
+      ],
+      "coverageGaps": [
+        "Fragment replacement and multi-fragment assembly mutagenesis were screened out and should be represented as separate child categories if required."
+      ],
+      "nextSearchSuggestions": [
+        "Search for fragment-replacement mutagenesis protocols using Gibson or type IIS assembly.",
+        "Search for high-throughput saturation mutagenesis as a separate variant."
+      ]
+    },
+    {
+      "categoryId": "plasmid-miniprep",
+      "categoryLabel": "Plasmid DNA miniprep",
+      "status": "partial",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://doi.org/10.17504/protocols.io.7j4hkqw",
+        "https://www.thermofisher.com/",
+        "https://www.protocols.io/"
+      ],
+      "representative": {
+        "title": "Plasmid Isolation: Miniprep Protocol for GeneJET Plasmid Miniprep Kit",
+        "protocolType": "Plasmid DNA miniprep protocol",
+        "assay": "Plasmid purification",
+        "operation": "Small-scale plasmid isolation",
+        "source": "Protocols.io",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.7j4hkqw",
+        "sourceRecordId": "7j4hkqw",
+        "doi": "10.17504/protocols.io.7j4hkqw",
+        "authors": [
+          "Alba Balletbó"
+        ],
+        "published": "2019-09-22",
+        "updated": null,
+        "licenseCode": "CC BY",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://www.protocols.io/view/plasmid-isolation-miniprep-protocol-for-genejet-pl-7j4hkqw",
+        "licenseVerifiedAt": "2026-08-01T19:26:17Z",
+        "metadataVerifiedAt": "2026-08-01T19:26:17Z",
+        "specimen": "Bacterial culture",
+        "organism": "Bacterial host; strain not specified",
+        "platform": "GeneJET Plasmid Miniprep Kit",
+        "methodVariant": "Alkaline-lysis silica spin-column miniprep",
+        "safetyLevel": "not specified",
+        "confidence": 0.87,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.92,
+          "sourceAuthority": 0.82,
+          "metadataCompleteness": 0.9,
+          "freshness": 0.72,
+          "corroboration": 0.82,
+          "overall": 0.87
+        },
+        "evidenceStatus": "metadata-verified; license evidence present",
+        "selectionNote": "Selected as a specific, DOI-backed column miniprep record with an explicit kit identity; the record is more reproducible-looking than generic alkaline-lysis summaries."
+      },
+      "screened": [
+        {
+          "title": "GeneJET Plasmid Miniprep Kit protocol",
+          "source": "Thermo Fisher Scientific",
+          "sourceUrl": "https://www.thermofisher.com/order/catalog/product/K0502",
+          "sourceRecordId": "K0502",
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Manufacturer documentation is authoritative for the kit but does not provide the same independent protocol-record metadata and license evidence as the selected record."
+        }
+      ],
+      "coverageGaps": [
+        "The representative does not specify bacterial strain or culture scale in the verified metadata fields.",
+        "Precipitation-based minipreps and high-copy versus low-copy host-specific variants remain separate method variants."
+      ],
+      "nextSearchSuggestions": [
+        "Search for strain-specific miniprep records covering E. coli K-12 and recalcitrant hosts.",
+        "Search for precipitation-based and column-free plasmid miniprep protocols."
+      ]
+    },
+    {
+      "categoryId": "bacterial-transformation",
+      "categoryLabel": "Bacterial transformation",
+      "status": "partial",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://doi.org/10.17504/protocols.io.4f9gtr6",
+        "https://www.addgene.org/protocols/bacterial-transformation/",
+        "https://doi.org/10.17504/protocols.io.bccfistn",
+        "https://doi.org/10.17504/protocols.io.nwgdfbw"
+      ],
+      "representative": {
+        "title": "Bacterial Transformation",
+        "protocolType": "Bacterial transformation protocol",
+        "assay": "Plasmid introduction",
+        "operation": "Transformation of chemically competent bacteria",
+        "source": "Protocols.io / Addgene",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.4f9gtr6",
+        "sourceRecordId": "4f9gtr6",
+        "doi": "10.17504/protocols.io.4f9gtr6",
+        "authors": [
+          "Addgene"
+        ],
+        "published": "2019-09-13",
+        "updated": null,
+        "licenseCode": "CC BY",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://www.protocols.io/view/bacterial-transformation-4f9gtr6",
+        "licenseVerifiedAt": "2026-08-01T19:26:17Z",
+        "metadataVerifiedAt": "2026-08-01T19:26:17Z",
+        "specimen": "Chemically competent bacterial cells",
+        "organism": "Bacteria; strain not specified",
+        "platform": "Chemical transformation and heat shock",
+        "methodVariant": "Heat-shock transformation",
+        "safetyLevel": "not specified",
+        "confidence": 0.9,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.9,
+          "sourceAuthority": 0.95,
+          "metadataCompleteness": 0.88,
+          "freshness": 0.7,
+          "corroboration": 0.9,
+          "overall": 0.9
+        },
+        "evidenceStatus": "metadata-verified; license evidence present",
+        "selectionNote": "Selected because it is the Addgene transformation record with a DOI-backed public protocol page; heat shock is kept as the representative method variant and electroporation is screened separately."
+      },
+      "screened": [
+        {
+          "title": "Electroporation Protocol (C2986)",
+          "source": "Protocols.io / New England Biolabs",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.bccfistn",
+          "sourceRecordId": "bccfistn",
+          "doi": "10.17504/protocols.io.bccfistn",
+          "screenStatus": "wrong-variant",
+          "reason": "Electroporation is a required transformation variant but is intentionally kept separate from the selected chemical heat-shock workflow."
+        },
+        {
+          "title": "E. coli Heat Shock Transformation",
+          "source": "Protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.nwgdfbw",
+          "sourceRecordId": "nwgdfbw",
+          "doi": "10.17504/protocols.io.nwgdfbw",
+          "screenStatus": "alternative",
+          "reason": "Useful E. coli-specific heat-shock alternative, but narrower than the selected Addgene record and less suitable as the packet-level representative."
+        }
+      ],
+      "coverageGaps": [
+        "Electroporation is represented only as a screened variant and needs a dedicated representative if this category is split into child categories.",
+        "Strain-specific competent-cell preparation and transformation efficiency readouts were not normalized into this packet."
+      ],
+      "nextSearchSuggestions": [
+        "Create separate child categories for chemical heat shock and electroporation.",
+        "Search for strain-specific transformation records with explicit efficiency readouts."
+      ]
+    },
+    {
+      "categoryId": "crispr-guide-design",
+      "categoryLabel": "CRISPR guide design and cloning",
+      "status": "partial",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://doi.org/10.17504/protocols.io.x54v9yj3pg3e",
+        "https://doi.org/10.17504/protocols.io.bjp3kmqn",
+        "https://doi.org/10.17504/protocols.io.e6nvwnwo7vmk",
+        "https://portals.broadinstitute.org/gppx/crispick/public"
+      ],
+      "representative": {
+        "title": "CRISPR gRNAs cloning",
+        "protocolType": "CRISPR guide design and cloning protocol",
+        "assay": "Genome editing setup",
+        "operation": "SpCas9 guide design followed by sgRNA oligo cloning",
+        "source": "Protocols.io",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.x54v9yj3pg3e",
+        "sourceRecordId": "x54v9yj3pg3e",
+        "doi": "10.17504/protocols.io.x54v9yj3pg3e",
+        "authors": [
+          "Anita Adami",
+          "Danielle Daft"
+        ],
+        "published": "2024-03-15",
+        "updated": "2024-05-31",
+        "licenseCode": "CC BY",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://www.protocols.io/view/crispr-grnas-cloning-x54v9yj3pg3e",
+        "licenseVerifiedAt": "2026-08-01T19:26:17Z",
+        "metadataVerifiedAt": "2026-08-01T19:26:17Z",
+        "specimen": "Guide oligos and CRISPR plasmid construct",
+        "organism": null,
+        "platform": "CRISPick and type IIS-compatible CRISPR vector",
+        "methodVariant": "SpCas9 sgRNA design with oligo cloning",
+        "safetyLevel": "not specified",
+        "confidence": 0.89,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.94,
+          "sourceAuthority": 0.82,
+          "metadataCompleteness": 0.9,
+          "freshness": 0.9,
+          "corroboration": 0.84,
+          "overall": 0.89
+        },
+        "evidenceStatus": "metadata-verified; license evidence present",
+        "selectionNote": "Selected because it covers both guide design and wet-lab cloning in one DOI-backed record and names the design platform and construct context."
+      },
+      "screened": [
+        {
+          "title": "Target Guide Sequence Cloning Protocol Version 2",
+          "source": "Protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/target-guide-sequence-cloning-protocol-version-2-bjp3kmqn",
+          "sourceRecordId": "bjp3kmqn",
+          "doi": "10.17504/protocols.io.bjp3kmqn",
+          "screenStatus": "alternative",
+          "reason": "Strong targeted-cloning alternative, but narrower because it is tied to a specific lentiGuide-puro vector context."
+        },
+        {
+          "title": "CRISPR Guide RNA Design Guidelines for Efficient CRISPR/Cas9 Gene Editing",
+          "source": "Protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/crispr-guide-rna-design-guidelines-for-efficient-g-e6nvwnwo7vmk",
+          "sourceRecordId": "e6nvwnwo7vmk",
+          "doi": null,
+          "screenStatus": "wrong-variant",
+          "reason": "Design-only record; it does not cover the cloning or construct-assembly portion of the assigned category."
+        }
+      ],
+      "coverageGaps": [
+        "The representative is SpCas9-focused and does not cover Cas12a, base-editing guide design, prime-editing pegRNA design, or pooled-library design.",
+        "Cell type, organism, vector backbone, and delivery mode are not universal across guide-design records."
+      ],
+      "nextSearchSuggestions": [
+        "Search separately for Cas12a, base-editing, and prime-editing guide-design records.",
+        "Search for pooled-library and organism-specific guide-cloning protocols."
+      ]
+    },
+    {
+      "categoryId": "crispr-gene-editing",
+      "categoryLabel": "CRISPR genome editing",
+      "status": "partial",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://doi.org/10.17504/protocols.io.rm7vzxzxrgx1",
+        "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0215591",
+        "https://doi.org/10.17504/protocols.io.5qpvo1j6bg4o",
+        "https://www.protocols.io/"
+      ],
+      "representative": {
+        "title": "An efficient and cost-effective method for disrupting genes in cultured macrophages using CRISPR-Cas9",
+        "protocolType": "CRISPR-Cas9 genome editing protocol",
+        "assay": "Gene knockout",
+        "operation": "Non-viral CRISPR-Cas9 disruption in cultured macrophages",
+        "source": "Protocols.io / PLOS ONE",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.rm7vzxzxrgx1",
+        "sourceRecordId": "rm7vzxzxrgx1",
+        "doi": "10.17504/protocols.io.rm7vzxzxrgx1",
+        "authors": [
+          "Mikako Sano",
+          "Katherine M. S. O'Brien"
+        ],
+        "published": "2024-02-15",
+        "updated": null,
+        "licenseCode": "CC BY",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://www.protocols.io/view/an-efficient-and-cost-effective-method-for-disrupting-rm7vzxzxrgx1",
+        "licenseVerifiedAt": "2026-08-01T19:26:17Z",
+        "metadataVerifiedAt": "2026-08-01T19:26:17Z",
+        "specimen": "Cultured macrophages",
+        "organism": "Murine RAW264.7 macrophage cell line",
+        "platform": "CRISPR-Cas9 plasmid delivery and clonal validation",
+        "methodVariant": "SpCas9 knockout with non-viral delivery",
+        "safetyLevel": "not specified",
+        "confidence": 0.9,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.9,
+          "freshness": 0.84,
+          "corroboration": 0.92,
+          "overall": 0.9
+        },
+        "evidenceStatus": "metadata-verified; license evidence present",
+        "selectionNote": "Selected because the record is DOI-backed, links to the primary PLOS ONE publication, and clearly identifies a complete cell-based SpCas9 knockout context."
+      },
+      "screened": [
+        {
+          "title": "Generation of knock-in and knock-out CRISPR/Cas9 editing in mammalian cells",
+          "source": "Protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/generation-of-knock-in-and-knock-out-crispr-cas9-e-5jyl85x89l2w",
+          "sourceRecordId": "5jyl85x89l2w",
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Broader mammalian knock-in/knock-out scope, but the verified metadata is less specific about the selected delivery and readout context."
+        },
+        {
+          "title": "CRISPR Nickase-Mediated Base Editing in Yeast",
+          "source": "Protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.5qpvo1j6bg4o",
+          "sourceRecordId": "5qpvo1j6bg4o",
+          "doi": "10.17504/protocols.io.5qpvo1j6bg4o",
+          "screenStatus": "wrong-variant",
+          "reason": "Base editing is an assigned assay type but is a distinct editor and organism context from the selected SpCas9 knockout workflow."
+        }
+      ],
+      "coverageGaps": [
+        "Knock-in, base editing, and prime editing need separate representatives because editor chemistry and readouts differ materially.",
+        "Viral delivery, RNP delivery, primary-cell editing, and organism-specific workflows were not mixed into the representative.",
+        "The selected record is a cultured macrophage knockout workflow and should not stand in for all mammalian or in vivo editing."
+      ],
+      "nextSearchSuggestions": [
+        "Create child categories for SpCas9 knockout, knock-in, base editing, and prime editing.",
+        "Search each child category by delivery mode and required validation readout."
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "site-directed-mutagenesis",
+      "plasmid-miniprep",
+      "bacterial-transformation",
+      "crispr-guide-design",
+      "crispr-gene-editing"
+    ],
+    "actualCategoryIds": [
+      "site-directed-mutagenesis",
+      "plasmid-miniprep",
+      "bacterial-transformation",
+      "crispr-guide-design",
+      "crispr-gene-editing"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": false,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-01T19:33:59Z",
+    "selfCheckNotes": [
+      "All five assigned category IDs are present exactly once and in packet order.",
+      "Every representative has an HTTP(S) DOI landing URL and a record-level license evidence URL.",
+      "The packet is partial because several assigned categories contain materially distinct variants that require child-category follow-up.",
+      "No protocol steps, tables, figures, videos, PDFs, or long source passages were stored."
+    ]
+  },
+  "runNotes": [
+    "Metadata-first collection completed across Protocols.io records plus source-family corroboration from NEB, Thermo Fisher, Addgene, Broad CRISPick, and PLOS ONE.",
+    "License evidence was recorded at the protocol-record level where the public record exposed a CC BY statement; exact license version URLs were left null when not stated."
+  ]
+}

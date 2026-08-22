@@ -1,0 +1,464 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Standard PCR (Endpoint DNA Amplification with Taq DNA Polymerase)",
+    "protocolId": "lr-testset-standard-pcr",
+    "version": "0.1",
+    "family": "PCR",
+    "category": "Molecular Biology",
+    "purpose": "Amplify a specific DNA target from a template by endpoint PCR using Taq DNA polymerase with Standard Taq Buffer, producing a double-stranded amplicon for downstream analysis (e.g. agarose gel electrophoresis, cloning, sequencing).",
+    "scope": "Routine endpoint PCR with wild-type Taq DNA Polymerase (NEB #M0273) and Standard Taq Reaction Buffer for targets up to ~5 kb. Not intended for high-fidelity, long-range (>5 kb), quantitative (qPCR), or GC-rich templates that require a proofreading or hot-start enzyme.",
+    "estimatedTime": "~1.5-3 h (reaction setup plus ~30 thermal cycles)",
+    "beforeYouBegin": [
+      "Design forward and reverse primers flanking the target; know the amplicon length (to set extension time at 1 min/kb) and primer Tm (to set the annealing temperature).",
+      "Assemble all reaction components on ice; keep Taq DNA Polymerase in a cooling block.",
+      "Preheat the thermal cycler to the 95 C denaturation temperature before loading tubes."
+    ],
+    "tags": [
+      "PCR",
+      "endpoint PCR",
+      "DNA amplification",
+      "Taq polymerase",
+      "thermocycling"
+    ]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "10X Standard Taq Reaction Buffer",
+      "role": "buffer",
+      "workingConcentration": "1X in the reaction",
+      "specification": "10X concentrate; 1X = 10 mM Tris-HCl, 50 mM KCl, 1.5 mM MgCl2, pH 8.3 at 25 C (standard NEB formulation; exact composition not stated on the fetched protocol page)",
+      "vendor": "New England Biolabs",
+      "catalogNumber": "B9014 (supplied with M0273)",
+      "storage": "-20 C",
+      "rawText": "10X Standard Taq Reaction Buffer  5 uL  1X",
+      "needsReview": true
+    },
+    {
+      "id": "m2",
+      "name": "Deoxynucleotide (dNTP) solution mix",
+      "role": "reagent",
+      "workingConcentration": "200 uM each in the reaction",
+      "specification": "10 mM each of dATP, dCTP, dGTP, dTTP",
+      "storage": "-20 C",
+      "rawText": "10 mM dNTPs  1 uL  200 uM"
+    },
+    {
+      "id": "m3",
+      "name": "Forward primer",
+      "role": "reagent",
+      "workingConcentration": "0.2 uM final (usable range 0.05-1 uM)",
+      "specification": "10 uM stock; sequence is target-specific and defined by the user",
+      "rawText": "10 uM Forward Primer  1 uL  0.2 uM (0.05-1 uM)",
+      "needsReview": true
+    },
+    {
+      "id": "m4",
+      "name": "Reverse primer",
+      "role": "reagent",
+      "workingConcentration": "0.2 uM final (usable range 0.05-1 uM)",
+      "specification": "10 uM stock; sequence is target-specific and defined by the user",
+      "rawText": "10 uM Reverse Primer  1 uL  0.2 uM (0.05-1 uM)",
+      "needsReview": true
+    },
+    {
+      "id": "m5",
+      "name": "Taq DNA Polymerase",
+      "role": "enzyme",
+      "workingConcentration": "1.25 units per 50 uL reaction",
+      "specification": "5 U/uL stock",
+      "vendor": "New England Biolabs",
+      "catalogNumber": "M0273",
+      "storage": "-20 C",
+      "rawText": "Taq DNA Polymerase  0.25 uL  1.25 Units/50 uL PCR"
+    },
+    {
+      "id": "m6",
+      "name": "Nuclease-free water",
+      "role": "solvent",
+      "specification": "Molecular-biology grade; brings reaction to final volume",
+      "rawText": "Nuclease-Free Water  To 50 uL"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Programmable thermal cycler",
+      "settings": "Preheat block to 95 C (denaturation temperature) before loading; heated lid enabled"
+    }
+  ],
+  "samples": [
+    {
+      "id": "sp1",
+      "name": "Template DNA",
+      "role": "input",
+      "description": "Genomic, plasmid, or cDNA template; use < 1000 ng per 50 uL reaction. Organism/source is defined by the user.",
+      "needsReview": true
+    },
+    {
+      "id": "sp2",
+      "name": "PCR amplicon",
+      "role": "output",
+      "description": "Double-stranded DNA product spanning the primer-defined target region; length is target-dependent."
+    }
+  ],
+  "containers": [
+    {
+      "id": "c1",
+      "name": "0.2 mL thin-walled PCR tube (or strip/plate)",
+      "type": "tube"
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "PCR reaction setup (master mix)",
+      "columns": [
+        "Component",
+        "Stock",
+        "Volume per 25 uL rxn",
+        "Volume per 50 uL rxn",
+        "Final concentration"
+      ],
+      "rows": [
+        [
+          "10X Standard Taq Reaction Buffer",
+          "10X",
+          "2.5 uL",
+          "5 uL",
+          "1X"
+        ],
+        [
+          "dNTPs",
+          "10 mM each",
+          "0.5 uL",
+          "1 uL",
+          "200 uM each"
+        ],
+        [
+          "Forward primer",
+          "10 uM",
+          "0.5 uL",
+          "1 uL",
+          "0.2 uM (0.05-1 uM)"
+        ],
+        [
+          "Reverse primer",
+          "10 uM",
+          "0.5 uL",
+          "1 uL",
+          "0.2 uM (0.05-1 uM)"
+        ],
+        [
+          "Template DNA",
+          "-",
+          "variable",
+          "variable",
+          "< 1000 ng"
+        ],
+        [
+          "Taq DNA Polymerase",
+          "5 U/uL",
+          "0.125 uL",
+          "0.25 uL",
+          "1.25 units / 50 uL"
+        ],
+        [
+          "Nuclease-free water",
+          "-",
+          "to 25 uL",
+          "to 50 uL",
+          "-"
+        ]
+      ],
+      "note": "Assemble on ice. For multiple reactions, prepare a template-free master mix and aliquot, then add template."
+    },
+    {
+      "id": "t2",
+      "title": "Thermocycling program",
+      "columns": [
+        "Step",
+        "Temperature",
+        "Time",
+        "Cycles"
+      ],
+      "rows": [
+        [
+          "Initial denaturation",
+          "95 C",
+          "30 s",
+          1
+        ],
+        [
+          "Denaturation",
+          "95 C",
+          "15-30 s",
+          30
+        ],
+        [
+          "Annealing",
+          "45-68 C",
+          "15-60 s",
+          30
+        ],
+        [
+          "Extension",
+          "68 C",
+          "1 min/kb",
+          30
+        ],
+        [
+          "Final extension",
+          "68 C",
+          "5 min",
+          1
+        ],
+        [
+          "Hold",
+          "4-10 C",
+          "hold",
+          null
+        ]
+      ],
+      "note": "The denaturation/annealing/extension trio is repeated for 30 cycles. Set the annealing temperature to the primer Tm (guidance range 45-68 C); set extension time to ~1 min per kb of amplicon."
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Setup",
+      "action": "Thaw and gently mix all reagents; keep on ice throughout assembly.",
+      "materialIds": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6"
+      ],
+      "criticalNotes": "Add the polymerase last and keep it in a cooling block."
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Setup",
+      "action": "Assemble the PCR reaction in a thin-walled PCR tube on ice per the master-mix table (scale to 25 uL or 50 uL).",
+      "materialIds": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "tableIds": [
+        "t1"
+      ],
+      "inputIds": [
+        "sp1",
+        "m3",
+        "m4"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 50,
+          "unit": "uL",
+          "rawText": "50 uL Reaction"
+        }
+      ],
+      "expectedResult": "Complete reaction mix, template plus primers, ready to cycle."
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Setup",
+      "action": "Gently mix the reaction, briefly spin down, and transfer tubes to the thermal cycler preheated to 95 C.",
+      "equipmentIds": [
+        "e1"
+      ],
+      "containerIds": [
+        "c1"
+      ]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Thermocycling",
+      "action": "Run the thermocycling program: initial denaturation, then 30 cycles of denaturation/annealing/extension, followed by a final extension and hold.",
+      "equipmentIds": [
+        "e1"
+      ],
+      "tableIds": [
+        "t2"
+      ],
+      "inputIds": [
+        "sp1",
+        "m3",
+        "m4"
+      ],
+      "outputIds": [
+        "sp2"
+      ],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 95,
+          "unit": "degC",
+          "rawText": "Initial Denaturation 95 C"
+        },
+        {
+          "type": "time",
+          "value": 30,
+          "unit": "s",
+          "rawText": "30 seconds"
+        },
+        {
+          "type": "count",
+          "value": 30,
+          "unit": "cycles",
+          "rawText": "30 Cycles"
+        },
+        {
+          "type": "temperature",
+          "value": 95,
+          "unit": "degC",
+          "rawText": "95 C (denaturation, 15-30 seconds)"
+        },
+        {
+          "type": "time",
+          "value": 15,
+          "valueMax": 30,
+          "unit": "s",
+          "rawText": "15-30 seconds"
+        },
+        {
+          "type": "temperature",
+          "value": 45,
+          "valueMax": 68,
+          "unit": "degC",
+          "rawText": "*45-68 C (adjust to primer annealing temperature)",
+          "needsReview": true
+        },
+        {
+          "type": "time",
+          "value": 15,
+          "valueMax": 60,
+          "unit": "s",
+          "rawText": "15-60 seconds"
+        },
+        {
+          "type": "temperature",
+          "value": 68,
+          "unit": "degC",
+          "rawText": "68 C (extension)"
+        },
+        {
+          "type": "time",
+          "value": null,
+          "unit": "min/kb",
+          "rawText": "68 C 1 minute/kb"
+        },
+        {
+          "type": "temperature",
+          "value": 68,
+          "unit": "degC",
+          "rawText": "Final Extension 68 C"
+        },
+        {
+          "type": "time",
+          "value": 5,
+          "unit": "min",
+          "rawText": "5 minutes"
+        },
+        {
+          "type": "temperature",
+          "value": 4,
+          "valueMax": 10,
+          "unit": "degC",
+          "rawText": "Hold 4-10 C"
+        }
+      ],
+      "expectedResult": "Exponential accumulation of the target amplicon."
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Analysis",
+      "action": "Hold the reaction at 4-10 C; analyze an aliquot by agarose gel electrophoresis or proceed to downstream use, or store.",
+      "optional": true,
+      "outputIds": [
+        "sp2"
+      ],
+      "pausePoint": true,
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 4,
+          "valueMax": 10,
+          "unit": "degC",
+          "rawText": "Hold 4-10 C"
+        }
+      ],
+      "expectedResult": "A single band of the expected size on an agarose gel."
+    }
+  ],
+  "controls": [
+    {
+      "name": "NTC (no-template control)",
+      "description": "Reaction with nuclease-free water in place of template DNA to detect reagent/primer contamination. Recommended good practice; not specified on the source protocol page.",
+      "needsReview": true
+    },
+    {
+      "name": "Positive control template",
+      "description": "A template known to amplify with the primer pair, to confirm reagents and cycling performed correctly.",
+      "needsReview": true
+    }
+  ],
+  "expectedOutputs": [
+    "A discrete double-stranded DNA band of the expected amplicon size on an agarose gel.",
+    "No product in the no-template control."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "No product",
+      "cause": "Annealing temperature too high; too little template; degraded primers/enzyme",
+      "solution": "Lower annealing temperature toward primer Tm; increase template (<1000 ng); use fresh primers/Taq"
+    },
+    {
+      "problem": "Nonspecific / multiple bands",
+      "cause": "Annealing temperature too low; excess primer or template; too many cycles",
+      "solution": "Raise annealing temperature; reduce primer/template; reduce cycle number"
+    },
+    {
+      "problem": "Smearing",
+      "cause": "Extension too long or too much enzyme/template",
+      "solution": "Shorten extension; reduce Taq and template amounts"
+    }
+  ],
+  "safety": [
+    "Wear gloves and eye protection; follow institutional rules for handling and disposing of PCR reagents and, downstream, any DNA stain used for gel visualization."
+  ],
+  "biosafetyLevel": "not specified",
+  "limitations": "Wild-type Taq lacks 3'->5' proofreading, so this protocol is not appropriate where high fidelity is required. Amplicon length, annealing temperature, and extension time must be tuned to the specific primer pair and target and are left to the user.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "url",
+      "title": "PCR Protocol for Taq DNA Polymerase with Standard Taq Buffer (NEB #M0273)",
+      "url": "https://www.neb.com/en/protocols/taq-dna-polymerase-with-standard-taq-buffer-m0273",
+      "license": "NEB online protocol; reuse terms not specified",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

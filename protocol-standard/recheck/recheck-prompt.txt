@@ -1,0 +1,29 @@
+5am re-check of the LabRecord Protocol Library. The working directory is the project root
+(D:\大学\暑研\7-31 protocol library). This run is UNATTENDED with acceptEdits permissions —
+do NOT use shell/Bash or web tools (they would prompt and stall). Work only from files you
+can Read, and update via Write/Edit.
+
+Steps:
+1. Read docs/STATUS.md (at least the top section), protocol-standard/README.md, and
+   protocol-standard/presentation-plan.md to load the current state and roadmap.
+2. Treat presentation-plan.md's section list + the deliverables in README.md as the checklist
+   (it mirrors the Google Doc "To Do 0822").
+3. Produce a concise findings report covering:
+   (a) What remains vs the plan — Section 4 (DB/API/website implementation) and Section 5
+       (LLM parser / MCP, deferred) are the main pending items; state the SMALLEST sensible
+       next step to start Section 4.
+   (b) What to optimize/fix — from the schema v0.2 ideas already noted (UCUM unit codes;
+       decouple amount from reagent identity; structured expectedResult with an onFail branch;
+       JSON-LD @context; a first-class table object for things like dilution series;
+       ontology/DefinedTerm bindings). Pick the 3 highest-leverage ones and say why.
+   (c) Relevant GitHub projects to borrow from — reuse the table in presentation-plan.md
+       (protocols.io, Bioprotocols/LabOP, ISA-tools, Opentrons, Open Reaction Database,
+       schema.org/Bioschemas). If protocol-standard/references-github-issues.md exists,
+       incorporate its lessons.
+4. Prepend a new dated section to docs/STATUS.md: first Read the ENTIRE file; then create a
+   backup by Writing its full current content to docs/STATUS.md.bak_20260821_5am; then Edit
+   docs/STATUS.md to insert a new section titled
+   "## Protocol 5am 复查（2026-08-21 本地 5am）"
+   immediately AFTER the first line "# 当前交接状态" and BEFORE the existing first "## "
+   section. Never rewrite or delete existing sections.
+5. Report your findings concisely in Chinese as your final message.

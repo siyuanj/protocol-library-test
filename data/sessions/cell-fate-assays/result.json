@@ -1,0 +1,409 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "cell-fate-assays",
+  "sessionTitle": "Cell viability, proliferation, and fate",
+  "packetStatus": "complete",
+  "startedAt": "2026-08-01T19:40:00Z",
+  "writtenAt": "2026-08-01T20:18:00Z",
+  "worker": "codex-protocol-atlas-cell-fate-assays-2026-08-01",
+  "sourcesSearched": [
+    "https://www.protocols.io/view/resazurin-cell-viability-assay-in-hipsc-derived-in-d4mk8u4w.pdf",
+    "https://doi.org/10.17504/protocols.io.d4mk8u4w",
+    "https://www.protocols.io/view/cell-viability-assay-mtt-assay-protocol-c3tmynk6.pdf",
+    "https://www.protocols.io/view/cell-proliferation-related-assays-hrqvb55w7.pdf",
+    "https://www.protocols.io/view/edu-incorporation-and-analysis-in-pancreatic-islet-n92ldz8d9v5b/v1",
+    "https://www.protocols.io/view/edu-immunohistochemistry-using-click-it-reaction-crezv3f6.pdf",
+    "https://www.protocols.io/view/the-use-of-bromodeoxyuridine-incorporation-assays-rm7vz45zxlx1/v1",
+    "https://www.protocols.io/view/annexin-v-and-propidium-iodide-staining-for-detecti-d5e94z4g",
+    "https://www.protocols.io/view/caspase-3-7-activity-x54v97mkzg3e/v1",
+    "https://www.protocols.io/view/caspase-apoptosis-fluorometic-assay-with-cell-lysa-e9cbh2w.pdf",
+    "https://www.protocols.io/view/apoptosis-detection-with-cellevent-caspase-3-7-gztibx6kf.pdf",
+    "https://www.protocols.io/view/propidium-iodide-cell-cycle-staining-protocol-bacyiaxw.pdf",
+    "https://www.protocols.io/view/propidium-iodide-pi-staining-of-cells-for-cell-cycl-btaxinfn",
+    "https://www.protocols.io/view/edu-labeling-for-cell-cycle-analysis-cvbw2q7",
+    "https://api.crossref.org/works?query.bibliographic=cell%20viability%20MTT%20resazurin%20ATP%20protocol&filter=prefix%3A10.17504&rows=20",
+    "https://api.crossref.org/works?query.bibliographic=EdU%20BrdU%20cell%20proliferation%20protocol&filter=prefix%3A10.17504&rows=20",
+    "https://api.crossref.org/works?query.bibliographic=Annexin%20V%20caspase%20apoptosis%20protocol&filter=prefix%3A10.17504&rows=20",
+    "https://api.crossref.org/works?query.bibliographic=propidium%20iodide%20cell%20cycle%20protocol&filter=prefix%3A10.17504&rows=20"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "cell-viability",
+      "categoryLabel": "Cell viability assay",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/view/resazurin-cell-viability-assay-in-hipsc-derived-in-d4mk8u4w.pdf",
+        "https://doi.org/10.17504/protocols.io.d4mk8u4w",
+        "https://www.protocols.io/view/cell-viability-assay-mtt-assay-protocol-c3tmynk6.pdf",
+        "https://www.protocols.io/view/cell-proliferation-related-assays-hrqvb55w7.pdf",
+        "https://api.crossref.org/works?query.bibliographic=cell%20viability%20MTT%20resazurin%20ATP%20protocol&filter=prefix%3A10.17504&rows=20"
+      ],
+      "representative": {
+        "title": "Resazurin Cell Viability Assay in hiPSC-derived induced microglia and neurons",
+        "protocolType": "Public experimental protocol",
+        "assay": "Resazurin metabolic cell-viability assay",
+        "operation": "Cell viability measurement using resazurin reduction in a microplate readout",
+        "source": "protocols.io",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.d4mk8u4w",
+        "sourceRecordId": "12918",
+        "doi": "10.17504/protocols.io.d4mk8u4w",
+        "authors": [
+          "Brian Aksoy",
+          "Meltem Serdar",
+          "Mugce Boz"
+        ],
+        "published": "2023-10-23",
+        "updated": "2023-11-01",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.d4mk8u4w",
+        "licenseVerifiedAt": "2026-08-01T20:05:00Z",
+        "metadataVerifiedAt": "2026-08-01T20:05:00Z",
+        "specimen": "hiPSC-derived induced microglia and neurons",
+        "organism": "Human",
+        "platform": "Microplate resazurin fluorescence or absorbance readout",
+        "methodVariant": "Resazurin endpoint in human induced neural cell types",
+        "safetyLevel": "not specified",
+        "confidence": 0.93,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.97,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.92,
+          "freshness": 0.82,
+          "corroboration": 0.94,
+          "overall": 0.93
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as the strongest direct viability record because the protocol is explicitly titled for cell viability, identifies the resazurin endpoint and human induced-cell specimen, and has DOI-backed metadata with CC BY 4.0 evidence. MTT and ATP-luminescence records remain separate chemistry variants."
+      },
+      "screened": [
+        {
+          "title": "Cell Viability Assay (MTT Assay) Protocol",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/cell-viability-assay-mtt-assay-protocol-c3tmynk6.pdf",
+          "sourceRecordId": "8epv5x3kdg1b",
+          "doi": "10.17504/protocols.io.8epv5x3kdg1b/v1",
+          "screenStatus": "alternative",
+          "reason": "Direct MTT viability record and a meaningful chemistry alternative, but the accessible metadata is less specific about specimen and platform than the selected resazurin record."
+        },
+        {
+          "title": "CellTiter-Glo 2.0 Cell Viability Assay",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/cell-proliferation-related-assays-hrqvb55w7.pdf",
+          "sourceRecordId": "77846",
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "ATP-luminescence viability endpoint is in scope, but the source is a related-assays collection and is not as cleanly scoped to one cell-viability record."
+        },
+        {
+          "title": "Resazurin Cell Viability Assay in hiPSC-derived induced microglia and neurons",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.d4mk8u4w",
+          "sourceRecordId": "12918",
+          "doi": "10.17504/protocols.io.d4mk8u4w",
+          "screenStatus": "duplicate",
+          "reason": "Same DOI-backed record as the representative; retained here only to document duplicate discovery through the direct protocol and DOI routes."
+        }
+      ],
+      "coverageGaps": [
+        "MTT, resazurin, ATP-luminescence, and dye-free viability readouts are materially different endpoint chemistries and should be split into child categories for execution-level comparison.",
+        "The representative is a human induced-neural-cell variant; mammalian primary cells, immortalized lines, organoids, and non-human specimens remain separate specimen variants."
+      ],
+      "nextSearchSuggestions": [
+        "Create child categories for MTT, resazurin, and ATP-luminescence viability assays.",
+        "Add explicit specimen, plate-reader modality, and cytotoxicity-versus-baseline operation facets."
+      ]
+    },
+    {
+      "categoryId": "cell-proliferation",
+      "categoryLabel": "Cell proliferation assay",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/view/edu-incorporation-and-analysis-in-pancreatic-islet-n92ldz8d9v5b/v1",
+        "https://www.protocols.io/view/edu-immunohistochemistry-using-click-it-reaction-crezv3f6.pdf",
+        "https://www.protocols.io/view/the-use-of-bromodeoxyuridine-incorporation-assays-rm7vz45zxlx1/v1",
+        "https://api.crossref.org/works?query.bibliographic=EdU%20BrdU%20cell%20proliferation%20protocol&filter=prefix%3A10.17504&rows=20"
+      ],
+      "representative": {
+        "title": "EdU Incorporation and Analysis in Pancreatic Islets",
+        "protocolType": "Public experimental protocol",
+        "assay": "EdU incorporation cell-proliferation assay",
+        "operation": "Pulse-labeling of DNA synthesis followed by EdU and insulin immunophenotyping",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/edu-incorporation-and-analysis-in-pancreatic-islet-n92ldz8d9v5b/v1",
+        "sourceRecordId": "59811",
+        "doi": "10.17504/protocols.io.n92ldz8d9v5b/v1",
+        "authors": [
+          "Julien Ghislain",
+          "Vincent Poitout"
+        ],
+        "published": "2022-03-23",
+        "updated": "2022-05-02",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.n92ldz8d9v5b",
+        "licenseVerifiedAt": "2026-08-01T20:07:00Z",
+        "metadataVerifiedAt": "2026-08-01T20:07:00Z",
+        "specimen": "Pancreatic islet cells",
+        "organism": null,
+        "platform": "Flow cytometry",
+        "methodVariant": "EdU pulse labeling with click chemistry and insulin co-immunophenotyping",
+        "safetyLevel": "not specified",
+        "confidence": 0.92,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.9,
+          "freshness": 0.76,
+          "corroboration": 0.94,
+          "overall": 0.92
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as the strongest direct proliferation record because it explicitly measures EdU incorporation, identifies the pulse-labeling and immunophenotyping operation, names the pancreatic-islet specimen, and has stable DOI-backed CC BY 4.0 metadata. EdU imaging/IHC and BrdU are retained as distinct alternatives."
+      },
+      "screened": [
+        {
+          "title": "EdU Immunohistochemistry Using Click-iT Reaction",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/edu-immunohistochemistry-using-click-it-reaction-crezv3f6.pdf",
+          "sourceRecordId": "crezv3f6",
+          "doi": "10.17504/protocols.io.crezv3f6/v1",
+          "screenStatus": "alternative",
+          "reason": "Direct EdU proliferation workflow, but it uses immunohistochemistry in tissue rather than the selected flow-cytometry/islet format."
+        },
+        {
+          "title": "The Use of Bromodeoxyuridine Incorporation Assays to Assess Corneal Stem Cell Proliferation",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/the-use-of-bromodeoxyuridine-incorporation-assays-rm7vz45zxlx1/v1",
+          "sourceRecordId": "rm7vz45zxlx1",
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Direct DNA-synthesis proliferation assay, but BrdU is a distinct pulse-labeling analog and the record is specific to corneal stem cells."
+        },
+        {
+          "title": "CellTiter-Glo 2.0 Cell Viability Assay",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/cell-proliferation-related-assays-hrqvb55w7.pdf",
+          "sourceRecordId": "77846",
+          "doi": null,
+          "screenStatus": "wrong-variant",
+          "reason": "Related to cell-number or growth measurements, but ATP viability is not a direct DNA-synthesis proliferation readout."
+        }
+      ],
+      "coverageGaps": [
+        "EdU flow cytometry, EdU imaging/IHC, BrdU, Ki-67, and cumulative growth assays are distinct readout modalities and should not be merged operationally.",
+        "The representative does not define a universal pulse duration or cell-cycle synchronization context; those are specimen- and experiment-specific facets."
+      ],
+      "nextSearchSuggestions": [
+        "Create child categories for EdU flow cytometry, EdU imaging/IHC, BrdU, and non-labeling growth assays.",
+        "Add pulse duration, labeling concentration, synchronization status, and readout modality fields."
+      ]
+    },
+    {
+      "categoryId": "apoptosis-assay",
+      "categoryLabel": "Apoptosis assay",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/view/annexin-v-and-propidium-iodide-staining-for-detecti-d5e94z4g",
+        "https://www.protocols.io/view/caspase-3-7-activity-x54v97mkzg3e/v1",
+        "https://www.protocols.io/view/caspase-apoptosis-fluorometic-assay-with-cell-lysa-e9cbh2w.pdf",
+        "https://www.protocols.io/view/apoptosis-detection-with-cellevent-caspase-3-7-gztibx6kf.pdf",
+        "https://api.crossref.org/works?query.bibliographic=Annexin%20V%20caspase%20apoptosis%20protocol&filter=prefix%3A10.17504&rows=20"
+      ],
+      "representative": {
+        "title": "Annexin V and Propidium Iodide Staining for Detection of Apoptosis in Cell Culture",
+        "protocolType": "Public experimental protocol",
+        "assay": "Annexin V / propidium iodide apoptosis assay",
+        "operation": "Flow-cytometric discrimination of viable, early-apoptotic, and membrane-compromised cells",
+        "source": "protocols.io",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.d5e94z4g",
+        "sourceRecordId": "61999",
+        "doi": "10.17504/protocols.io.d5e94z4g",
+        "authors": [
+          "Guangli Suo"
+        ],
+        "published": "2021-03-17",
+        "updated": "2021-03-17",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.d5e94z4g",
+        "licenseVerifiedAt": "2026-08-01T20:09:00Z",
+        "metadataVerifiedAt": "2026-08-01T20:09:00Z",
+        "specimen": "Cultured cells",
+        "organism": null,
+        "platform": "Flow cytometry",
+        "methodVariant": "Annexin V binding with propidium iodide membrane-integrity counterstain",
+        "safetyLevel": "not specified",
+        "confidence": 0.94,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.98,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.91,
+          "freshness": 0.74,
+          "corroboration": 0.95,
+          "overall": 0.94
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as the strongest direct apoptosis record because it is specifically an Annexin V/PI assay, names the flow-cytometry operation and apoptosis-state discrimination, and has DOI-backed CC BY 4.0 metadata. Caspase-activity and morphology-only assays are explicitly retained as separate variants."
+      },
+      "screened": [
+        {
+          "title": "Caspase-3/7 Activity Assay",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/caspase-3-7-activity-x54v97mkzg3e/v1",
+          "sourceRecordId": "125870",
+          "doi": "10.17504/protocols.io.x54v97mkzg3e/v1",
+          "screenStatus": "alternative",
+          "reason": "Direct caspase-3/7 activity assay, retained as a distinct biochemical or luminescent apoptosis readout rather than merged with Annexin V/PI."
+        },
+        {
+          "title": "Caspase Apoptosis Fluorometric Assay with Cell Lysates",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/caspase-apoptosis-fluorometic-assay-with-cell-lysa-e9cbh2w.pdf",
+          "sourceRecordId": "3076",
+          "doi": "10.17504/protocols.io.e9cbh2w",
+          "screenStatus": "alternative",
+          "reason": "Direct fluorometric caspase assay using cell lysates; biochemical endpoint and sample processing differ from intact-cell Annexin V/PI flow cytometry."
+        },
+        {
+          "title": "Apoptosis Detection with CellEvent Caspase-3/7 Green Detection Reagent",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/apoptosis-detection-with-cellevent-caspase-3-7-gztibx6kf.pdf",
+          "sourceRecordId": "218698",
+          "doi": "10.17504/protocols.io.rm7vzqd95vx1/v1",
+          "screenStatus": "alternative",
+          "reason": "Caspase-3/7 fluorescent imaging or flow-style reagent workflow; retained separately from Annexin V/PI and from morphology-only methods."
+        }
+      ],
+      "coverageGaps": [
+        "Annexin V/PI, caspase activity, TUNEL, mitochondrial-potential, and morphology-only readouts measure different apoptotic states or mechanisms and require separate child categories.",
+        "The representative is an intact cultured-cell flow-cytometry variant; tissue, fixed-cell, live-imaging, and lysate-based workflows remain separate specimen or platform variants."
+      ],
+      "nextSearchSuggestions": [
+        "Create child categories for Annexin V/PI, caspase activity, TUNEL, mitochondrial potential, and morphology-only apoptosis assays.",
+        "Add apoptosis stage, live-versus-fixed state, fluorophore, gating or image-analysis platform, and positive-control fields."
+      ]
+    },
+    {
+      "categoryId": "cell-cycle",
+      "categoryLabel": "Cell-cycle analysis",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/view/propidium-iodide-cell-cycle-staining-protocol-bacyiaxw.pdf",
+        "https://www.protocols.io/view/propidium-iodide-pi-staining-of-cells-for-cell-cycl-btaxinfn",
+        "https://www.protocols.io/view/edu-labeling-for-cell-cycle-analysis-cvbw2q7",
+        "https://api.crossref.org/works?query.bibliographic=propidium%20iodide%20cell%20cycle%20protocol&filter=prefix%3A10.17504&rows=20"
+      ],
+      "representative": {
+        "title": "Propidium Iodide Cell Cycle Staining Protocol",
+        "protocolType": "Public experimental protocol",
+        "assay": "DNA-content cell-cycle analysis",
+        "operation": "Ethanol fixation followed by propidium iodide/RNase DNA-content staining and flow-cytometric profiling",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/propidium-iodide-cell-cycle-staining-protocol-bacyiaxw.pdf",
+        "sourceRecordId": "bacyiaxw",
+        "doi": null,
+        "authors": [
+          "Sam Li"
+        ],
+        "published": "2020-07-15",
+        "updated": "2020-07-15",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://www.protocols.io/view/propidium-iodide-cell-cycle-staining-protocol-bacyiaxw.pdf",
+        "licenseVerifiedAt": "2026-08-01T20:11:00Z",
+        "metadataVerifiedAt": "2026-08-01T20:11:00Z",
+        "specimen": "Cultured cells",
+        "organism": null,
+        "platform": "Flow cytometry",
+        "methodVariant": "Fixed-cell PI/RNase DNA-content profiling",
+        "safetyLevel": "not specified",
+        "confidence": 0.9,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.87,
+          "metadataCompleteness": 0.9,
+          "freshness": 0.7,
+          "corroboration": 0.92,
+          "overall": 0.9
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because it directly covers fixation, PI/RNase DNA-content staining, and flow-cytometric cell-cycle profiling. The record has a unique protocols.io source identifier and visible CC BY 4.0 evidence, but no DOI was available in the verified metadata. EdU-based cell-cycle analysis remains a separate labeling variant."
+      },
+      "screened": [
+        {
+          "title": "Propidium Iodide (PI) Staining of Cells for Cell Cycle Analysis",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/propidium-iodide-pi-staining-of-cells-for-cell-cycl-btaxinfn",
+          "sourceRecordId": "btaxinfn",
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Direct PI cell-cycle record, retained as an alternative because the available metadata is less explicit about the full fixation and instrument context than the selected record."
+        },
+        {
+          "title": "EdU Labeling for Cell Cycle Analysis",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/edu-labeling-for-cell-cycle-analysis-cvbw2q7",
+          "sourceRecordId": "cvbw2q7",
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Direct cell-cycle profiling variant using EdU pulse labeling rather than PI DNA-content staining; retained separately because it reports synthesis and DNA content through a different modality."
+        },
+        {
+          "title": "Propidium Iodide Cell Cycle Staining Protocol",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/propidium-iodide-cell-cycle-staining-protocol-bacyiaxw.pdf",
+          "sourceRecordId": "bacyiaxw",
+          "doi": null,
+          "screenStatus": "duplicate",
+          "reason": "Same source record as the representative; duplicate discovery through the direct protocol PDF route."
+        }
+      ],
+      "coverageGaps": [
+        "PI DNA-content, EdU/PI dual-parameter, BrdU/PI, live-cell reporters, and synchronization-dependent profiles are distinct cell-cycle methods.",
+        "Instrument model, DNA-content analysis software, doublet discrimination, and gating conventions are not normalized in the metadata-only record."
+      ],
+      "nextSearchSuggestions": [
+        "Create child categories for PI DNA-content, EdU/PI dual-parameter, BrdU/PI, and live-cell cell-cycle profiling.",
+        "Add fixation chemistry, RNase treatment, stain concentration, instrument model, doublet handling, and analysis software fields."
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "cell-viability",
+      "cell-proliferation",
+      "apoptosis-assay",
+      "cell-cycle"
+    ],
+    "actualCategoryIds": [
+      "cell-viability",
+      "cell-proliferation",
+      "apoptosis-assay",
+      "cell-cycle"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": true,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-01T20:18:00Z",
+    "selfCheckNotes": [
+      "Exactly four categoryResults are present in the assigned packet order.",
+      "Every representative has an HTTP(S) sourceUrl and either a stable protocols.io source record ID or a DOI; the cell-cycle representative has a unique source record ID but no DOI was available in verified metadata.",
+      "Representative protocols.io records were selected with explicit CC BY 4.0 license evidence; no protocol steps, tables, figures, videos, PDFs, or long source passages were copied into the result.",
+      "MTT/resazurin/ATP, EdU/BrdU, Annexin V/caspase, and PI/EdU cell-cycle variants are documented as screened records or coverage gaps rather than silently merged.",
+      "Result was re-read and parsed as JSON after writing."
+    ]
+  },
+  "runNotes": [
+    "Research was metadata-first and limited to public protocols.io records plus DOI/Crossref metadata routes.",
+    "Search-result pages were treated as discovery only; representatives use direct protocol or DOI URLs.",
+    "The packet is complete at the four assigned category level, with explicit child-category suggestions for chemistry, specimen, readout, fixation, and platform variants."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0",
+  "project": "Protocol Atlas",
+  "phase": "phase-1",
+  "promptVersion": "phase1-v4-coverage-license-normalization",
+  "metadataOnly": true,
+  "categoryRegistry": "../../common-protocol-categories.js",
+  "protocolRecordSchema": "../../protocol-schema.json",
+  "liveDataRoot": "../../data/sessions",
+  "screenedRoot": "../02-screened",
+  "normalizedRoot": "../03-normalized",
+  "reviewRoot": "../04-review",
+  "deliveryRoot": "../05-delivery",
+  "archiveRoot": "../99-archive",
+  "concurrencyRule": "A collection session writes only to its assigned ../../data/sessions/<session-id>/result.json path. The static pages derive expected paths from the fixed queue; the coordinator is the only writer for shared review directories.",
+  "retentionRule": "Store metadata, source URLs, license evidence URLs, and short notes. Do not store copied protocol text or media without explicit rights review."
+}

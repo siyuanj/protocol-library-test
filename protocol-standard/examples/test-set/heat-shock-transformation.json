@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Bacterial Heat-Shock Transformation of E. coli",
+    "protocolId": "lr-test-heat-shock-transformation",
+    "version": "0.1",
+    "family": "Transformation",
+    "category": "Molecular Biology",
+    "purpose": "Introduce plasmid DNA into chemically competent E. coli by a brief 42 C heat shock, recover the cells, and select transformants on antibiotic agar plates.",
+    "scope": "Heat-shock (chemical) transformation of laboratory E. coli cloning strains with a supercoiled plasmid carrying a selectable antibiotic-resistance marker. Electroporation and competent-cell preparation are out of scope.",
+    "estimatedTime": "~2 h hands-on + overnight plate incubation",
+    "beforeYouBegin": [
+      "Thaw competent cells on ice just before use; keep them cold at all times.",
+      "Pre-warm selective LB agar plates and recovery medium (SOC or LB) to 37 C.",
+      "Use a plasmid with an antibiotic-resistance marker matching the antibiotic in your plates."
+    ],
+    "tags": ["transformation", "heat shock", "E. coli", "competent cells", "plasmid", "cloning"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Chemically competent E. coli", "role": "other", "amount": 20, "amountMax": 50, "unit": "uL", "specification": "Chemically competent laboratory E. coli cloning strain; volume per transformation", "storage": "-80 C", "rawText": "20-50 μL of competent cells", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "excerpt": "20-50 μL of competent cells" }] },
+    { "id": "m2", "name": "Plasmid DNA", "role": "reagent", "amount": 1, "amountMax": 5, "unit": "uL", "workingConcentration": "10 pg - 100 ng total", "rawText": "1 - 5 μl of DNA (usually 10 pg - 100 ng)", "sourceReferences": [{ "sourceId": "src1", "excerpt": "1 - 5 μl of DNA (usually 10 pg - 100 ng)" }] },
+    { "id": "m3", "name": "Recovery medium (SOC or LB)", "role": "medium", "amount": 250, "amountMax": 1000, "unit": "uL", "specification": "Without antibiotic", "rawText": "250-1,000 μl LB or SOC media (without antibiotic)", "sourceReferences": [{ "sourceId": "src1", "excerpt": "250-1,000 μl LB or SOC media (without antibiotic)" }] },
+    { "id": "m4", "name": "Selective LB agar plate", "role": "medium", "specification": "10 cm LB agar plate containing the appropriate antibiotic", "rawText": "10 cm LB agar plate containing the appropriate antibiotic", "sourceReferences": [{ "sourceId": "src1", "excerpt": "10 cm LB agar plate containing the appropriate antibiotic" }] }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Water bath or heat block", "settings": "42 C" },
+    { "id": "e2", "name": "Shaking incubator", "settings": "37 C, shaking" },
+    { "id": "e3", "name": "Static incubator", "settings": "37 C (overnight plate incubation)" }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "Chemically competent E. coli", "role": "input", "organism": "Escherichia coli", "derivedFromMaterialId": "m1", "description": "Recipient cells for the plasmid." },
+    { "id": "sp2", "name": "Transformation mixture (cells + plasmid)", "role": "intermediate", "description": "Competent cells combined with plasmid DNA, before and during heat shock." },
+    { "id": "sp3", "name": "Recovered outgrowth culture", "role": "intermediate", "description": "Transformed cells after recovery in antibiotic-free medium." },
+    { "id": "sp4", "name": "E. coli transformant colonies", "role": "output", "organism": "Escherichia coli", "description": "Antibiotic-resistant colonies carrying the plasmid." }
+  ],
+  "containers": [
+    { "id": "c1", "name": "1.5 mL microcentrifuge tube", "type": "tube" },
+    { "id": "c2", "name": "10 cm LB agar plate", "type": "plate" }
+  ],
+  "tables": [
+    { "id": "t1", "title": "Plating scheme", "columns": ["Plate", "Volume plated"], "rows": [["Plate 1", "50 µL"], ["Plate 2", "Remainder of recovery culture"]], "note": "Plating two volumes gives well-separated colonies across a range of densities." }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Setup", "action": "Thaw competent cells on ice.", "materialIds": ["m1"], "inputIds": ["sp1"], "criticalNotes": "Keep cells on ice throughout; do not warm.", "expectedResult": "Cells thawed and cold." },
+    { "id": "s2", "number": 2, "phase": "DNA addition", "action": "Add 1-5 uL plasmid DNA to 20-50 uL competent cells in a chilled tube; flick gently to mix and incubate on ice.", "materialIds": ["m1", "m2"], "containerIds": ["c1"], "inputIds": ["sp1", "m2"], "outputIds": ["sp2"], "parameters": [{ "type": "volume", "value": 20, "valueMax": 50, "unit": "uL", "rawText": "20-50 μL of competent cells" }, { "type": "volume", "value": 1, "valueMax": 5, "unit": "uL", "rawText": "1 - 5 μl of DNA (usually 10 pg - 100 ng)" }, { "type": "time", "value": 20, "valueMax": 30, "unit": "min", "rawText": "20-30 mins" }], "criticalNotes": "Do not vortex; mix by gentle flicking to avoid damaging cells.", "expectedResult": "DNA-cell mixture equilibrated on ice.", "sourceReferences": [{ "sourceId": "src1", "excerpt": "Add 1 - 5 μl of DNA ... incubate on ice for 20-30 mins" }] },
+    { "id": "s3", "number": 3, "phase": "Heat shock", "action": "Heat shock the tube at 42 C, then remove.", "equipmentIds": ["e1"], "inputIds": ["sp2"], "parameters": [{ "type": "temperature", "value": 42, "unit": "degC", "rawText": "42°C water bath" }, { "type": "time", "value": 30, "valueMax": 60, "unit": "s", "rawText": "42°C water bath for 30-60 secs (45 secs is usually ideal)" }], "criticalNotes": "45 s is usually ideal; do not exceed the stated range.", "expectedResult": "Cells heat-shocked.", "sourceReferences": [{ "sourceId": "src1", "excerpt": "42°C water bath for 30-60 secs (45 secs is usually ideal)" }] },
+    { "id": "s4", "number": 4, "phase": "Heat shock", "action": "Return the tube to ice.", "inputIds": ["sp2"], "parameters": [{ "type": "time", "value": 2, "unit": "min", "rawText": "2 min" }], "expectedResult": "Cells rested on ice." },
+    { "id": "s5", "number": 5, "phase": "Recovery", "action": "Add 250-1000 uL antibiotic-free recovery medium (SOC or LB).", "materialIds": ["m3"], "inputIds": ["sp2"], "parameters": [{ "type": "volume", "value": 250, "valueMax": 1000, "unit": "uL", "rawText": "250-1,000 μl LB or SOC media (without antibiotic)" }], "criticalNotes": "SOC generally gives higher efficiency than LB.", "expectedResult": "Cells in recovery medium." },
+    { "id": "s6", "number": 6, "phase": "Recovery", "action": "Incubate with shaking at 37 C to let cells recover and express the resistance marker.", "equipmentIds": ["e2"], "inputIds": ["sp2"], "outputIds": ["sp3"], "parameters": [{ "type": "temperature", "value": 37, "unit": "degC", "rawText": "37°C" }, { "type": "time", "value": 45, "unit": "min", "rawText": "37°C shaking incubator for 45 min" }], "expectedResult": "Recovered outgrowth culture ready to plate.", "sourceReferences": [{ "sourceId": "src1", "excerpt": "37°C shaking incubator for 45 min" }] },
+    { "id": "s7", "number": 7, "phase": "Plating", "action": "Spread the recovery culture onto selective LB agar: 50 uL on one plate and the remainder on a second plate.", "materialIds": ["m4"], "containerIds": ["c2"], "tableIds": ["t1"], "inputIds": ["sp3"], "outputIds": ["sp4"], "parameters": [{ "type": "volume", "value": 50, "unit": "uL", "rawText": "50 μL on one plate and the rest on a second plate" }], "criticalNotes": "Use a plate whose antibiotic matches the plasmid resistance marker.", "expectedResult": "Cells spread on selective agar.", "sourceReferences": [{ "sourceId": "src1", "excerpt": "50 μL on one plate and the rest on a second plate" }] },
+    { "id": "s8", "number": 8, "phase": "Plating", "action": "Invert the plates and incubate at 37 C overnight.", "equipmentIds": ["e3"], "inputIds": ["sp4"], "outputIds": ["sp4"], "parameters": [{ "type": "temperature", "value": 37, "unit": "degC", "rawText": "37°C overnight" }, { "type": "time", "value": null, "unit": "overnight", "rawText": "37°C overnight" }], "expectedResult": "Discrete colonies visible the next day.", "sourceReferences": [{ "sourceId": "src1", "excerpt": "37°C overnight" }] }
+  ],
+  "controls": [
+    { "name": "Positive control (control plasmid)", "description": "Transform a known amount of intact control plasmid to confirm competent-cell efficiency.", "needsReview": true },
+    { "name": "Negative control (no DNA)", "description": "Competent cells with no plasmid, plated on selective agar; should yield no colonies.", "needsReview": true }
+  ],
+  "expectedOutputs": [
+    "Discrete antibiotic-resistant colonies on the selective plate(s) after overnight incubation.",
+    "No (or negligible) colonies on the no-DNA negative-control plate."
+  ],
+  "troubleshooting": [
+    { "problem": "No colonies", "cause": "Low competent-cell efficiency; wrong antibiotic; heat shock too long/short; no recovery", "solution": "Use fresh high-efficiency cells; match antibiotic to marker; keep heat shock in range; allow full recovery outgrowth" },
+    { "problem": "Colonies on the no-DNA control", "cause": "Contaminated cells/medium or plates lacking antibiotic", "solution": "Use sterile technique; confirm plates contain the correct antibiotic" },
+    { "problem": "Lawn / too many colonies", "cause": "Too much DNA plated or overgrowth", "solution": "Plate less culture or dilute before plating" }
+  ],
+  "safety": [
+    "Use sterile technique; treat live bacterial cultures and plates as biohazardous waste per institutional rules.",
+    "Handle antibiotics per their safety data sheets."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "Transformation efficiency depends on competent-cell quality, plasmid size/amount, and the selection marker. The times, temperatures, and volumes here are the vendor-generic ranges from the Addgene protocol and should be tuned to the specific competent cells used (follow the cells' own datasheet where available).",
+  "sources": [
+    { "id": "src1", "kind": "url", "title": "Addgene: Bacterial Transformation (Protocol)", "url": "https://www.addgene.org/protocols/bacterial-transformation/", "license": "Addgene protocol page; reuse terms not verified", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

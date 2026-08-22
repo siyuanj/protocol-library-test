@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LabRecord · Protocol Library</title>
+    <style>
+      :root {
+        --bg: #0f1420;
+        --panel: #161d2e;
+        --panel-2: #1c2740;
+        --line: #26314c;
+        --text: #e7ecf5;
+        --muted: #93a0bd;
+        --accent: #5b8cff;
+        --amber: #f0a742;
+        --green: #46c98b;
+        --amber-soft: rgba(240, 167, 66, 0.14);
+        --green-soft: rgba(70, 201, 139, 0.14);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: radial-gradient(1200px 600px at 80% -10%, #1a2540 0%, var(--bg) 55%);
+        color: var(--text);
+        min-height: 100vh;
+      }
+      .topbar {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 16px 28px; border-bottom: 1px solid var(--line);
+        position: sticky; top: 0; backdrop-filter: blur(8px); background: rgba(15, 20, 32, 0.72);
+      }
+      .brand { font-weight: 700; letter-spacing: 0.3px; display: flex; align-items: center; gap: 10px; font-size: 18px; }
+      .flask { color: var(--accent); font-size: 22px; }
+      .right { display: flex; align-items: center; gap: 18px; }
+      .right label { color: var(--muted); font-size: 13px; }
+      select {
+        margin-left: 8px; background: var(--panel-2); color: var(--text);
+        border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 13px;
+      }
+      .live { display: flex; align-items: center; gap: 7px; color: var(--green); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+      .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(70, 201, 139, 0.6); animation: pulse 1.8s infinite; }
+      @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(70, 201, 139, 0.5); } 70% { box-shadow: 0 0 0 8px rgba(70, 201, 139, 0); } 100% { box-shadow: 0 0 0 0 rgba(70, 201, 139, 0); } }
+      main { max-width: 900px; margin: 0 auto; padding: 32px 24px 80px; }
+      .hero h1 { margin: 0 0 8px; font-size: 28px; }
+      .hero p { margin: 0 0 28px; color: var(--muted); line-height: 1.6; max-width: 680px; }
+      .hero b { color: var(--text); }
+      .empty { color: var(--muted); border: 1px dashed var(--line); border-radius: 14px; padding: 40px; text-align: center; }
+      .list { display: flex; flex-direction: column; gap: 16px; }
+      .card {
+        background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px;
+        transition: box-shadow 0.3s, border-color 0.3s;
+      }
+      .card.flash { animation: flash 1.6s ease-out; }
+      @keyframes flash { 0% { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(91, 140, 255, 0.25); } 100% { border-color: var(--line); box-shadow: none; } }
+      .card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+      .badge { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; padding: 3px 9px; border-radius: 999px; }
+      .badge.draft { background: var(--amber-soft); color: var(--amber); }
+      .badge.published { background: var(--green-soft); color: var(--green); }
+      .cat { color: var(--muted); font-size: 13px; }
+      .card-top time { margin-left: auto; color: var(--muted); font-size: 12px; }
+      .card h3 { margin: 4px 0 6px; font-size: 18px; }
+      .summary { margin: 0 0 14px; color: var(--muted); line-height: 1.55; }
+      .stats { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+      .chip { font-size: 12px; color: var(--muted); background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 4px 10px; }
+      .chip.warn { color: var(--amber); border-color: rgba(240, 167, 66, 0.4); }
+      details { border-top: 1px solid var(--line); padding-top: 12px; }
+      summary { cursor: pointer; color: var(--accent); font-size: 14px; }
+      ol.steps { margin: 12px 0 0; padding-left: 20px; }
+      ol.steps li { margin-bottom: 12px; line-height: 1.5; }
+      .meta-line { color: var(--muted); font-size: 12px; margin-top: 3px; }
+      .mat { display: block; color: var(--muted); font-size: 13px; margin-top: 3px; }
+      .review { display: block; color: var(--amber); font-size: 13px; margin-top: 4px; }
+      .review::before { content: "⚑ needs review: "; font-weight: 600; }
+      .protocol-review { margin-top: 10px; padding: 10px 12px; background: var(--amber-soft); border-radius: 10px; }
+      .protocol-review p { margin: 0 0 4px; color: var(--amber); font-size: 13px; }
+      .connect { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; margin-bottom: 28px; }
+      .connect h2 { margin: 0 0 4px; font-size: 18px; }
+      .connect > p { margin: 0 0 16px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+      .connect .warn-note { color: var(--amber); }
+      .field { display: block; margin-bottom: 14px; }
+      .field > span { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
+      .field b { color: var(--text); text-transform: none; letter-spacing: 0; }
+      .copyrow { display: flex; gap: 8px; align-items: stretch; }
+      .copyrow input, .copyrow code {
+        flex: 1; min-width: 0; background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+        color: var(--text); font-family: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 13px; padding: 10px 12px; white-space: nowrap; overflow-x: auto;
+      }
+      .copyrow button {
+        flex: none; background: var(--accent); color: #0b1020; border: none; border-radius: 8px;
+        padding: 0 16px; font-weight: 700; font-size: 13px; cursor: pointer;
+      }
+      .copyrow button.done { background: var(--green); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand"><span class="flask">⚗</span> LabRecord</div>
+      <div class="right">
+        <label>Lab
+          <select id="lab">
+            <option value="wang-lab">Wang Lab</option>
+            <option value="lee-lab">Lee Lab</option>
+          </select>
+        </label>
+        <span class="live"><span class="dot"></span> live</span>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <h1>Protocol Library</h1>
+        <p>
+          Protocols imported by an AI agent through the LabRecord <b>MCP server</b> appear here
+          automatically. Every import lands as a <b>draft</b> pending human review — uncertain values are
+          <b>flagged, never invented</b>. This page just reads the library; the writing happens over MCP.
+        </p>
+      </section>
+      <section class="connect">
+        <h2>Connect your agent</h2>
+        <p>
+          Copy your API token into your agent client's <b>config</b> — <span class="warn-note">not into the chat</span>.
+          Then just tell the agent "import this protocol." The token identifies your lab; the model never sees it.
+        </p>
+        <label class="field">
+          <span>API token for <b id="connect-lab">Wang Lab</b></span>
+          <div class="copyrow"><input id="token" readonly value="…" /><button type="button" data-copy="token">Copy</button></div>
+        </label>
+        <label class="field">
+          <span>Step 1 · one-time setup command (Claude Code)</span>
+          <div class="copyrow"><code id="cmd">…</code><button type="button" data-copy="cmd">Copy</button></div>
+        </label>
+        <label class="field">
+          <span>Step 2 · prompt to paste to your agent</span>
+          <div class="copyrow"><code id="prompt">Import the protocol I give you (PDF, photo, or notes) into my LabRecord library as a review draft: read it, structure it into steps and materials, attach source references, and flag anything you can't confirm in needsReview instead of guessing.</code><button type="button" data-copy="prompt">Copy</button></div>
+        </label>
+      </section>
+
+      <section id="empty" class="empty" hidden>No protocols yet for this lab. Ask your agent to import one.</section>
+      <section id="list" class="list"></section>
+    </main>
+
+    <script>
+      const listEl = document.getElementById("list");
+      const emptyEl = document.getElementById("empty");
+      const labEl = document.getElementById("lab");
+      const seen = new Set();
+      let firstLoad = true;
+
+      const esc = (value) =>
+        String(value ?? "").replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+
+      function stepHtml(step) {
+        const meta = [step.duration, step.temperature].filter(Boolean).join(" · ");
+        const materials = (step.materials ?? [])
+          .map((m) => `<span class="mat">↳ ${esc(m.name)}${m.amount ? ` · ${esc(m.amount)}` : ""}${m.unit ? ` ${esc(m.unit)}` : ""}${m.gradeOrLot ? ` · ${esc(m.gradeOrLot)}` : ""}</span>`)
+          .join("");
+        const reviews = (step.needsReview ?? []).map((r) => `<span class="review">${esc(r)}</span>`).join("");
+        return `<li>${esc(step.instruction)}${meta ? `<span class="meta-line">${esc(meta)}</span>` : ""}${materials}${reviews}</li>`;
+      }
+
+      function cardHtml(item) {
+        const p = item.protocol;
+        const steps = (p.steps ?? []).map(stepHtml).join("");
+        const protocolReview = (p.needsReview ?? []).length
+          ? `<div class="protocol-review">${p.needsReview.map((r) => `<p>⚑ ${esc(r)}</p>`).join("")}</div>`
+          : "";
+        return `
+          <article class="card" id="${esc(item.id)}">
+            <div class="card-top">
+              <span class="badge ${item.status === "published" ? "published" : "draft"}">${esc(item.status)}</span>
+              <span class="cat">${esc(p.category)}</span>
+              <time>${new Date(item.createdAt).toLocaleString()}</time>
+            </div>
+            <h3>${esc(p.title)}</h3>
+            <p class="summary">${esc(p.summary || "No summary provided.")}</p>
+            <div class="stats">
+              <span class="chip">${(p.steps ?? []).length} steps</span>
+              <span class="chip ${item.reviewFlags ? "warn" : ""}">${item.reviewFlags} review flag${item.reviewFlags === 1 ? "" : "s"}</span>
+              ${(p.tags ?? []).map((t) => `<span class="chip">#${esc(t)}</span>`).join("")}
+            </div>
+            <details ${item.reviewFlags ? "open" : ""}>
+              <summary>Structured steps</summary>
+              ${protocolReview}
+              <ol class="steps">${steps}</ol>
+            </details>
+          </article>`;
+      }
+
+      async function refresh() {
+        try {
+          const response = await fetch(`/api/protocols?lab=${encodeURIComponent(labEl.value)}`);
+          const { protocols } = await response.json();
+          emptyEl.hidden = protocols.length > 0;
+          listEl.innerHTML = protocols.map(cardHtml).join("");
+          if (!firstLoad) {
+            for (const item of protocols) {
+              if (!seen.has(item.id)) {
+                const el = document.getElementById(item.id);
+                if (el) el.classList.add("flash");
+              }
+            }
+          }
+          protocols.forEach((item) => seen.add(item.id));
+          firstLoad = false;
+        } catch {
+          /* keep last view on transient errors */
+        }
+      }
+
+      const tokenEl = document.getElementById("token");
+      const cmdEl = document.getElementById("cmd");
+      const connectLabEl = document.getElementById("connect-lab");
+
+      async function updateConnect() {
+        try {
+          const info = await (await fetch(`/api/connect?lab=${encodeURIComponent(labEl.value)}`)).json();
+          tokenEl.value = info.token;
+          cmdEl.textContent = info.command;
+          connectLabEl.textContent = info.lab.name;
+        } catch {
+          /* ignore transient errors */
+        }
+      }
+
+      document.querySelectorAll("button[data-copy]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const target = document.getElementById(button.dataset.copy);
+          const value = target.tagName === "INPUT" ? target.value : target.textContent;
+          try {
+            await navigator.clipboard.writeText(value);
+            const original = button.textContent;
+            button.textContent = "Copied!";
+            button.classList.add("done");
+            setTimeout(() => {
+              button.textContent = original;
+              button.classList.remove("done");
+            }, 1400);
+          } catch {
+            /* clipboard unavailable */
+          }
+        });
+      });
+
+      labEl.addEventListener("change", () => {
+        seen.clear();
+        firstLoad = true;
+        updateConnect();
+        refresh();
+      });
+      updateConnect();
+      refresh();
+      setInterval(refresh, 2000);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,412 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "molecular-pcr-core",
+  "sessionTitle": "PCR core methods",
+  "packetStatus": "partial",
+  "startedAt": "2026-08-03T22:14:09Z",
+  "writtenAt": "2026-08-03T22:14:09Z",
+  "worker": "molecular-pcr-core-crawler-2026-08-03",
+  "sourcesSearched": [
+    "protocols.io",
+    "Bio-protocol",
+    "Thermo Fisher Scientific",
+    "New England Biolabs",
+    "Promega"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "pcr-endpoint",
+      "categoryLabel": "Conventional PCR",
+      "status": "complete",
+      "searchedAt": "2026-08-03",
+      "sourcesSearched": [
+        "protocols.io",
+        "Bio-protocol",
+        "Thermo Fisher Scientific",
+        "New England Biolabs"
+      ],
+      "representative": {
+        "title": "PCR Protocol for Phusion High-Fidelity DNA Polymerase (M0530)",
+        "protocolType": "Routine high-fidelity endpoint PCR protocol",
+        "assay": "DNA amplification for genotyping, cloning, or amplicon generation",
+        "operation": "Amplify a purified DNA template with a conventional thermocycler and high-fidelity polymerase",
+        "source": "protocols.io",
+        "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.irrcd56",
+        "sourceRecordId": "6673",
+        "doi": "10.17504/protocols.io.irrcd56",
+        "authors": [
+          "New England Biolabs"
+        ],
+        "published": "2017-08-08",
+        "updated": "2021-03-26",
+        "licenseCode": "CC BY",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.irrcd56",
+        "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+        "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+        "specimen": "Purified DNA template, including genomic, plasmid, or viral DNA",
+        "organism": null,
+        "platform": "Conventional PCR thermocycler",
+        "methodVariant": "Phusion high-fidelity DNA polymerase; endpoint amplification",
+        "safetyLevel": "not specified",
+        "confidence": 0.91,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.99,
+          "metadataCompleteness": 0.98,
+          "freshness": 0.81,
+          "corroboration": 0.96,
+          "coverageCompleteness": 0.91,
+          "evidenceStrength": 0.98,
+          "licenseClarity": 1.0,
+          "clusterAgreement": 0.94,
+          "overall": 0.91
+        },
+        "evidenceStatus": "metadata-verified; license-verified; endpoint readout is not detailed on the record",
+        "selectionNote": "Direct New England Biolabs protocol record with DOI, update metadata, routine PCR scope, and an explicit record-level Creative Commons Attribution statement. It is a strong general conventional-PCR representative and is distinct from qPCR, RT-PCR, digital PCR, and long-range PCR."
+      },
+      "screened": [
+        {
+          "title": "PCR Protocol for Taq DNA Polymerase with ThermoPol Buffer",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.bd2wi8fe",
+          "sourceRecordId": "34614",
+          "doi": "10.17504/protocols.io.bd2wi8fe",
+          "published": "2020-03-21",
+          "updated": "2022-03-21",
+          "confidence": 0.87,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.bd2wi8fe",
+          "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+          "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+          "evidenceStatus": "metadata-verified; license-verified",
+          "screenStatus": "alternative",
+          "reason": "Authoritative New England Biolabs routine-PCR alternative using standard Taq chemistry; retained as a polymerase-chemistry variant while Phusion is the stronger general high-fidelity representative."
+        },
+        {
+          "title": "Environmental DNA metabarcoding of COI gene using endpoint PCR",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.dm6gp3wpdvzp/v1",
+          "sourceRecordId": "85185",
+          "doi": "10.17504/protocols.io.dm6gp3wpdvzp/v1",
+          "published": "2023-08-01",
+          "updated": "2023-08-02",
+          "confidence": 0.82,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.dm6gp3wpdvzp/v1",
+          "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+          "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+          "evidenceStatus": "metadata-verified; license-verified",
+          "screenStatus": "alternative",
+          "reason": "Complete endpoint PCR and agarose-gel readout, but environmental COI-specific and multiplex-kit focused rather than a general conventional-PCR workflow."
+        }
+      ],
+      "coverageGaps": [],
+      "nextSearchSuggestions": []
+    },
+    {
+      "categoryId": "pcr-quantitative",
+      "categoryLabel": "Quantitative PCR",
+      "status": "partial",
+      "searchedAt": "2026-08-03",
+      "sourcesSearched": [
+        "protocols.io",
+        "Bio-protocol",
+        "Thermo Fisher Scientific",
+        "Promega"
+      ],
+      "representative": {
+        "title": "Gene expression analysis by quantitative Real-Time PCR (qPCR)",
+        "protocolType": "Dual-chemistry quantitative real-time PCR protocol",
+        "assay": "Quantitative gene-expression amplification with TaqMan or SYBR fluorescence readout",
+        "operation": "Prepare TaqMan or SYBR qPCR reactions, run them on a real-time thermal cycler, and analyze threshold-cycle values by the delta-delta Ct method",
+        "source": "protocols.io",
+        "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.ewov1oyz2lr2/v1",
+        "sourceRecordId": "69945",
+        "doi": "10.17504/protocols.io.ewov1oyz2lr2/v1",
+        "authors": [
+          "Miquel Vila"
+        ],
+        "published": "2022-09-14",
+        "updated": "2022-09-14",
+        "licenseCode": "CC BY",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.ewov1oyz2lr2/v1",
+        "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+        "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+        "specimen": "cDNA from gene-expression samples",
+        "organism": null,
+        "platform": "Roche LightCycler 480 System with 384-well plate",
+        "methodVariant": "TaqMan and SYBR qPCR options with delta-delta Ct gene-expression analysis",
+        "safetyLevel": "not specified",
+        "confidence": 0.89,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.93,
+          "metadataCompleteness": 0.98,
+          "freshness": 0.91,
+          "corroboration": 0.95,
+          "coverageCompleteness": 0.82,
+          "evidenceStrength": 0.97,
+          "licenseClarity": 1.0,
+          "clusterAgreement": 0.92,
+          "overall": 0.89
+        },
+        "evidenceStatus": "metadata-verified; license-verified; dual chemistry is covered but the record is gene-expression and LightCycler-specific",
+        "selectionNote": "Direct protocols.io record with explicit record-level Creative Commons Attribution evidence and two stated qPCR options: TaqMan and SYBR. It is a stronger chemistry-coverage representative than the earlier dye-only record, but remains tied to cDNA gene expression and a Roche LightCycler 480 platform."
+      },
+      "screened": [
+        {
+          "title": "qPCR (Bio-Rad)",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.j8acrse",
+          "sourceRecordId": "8162",
+          "doi": "10.17504/protocols.io.j8acrse",
+          "published": "2017-10-07",
+          "updated": "2018-02-23",
+          "confidence": 0.83,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.j8acrse",
+          "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+          "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+          "evidenceStatus": "metadata-verified; license-verified",
+          "screenStatus": "alternative",
+          "reason": "SYBR qPCR workflow on a Bio-Rad iQ5 platform; useful instrument-platform alternative but narrower and less general than the Promega representative."
+        },
+        {
+          "title": "TaqMan qPCR assay for detecting Batrachochytrium dendrobatidis",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.ewov1nq7mr2d/v1",
+          "sourceRecordId": "43833",
+          "doi": "10.17504/protocols.io.ewov1nq7mr2d/v1",
+          "published": "2020-11-19",
+          "updated": "2020-11-19",
+          "confidence": 0.84,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.ewov1nq7mr2d/v1",
+          "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+          "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+          "evidenceStatus": "metadata-verified; license-verified",
+          "screenStatus": "alternative",
+          "reason": "Direct DNA qPCR using hydrolysis-probe chemistry on a Bio-Rad CFX96; retained as the major TaqMan chemistry variant, but organism-specific and narrower than the representative."
+        },
+        {
+          "title": "Quantitative RT-PCR Using TaqMan Gene Expression Assays",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.2v8ge9w",
+          "sourceRecordId": "23200",
+          "doi": "10.17504/protocols.io.2v8ge9w",
+          "published": "2019-06-04",
+          "updated": "2019-06-04",
+          "confidence": 0.85,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.2v8ge9w",
+          "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+          "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+          "evidenceStatus": "metadata-verified; license-verified",
+          "screenStatus": "alternative",
+          "reason": "TaqMan RT-qPCR gene-expression workflow on an Applied Biosystems StepOnePlus platform; documents probe and platform variants but is cDNA/gene-expression focused."
+        },
+        {
+          "title": "Introduction to TaqMan and SYBR Green Chemistries for Real-Time PCR",
+          "source": "Thermo Fisher Scientific",
+          "sourceUrl": "https://documents.thermofisher.com/TFS-Assets/LSG/manuals/4407003.pdf",
+          "sourceRecordId": null,
+          "doi": null,
+          "published": null,
+          "updated": null,
+          "confidence": 0.82,
+          "licenseCode": null,
+          "licenseUrl": null,
+          "licenseEvidenceUrl": null,
+          "licenseVerifiedAt": null,
+          "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+          "evidenceStatus": "metadata-only; license-unclear",
+          "screenStatus": "alternative",
+          "reason": "Authoritative Thermo Fisher guide covering both TaqMan and SYBR chemistry, but retained as a metadata-only alternative because no record-level reuse statement was verified."
+        }
+      ],
+      "coverageGaps": [
+        "The representative covers both TaqMan and SYBR chemistry but is tied to cDNA gene-expression assays; a general DNA copy-number or plasmid-template qPCR representative is still missing.",
+        "Instrument-specific validation beyond the Roche LightCycler 480 workflow is represented only by screened alternatives."
+      ],
+      "nextSearchSuggestions": [
+        "Search protocols.io and Thermo Fisher Scientific for a general non-RT TaqMan qPCR protocol spanning copy-number or plasmid-DNA quantification on multiple real-time platforms.",
+        "Search Bio-protocol for a platform-neutral qPCR SOP that supports both cDNA gene expression and direct DNA copy-number measurements."
+      ]
+    },
+    {
+      "categoryId": "pcr-reverse-transcription",
+      "categoryLabel": "Reverse transcription PCR",
+      "status": "partial",
+      "searchedAt": "2026-08-03",
+      "sourcesSearched": [
+        "protocols.io",
+        "Bio-protocol",
+        "Thermo Fisher Scientific",
+        "Promega"
+      ],
+      "representative": {
+        "title": "RNA Extraction and RT-PCR on Mouse Tissues",
+        "protocolType": "Two-step reverse transcription PCR protocol",
+        "assay": "RNA-to-cDNA transcript detection",
+        "operation": "Extract RNA, synthesize cDNA, amplify cDNA by endpoint PCR, and verify amplicon size by agarose gel",
+        "source": "protocols.io",
+        "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.36wgq3z3olk5/v1",
+        "sourceRecordId": "94042",
+        "doi": "10.17504/protocols.io.36wgq3z3olk5/v1",
+        "authors": [
+          "Lorna C. Ferrao",
+          "Melissa R. Hargrove",
+          "Luca Santoro",
+          "Tania L. Vargas",
+          "Joao P. Nascimento"
+        ],
+        "published": "2024-12-12",
+        "updated": "2024-12-12",
+        "licenseCode": "CC BY",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.36wgq3z3olk5/v1",
+        "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+        "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+        "specimen": "Mouse heart and skeletal muscle tissue",
+        "organism": "Mus musculus",
+        "platform": "Conventional thermocycler with agarose-gel visualization",
+        "methodVariant": "Two-step cDNA synthesis followed by standard Taq endpoint PCR",
+        "safetyLevel": "not specified",
+        "confidence": 0.88,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.95,
+          "metadataCompleteness": 0.94,
+          "freshness": 0.96,
+          "corroboration": 0.86,
+          "coverageCompleteness": 0.68,
+          "evidenceStrength": 0.94,
+          "licenseClarity": 1.0,
+          "clusterAgreement": 0.84,
+          "overall": 0.88
+        },
+        "evidenceStatus": "metadata-verified; license-verified; representative is mouse-tissue and two-step specific",
+        "selectionNote": "Most complete direct record found for endpoint RT-PCR, including RNA extraction, cDNA synthesis, endpoint amplification, and gel verification. It is intentionally kept separate from RT-qPCR; one-step RT-PCR, non-mammalian templates, and broader specimen coverage remain open variants."
+      },
+      "screened": [
+        {
+          "title": "Tiled PCR Amplification for Poliovirus Whole-Genome Sequencing",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.g3tcbynix",
+          "sourceRecordId": "111511",
+          "doi": "10.17504/protocols.io.g3tcbynix",
+          "published": "2025-08-08",
+          "updated": "2025-08-08",
+          "confidence": 0.83,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.g3tcbynix",
+          "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+          "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+          "evidenceStatus": "metadata-verified; license-verified",
+          "screenStatus": "alternative",
+          "reason": "One-step RT-PCR with post-amplification gel verification and a direct CC BY record, but tiled poliovirus whole-genome sequencing is pathogen- and amplicon-design-specific rather than a general transcript-detection workflow."
+        },
+        {
+          "title": "First-Strand cDNA Synthesis and Conventional PCR",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.pw9dph6",
+          "sourceRecordId": "11969",
+          "doi": "10.17504/protocols.io.pw9dph6",
+          "published": "2018-06-06",
+          "updated": "2018-06-07",
+          "confidence": 0.86,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.pw9dph6",
+          "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+          "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+          "evidenceStatus": "metadata-verified; license-verified",
+          "screenStatus": "alternative",
+          "reason": "Two-step cDNA synthesis plus conventional PCR for yellow fever virus RNA; strong endpoint RT-PCR alternative but older and pathogen-specific."
+        },
+        {
+          "title": "LN34 Pan-lyssavirus Real-time RT-PCR Assay",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.n2wdgg6",
+          "sourceRecordId": "11123",
+          "doi": "10.17504/protocols.io.n2wdgg6",
+          "published": "2018-06-01",
+          "updated": "2018-06-01",
+          "confidence": 0.84,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.n2wdgg6",
+          "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+          "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+          "evidenceStatus": "metadata-verified; license-verified",
+          "screenStatus": "wrong-variant",
+          "reason": "One-step real-time TaqMan RT-PCR with qPCR Cq readout and lyssavirus safety context; not endpoint RT-PCR."
+        },
+        {
+          "title": "SOP: cDNA Synthesis by RT Promega Kit",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.94277/v1",
+          "sourceRecordId": "94277",
+          "doi": "10.17504/protocols.io.94277/v1",
+          "published": "2024-02-26",
+          "updated": "2024-05-31",
+          "confidence": 0.78,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.94277/v1",
+          "licenseVerifiedAt": "2026-08-03T22:14:09Z",
+          "metadataVerifiedAt": "2026-08-03T22:14:09Z",
+          "evidenceStatus": "metadata-verified; license-verified",
+          "screenStatus": "wrong-variant",
+          "reason": "Useful reverse-transcription record but cDNA-synthesis-only; it lacks downstream endpoint PCR and transcript readout."
+        }
+      ],
+      "coverageGaps": [
+        "The representative covers two-step endpoint RT-PCR on mouse tissue but not a general RNA-template workflow across organisms or specimen types.",
+        "One-step endpoint RT-PCR remains without a qualified representative; the screened one-step record is real-time TaqMan and therefore a wrong readout variant."
+      ],
+      "nextSearchSuggestions": [
+        "Search protocols.io and Bio-protocol for a platform-neutral one-step endpoint RT-PCR protocol with agarose-gel readout and no qPCR quantification.",
+        "Search Thermo Fisher Scientific and New England Biolabs for a general RNA-to-cDNA plus endpoint-PCR protocol not tied to mouse tissue or a pathogen."
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "pcr-endpoint",
+      "pcr-quantitative",
+      "pcr-reverse-transcription"
+    ],
+    "actualCategoryIds": [
+      "pcr-endpoint",
+      "pcr-quantitative",
+      "pcr-reverse-transcription"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": false,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-03T22:14:09Z",
+    "selfCheckNotes": [
+      "Category results are present exactly once and remain in the assigned packet order.",
+      "All representative and screened sourceUrl values are stable HTTP(S) DOI landing URLs.",
+      "All representatives have direct record-level Creative Commons Attribution evidence; no license pass was inferred from public readability alone.",
+      "qPCR and RT-PCR are partial because major chemistry, platform, specimen, or workflow variants remain explicitly uncovered.",
+      "No missing-value placeholders or mixed source labels were written."
+    ]
+  },
+  "runNotes": [
+    "Search scope covered direct protocols.io records plus Bio-protocol, Thermo Fisher Scientific, New England Biolabs, and Promega source families.",
+    "Only metadata, identifiers, short evidence notes, and coverage decisions were stored; protocol steps and source passages were not copied."
+  ]
+}

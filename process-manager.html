@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Copy-ready biological protocol collection session packets.">
+  <title>Protocol Atlas | Session Prompt Copier</title>
+  <style>
+    :root {
+      --bg:#f5f7fa;
+      --panel:#ffffff;
+      --text:#1f2933;
+      --muted:#637083;
+      --line:#d8dee8;
+      --accent:#0b6b63;
+      --accent-soft:#e7f4f2;
+      --blue:#245fbd;
+      --blue-soft:#edf3ff;
+      --warning:#925100;
+      --warning-bg:#fff6e6;
+      --shadow:0 7px 20px rgba(27,42,56,.045);
+    }
+
+    * { box-sizing:border-box; }
+    html { background:var(--bg); color:var(--text); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    body { margin:0; min-width:320px; }
+    button,input,select { font:inherit; }
+    button { cursor:pointer; }
+    .sr-only { clip:rect(0,0,0,0); clip-path:inset(50%); height:1px; overflow:hidden; position:absolute; white-space:nowrap; width:1px; }
+
+    header { background:var(--panel); border-bottom:1px solid var(--line); padding:23px 28px 16px; position:sticky; top:0; z-index:5; }
+    .header-inner { margin:0 auto; max-width:1320px; }
+    h1 { font-size:24px; line-height:1.2; margin:0 0 7px; }
+    .sub { color:var(--muted); font-size:14px; line-height:1.45; margin:0; max-width:940px; }
+    main { margin:0 auto; max-width:1320px; padding:20px 22px 48px; }
+
+    .toolbar { align-items:center; display:flex; flex-wrap:wrap; gap:9px; margin-bottom:15px; }
+    button { background:var(--accent); border:1px solid var(--accent); border-radius:7px; color:#fff; font-size:13px; font-weight:750; min-height:36px; padding:8px 11px; }
+    button:hover { filter:brightness(.95); }
+    button.secondary { background:var(--panel); color:var(--accent); }
+    button.secondary:hover { background:var(--accent-soft); }
+    .status { color:var(--accent); font-size:13px; font-weight:700; min-height:20px; }
+    .link-button { align-items:center; background:var(--panel); border:1px solid var(--line); border-radius:7px; color:var(--accent); display:inline-flex; font-size:13px; font-weight:750; min-height:36px; padding:8px 11px; text-decoration:none; }
+    .link-button:hover { background:var(--accent-soft); }
+    .search { background:#fff; border:1px solid var(--line); border-radius:7px; color:var(--text); flex:1 1 280px; min-height:36px; outline:none; padding:8px 10px; }
+    .search:focus { border-color:#65a69f; box-shadow:0 0 0 3px rgba(11,107,99,.12); }
+
+    .notice { background:var(--warning-bg); border:1px solid #efd7a1; border-radius:8px; color:var(--warning); font-size:13px; line-height:1.48; margin-bottom:17px; padding:12px 14px; }
+    .notice strong { color:#754000; }
+    .metrics { align-items:center; display:flex; flex-wrap:wrap; gap:8px 16px; margin:0 0 19px; }
+    .metric { color:var(--muted); font-size:12px; }
+    .metric strong { color:var(--text); font-size:15px; }
+
+    .section-title { font-size:20px; line-height:1.25; margin:25px 0 11px; }
+    .section-copy { color:var(--muted); font-size:12px; margin:-5px 0 12px; }
+    .grid { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(365px,1fr)); }
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:8px; box-shadow:var(--shadow); min-width:0; padding:15px; }
+    .card.packet-complete { background:#f5fbf9; border-color:#66aa9f; box-shadow:inset 4px 0 0 var(--accent),var(--shadow); }
+    .card.packet-partial { background:#fffaf1; border-color:#e4c27d; box-shadow:inset 4px 0 0 #d89c33,var(--shadow); }
+    .card.packet-blocked, .card.packet-invalid { background:#fff7f8; border-color:#e4a9b5; box-shadow:inset 4px 0 0 #b4233f,var(--shadow); }
+    .card.packet-not-started { box-shadow:inset 3px 0 0 #c7d0d9,var(--shadow); }
+    .card-heading { align-items:flex-start; display:flex; gap:11px; justify-content:space-between; }
+    h2 { font-size:17px; line-height:1.32; margin:0; }
+    .session-id { color:var(--muted); font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; font-size:11px; margin-top:4px; overflow-wrap:anywhere; }
+    .mode { border-radius:4px; font-size:9px; font-weight:850; padding:4px 5px; text-transform:uppercase; white-space:nowrap; }
+    .mode.focused { background:var(--accent-soft); color:var(--accent); }
+    .mode.batch { background:var(--blue-soft); color:var(--blue); }
+    .card-note { color:#45535f; font-size:12px; line-height:1.45; margin:10px 0; min-height:35px; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 9px; }
+    .actions button { min-height:32px; padding:6px 9px; }
+    ul { list-style:none; margin:0; padding:0; }
+    li { align-items:center; border-top:1px solid var(--line); display:grid; gap:8px; grid-template-columns:minmax(0,1fr) auto; padding:8px 0; }
+    .name { font-size:13px; font-weight:700; overflow-wrap:anywhere; }
+    .slug { color:var(--muted); display:block; font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; font-size:11px; font-weight:400; margin-top:2px; overflow-wrap:anywhere; }
+    .mini { font-size:11px; min-height:30px; padding:5px 7px; }
+    .category-priority { border-radius:4px; display:inline-block; font-family:Inter,ui-sans-serif,system-ui,sans-serif; font-size:9px; font-weight:800; margin-left:5px; padding:2px 4px; text-transform:uppercase; vertical-align:1px; }
+    .category-priority.core { background:var(--accent-soft); color:var(--accent); }
+    .category-priority.common { background:var(--blue-soft); color:var(--blue); }
+    .category-priority.extended { background:#edf0f3; color:#65727e; }
+    li.category-complete { background:#f5fbf9; }
+    li.category-partial { background:#fffaf1; }
+    li.category-blocked, li.category-no-qualified-record { background:#fff7f8; }
+    .category-state { border-radius:4px; display:inline-block; font-size:9px; font-weight:850; margin-left:6px; padding:2px 4px; text-transform:uppercase; vertical-align:1px; }
+    .category-state.complete { background:var(--accent-soft); color:var(--accent); }
+    .category-state.partial { background:var(--warning-bg); color:var(--warning); }
+    .category-state.blocked, .category-state.no-qualified-record { background:#fff0f2; color:#a91c38; }
+    .category-state.not-started { background:#edf0f3; color:#65727e; }
+    details { border-top:1px solid var(--line); margin-top:10px; padding-top:10px; }
+    summary { color:var(--muted); cursor:pointer; font-size:12px; font-weight:700; }
+    pre { background:#f0f3f7; border:1px solid var(--line); border-radius:7px; color:#293743; font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; font-size:11px; line-height:1.48; margin:10px 0 0; max-height:330px; overflow:auto; padding:11px; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .empty { background:#fff; border:1px dashed var(--line); border-radius:8px; color:var(--muted); font-size:13px; padding:22px; text-align:center; }
+    .validation { background:#fff0f2; border:1px solid #f1c6cf; border-radius:8px; color:#a91c38; font-size:12px; line-height:1.45; margin-bottom:16px; padding:11px 13px; }
+    .data-overview { background:var(--panel); border:1px solid var(--line); border-radius:8px; box-shadow:var(--shadow); margin-bottom:21px; padding:14px 15px; }
+    .overview-heading { align-items:baseline; display:flex; gap:10px; justify-content:space-between; margin-bottom:11px; }
+    .overview-heading strong { font-size:14px; }
+    .overview-heading span { color:var(--muted); font-size:11px; }
+    .overview-grid { display:grid; gap:8px; grid-template-columns:repeat(6,minmax(0,1fr)); }
+    .overview-item { border-left:3px solid #c7d0d9; min-width:0; padding:5px 8px; }
+    .overview-item.complete { border-color:var(--accent); }
+    .overview-item.partial { border-color:#d89c33; }
+    .overview-item.blocked, .overview-item.invalid { border-color:#b4233f; }
+    .overview-item strong { display:block; font-size:18px; line-height:1; }
+    .overview-item span { color:var(--muted); display:block; font-size:10px; margin-top:5px; }
+    .overview-foot { color:var(--muted); font-size:11px; line-height:1.45; margin:11px 0 0; }
+    .overview-foot strong { color:var(--text); }
+    .card-state { align-items:center; display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 0; }
+    .packet-status { border-radius:4px; display:inline-block; font-size:9px; font-weight:850; padding:4px 5px; text-transform:uppercase; }
+    .packet-status.complete { background:var(--accent-soft); color:var(--accent); }
+    .packet-status.partial, .packet-status.in-progress { background:var(--warning-bg); color:var(--warning); }
+    .packet-status.blocked, .packet-status.invalid { background:#fff0f2; color:#a91c38; }
+    .packet-status.not-started { background:#edf0f3; color:#65727e; }
+    .state-detail { color:var(--muted); font-size:11px; }
+    .data-access-warning { background:var(--warning-bg); border:1px solid #efd7a1; border-radius:6px; color:var(--warning); font-size:11px; line-height:1.45; margin-top:10px; padding:8px 10px; }
+
+    @media (max-width:640px) {
+      header { padding:19px 16px 14px; position:static; }
+      main { padding:16px 12px 36px; }
+      h1 { font-size:21px; }
+      .toolbar { align-items:stretch; }
+      .toolbar button { flex:1 1 150px; }
+      .search { flex-basis:100%; }
+      .grid { grid-template-columns:1fr; }
+      li { grid-template-columns:1fr; }
+      li .mini { justify-self:start; }
+      .overview-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    }
+    @media (max-width:430px) {
+      .overview-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>Protocol Atlas Session Prompt Copier</h1>
+      <p class="sub">43 independent collection packets cover 142 biological protocol categories. Copy one packet into a new conversation; that crawler writes its own metadata-only result into the matching <code>data/sessions/&lt;session-id&gt;/result.json</code> file.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <button type="button" id="copyVisible">Copy visible packet prompts</button>
+      <button type="button" id="copyFocused">Copy focused packet prompts</button>
+      <button type="button" id="copyBatches">Copy batch packet prompts</button>
+      <button class="secondary" type="button" id="refreshData">Refresh data</button>
+      <a class="link-button" href="index.html">Open live catalog</a>
+      <a class="link-button" href="archive-dashboard.html">Open archive overview</a>
+      <input class="search" id="filter" type="search" placeholder="Filter packets, categories, IDs, or domains" aria-label="Filter session packets">
+      <span class="status" id="status" role="status" aria-live="polite"></span>
+    </div>
+
+    <div class="notice"><strong>Independent-writer workflow:</strong> one conversation owns one packet and writes only its own <code>data/sessions/&lt;session-id&gt;/result.json</code>. It must process every assigned category, retain one representative plus screened alternatives per category, re-read the file, and report only the final path and status in chat. No central index or JSON paste-back is required.</div>
+    <div class="metrics"><span class="metric"><strong id="visibleCount">0</strong> visible packets</span><span class="metric"><strong id="sessionCount">0</strong> total packets</span><span class="metric"><strong id="categoryCount">0</strong> assigned categories</span><span class="metric"><strong id="coreCount">0</strong> core categories</span><span class="metric"><strong id="copiedCount">0</strong> copied packets</span><span class="metric"><strong id="completeCount">0</strong> complete packets</span><span class="metric"><strong id="resultCount">0</strong> representative records</span></div>
+
+    <div id="validation"></div>
+    <section class="data-overview" aria-live="polite">
+      <div class="overview-heading"><strong>Local data coverage</strong><span id="dataUpdated">Checking data/sessions...</span></div>
+      <div class="overview-grid" id="dataOverview"></div>
+      <p class="overview-foot" id="dataOverviewFoot"></p>
+    </section>
+    <section id="focusedSection">
+      <h2 class="section-title">Focused collection packets</h2>
+      <p class="section-copy">Use these for broader or higher-variation method groups.</p>
+      <div class="grid" id="focusedGrid"></div>
+    </section>
+    <section id="batchSection">
+      <h2 class="section-title">Batch collection packets</h2>
+      <p class="section-copy">These combine a few narrower related categories while keeping each output separate.</p>
+      <div class="grid" id="batchGrid"></div>
+    </section>
+  </main>
+
+  <script src="common-protocol-categories.js"></script>
+  <script src="collection-session-batches.js"></script>
+  <script>
+    (() => {
+      const categories = Array.isArray(window.COMMON_PROTOCOL_CATEGORIES) ? window.COMMON_PROTOCOL_CATEGORIES : [];
+      const sessions = Array.isArray(window.COLLECTION_SESSION_BATCHES) ? window.COLLECTION_SESSION_BATCHES : [];
+      const validation = window.COLLECTION_SESSION_VALIDATION || {};
+      const buildSessionPrompt = window.buildCollectionSessionPrompt;
+      const singleTemplate = window.COLLECTION_PROMPT_TEMPLATE || "";
+      const categoryById = new Map(categories.map((category) => [category.id, category]));
+      const copiedSessions = new Set();
+      const sessionResults = new Map();
+      let dataAccessState = "checking";
+      const $ = (id) => document.getElementById(id);
+      const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", '"':"&quot;" }[char]));
+      const categoriesFor = (session) => session.categoryIds.map((id) => categoryById.get(id)).filter(Boolean);
+      const status = (message) => { $("status").textContent = message; clearTimeout(status.timer); status.timer = setTimeout(() => { $("status").textContent = ""; }, 2600); };
+
+      function resultEntry(session, state, result, error) {
+        const categoryResults = Array.isArray(result?.categoryResults) ? result.categoryResults : [];
+        return {
+          session,
+          state,
+          result,
+          error: error || "",
+          categoryCount: categoryResults.length,
+          representativeCount: categoryResults.filter((item) => item && item.representative).length,
+          screenedCount: categoryResults.reduce((sum, item) => sum + (Array.isArray(item?.screened) ? item.screened.length : 0), 0)
+        };
+      }
+
+      async function loadSessionResults() {
+        sessionResults.clear();
+        let accessError = false;
+        await Promise.all(sessions.map(async (session) => {
+          const path = `data/sessions/${encodeURIComponent(session.id)}/result.json`;
+          try {
+            const response = await fetch(path, { cache: "no-store" });
+            if (response.status === 404) {
+              sessionResults.set(session.id, resultEntry(session, "not-started", null));
+              return;
+            }
+            if (!response.ok) {
+              sessionResults.set(session.id, resultEntry(session, "invalid", null, `HTTP ${response.status}`));
+              return;
+            }
+            const result = await response.json();
+            const categoryResults = Array.isArray(result?.categoryResults) ? result.categoryResults : [];
+            const expected = session.categoryIds;
+            const actual = categoryResults.map((item) => item?.categoryId).filter(Boolean);
+            const valid = result?.sessionId === session.id && expected.length === actual.length && expected.every((id) => actual.includes(id)) && new Set(actual).size === actual.length;
+            sessionResults.set(session.id, resultEntry(session, valid ? (result.packetStatus || "in-progress") : "invalid", result, valid ? "" : "session/category verification mismatch"));
+          } catch (error) {
+            accessError = true;
+            sessionResults.set(session.id, resultEntry(session, "unavailable", null, error?.message || "local data could not be fetched"));
+          }
+        }));
+        dataAccessState = accessError ? "unavailable" : "ready";
+        renderDataOverview();
+        render();
+      }
+
+      function entryFor(session) {
+        return sessionResults.get(session.id) || resultEntry(session, dataAccessState === "unavailable" ? "unavailable" : "not-started", null);
+      }
+
+      function displayState(entry) {
+        if (entry.state === "unavailable") return "not-started";
+        return ["complete", "partial", "blocked", "in-progress", "invalid", "not-started"].includes(entry.state) ? entry.state : "invalid";
+      }
+
+      function stateLabel(state) {
+        return state.replace("-", " ");
+      }
+
+      function categoryResultFor(entry, categoryId) {
+        return (entry.result?.categoryResults || []).find((item) => item?.categoryId === categoryId) || null;
+      }
+
+      function decorateRenderedStatus() {
+        document.querySelectorAll(".card").forEach((card) => {
+          const sessionId = card.querySelector(".session-id")?.textContent.split(" / ")[0];
+          const session = sessions.find((item) => item.id === sessionId);
+          if (!session) return;
+          const entry = entryFor(session);
+          const packetState = displayState(entry);
+          card.classList.add(`packet-${packetState}`);
+          card.querySelectorAll(".category-state").forEach((node) => node.remove());
+          card.querySelectorAll("li").forEach((item) => {
+            item.classList.remove("category-complete", "category-partial", "category-blocked", "category-no-qualified-record", "category-not-started");
+            const slug = item.querySelector(".slug");
+            const name = item.querySelector(".name");
+            const categoryId = slug?.textContent.split(" / ")[0];
+            if (!name || !categoryId) return;
+            const categoryResult = categoryResultFor(entry, categoryId);
+            const state = categoryResult?.status || (entry.state === "complete" ? "complete" : "not-started");
+            const label = state === "no-qualified-record" ? "no qualified record" : state.replace("-", " ");
+            item.classList.add(`category-${state}`);
+            const marker = document.createElement("span");
+            marker.className = `category-state ${state}`;
+            marker.textContent = label;
+            name.appendChild(marker);
+          });
+        });
+      }
+
+      function renderDataOverview() {
+        const entries = sessions.map((session) => entryFor(session));
+        const count = (state) => entries.filter((entry) => entry.state === state).length;
+        const started = entries.filter((entry) => ["complete", "partial", "blocked", "in-progress", "invalid"].includes(entry.state)).length;
+        const categoriesWritten = entries.reduce((sum, entry) => sum + entry.categoryCount, 0);
+        const representatives = entries.reduce((sum, entry) => sum + entry.representativeCount, 0);
+        const screened = entries.reduce((sum, entry) => sum + entry.screenedCount, 0);
+        $("completeCount").textContent = count("complete");
+        $("resultCount").textContent = representatives;
+        $("dataOverview").innerHTML = [
+          ["complete", count("complete"), "complete packets"],
+          ["partial", count("partial"), "partial packets"],
+          ["blocked", count("blocked"), "blocked packets"],
+          ["not-started", count("not-started"), "not started"],
+          ["invalid", count("invalid"), "invalid files"],
+          ["complete", `${categoriesWritten}/${categories.length}`, "category results written"]
+        ].map(([className, value, label]) => `<div class="overview-item ${className}"><strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`).join("");
+        $("dataUpdated").textContent = dataAccessState === "ready" ? `Refreshed ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}` : "Local files unavailable";
+        const accessNote = dataAccessState === "unavailable" ? "Run the page through a local HTTP server so the browser can fetch data/session result files; file:// pages block these reads." : "Each crawler owns one result.json. The dashboard reads fixed expected paths and never writes them.";
+        $("dataOverviewFoot").innerHTML = `<strong>${started}/${sessions.length}</strong> packets have a readable result · <strong>${representatives}</strong> representatives · <strong>${screened}</strong> screened alternatives. ${escapeHtml(accessNote)}`;
+      }
+
+      function sessionPrompt(session) {
+        return typeof buildSessionPrompt === "function" ? buildSessionPrompt(session, categoriesFor(session)) : "Session prompt builder is unavailable.";
+      }
+
+      function categoryPrompt(category) {
+        return singleTemplate
+          .replace("{{CATEGORY_JSON}}", JSON.stringify({ id:category.id, domain:category.domain, label:category.label, aliases:category.aliases, priority:category.priority, assayTypes:category.assayTypes, searchObjects:category.searchObjects, notes:category.notes }, null, 2))
+          .replaceAll("{{CATEGORY_ID}}", category.id)
+          .replaceAll("{{CATEGORY_LABEL}}", category.label);
+      }
+
+      async function copyText(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (error) {
+          const area = document.createElement("textarea");
+          area.value = text;
+          area.style.position = "fixed";
+          area.style.opacity = "0";
+          document.body.appendChild(area);
+          area.select();
+          const copied = document.execCommand("copy");
+          area.remove();
+          return copied;
+        }
+      }
+
+      function visibleSessions() {
+        const query = $("filter").value.trim().toLowerCase();
+        if (!query) return sessions;
+        return sessions.filter((session) => {
+          const haystack = [session.id, session.title, session.domain, session.note, ...categoriesFor(session).flatMap((category) => [category.id, category.label, ...(category.aliases || []), ...(category.assayTypes || [])])].join(" ").toLowerCase();
+          return haystack.includes(query);
+        });
+      }
+
+      function card(session, index) {
+        const sessionCategories = categoriesFor(session);
+        const prompt = sessionPrompt(session);
+        const label = `Session ${String(index + 1).padStart(2, "0")}`;
+        const entry = entryFor(session);
+        const state = displayState(entry);
+        const detail = entry.state === "not-started" ? `Expected file: data/sessions/${session.id}/result.json` : entry.state === "unavailable" ? "Start a local HTTP server to read session files." : `${entry.categoryCount}/${sessionCategories.length} categories · ${entry.representativeCount} representatives · ${entry.screenedCount} screened`;
+        return `<article class="card"><div class="card-heading"><div><h2>${escapeHtml(label)}: ${escapeHtml(session.title)}</h2><div class="session-id">${escapeHtml(session.id)} / ${escapeHtml(session.domain)} / ${sessionCategories.length} category results</div><div class="card-state"><span class="packet-status ${escapeHtml(state)}">${escapeHtml(stateLabel(state))}</span><span class="state-detail">${escapeHtml(detail)}</span></div></div><span class="mode ${escapeHtml(session.mode)}">${escapeHtml(session.mode)}</span></div><p class="card-note">${escapeHtml(session.note)}</p><div class="actions"><button type="button" data-copy-session="${escapeHtml(session.id)}">Copy session prompt</button><button class="secondary" type="button" data-copy-ids="${escapeHtml(session.id)}">Copy category IDs</button></div><ul>${sessionCategories.map((category) => `<li><span class="name">${escapeHtml(category.label)}<span class="category-priority ${escapeHtml(category.priority)}">${escapeHtml(category.priority)}</span><span class="slug">${escapeHtml(category.id)} / ${escapeHtml(category.assayTypes?.[0] || category.domain)}</span></span><button class="secondary mini" type="button" data-copy-category="${escapeHtml(category.id)}">Copy category</button></li>`).join("")}</ul><details><summary>Preview session prompt</summary><pre>${escapeHtml(prompt)}</pre></details></article>`;
+      }
+
+      function render() {
+        const visible = visibleSessions();
+        const focused = visible.filter((session) => session.mode === "focused");
+        const batches = visible.filter((session) => session.mode === "batch");
+        $("focusedGrid").innerHTML = focused.length ? focused.map((session) => card(session, sessions.indexOf(session))).join("") : `<div class="empty">No focused packets match this filter.</div>`;
+        $("batchGrid").innerHTML = batches.length ? batches.map((session) => card(session, sessions.indexOf(session))).join("") : `<div class="empty">No batch packets match this filter.</div>`;
+        $("focusedSection").hidden = !focused.length && !!$("filter").value.trim();
+        $("batchSection").hidden = !batches.length && !!$("filter").value.trim();
+        decorateRenderedStatus();
+        $("visibleCount").textContent = visible.length;
+        $("sessionCount").textContent = sessions.length;
+        $("categoryCount").textContent = categories.length;
+        $("coreCount").textContent = categories.filter((category) => category.priority === "core").length;
+        $("copiedCount").textContent = copiedSessions.size;
+      }
+
+      async function copySession(session) {
+        const copied = await copyText(sessionPrompt(session));
+        if (copied) {
+          copiedSessions.add(session.id);
+          render();
+          status(`Copied ${session.categoryCount}-category session packet`);
+        } else {
+          status("Copy was blocked; open the preview and select the prompt text.");
+        }
+      }
+
+      async function copyCategory(category) {
+        const copied = await copyText(categoryPrompt(category));
+        status(copied ? `Copied category prompt: ${category.label}` : "Copy was blocked; open the session preview and select the prompt text.");
+      }
+
+      async function copySessionIds(session) {
+        const text = categoriesFor(session).map((category) => `${category.id}\t${category.label}`).join("\n");
+        const copied = await copyText(text);
+        status(copied ? `Copied ${session.categoryCount} category IDs` : "Copy was blocked.");
+      }
+
+      async function copyGroup(mode) {
+        const group = visibleSessions().filter((session) => !mode || session.mode === mode);
+        const text = group.map((session, index) => `${index + 1}. ${session.title} [${session.id}]\n${sessionPrompt(session)}`).join("\n\n---\n\n");
+        const copied = await copyText(text);
+        status(copied ? `Copied ${group.length} ${mode || "visible"} packet prompts` : "Copy was blocked; use one packet at a time.");
+      }
+
+      function renderValidation() {
+        const errors = [
+          ...(validation.duplicateCategoryIds || []).map((id) => `Duplicate assignment: ${id}`),
+          ...(validation.unknownCategoryIds || []).map((id) => `Unknown category ID: ${id}`),
+          ...(validation.unassignedCategoryIds || []).map((id) => `Unassigned category: ${id}`)
+        ];
+        $("validation").innerHTML = errors.length ? `<div class="validation"><strong>Queue validation needs attention.</strong><br>${errors.map(escapeHtml).join("<br>")}</div>` : "";
+      }
+
+      $("filter").addEventListener("input", render);
+      $("copyVisible").addEventListener("click", () => copyGroup(null));
+      $("copyFocused").addEventListener("click", () => copyGroup("focused"));
+      $("copyBatches").addEventListener("click", () => copyGroup("batch"));
+      $("refreshData").addEventListener("click", async () => {
+        status("Refreshing local session data...");
+        await loadSessionResults();
+        status(dataAccessState === "ready" ? "Local session data refreshed" : "Could not read local data; start an HTTP server");
+      });
+      document.addEventListener("click", (event) => {
+        const sessionButton = event.target.closest("button[data-copy-session]");
+        const categoryButton = event.target.closest("button[data-copy-category]");
+        const idButton = event.target.closest("button[data-copy-ids]");
+        if (sessionButton) {
+          const session = sessions.find((item) => item.id === sessionButton.dataset.copySession);
+          if (session) copySession(session);
+        }
+        if (categoryButton) {
+          const category = categoryById.get(categoryButton.dataset.copyCategory);
+          if (category) copyCategory(category);
+        }
+        if (idButton) {
+          const session = sessions.find((item) => item.id === idButton.dataset.copyIds);
+          if (session) copySessionIds(session);
+        }
+      });
+
+      renderValidation();
+      render();
+      loadSessionResults();
+    })();
+  </script>
+</body>
+</html>

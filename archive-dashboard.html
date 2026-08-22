@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Protocol Atlas 本地归档数据总览。">
+  <title>Protocol Atlas | 本地归档总览</title>
+  <style>
+    :root {
+      --ink: #152936;
+      --muted: #62727b;
+      --paper: #f5f7f4;
+      --surface: #ffffff;
+      --line: #dfe7e3;
+      --navy: #163b52;
+      --teal: #087d72;
+      --teal-soft: #e5f6f1;
+      --blue: #2b62c6;
+      --blue-soft: #edf3ff;
+      --amber: #ae6b13;
+      --amber-soft: #fff4e4;
+      --rose: #b53f58;
+      --rose-soft: #fff0f3;
+      --shadow: 0 12px 32px rgba(20, 45, 50, .06);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--paper); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; min-width: 320px; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+    .shell { margin: 0 auto; max-width: 1440px; padding: 0 30px 52px; }
+
+    .topbar { align-items: center; background: var(--navy); color: #fff; display: flex; gap: 24px; justify-content: space-between; margin: 0 -30px; min-height: 72px; padding: 0 30px; }
+    .brand { align-items: center; display: flex; gap: 12px; }
+    .brand-mark { align-items: center; background: #cceee6; border-radius: 9px; color: var(--navy); display: flex; font-size: 13px; font-weight: 900; height: 36px; justify-content: center; letter-spacing: .08em; width: 36px; }
+    .brand strong { display: block; font-size: 15px; letter-spacing: .01em; }
+    .brand span { color: #b8cbd4; display: block; font-size: 11px; margin-top: 2px; }
+    .nav { align-items: center; display: flex; flex-wrap: wrap; gap: 7px; justify-content: flex-end; }
+    .nav a { border: 1px solid transparent; border-radius: 6px; color: #d5e1e6; font-size: 12px; font-weight: 750; padding: 7px 9px; text-decoration: none; }
+    .nav a:hover, .nav a:focus-visible { background: rgba(255, 255, 255, .09); color: #fff; outline: none; }
+    .nav a.active { background: #cceee6; color: var(--navy); }
+
+    .hero { align-items: end; display: flex; gap: 28px; justify-content: space-between; padding: 42px 0 27px; }
+    .eyebrow { color: var(--teal); font-size: 11px; font-weight: 850; letter-spacing: .12em; margin: 0 0 9px; text-transform: uppercase; }
+    h1 { font-size: clamp(28px, 4vw, 47px); letter-spacing: -.04em; line-height: 1.04; margin: 0; }
+    .intro { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 13px 0 0; max-width: 730px; }
+    .live-box { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); min-width: 245px; padding: 13px 15px; }
+    .live-line { align-items: center; color: var(--teal); display: flex; font-size: 12px; font-weight: 800; gap: 8px; }
+    .live-dot { background: currentColor; border-radius: 50%; height: 8px; width: 8px; }
+    .live-box p { color: var(--muted); font-size: 11px; line-height: 1.4; margin: 6px 0 0 16px; }
+
+    .metrics { display: grid; gap: 12px; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .metric { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); min-height: 112px; padding: 17px; }
+    .metric:nth-child(1) { border-top: 3px solid var(--teal); }
+    .metric:nth-child(2) { border-top: 3px solid var(--blue); }
+    .metric:nth-child(3) { border-top: 3px solid #8a68c7; }
+    .metric:nth-child(4) { border-top: 3px solid #d79530; }
+    .metric:nth-child(5) { border-top: 3px solid var(--navy); }
+    .metric-label { color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .04em; }
+    .metric-value { font-size: 31px; font-weight: 850; letter-spacing: -.04em; line-height: 1; margin-top: 13px; }
+    .metric-note { color: var(--muted); font-size: 11px; line-height: 1.35; margin-top: 8px; }
+
+    .panel-grid { display: grid; gap: 17px; grid-template-columns: minmax(0, 1.15fr) minmax(310px, .85fr); margin-top: 18px; }
+    .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); min-width: 0; padding: 19px; }
+    .panel-head { align-items: flex-start; display: flex; gap: 14px; justify-content: space-between; margin-bottom: 17px; }
+    .panel-title { font-size: 16px; letter-spacing: -.015em; margin: 0; }
+    .panel-copy { color: var(--muted); font-size: 11px; line-height: 1.45; margin: 4px 0 0; }
+    .soft-button, .primary-button { border-radius: 6px; font-size: 11px; font-weight: 800; min-height: 32px; padding: 7px 10px; white-space: nowrap; }
+    .soft-button { background: #fff; border: 1px solid #cbd8d8; color: var(--teal); }
+    .soft-button:hover { background: var(--teal-soft); }
+    .primary-button { background: var(--teal); border: 1px solid var(--teal); color: #fff; }
+    .primary-button:hover { filter: brightness(.94); }
+
+    .coverage-row { align-items: center; display: grid; gap: 11px; grid-template-columns: 116px minmax(0, 1fr) 86px; margin-top: 12px; }
+    .coverage-label { color: var(--muted); font-size: 11px; font-weight: 750; }
+    .coverage-track { background: #edf1ef; border-radius: 99px; display: flex; height: 10px; overflow: hidden; }
+    .coverage-segment { height: 100%; min-width: 0; }
+    .coverage-segment.complete { background: var(--teal); }
+    .coverage-segment.partial { background: #e2a443; }
+    .coverage-segment.blocked { background: var(--rose); }
+    .coverage-segment.missing { background: #cbd4d5; }
+    .coverage-value { color: var(--ink); font-size: 11px; font-weight: 800; text-align: right; }
+    .legend { display: flex; flex-wrap: wrap; gap: 9px 13px; margin-top: 18px; }
+    .legend span { align-items: center; color: var(--muted); display: inline-flex; font-size: 10px; gap: 5px; }
+    .legend i { background: #cbd4d5; border-radius: 50%; display: inline-block; height: 7px; width: 7px; }
+    .legend i.complete { background: var(--teal); }
+    .legend i.partial { background: #e2a443; }
+    .legend i.blocked { background: var(--rose); }
+    .health-list { display: grid; gap: 9px; }
+    .health-item { align-items: center; border-bottom: 1px solid #edf1ef; display: flex; gap: 12px; justify-content: space-between; padding-bottom: 9px; }
+    .health-item:last-child { border-bottom: 0; padding-bottom: 0; }
+    .health-label { color: var(--muted); font-size: 11px; }
+    .health-value { color: var(--ink); font-size: 13px; font-weight: 850; text-align: right; }
+    .health-value.teal { color: var(--teal); }
+    .health-value.amber { color: var(--amber); }
+    .health-value.rose { color: var(--rose); }
+
+    .section { margin-top: 18px; }
+    .section-head { align-items: flex-end; display: flex; gap: 20px; justify-content: space-between; margin: 28px 0 13px; }
+    .section-head h2 { font-size: 20px; letter-spacing: -.025em; margin: 0; }
+    .section-head p { color: var(--muted); font-size: 12px; line-height: 1.45; margin: 5px 0 0; }
+    .controls { align-items: center; display: flex; flex-wrap: wrap; gap: 8px; }
+    .search { background: #fff; border: 1px solid #cad6d5; border-radius: 7px; color: var(--ink); font-size: 12px; min-height: 35px; outline: none; padding: 8px 10px; width: min(310px, 70vw); }
+    .search:focus { border-color: #58a69a; box-shadow: 0 0 0 3px rgba(8, 125, 114, .11); }
+    .source-layout { display: grid; gap: 17px; grid-template-columns: minmax(0, 1fr) minmax(330px, .92fr); }
+    .source-bars { display: grid; gap: 10px; }
+    .source-bar-row { display: grid; gap: 9px; grid-template-columns: minmax(130px, 1fr) minmax(100px, 2.4fr) 38px; }
+    .source-bar-label { color: var(--ink); font-size: 11px; font-weight: 750; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .source-bar-track { background: #edf1ef; border-radius: 99px; height: 8px; margin-top: 4px; overflow: hidden; }
+    .source-bar-fill { background: linear-gradient(90deg, var(--teal), #54afa4); border-radius: inherit; height: 100%; }
+    .source-bar-count { color: var(--muted); font-size: 10px; font-weight: 750; text-align: right; }
+    .source-bars .empty, .session-list .empty { color: var(--muted); font-size: 12px; padding: 18px 0; }
+    .source-table-wrap { border: 1px solid var(--line); border-radius: 9px; overflow: auto; }
+    table { border-collapse: collapse; min-width: 840px; width: 100%; }
+    th { background: #f8faf9; color: var(--muted); font-size: 10px; font-weight: 850; letter-spacing: .05em; padding: 10px 11px; text-align: left; text-transform: uppercase; }
+    td { border-top: 1px solid #edf1ef; font-size: 11px; padding: 11px; vertical-align: top; }
+    .site-name { color: var(--ink); font-weight: 800; }
+    .site-host { color: var(--muted); display: block; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 10px; margin-top: 3px; }
+    .site-link { color: var(--blue); font-size: 10px; font-weight: 750; text-decoration: none; }
+    .site-link:hover { text-decoration: underline; }
+    .source-kind { color: #3d5c65; font-size: 10px; font-weight: 800; }
+    .source-boundary { color: var(--muted); font-size: 10px; line-height: 1.4; max-width: 205px; }
+    .number { font-weight: 800; text-align: right; }
+    .source-note { color: var(--muted); font-size: 10px; line-height: 1.4; margin: 10px 0 0; }
+
+    .session-list { display: grid; gap: 10px; }
+    .session-card { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid #cbd4d5; border-radius: 8px; padding: 13px 14px; }
+    .session-card.complete { border-left-color: var(--teal); }
+    .session-card.partial, .session-card.in-progress { border-left-color: #e2a443; }
+    .session-card.blocked, .session-card.invalid { border-left-color: var(--rose); }
+    .session-top { align-items: flex-start; display: flex; gap: 13px; justify-content: space-between; }
+    .session-title { font-size: 14px; font-weight: 850; letter-spacing: -.01em; margin: 0; }
+    .session-id { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 10px; margin-top: 4px; }
+    .badge { border-radius: 4px; font-size: 9px; font-weight: 850; padding: 4px 6px; text-transform: uppercase; white-space: nowrap; }
+    .badge.complete { background: var(--teal-soft); color: var(--teal); }
+    .badge.partial, .badge.in-progress { background: var(--amber-soft); color: var(--amber); }
+    .badge.blocked, .badge.invalid { background: var(--rose-soft); color: var(--rose); }
+    .badge.missing { background: #edf1ef; color: #66747a; }
+    .session-meta { color: var(--muted); display: flex; flex-wrap: wrap; font-size: 11px; gap: 8px 14px; margin-top: 10px; }
+    .session-meta strong { color: var(--ink); }
+    .session-card details { border-top: 1px solid #edf1ef; margin-top: 11px; padding-top: 9px; }
+    .session-card summary { color: var(--teal); cursor: pointer; font-size: 11px; font-weight: 800; }
+    .session-sources { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+    .session-sources a { background: #f0f5f4; border-radius: 4px; color: #3c6062; font-size: 10px; font-weight: 700; padding: 4px 6px; text-decoration: none; }
+    .session-sources a:hover { background: var(--teal-soft); color: var(--teal); }
+    .empty-state { background: var(--surface); border: 1px dashed #bdceca; border-radius: 9px; color: var(--muted); font-size: 13px; line-height: 1.55; padding: 31px 20px; text-align: center; }
+    .footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; line-height: 1.55; margin-top: 28px; padding-top: 18px; }
+    .footer strong { color: var(--ink); }
+
+    @media (max-width: 1050px) {
+      .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .panel-grid, .source-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .shell { padding: 0 16px 36px; }
+      .topbar { align-items: flex-start; flex-direction: column; gap: 12px; margin: 0 -16px; padding: 16px; }
+      .nav { justify-content: flex-start; }
+      .hero { align-items: flex-start; flex-direction: column; padding: 30px 0 22px; }
+      .live-box { min-width: 0; width: 100%; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .metric:last-child { grid-column: span 2; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      .controls { width: 100%; }
+      .search { width: 100%; }
+      .coverage-row { grid-template-columns: 100px minmax(0, 1fr) 64px; }
+      .source-bar-row { grid-template-columns: 112px minmax(70px, 1fr) 32px; }
+    }
+    @media (max-width: 420px) {
+      .metrics { grid-template-columns: 1fr; }
+      .metric:last-child { grid-column: auto; }
+      .coverage-row { grid-template-columns: 1fr; gap: 5px; }
+      .coverage-value { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">PA</div>
+        <div><strong>Protocol Atlas</strong><span>本地 protocol archive</span></div>
+      </div>
+      <nav class="nav" aria-label="Protocol Atlas 页面">
+        <a class="active" href="archive-dashboard.html">归档总览</a>
+        <a href="index.html">协议目录</a>
+        <a href="process-manager.html">收集队列</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Local archive dashboard</p>
+          <h1>我们已经整理了什么？</h1>
+          <p class="intro">从每个 crawler 的本地 <code>result.json</code> 实时汇总协议分类、候选记录和检索过的网站。页面只读取元数据和链接，不复制任何协议正文。</p>
+        </div>
+        <div class="live-box" aria-live="polite">
+          <div class="live-line"><i class="live-dot" aria-hidden="true"></i><span id="dataStatus">正在读取本地归档</span></div>
+          <p id="dataUpdated">data/sessions/</p>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="归档统计">
+        <article class="metric"><div class="metric-label">已归档批次</div><div class="metric-value" id="metricSessions">—</div><div class="metric-note" id="metricSessionsNote">等待读取</div></article>
+        <article class="metric"><div class="metric-label">已写入分类</div><div class="metric-value" id="metricCategories">—</div><div class="metric-note" id="metricCategoriesNote">等待读取</div></article>
+        <article class="metric"><div class="metric-label">代表性协议</div><div class="metric-value" id="metricRepresentatives">—</div><div class="metric-note">每个分类优先保留一条</div></article>
+        <article class="metric"><div class="metric-label">筛选过的备选</div><div class="metric-value" id="metricScreened">—</div><div class="metric-note">保留筛选理由，方便复查</div></article>
+        <article class="metric"><div class="metric-label">来源网站</div><div class="metric-value" id="metricSources">—</div><div class="metric-note">按实际检索链接去重</div></article>
+      </section>
+
+      <section class="panel-grid">
+        <article class="panel">
+          <div class="panel-head"><div><h2 class="panel-title">收集覆盖度</h2><p class="panel-copy">固定队列中的批次与分类；颜色表示当前文件中的真实状态。</p></div><button class="soft-button" type="button" id="refreshData">重新读取</button></div>
+          <div class="coverage-row"><span class="coverage-label">批次</span><div class="coverage-track" id="sessionCoverage"></div><strong class="coverage-value" id="sessionCoverageValue">—</strong></div>
+          <div class="coverage-row"><span class="coverage-label">分类</span><div class="coverage-track" id="categoryCoverage"></div><strong class="coverage-value" id="categoryCoverageValue">—</strong></div>
+          <div class="legend" aria-label="状态图例"><span><i class="complete"></i>完成</span><span><i class="partial"></i>部分完成</span><span><i class="blocked"></i>阻塞/无合格记录</span><span><i></i>未开始</span></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head"><div><h2 class="panel-title">归档健康度</h2><p class="panel-copy">这些数值反映已保存的元数据，不是实验质量评分。</p></div></div>
+          <div class="health-list">
+            <div class="health-item"><span class="health-label">可读取结果文件</span><strong class="health-value teal" id="healthReadable">—</strong></div>
+            <div class="health-item"><span class="health-label">类别带代表性协议</span><strong class="health-value teal" id="healthRepresented">—</strong></div>
+            <div class="health-item"><span class="health-label">已记录许可证据</span><strong class="health-value amber" id="healthLicenses">—</strong></div>
+            <div class="health-item"><span class="health-label">状态为 partial / blocked</span><strong class="health-value amber" id="healthFollowup">—</strong></div>
+            <div class="health-item"><span class="health-label">无效或无法读取</span><strong class="health-value rose" id="healthInvalid">—</strong></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" aria-labelledby="sourcesHeading">
+        <div class="section-head">
+          <div><h2 id="sourcesHeading">已检索的网站</h2><p>来自每个 session 和分类的 <code>sourcesSearched</code>，并合并代表性与备选记录中的来源。</p></div>
+          <div class="controls"><input class="search" id="sourceSearch" type="search" placeholder="筛选网站、域名或 session" aria-label="筛选来源网站"><button class="soft-button" type="button" id="clearSourceSearch">清除筛选</button></div>
+        </div>
+        <div class="source-layout">
+          <article class="panel"><div class="panel-head"><div><h3 class="panel-title">检索频次最高</h3><p class="panel-copy">统计保存下来的链接出现次数，不等同于页面浏览量。</p></div></div><div class="source-bars" id="sourceBars"></div></article>
+          <article class="panel"><div class="panel-head"><div><h3 class="panel-title">来源明细</h3><p class="panel-copy" id="sourceTableSummary">正在汇总…</p></div></div><div class="source-table-wrap"><table><thead><tr><th>网站</th><th>定位 / 使用边界</th><th>检索链接</th><th>代表记录</th><th>备选记录</th><th>批次</th></tr></thead><tbody id="sourceTable"></tbody></table></div><p class="source-note">“使用边界”是本项目的保守工作规则，不替代逐条许可核验。点击“打开示例”会在新标签打开该来源的一个已归档链接。</p></article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sessionsHeading">
+        <div class="section-head"><div><h2 id="sessionsHeading">本地归档批次</h2><p>每张卡对应 <code>data/sessions/&lt;session-id&gt;/result.json</code>；未创建文件的批次也会显示出来。</p></div></div>
+        <div class="session-list" id="sessionList" aria-live="polite"></div>
+      </section>
+
+      <p class="footer"><strong>数据边界：</strong>仪表盘只读取本地 JSON 中的题名、来源、DOI、许可和简短筛选说明。协议步骤、表格、图片、视频和 PDF 不在这个网站中保存或展示。</p>
+    </main>
+  </div>
+
+  <script src="common-protocol-categories.js"></script>
+  <script src="collection-session-batches.js"></script>
+  <script>
+    (() => {
+      const sessions = Array.isArray(window.COLLECTION_SESSION_BATCHES) ? window.COLLECTION_SESSION_BATCHES : [];
+      const categories = Array.isArray(window.COMMON_PROTOCOL_CATEGORIES) ? window.COMMON_PROTOCOL_CATEGORIES : [];
+      const $ = (id) => document.getElementById(id);
+      const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
+      const state = { sourceSearch: "", entries: [], sources: [] };
+
+      const siteNames = {
+        "www.protocols.io": "Protocols.io",
+        "bio-protocol.org": "Bio-protocol",
+        "en.bio-protocol.org": "Bio-protocol EN",
+        "api.crossref.org": "Crossref API",
+        "doi.org": "DOI resolver",
+        "dx.doi.org": "DOI resolver",
+        "www.addgene.org": "Addgene",
+        "www.neb.com": "New England Biolabs",
+        "nebcloner.neb.com": "NEBcloner",
+        "www.nature.com": "Nature Protocols",
+        "experiments.springernature.com": "Springer Nature Experiments",
+        "www.thermofisher.com": "Thermo Fisher Scientific",
+        "documents.thermofisher.com": "Thermo Fisher documents",
+        "www.bdbiosciences.com": "BD Biosciences",
+        "pmc.ncbi.nlm.nih.gov": "PubMed Central",
+        "www.ncbi.nlm.nih.gov": "NCBI",
+        "www.qiagen.com": "QIAGEN",
+        "www.fda.gov": "FDA",
+        "portals.broadinstitute.org": "Broad Institute",
+        "journals.plos.org": "PLOS ONE",
+        "www.abcam.com": "Abcam",
+        "www.zymoresearch.com": "Zymo Research",
+        "qb3.berkeley.edu": "QB3 Berkeley",
+        "mmpc.org": "MMPC"
+      };
+
+      const statusLabel = { complete: "完成", partial: "部分完成", blocked: "阻塞", "in-progress": "进行中", invalid: "无效", missing: "未开始", "no-qualified-record": "无合格记录" };
+      const isHttp = (value) => typeof value === "string" && /^https?:\/\//i.test(value);
+      const unique = (items) => [...new Set(items.filter(Boolean))];
+      const dateLabel = (value) => {
+        if (!value) return "未记录";
+        const date = new Date(value);
+        return Number.isNaN(date.getTime()) ? "未记录" : new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "short", day: "numeric" }).format(date);
+      };
+      const percent = (part, total) => total ? Math.round((part / total) * 100) : 0;
+      const sourceInfo = (url) => {
+        try {
+          const parsed = new URL(url);
+          const rawHost = parsed.hostname.toLowerCase();
+          const host = ["doi.org", "dx.doi.org"].includes(rawHost) ? "doi-resolver" : rawHost;
+          return { host, rawHost, url: parsed.href, name: host === "doi-resolver" ? "DOI resolver" : (siteNames[rawHost] || rawHost.replace(/^www\./, "")) };
+        } catch (error) {
+          return null;
+        }
+      };
+
+      function sourceProfile(source) {
+        if (source.host === "www.protocols.io") return { kind: "公开 protocol 平台", boundary: "逐条保存 CC BY 证据与署名；不继续自动化采集。" };
+        if (["api.crossref.org", "doi-resolver"].includes(source.host)) return { kind: "元数据 / DOI 核验", boundary: "用于核对引用和落地页；不作为协议正文来源。" };
+        if (["www.nature.com", "pmc.ncbi.nlm.nih.gov", "www.ncbi.nlm.nih.gov", "journals.plos.org", "bio-protocol.org", "en.bio-protocol.org"].includes(source.host)) return { kind: "期刊或开放知识库", boundary: "按具体论文或记录的许可决定是否可复用全文。" };
+        return { kind: "官方机构或试剂商资料", boundary: "默认仅存链接和元数据；正文、PDF、图表不镜像。" };
+      }
+
+      function makeEntry(session, stateName, result, error) {
+        const categoryResults = Array.isArray(result?.categoryResults) ? result.categoryResults : [];
+        const valid = stateName === "ready" && result?.sessionId === session.id && categoryResults.length === session.categoryIds.length && session.categoryIds.every((id, index) => categoryResults[index]?.categoryId === id);
+        if (stateName === "ready" && !valid) return { session, state: "invalid", result: null, error: "session/category verification mismatch", categoryResults: [] };
+        return { session, state: stateName === "ready" ? (result.packetStatus || "in-progress") : stateName, result, error: error || "", categoryResults };
+      }
+
+      async function readArchive() {
+        $("dataStatus").textContent = "正在读取本地归档";
+        const responses = await Promise.all(sessions.map(async (session) => {
+          const path = `data/sessions/${encodeURIComponent(session.id)}/result.json`;
+          try {
+            const response = await fetch(path, { cache: "no-store" });
+            if (response.status === 404) return makeEntry(session, "missing", null);
+            if (!response.ok) return makeEntry(session, "invalid", null, `HTTP ${response.status}`);
+            return makeEntry(session, "ready", await response.json());
+          } catch (error) {
+            return makeEntry(session, "invalid", null, error?.message || "local file unavailable");
+          }
+        }));
+        state.entries = responses;
+        state.sources = collectSources(responses);
+        render();
+      }
+
+      function collectSources(entries) {
+        const map = new Map();
+        const add = (url, entry, role) => {
+          if (!isHttp(url)) return;
+          const info = sourceInfo(url);
+          if (!info) return;
+          if (!map.has(info.host)) map.set(info.host, { ...info, domains: new Set(), searches: 0, representatives: 0, screened: 0, sessions: new Set(), categories: new Set(), samples: new Set() });
+          const target = map.get(info.host);
+          target.domains.add(info.rawHost);
+          target.sessions.add(entry.session.id);
+          target.samples.add(info.url);
+          if (role === "search") target.searches += 1;
+          if (role === "representative") target.representatives += 1;
+          if (role === "screened") target.screened += 1;
+        };
+        entries.filter((entry) => entry.result).forEach((entry) => {
+          (entry.result.sourcesSearched || []).forEach((url) => add(url, entry, "search"));
+          entry.categoryResults.forEach((category) => {
+            (category.sourcesSearched || []).forEach((url) => add(url, entry, "search"));
+            if (category.representative?.sourceUrl) add(category.representative.sourceUrl, entry, "representative");
+            (category.screened || []).forEach((record) => add(record?.sourceUrl, entry, "screened"));
+            const categoryId = category.categoryId;
+            [category.representative?.sourceUrl, ...(category.screened || []).map((record) => record?.sourceUrl), ...(category.sourcesSearched || [])].forEach((url) => {
+              const info = sourceInfo(url);
+              if (info && map.has(info.host) && categoryId) map.get(info.host).categories.add(categoryId);
+            });
+          });
+        });
+        return [...map.values()].sort((a, b) => b.searches - a.searches || b.representatives - a.representatives || a.name.localeCompare(b.name));
+      }
+
+      function categoryStatusCounts(entries) {
+        const counts = { complete: 0, partial: 0, blocked: 0, missing: 0 };
+        entries.forEach((entry) => {
+          if (!entry.result) {
+            counts.missing += entry.session.categoryIds.length;
+            return;
+          }
+          entry.categoryResults.forEach((category) => {
+            if (category.status === "complete") counts.complete += 1;
+            else if (category.status === "partial") counts.partial += 1;
+            else counts.blocked += 1;
+          });
+        });
+        return counts;
+      }
+
+      function sessionStatusCounts(entries) {
+        const counts = { complete: 0, partial: 0, blocked: 0, missing: 0 };
+        entries.forEach((entry) => {
+          if (entry.state === "complete") counts.complete += 1;
+          else if (entry.state === "partial" || entry.state === "in-progress") counts.partial += 1;
+          else if (entry.state === "blocked" || entry.state === "invalid") counts.blocked += 1;
+          else counts.missing += 1;
+        });
+        return counts;
+      }
+
+      function coverageMarkup(counts, total) {
+        return ["complete", "partial", "blocked", "missing"].map((key) => `<span class="coverage-segment ${key}" style="width:${percent(counts[key], total)}%" title="${escapeHtml(statusLabel[key])}: ${counts[key]}"></span>`).join("");
+      }
+
+      function renderOverview() {
+        const entries = state.entries;
+        const readable = entries.filter((entry) => entry.result).length;
+        const sessionCounts = sessionStatusCounts(entries);
+        const categoryCounts = categoryStatusCounts(entries);
+        const allCategories = entries.flatMap((entry) => entry.categoryResults);
+        const representatives = allCategories.filter((category) => category.representative).length;
+        const licensed = allCategories.filter((category) => category.representative?.licenseEvidenceUrl).length;
+        const screened = allCategories.reduce((sum, category) => sum + (Array.isArray(category.screened) ? category.screened.length : 0), 0);
+        const followup = categoryCounts.partial + categoryCounts.blocked;
+        const invalid = entries.filter((entry) => entry.state === "invalid").length;
+        $("metricSessions").textContent = readable;
+        $("metricSessionsNote").textContent = `共 ${sessions.length} 个计划批次`;
+        $("metricCategories").textContent = allCategories.length;
+        $("metricCategoriesNote").textContent = `共 ${categories.length || sessions.reduce((sum, session) => sum + session.categoryIds.length, 0)} 个计划分类`;
+        $("metricRepresentatives").textContent = representatives;
+        $("metricScreened").textContent = screened;
+        $("metricSources").textContent = state.sources.length;
+        $("sessionCoverage").innerHTML = coverageMarkup(sessionCounts, entries.length);
+        $("categoryCoverage").innerHTML = coverageMarkup(categoryCounts, categories.length || allCategories.length);
+        $("sessionCoverageValue").textContent = `${readable} / ${entries.length} 已归档`;
+        $("categoryCoverageValue").textContent = `${allCategories.length} / ${categories.length || allCategories.length} 已写入`;
+        $("healthReadable").textContent = `${readable} / ${entries.length}`;
+        $("healthRepresented").textContent = `${representatives} / ${allCategories.length || 0}`;
+        $("healthLicenses").textContent = `${licensed} / ${representatives}`;
+        $("healthFollowup").textContent = followup;
+        $("healthInvalid").textContent = invalid;
+        $("dataStatus").textContent = invalid ? "部分本地文件不可用" : "已读取本地归档";
+        $("dataUpdated").textContent = invalid ? "请通过本地 HTTP 服务打开页面，然后重新读取。" : `最后读取：${new Date().toLocaleString("zh-CN")}`;
+      }
+
+      function filteredSources() {
+        const query = state.sourceSearch.trim().toLowerCase();
+        if (!query) return state.sources;
+        return state.sources.filter((source) => [source.name, source.host, ...source.sessions].join(" ").toLowerCase().includes(query));
+      }
+
+      function renderSources() {
+        const sources = filteredSources();
+        const top = sources.slice(0, 8);
+        const maxSearches = Math.max(...top.map((source) => source.searches), 1);
+        $("sourceBars").innerHTML = top.length ? top.map((source) => `<div class="source-bar-row"><div class="source-bar-label" title="${escapeHtml(source.host)}">${escapeHtml(source.name)}</div><div class="source-bar-track"><div class="source-bar-fill" style="width:${Math.max(5, (source.searches / maxSearches) * 100)}%"></div></div><div class="source-bar-count">${source.searches}</div></div>`).join("") : `<div class="empty">没有匹配的网站。</div>`;
+        $("sourceTableSummary").textContent = `显示 ${sources.length} / ${state.sources.length} 个网站`;
+        $("sourceTable").innerHTML = sources.length ? sources.map((source) => {
+          const profile = sourceProfile(source);
+          return `<tr><td><span class="site-name">${escapeHtml(source.name)}</span><span class="site-host">${escapeHtml([...source.domains].sort().join(", "))}</span><a class="site-link" href="${escapeHtml([...source.samples][0])}" target="_blank" rel="noreferrer">打开示例</a></td><td><span class="source-kind">${escapeHtml(profile.kind)}</span><div class="source-boundary">${escapeHtml(profile.boundary)}</div></td><td class="number">${source.searches}</td><td class="number">${source.representatives}</td><td class="number">${source.screened}</td><td class="number">${source.sessions.size}</td></tr>`;
+        }).join("") : `<tr><td colspan="6" style="color:var(--muted);text-align:center">没有匹配的网站</td></tr>`;
+      }
+
+      function sessionSourceLinks(entry) {
+        const urls = unique([...(entry.result?.sourcesSearched || []), ...entry.categoryResults.flatMap((category) => category.sourcesSearched || [])]).filter(isHttp).slice(0, 12);
+        return urls.length ? `<div class="session-sources">${urls.map((url) => { const source = sourceInfo(url); return source ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.name)}</a>` : ""; }).join("")}</div>` : `<div class="session-sources"><span style="color:var(--muted);font-size:10px">未保存检索来源</span></div>`;
+      }
+
+      function renderSessions() {
+        const entries = state.entries;
+        $("sessionList").innerHTML = entries.length ? entries.map((entry) => {
+          const categoriesWritten = entry.categoryResults.length;
+          const representatives = entry.categoryResults.filter((category) => category.representative).length;
+          const screened = entry.categoryResults.reduce((sum, category) => sum + (category.screened?.length || 0), 0);
+          const stateName = entry.state === "in-progress" ? "in-progress" : ["complete", "partial", "blocked", "invalid", "missing"].includes(entry.state) ? entry.state : "invalid";
+          const savedAt = entry.result?.writtenAt ? `写入：${dateLabel(entry.result.writtenAt)}` : entry.error ? `读取问题：${entry.error}` : "尚未创建归档文件";
+          return `<article class="session-card ${escapeHtml(stateName)}"><div class="session-top"><div><h3 class="session-title">${escapeHtml(entry.session.title)}</h3><div class="session-id">${escapeHtml(entry.session.id)} · ${escapeHtml(entry.session.domain)}</div></div><span class="badge ${escapeHtml(stateName)}">${escapeHtml(statusLabel[stateName] || stateName)}</span></div><div class="session-meta"><span><strong>${categoriesWritten}</strong> / ${entry.session.categoryIds.length} 分类</span><span><strong>${representatives}</strong> 代表记录</span><span><strong>${screened}</strong> 备选记录</span><span>${escapeHtml(savedAt)}</span></div>${entry.result ? `<details><summary>查看本批次已归档来源</summary>${sessionSourceLinks(entry)}</details>` : ""}</article>`;
+        }).join("") : `<div class="empty-state">没有找到计划中的 session。</div>`;
+      }
+
+      function render() {
+        renderOverview();
+        renderSources();
+        renderSessions();
+      }
+
+      $("sourceSearch").addEventListener("input", (event) => { state.sourceSearch = event.target.value; renderSources(); });
+      $("clearSourceSearch").addEventListener("click", () => { state.sourceSearch = ""; $("sourceSearch").value = ""; renderSources(); });
+      $("refreshData").addEventListener("click", readArchive);
+      readArchive();
+    })();
+  </script>
+</body>
+</html>

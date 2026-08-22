@@ -1,0 +1,396 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "protein-immuno-enrichment",
+  "sessionTitle": "Protein immunoassays and enrichment",
+  "packetStatus": "complete",
+  "startedAt": null,
+  "writtenAt": "2026-08-01T23:02:10Z",
+  "worker": "protein-immuno-enrichment-crawler-2026-08-01",
+  "sourcesSearched": [
+    "https://api.crossref.org/works?query.title=ELISA&filter=prefix%3A10.17504&rows=100",
+    "https://api.crossref.org/works?query.title=immunoprecipitation&filter=prefix%3A10.17504&rows=100",
+    "https://api.crossref.org/works?query.title=co-immunoprecipitation&filter=prefix%3A10.17504&rows=100",
+    "https://api.crossref.org/works?query.title=affinity%20purification&filter=prefix%3A10.17504&rows=100",
+    "https://api.crossref.org/works?query.title=His-tag&filter=prefix%3A10.17504&rows=100",
+    "https://www.protocols.io/view/sandwich-elisa-protocol-98xh9xn",
+    "https://www.protocols.io/view/immunoprecipitation-protocol-98qh9vw",
+    "https://www.protocols.io/view/co-immunoprecipitation-bp2l6zxzkgqe/v1",
+    "https://www.protocols.io/view/his-tag-purification-81wgb773yvpk/v1",
+    "https://api.crossref.org/works/10.17504/protocols.io.98xh9xn",
+    "https://api.crossref.org/works/10.17504/protocols.io.98qh9vw",
+    "https://api.crossref.org/works/10.17504/protocols.io.bp2l6zxzkgqe/v1",
+    "https://api.crossref.org/works/10.17504/protocols.io.bnw5mfg6"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "elisa",
+      "categoryLabel": "ELISA",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works?query.title=ELISA&filter=prefix%3A10.17504&rows=100",
+        "https://www.protocols.io/view/sandwich-elisa-protocol-98xh9xn",
+        "https://api.crossref.org/works/10.17504/protocols.io.98xh9xn"
+      ],
+      "representative": {
+        "title": "Sandwich ELISA Protocol v3",
+        "protocolType": "assay protocol",
+        "assay": "enzyme-linked immunosorbent assay",
+        "operation": "sandwich antibody capture for protein or antigen detection",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/sandwich-elisa-protocol-98xh9xn",
+        "sourceRecordId": "98xh9xn",
+        "doi": "10.17504/protocols.io.98xh9xn",
+        "authors": ["Sam Li"],
+        "published": "2019-12-06",
+        "updated": null,
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.98xh9xn",
+        "licenseVerifiedAt": "2026-08-01T23:02:10Z",
+        "metadataVerifiedAt": "2026-08-01T23:02:10Z",
+        "specimen": null,
+        "organism": null,
+        "platform": null,
+        "methodVariant": "sandwich ELISA",
+        "safetyLevel": "not specified",
+        "confidence": 0.91,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.94,
+          "metadataCompleteness": 0.94,
+          "freshness": 0.65,
+          "corroboration": 0.72,
+          "overall": 0.86
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because the record title explicitly identifies the sandwich ELISA format, directly matching the core protein or antigen detection category. Crossref independently confirms the DOI, author, publication date, and CC BY 4.0 license. Specimen, analyte, organism, and platform were not inferred from the generic title."
+      },
+      "screened": [
+        {
+          "title": "Direct ELISA v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.261ged83ov47/v1",
+          "sourceRecordId": "261ged83ov47/v1",
+          "doi": "10.17504/protocols.io.261ged83ov47/v1",
+          "screenStatus": "wrong-variant",
+          "reason": "A direct ELISA format is in scope but is a distinct assay variant from the selected sandwich format."
+        },
+        {
+          "title": "Indirect ELISA protocol (abcam) v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.bn8umhww",
+          "sourceRecordId": "bn8umhww",
+          "doi": "10.17504/protocols.io.bn8umhww",
+          "screenStatus": "wrong-variant",
+          "reason": "The title identifies an indirect format, which is a separate ELISA variant and not a stronger match for the sandwich representative."
+        },
+        {
+          "title": "Haemagglutinin Competition ELISA v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.7hihj4e",
+          "sourceRecordId": "7hihj4e",
+          "doi": "10.17504/protocols.io.7hihj4e",
+          "screenStatus": "wrong-variant",
+          "reason": "Competitive ELISA is explicitly a separate format and this record is analyte-specific."
+        }
+      ],
+      "coverageGaps": [
+        "Direct, indirect, and competitive ELISA formats remain separate child variants.",
+        "Analyte-, specimen-, kit-, and organism-specific ELISA records were screened but not mixed into the generic sandwich representative."
+      ],
+      "nextSearchSuggestions": [
+        "Search analyte-specific sandwich ELISA records when a target protein or specimen is supplied.",
+        "Add separate direct, indirect, and competitive ELISA child categories if format-level coverage is required."
+      ]
+    },
+    {
+      "categoryId": "immunoprecipitation",
+      "categoryLabel": "Immunoprecipitation",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works?query.title=immunoprecipitation&filter=prefix%3A10.17504&rows=100",
+        "https://www.protocols.io/view/immunoprecipitation-protocol-98qh9vw",
+        "https://api.crossref.org/works/10.17504/protocols.io.98qh9vw"
+      ],
+      "representative": {
+        "title": "Immunoprecipitation Protocol v3",
+        "protocolType": "protein enrichment protocol",
+        "assay": "immunoprecipitation",
+        "operation": "antibody-mediated capture and enrichment of a target protein from solution",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/immunoprecipitation-protocol-98qh9vw",
+        "sourceRecordId": "98qh9vw",
+        "doi": "10.17504/protocols.io.98qh9vw",
+        "authors": ["Sam Li"],
+        "published": "2019-12-06",
+        "updated": null,
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.98qh9vw",
+        "licenseVerifiedAt": "2026-08-01T23:02:10Z",
+        "metadataVerifiedAt": "2026-08-01T23:02:10Z",
+        "specimen": null,
+        "organism": null,
+        "platform": null,
+        "methodVariant": "antibody pull-down; compatible with downstream immunoblot analysis",
+        "safetyLevel": "not specified",
+        "confidence": 0.93,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.94,
+          "metadataCompleteness": 0.97,
+          "freshness": 0.65,
+          "corroboration": 0.82,
+          "overall": 0.90
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because the title directly identifies a general immunoprecipitation protocol and the Crossref abstract describes antibody-specific protein removal and enrichment before immunoblot analysis. Crossref confirms the DOI, author, publication date, and CC BY 4.0 license."
+      },
+      "screened": [
+        {
+          "title": "Immunoprecipitation Protocol v2",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.tkmeku6",
+          "sourceRecordId": "tkmeku6",
+          "doi": "10.17504/protocols.io.tkmeku6",
+          "screenStatus": "alternative",
+          "reason": "Generic IP record with a matching abstract, but the selected v3 record is the newer version in the same protocol family."
+        },
+        {
+          "title": "Immunoprecipitation Protocol v1",
+          "source": "protocols.io / BioLegend",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.eyvbfw6",
+          "sourceRecordId": "eyvbfw6",
+          "doi": "10.17504/protocols.io.eyvbfw6",
+          "screenStatus": "alternative",
+          "reason": "Directly relevant IP record, but its vendor-specific provenance is narrower than the selected generic protocol."
+        },
+        {
+          "title": "Chromatin immunoprecipitation v2",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.knkcvcw",
+          "sourceRecordId": "knkcvcw",
+          "doi": "10.17504/protocols.io.knkcvcw",
+          "screenStatus": "wrong-variant",
+          "reason": "Chromatin IP is a specialized nucleic-acid-associated workflow rather than the protein-target capture category."
+        }
+      ],
+      "coverageGaps": [
+        "Chromatin IP, RiboTag IP, tagged-protein IP, and kinase-assay IP remain separate specialized variants.",
+        "Cell, tissue, organism, antibody, and lysis-condition choices were not inferred from the generic record."
+      ],
+      "nextSearchSuggestions": [
+        "Create child categories for chromatin IP and RNA-associated IP if those enrichment targets are required.",
+        "Search target- and specimen-specific IP records after defining the antibody and sample context."
+      ]
+    },
+    {
+      "categoryId": "co-immunoprecipitation",
+      "categoryLabel": "Co-immunoprecipitation",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works?query.title=co-immunoprecipitation&filter=prefix%3A10.17504&rows=100",
+        "https://www.protocols.io/view/co-immunoprecipitation-bp2l6zxzkgqe/v1",
+        "https://api.crossref.org/works/10.17504/protocols.io.bp2l6zxzkgqe/v1"
+      ],
+      "representative": {
+        "title": "Co-Immunoprecipitation v1",
+        "protocolType": "protein interaction enrichment protocol",
+        "assay": "co-immunoprecipitation",
+        "operation": "antibody-mediated enrichment of interacting protein complexes",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/co-immunoprecipitation-bp2l6zxzkgqe/v1",
+        "sourceRecordId": "bp2l6zxzkgqe/v1",
+        "doi": "10.17504/protocols.io.bp2l6zxzkgqe/v1",
+        "authors": ["Tatiana Saccon", "Mohan Babu"],
+        "published": "2025-08-20",
+        "updated": null,
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.bp2l6zxzkgqe/v1",
+        "licenseVerifiedAt": "2026-08-01T23:02:10Z",
+        "metadataVerifiedAt": "2026-08-01T23:02:10Z",
+        "specimen": null,
+        "organism": null,
+        "platform": null,
+        "methodVariant": "co-IP for mitochondria-associated protein-protein interactions; cross-linking not specified",
+        "safetyLevel": "not specified",
+        "confidence": 0.95,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.98,
+          "sourceAuthority": 0.94,
+          "metadataCompleteness": 0.96,
+          "freshness": 0.98,
+          "corroboration": 0.80,
+          "overall": 0.94
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because the record title directly names co-immunoprecipitation and its Crossref abstract explicitly states that it analyzes protein-protein interactions associated with mitochondria. Crossref independently confirms the versioned DOI, authors, publication date, and CC BY 4.0 license. Native versus cross-linked conditions and organism were not inferred."
+      },
+      "screened": [
+        {
+          "title": "MCPyV Co-Immunoprecipitation Protocol v2",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.v6ke9cw",
+          "sourceRecordId": "v6ke9cw",
+          "doi": "10.17504/protocols.io.v6ke9cw",
+          "screenStatus": "wrong-variant",
+          "reason": "Directly relevant co-IP method but restricted to a virus-specific context."
+        },
+        {
+          "title": "co-immunoprecipitation ?co-IP? v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.qtxdwpn",
+          "sourceRecordId": "qtxdwpn",
+          "doi": "10.17504/protocols.io.qtxdwpn",
+          "screenStatus": "alternative",
+          "reason": "Generic co-IP candidate, but the selected record has clearer interaction-focused abstract metadata and a newer publication date."
+        },
+        {
+          "title": "Flag co-immunoprecipitation v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.4r3l27rpjg1y/v1",
+          "sourceRecordId": "4r3l27rpjg1y/v1",
+          "doi": "10.17504/protocols.io.4r3l27rpjg1y/v1",
+          "screenStatus": "wrong-variant",
+          "reason": "Tag-specific Flag co-IP is a narrower affinity and construct variant."
+        }
+      ],
+      "coverageGaps": [
+        "Native and cross-linked co-IP conditions remain separate method variants; the selected record does not specify cross-linking.",
+        "Organelle-, organism-, target-, and epitope-tag-specific co-IP records were not mixed into the representative."
+      ],
+      "nextSearchSuggestions": [
+        "Split native versus cross-linked co-IP when the interaction preservation condition is known.",
+        "Search tag-specific and organelle-specific co-IP records for the intended protein pair."
+      ]
+    },
+    {
+      "categoryId": "affinity-purification",
+      "categoryLabel": "Affinity purification",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works?query.title=affinity%20purification&filter=prefix%3A10.17504&rows=100",
+        "https://api.crossref.org/works?query.title=His-tag&filter=prefix%3A10.17504&rows=100",
+        "https://www.protocols.io/view/his-tag-purification-81wgb773yvpk/v1",
+        "https://api.crossref.org/works/10.17504/protocols.io.bnw5mfg6"
+      ],
+      "representative": {
+        "title": "His-tag purification v1",
+        "protocolType": "protein purification protocol",
+        "assay": "affinity purification",
+        "operation": "immobilized metal affinity capture and recovery of His-tagged protein",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/his-tag-purification-81wgb773yvpk/v1",
+        "sourceRecordId": "bnw5mfg6",
+        "doi": "10.17504/protocols.io.bnw5mfg6",
+        "authors": ["Andreea S"],
+        "published": "2020-10-24",
+        "updated": null,
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.bnw5mfg6",
+        "licenseVerifiedAt": "2026-08-01T23:02:10Z",
+        "metadataVerifiedAt": "2026-08-01T23:02:10Z",
+        "specimen": null,
+        "organism": null,
+        "platform": "IMAC resin or column",
+        "methodVariant": "His-tag immobilized metal affinity chromatography; exact resin and native/denaturing mode not specified",
+        "safetyLevel": "not specified",
+        "confidence": 0.94,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.98,
+          "sourceAuthority": 0.94,
+          "metadataCompleteness": 0.95,
+          "freshness": 0.80,
+          "corroboration": 0.80,
+          "overall": 0.92
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because the title explicitly identifies His-tag purification and the Crossref abstract describes immobilized metal affinity chromatography, metal-chelate binding, wash-off of non-tagged proteins, and recovery of the tagged protein. Crossref confirms the DOI, author, publication date, and CC BY 4.0 license. Exact resin, tag position, host organism, and native versus denaturing mode were not inferred."
+      },
+      "screened": [
+        {
+          "title": "Expression and purification of bacterial proteins (via N-terminal His-tag) v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.261ge514yg47/v1",
+          "sourceRecordId": "261ge514yg47/v1",
+          "doi": "10.17504/protocols.io.261ge514yg47/v1",
+          "screenStatus": "alternative",
+          "reason": "Recent and relevant His-tag purification record, but it is specifically coupled to bacterial expression and a two-step purification context."
+        },
+        {
+          "title": "His10-MBP-Cas9 purification v2",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.ssseeee",
+          "sourceRecordId": "ssseeee",
+          "doi": "10.17504/protocols.io.ssseeee",
+          "screenStatus": "wrong-variant",
+          "reason": "Specific Cas9 and tandem His10-MBP construct purification, narrower than the general His-tag representative."
+        },
+        {
+          "title": "Protein Purification strep-tag FPLC v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.7qchmsw",
+          "sourceRecordId": "7qchmsw",
+          "doi": "10.17504/protocols.io.7qchmsw",
+          "screenStatus": "wrong-variant",
+          "reason": "Strep-tag affinity purification uses a different tag and resin family from His-tag IMAC."
+        },
+        {
+          "title": "Expression and Purification of RH proteins via MBP affinity tag v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.j8nlko6nwv5r/v1",
+          "sourceRecordId": "j8nlko6nwv5r/v1",
+          "doi": "10.17504/protocols.io.j8nlko6nwv5r/v1",
+          "screenStatus": "wrong-variant",
+          "reason": "MBP-tag purification is a distinct tag and affinity matrix variant."
+        }
+      ],
+      "coverageGaps": [
+        "His-tag, GST-tag, MBP-tag, Strep-tag, and epitope-tag purification remain separate tag and resin variants.",
+        "Native versus denaturing conditions, resin chemistry, chromatography format, and host-specific expression contexts were not silently combined."
+      ],
+      "nextSearchSuggestions": [
+        "Split affinity purification by tag and resin when the construct is known.",
+        "Search native and denaturing child variants separately for the intended protein expression system."
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "elisa",
+      "immunoprecipitation",
+      "co-immunoprecipitation",
+      "affinity-purification"
+    ],
+    "actualCategoryIds": [
+      "elisa",
+      "immunoprecipitation",
+      "co-immunoprecipitation",
+      "affinity-purification"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": true,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-01T23:02:10Z",
+    "selfCheckNotes": [
+      "The four category results are present exactly once and retain the assigned order.",
+      "Each representative has a stable HTTPS protocols.io record page, a DOI, metadata verification, and Crossref license evidence.",
+      "Crossref record checks returned HTTP 200 for all four representatives and reported CC BY 4.0 license URLs.",
+      "Only metadata, URLs, identifiers, license evidence, and short selection or screening notes were stored; no protocol steps or long source passages were copied."
+    ]
+  },
+  "runNotes": [
+    "Search scope covered public protocols.io records discovered through Crossref DOI metadata queries for each assigned category and its principal variants.",
+    "Protocols.io record pages were checked directly; redirected canonical paths were retained for the co-IP and His-tag representatives.",
+    "Category completeness means coverage of the assigned category with explicit variant gaps, not exhaustive enumeration of every organism-, analyte-, tag-, or specimen-specific protocol."
+  ]
+}

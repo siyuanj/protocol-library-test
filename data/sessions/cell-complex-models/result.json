@@ -1,0 +1,259 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "cell-complex-models",
+  "sessionTitle": "Primary cells and organoid models",
+  "packetStatus": "partial",
+  "startedAt": "2026-08-01T23:01:50Z",
+  "writtenAt": "2026-08-01T23:06:18Z",
+  "worker": "codex-cell-complex-models-2026-08-01",
+  "sourcesSearched": [
+    "https://www.protocols.io/",
+    "https://bio-protocol.org/",
+    "https://www.nature.com/nprot/",
+    "https://www.nature.com/protocolexchange/",
+    "https://api.crossref.org/works?query.bibliographic=organoid%20culture%20protocol",
+    "https://api.crossref.org/works?query.bibliographic=primary%20cell%20isolation%20protocol"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "organoid-culture",
+      "categoryLabel": "Organoid culture",
+      "status": "partial",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/",
+        "https://bio-protocol.org/",
+        "https://www.nature.com/nprot/",
+        "https://api.crossref.org/works?query.bibliographic=organoid%20culture%20protocol",
+        "https://doi.org/10.17504/protocols.io.kxygx4mb4l8j/v3",
+        "https://doi.org/10.21769/bioprotoc.4657",
+        "https://doi.org/10.21769/bioprotoc.5157",
+        "https://doi.org/10.1007/7651_2024_591",
+        "https://doi.org/10.1038/protex.2017.064"
+      ],
+      "representative": {
+        "title": "Cortical Organoid Protocol and Calcitriol treatment V.1",
+        "protocolType": "Public protocol record",
+        "assay": "3D cortical organoid culture and self-organization",
+        "operation": "Culture and treatment of cortical organoids",
+        "source": "Protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/cortical-organoid-protocol-and-calcitriol-treatmen-kxygx4mb4l8j/v1",
+        "sourceRecordId": "kxygx4mb4l8j/v3",
+        "doi": "10.17504/protocols.io.kxygx4mb4l8j/v3",
+        "authors": [
+          "Katharina Meyer"
+        ],
+        "published": "2025-10-24",
+        "updated": "2025-10-24",
+        "licenseCode": null,
+        "licenseUrl": null,
+        "licenseEvidenceUrl": null,
+        "licenseVerifiedAt": null,
+        "metadataVerifiedAt": "2026-08-01T23:01:50Z",
+        "specimen": "Human cortical/cerebral organoid model",
+        "organism": "Human",
+        "platform": "3D cortical organoid culture",
+        "methodVariant": "Cortical organoid culture with calcitriol treatment",
+        "safetyLevel": "not specified",
+        "confidence": 0.87,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.94,
+          "sourceAuthority": 0.88,
+          "metadataCompleteness": 0.9,
+          "freshness": 0.9,
+          "corroboration": 0.78,
+          "overall": 0.87
+        },
+        "evidenceStatus": "metadata-verified; record-level permissive license not exposed in retrieved page",
+        "selectionNote": "Selected because the direct Protocols.io record exposes a specific cortical organoid title, author, publication date, DOI identifier, and a human brain-development context. It represents one tissue and differentiation variant, not the full organoid-culture category."
+      },
+      "screened": [
+        {
+          "title": "Establishing Bipotential Human Lung Organoid Culture System and Differentiation to Generate Mature Alveolar and Airway Organoids",
+          "source": "Bio-protocol",
+          "sourceUrl": "https://doi.org/10.21769/bioprotoc.4657",
+          "sourceRecordId": "e4657",
+          "doi": "10.21769/bioprotoc.4657",
+          "screenStatus": "wrong-variant",
+          "reason": "A specific human lung organoid system with alveolar and airway differentiation; it is a meaningful tissue variant but not interchangeable with cortical organoids."
+        },
+        {
+          "title": "Protocol for Immune Cell Isolation, Organoid Generation, and Co-culture Establishment from Cryopreserved Whole Human Intestine",
+          "source": "Bio-protocol",
+          "sourceUrl": "https://doi.org/10.21769/bioprotoc.5157",
+          "sourceRecordId": "e5157",
+          "doi": "10.21769/bioprotoc.5157",
+          "screenStatus": "wrong-variant",
+          "reason": "Combines intestinal organoid generation with immune-cell isolation and co-culture, so it has a materially different specimen and assay intent."
+        },
+        {
+          "title": "Mouse Intestinal Organoid Culture Protocol",
+          "source": "Springer Nature",
+          "sourceUrl": "https://doi.org/10.1007/7651_2024_591",
+          "sourceRecordId": null,
+          "doi": "10.1007/7651_2024_591",
+          "screenStatus": "wrong-variant",
+          "reason": "A mouse intestinal organoid variant with different tissue, organism, and differentiation context."
+        },
+        {
+          "title": "Detailed Cerebral Organoid Fusion Method",
+          "source": "Nature Protocol Exchange",
+          "sourceUrl": "https://doi.org/10.1038/protex.2017.064",
+          "sourceRecordId": "protex.2017.064",
+          "doi": "10.1038/protex.2017.064",
+          "screenStatus": "alternative",
+          "reason": "Relevant cerebral-organoid source, but the title centers on organoid fusion rather than the selected baseline cortical culture system."
+        }
+      ],
+      "coverageGaps": [
+        "Organoid culture spans materially different tissues, starting cell sources, extracellular matrices, and differentiation intents; the representative is only the cortical human variant.",
+        "Intestinal, lung, hepatic, neural, and co-culture systems need separate child-category representatives instead of being silently mixed.",
+        "The retrieved Protocols.io record page did not expose record-level license evidence, so reuse rights for this representative remain unresolved."
+      ],
+      "nextSearchSuggestions": [
+        "Search separate child categories for intestinal, lung, hepatic, cerebral, and co-culture organoids.",
+        "Track tissue, starting cell source, matrix, differentiation intent, and treatment as independent variant fields.",
+        "Recheck each selected record for an explicit record-level license before any content reuse."
+      ]
+    },
+    {
+      "categoryId": "primary-cell-isolation",
+      "categoryLabel": "Primary cell isolation",
+      "status": "partial",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/",
+        "https://bio-protocol.org/",
+        "https://www.nature.com/protocolexchange/",
+        "https://api.crossref.org/works?query.bibliographic=primary%20cell%20isolation%20protocol",
+        "https://doi.org/10.21769/bioprotoc.165",
+        "https://doi.org/10.21769/bioprotoc.1785",
+        "https://doi.org/10.21769/bioprotoc.2013",
+        "https://doi.org/10.21769/bioprotoc.2028",
+        "https://doi.org/10.17504/protocols.io.81wgbx933lpk/v1",
+        "https://doi.org/10.1038/protex.2017.159"
+      ],
+      "representative": {
+        "title": "Isolation of Primary Human Keratinocytes from Foreskin",
+        "protocolType": "Bio-protocol experimental protocol",
+        "assay": "Primary human keratinocyte isolation and culture",
+        "operation": "Isolation of primary keratinocytes from human foreskin tissue",
+        "source": "Bio-protocol",
+        "sourceUrl": "https://bio-protocol.org/exchange/protocoldetail?id=165&type=1",
+        "sourceRecordId": "e165",
+        "doi": "10.21769/BioProtoc.165",
+        "authors": [
+          "Jason Reuter"
+        ],
+        "published": "2011-12-20",
+        "updated": null,
+        "licenseCode": "exclusive licensee Bio-protocol LLC",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://bio-protocol.org/exchange/protocoldetail?id=165&type=1",
+        "licenseVerifiedAt": "2026-08-01T23:01:50Z",
+        "metadataVerifiedAt": "2026-08-01T23:01:50Z",
+        "specimen": "Human foreskin tissue",
+        "organism": "Human",
+        "platform": "Primary keratinocyte culture",
+        "methodVariant": "Foreskin-derived primary keratinocyte isolation",
+        "safetyLevel": "not specified",
+        "confidence": 0.88,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.97,
+          "sourceAuthority": 0.86,
+          "metadataCompleteness": 0.96,
+          "freshness": 0.55,
+          "corroboration": 0.84,
+          "overall": 0.88
+        },
+        "evidenceStatus": "metadata-verified; source copyright statement indicates an exclusive license, not a clear permissive reuse license",
+        "selectionNote": "Selected because the direct Bio-protocol record identifies a specific human tissue source, primary cell type, author, publication date, DOI, and record-level copyright statement. It is a tissue-specific representative, not a universal dissociation protocol."
+      },
+      "screened": [
+        {
+          "title": "Protocol for Primary Mouse Hepatocyte Isolation -- University of Minnesota TMCs",
+          "source": "Protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.81wgbx933lpk/v1",
+          "sourceRecordId": "81wgbx933lpk",
+          "doi": "10.17504/protocols.io.81wgbx933lpk/v1",
+          "screenStatus": "wrong-variant",
+          "reason": "Specific mouse liver isolation variant with a different organism and tissue source."
+        },
+        {
+          "title": "Isolation and Primary Cell Culture of Mouse Dorsal Root Ganglion Neurons",
+          "source": "Bio-protocol",
+          "sourceUrl": "https://doi.org/10.21769/bioprotoc.1785",
+          "sourceRecordId": "e1785",
+          "doi": "10.21769/bioprotoc.1785",
+          "screenStatus": "wrong-variant",
+          "reason": "Mouse neuronal tissue and primary neuronal culture are materially different from human foreskin keratinocytes."
+        },
+        {
+          "title": "Isolation of Highly Pure Primary Mouse Alveolar Epithelial Type II Cells by Flow Cytometric Cell Sorting",
+          "source": "Bio-protocol",
+          "sourceUrl": "https://doi.org/10.21769/bioprotoc.2013",
+          "sourceRecordId": "e2013",
+          "doi": "10.21769/bioprotoc.2013",
+          "screenStatus": "wrong-variant",
+          "reason": "Mouse lung epithelial isolation adds flow-sorting and a distinct tissue/cell identity."
+        },
+        {
+          "title": "Isolation and Primary Culture of Various Cell Types from Whole Human Endometrial Biopsies",
+          "source": "Bio-protocol",
+          "sourceUrl": "https://doi.org/10.21769/bioprotoc.2028",
+          "sourceRecordId": "e2028",
+          "doi": "10.21769/bioprotoc.2028",
+          "screenStatus": "wrong-variant",
+          "reason": "Human endometrial biopsy isolation covers multiple cell types and a different specimen source."
+        },
+        {
+          "title": "Primary isolation of vascular cells from murine brain for single cell sequencing",
+          "source": "Nature Protocol Exchange",
+          "sourceUrl": "https://doi.org/10.1038/protex.2017.159",
+          "sourceRecordId": "protex.2017.159",
+          "doi": "10.1038/protex.2017.159",
+          "screenStatus": "wrong-variant",
+          "reason": "A murine brain vascular-cell isolation workflow with a single-cell sequencing readout context."
+        }
+      ],
+      "coverageGaps": [
+        "Primary cell isolation spans different tissue sources, species, enzymes, mechanical dissociation schemes, and purification/readout intents; the representative is only the human foreskin keratinocyte variant.",
+        "Mouse hepatocytes, dorsal root ganglion neurons, lung epithelial cells, spleen mononuclear cells, and endometrial biopsy-derived cells require separate variants.",
+        "The Bio-protocol record exposes an exclusive-license statement rather than a clear CC reuse license; the record is suitable as metadata evidence but not a blanket permission to copy protocol content."
+      ],
+      "nextSearchSuggestions": [
+        "Create child categories by tissue and species before comparing enzymes or mechanical dissociation methods.",
+        "Track purification and readout intent separately from the isolation operation.",
+        "Prefer records with explicit permissive license evidence when the catalog later needs reusable protocol content."
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "organoid-culture",
+      "primary-cell-isolation"
+    ],
+    "actualCategoryIds": [
+      "organoid-culture",
+      "primary-cell-isolation"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": false,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": false,
+    "selfVerifiedAt": "2026-08-01T23:06:18Z",
+    "selfCheckNotes": [
+      "Both assigned category IDs are present exactly once and in packet order.",
+      "Both representatives have stable HTTP(S) record URLs, source record IDs, and DOI metadata.",
+      "The packet is partial because both labels contain materially different tissue, species, matrix, differentiation, enzyme, or readout variants.",
+      "License evidence is incomplete for the Protocols.io representative and non-permissive for the Bio-protocol representative; no protocol steps, tables, figures, videos, PDFs, or long source passages were stored."
+    ]
+  },
+  "runNotes": [
+    "Metadata-first collection used direct Protocols.io and Bio-protocol record pages, DOI landing pages, Crossref metadata, and Nature protocol-family records for variant comparison.",
+    "The cortical organoid page exposed title, author, publication date, DOI identifier, and a human brain-development context; the Bio-protocol keratinocyte page exposed title, author, publication date, DOI, and an exclusive-license copyright statement.",
+    "The result intentionally records explicit coverage and rights gaps instead of copying experimental instructions or treating one tissue-specific protocol as universal."
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "0.1",
+  "metadata": {
+    "title": "Gel Filtration (Size-Exclusion Chromatography) on AKTA start",
+    "protocolId": "lr-test-gel-filtration",
+    "version": "0.1",
+    "family": "Chromatography",
+    "category": "Protein",
+    "purpose": "Separate proteins by molecular weight on a cross-linked porous gel (Sephacryl S-100) and estimate the MW of an unknown protein from a Kav-vs-log(MW) standard curve.",
+    "scope": "Isocratic size-exclusion chromatography on an AKTA start with a Sephacryl S-100 column, single buffer (PBS, buffer A). Teaching setup; eluted proteins are not collected. Preparative fractionation and other resins are out of scope.",
+    "estimatedTime": "One session for the run; column cleaning/regeneration/storage in a later session.",
+    "beforeYouBegin": [
+      "Watch the instrument video and walk through the procedure before starting.",
+      "Filter buffer A (0.45 um) and the sample (0.45 um) before use.",
+      "Always know the state of each valve and the tubing contents during a programmed run; avoid air bubbles entering the fractionation tubing."
+    ],
+    "tags": ["gel filtration", "size-exclusion chromatography", "SEC", "AKTA", "protein MW"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Buffer A (50 mM PBS)", "amount": 400, "unit": "mL", "specification": "0.14 M NaCl, 36 mM Na2HPO4, 14 mM NaH2PO4, pH 7.2; 0.45 um filtered", "rawText": "Buffer A: 50 mM PBS (0.14 M NaCl, 36 mM Na2HPO4, 14 mM NaH2PO4), pH 7.2" },
+    { "id": "m2", "name": "Sephacryl S-100 column", "amount": 1, "unit": "column", "specification": "Size-exclusion resin", "needsReview": true },
+    { "id": "m3", "name": "0.45 um filter", "specification": "For buffer and sample" },
+    { "id": "m4", "name": "Blue dextran 2000", "workingConcentration": "5 mg/mL", "specification": "MW 2000 kDa - void-volume (V0) marker", "rawText": "Blue dextran 2000 5 mg/mL MW: 2000 kDa" },
+    { "id": "m5", "name": "BSA (bovine albumin)", "workingConcentration": "6 mg/mL", "specification": "MW 67 kDa - standard protein 1" },
+    { "id": "m6", "name": "Ovalbumin (chicken)", "workingConcentration": "9 mg/mL", "specification": "MW 45 kDa - standard protein 2" },
+    { "id": "m7", "name": "Ribonuclease A (bovine)", "workingConcentration": "9 mg/mL", "specification": "MW 13.7 kDa - standard protein 3" },
+    { "id": "m8", "name": "Unknown protein", "workingConcentration": "8 mg/mL", "specification": "MW to be determined" },
+    { "id": "m9", "name": "NaCl (cleaning)", "workingConcentration": "0.2 M", "specification": "Column cleaning" },
+    { "id": "m10", "name": "NaCl (regeneration)", "workingConcentration": "0.5 M", "specification": "Column regeneration" },
+    { "id": "m11", "name": "Acetic acid (HOAc)", "workingConcentration": "0.1 M", "specification": "Regeneration (or 0.2 M NaOH)" },
+    { "id": "m12", "name": "Ethanol", "workingConcentration": "20%", "specification": "Column storage" },
+    { "id": "m13", "name": "Water (ddH2O)", "specification": "Cleaning / storage" }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Chromatography system + pump + computer", "model": "AKTA start", "settings": "Manual run via system control; flow rates set per step" }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Setup & Equilibration", "action": "Prepare buffer A; add 400 mL to bottle A; immerse buffer A and buffer B inlet tubing in bottle A.", "materialIds": ["m1"], "parameters": [{ "type": "volume", "value": 400, "unit": "mL", "rawText": "add 400 mL Buffer A" }], "expectedResult": "Clean, degassed buffer ready.", "criticalNotes": "Only buffer A is used in this experiment." },
+    { "id": "s2", "number": 2, "phase": "Setup & Equilibration", "action": "Switch on AKTA start, install pump tubing, connect the computer.", "equipmentIds": ["e1"], "expectedResult": "Instrument ready." },
+    { "id": "s3", "number": 3, "phase": "Setup & Equilibration", "action": "Manual run: wash buffer A tubing, buffer B tubing, and fractionation tubing; extrude air bubbles.", "equipmentIds": ["e1"], "parameters": [{ "type": "volume", "value": 20, "unit": "mL", "rawText": "wash buffer A tubing (20 mL); buffer B tubing (20 mL)" }, { "type": "volume", "value": 10, "unit": "mL", "rawText": "wash fractionation tubing (10 mL)" }, { "type": "speed", "value": 5, "unit": "mL/min", "rawText": "Flow rate: 5 mL/min" }], "expectedResult": "Tubing primed, no air.", "criticalNotes": "May be done by TA/volunteer." },
+    { "id": "s4", "number": 4, "phase": "Setup & Equilibration", "action": "Connect the Sephacryl S-100 column.", "materialIds": ["m2"], "equipmentIds": ["e1"], "parameters": [{ "type": "speed", "value": 1, "unit": "mL/min", "rawText": "Flow rate: 1 mL/min" }], "expectedResult": "Column online." },
+    { "id": "s5", "number": 5, "phase": "Setup & Equilibration", "action": "Equilibrate the column.", "equipmentIds": ["e1"], "parameters": [{ "type": "volume", "value": 0.5, "valueMax": 1, "unit": "CV", "rawText": "Equilibration: 0.5-1 CV" }, { "type": "speed", "value": 1, "unit": "mL/min", "rawText": "Flow rate: 1 mL/min" }], "expectedResult": "Stable baseline." },
+    { "id": "s6", "number": 6, "phase": "Sample Application & Elution", "action": "Prepare the sample (standards + unknown) and filter.", "materialIds": ["m4", "m5", "m6", "m7", "m8", "m3"], "parameters": [{ "type": "other", "value": 0.45, "unit": "um", "rawText": "filter sample using 0.45 um filter" }], "expectedResult": "Particle-free sample.", "criticalNotes": "Sample mix contains blue dextran + 3 standards + unknown." },
+    { "id": "s7", "number": 7, "phase": "Sample Application & Elution", "action": "Wash inlet tubing and sample valve; apply the sample.", "equipmentIds": ["e1"], "parameters": [{ "type": "volume", "value": 0.2, "valueMax": 0.5, "unit": "mL", "rawText": "sample valve-0.2-0.5 mL" }, { "type": "speed", "value": 0.8, "unit": "mL/min", "rawText": "flow rate: 0.8 mL/min" }], "expectedResult": "Sample loaded without air.", "criticalNotes": "Switch the sample valve to buffer quickly after loading to prevent air entering the column." },
+    { "id": "s8", "number": 8, "phase": "Sample Application & Elution", "action": "Elute with buffer A; send outlet to waste; continue after the last peak.", "materialIds": ["m1"], "equipmentIds": ["e1"], "parameters": [{ "type": "speed", "value": 0.8, "unit": "mL/min", "rawText": "flow rate: 0.8 mL/min" }, { "type": "time", "value": 15, "unit": "min", "rawText": "stop the program after additional 15 min-elution" }], "expectedResult": "All proteins eluted.", "criticalNotes": "Eluted proteins are not collected in this run." },
+    { "id": "s9", "number": 9, "phase": "Analysis", "action": "Export CSV; plot the elution curve; find V0 and Ve per protein; compute Kav; plot log(MW) vs Kav; estimate the unknown MW.", "expectedResult": "Standard curve + estimated MW of the unknown.", "criticalNotes": "Upload via NOWLab; calculation done in Assignment 1." },
+    { "id": "s10", "number": 10, "phase": "Column Cleaning & Storage", "action": "Column cleaning.", "materialIds": ["m9", "m13"], "equipmentIds": ["e1"], "parameters": [{ "type": "volume", "value": 0.5, "unit": "CV", "rawText": "0.2 M NaCl, 0.5 CV" }, { "type": "volume", "value": 1, "unit": "CV", "rawText": "water, 1 CV" }, { "type": "speed", "value": 1, "unit": "mL/min", "rawText": "Flow rate: 1 mL/min" }], "expectedResult": "Column cleaned.", "optional": true },
+    { "id": "s11", "number": 11, "phase": "Column Cleaning & Storage", "action": "Column regeneration.", "materialIds": ["m10", "m11"], "equipmentIds": ["e1"], "parameters": [{ "type": "volume", "value": 1, "unit": "CV", "rawText": "0.5 M NaCl, 1 CV; 0.1 M HOAc, 1 CV (or 0.2 M NaOH)" }, { "type": "speed", "value": 1, "unit": "mL/min", "rawText": "Flow rate: 1 mL/min" }], "expectedResult": "Column regenerated.", "optional": true },
+    { "id": "s12", "number": 12, "phase": "Column Cleaning & Storage", "action": "Column cleaning and storage.", "materialIds": ["m13", "m12"], "equipmentIds": ["e1"], "parameters": [{ "type": "volume", "value": 1, "unit": "CV", "rawText": "water, 1 CV; 20% alcohol, 1 CV for storing" }, { "type": "speed", "value": 1, "unit": "mL/min", "rawText": "Flow rate: 1 mL/min" }], "expectedResult": "Column stored in 20% ethanol.", "optional": true }
+  ],
+  "controls": [
+    { "name": "Void-volume marker", "description": "Blue dextran 2000 defines V0." },
+    { "name": "Calibration standards", "description": "BSA (67 kDa), Ovalbumin (45 kDa), Ribonuclease A (13.7 kDa) build the Kav-vs-log(MW) standard curve." },
+    { "name": "Unknown", "description": "Sample whose MW is estimated from the standard curve." }
+  ],
+  "expectedOutputs": [
+    "An elution curve (CSV) with resolved peaks.",
+    "V0 and elution volume (Ve) per protein; Kav per protein.",
+    "A log(MW)-vs-Kav standard curve and an estimated MW for the unknown protein."
+  ],
+  "troubleshooting": [
+    { "problem": "Air bubble entering fractionation tubing/column", "cause": "Valve/tubing state during manual run", "solution": "Pause the program or switch the wash valve to waste; switch the sample valve to buffer quickly after loading" },
+    { "problem": "Poorly resolved peaks", "cause": "Overloaded sample volume; flow too high", "solution": "Reduce sample volume; keep flow at the specified rate" }
+  ],
+  "safety": [
+    "0.1 M acetic acid and 0.2 M NaOH are corrosive - handle with care.",
+    "Standard laboratory PPE; follow the ÄKTA start instrument SOP."
+  ],
+  "biosafetyLevel": "not specified",
+  "limitations": "Teaching run; eluted proteins are not collected. MW estimation assumes globular standards and a valid Kav calibration. Resin lot/column dimensions not specified.",
+  "sources": [
+    { "id": "src1", "kind": "file", "title": "Gel Filtration Procedures (2024 teaching protocol)", "file": "test_protocol/1-Gel Filtration Procedures.pdf", "license": "Institutional teaching material; reuse terms not specified", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

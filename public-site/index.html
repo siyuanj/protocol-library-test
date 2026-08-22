@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A metadata-only public preview of curated biological protocol records.">
+  <title>Protocol Atlas — curated preview</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#catalogue">Skip to catalogue</a>
+  <header class="hero">
+    <div class="shell">
+      <p class="eyebrow">Protocol Atlas · public preview</p>
+      <h1>Find a starting point for common laboratory methods.</h1>
+      <p class="lede">A compact, link-first catalogue for discussion and source review. Each card preserves the source, DOI where available, author attribution and any recorded license evidence—never the protocol body.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#catalogue">Browse 60 records</a>
+        <a class="button secondary" href="#about">Read the curation boundary</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="shell metrics" aria-label="Catalogue summary">
+      <article><strong id="recordCount">60</strong><span>classic-method records</span></article>
+      <article><strong>28 + 2 + 30</strong><span>complete + follow-up + peer-screening records</span></article>
+      <article><strong>0</strong><span>protocol bodies copied</span></article>
+    </section>
+
+    <section class="shell notice" aria-label="Important use note">
+      <div class="notice-mark" aria-hidden="true">i</div>
+      <p><strong>This is an orientation catalogue, not an execution manual.</strong> Thirty additions are explicitly reserved for peer screening, and some have an unconfirmed license field. Every original paper, version, third-party material and local safety requirement still needs review before a processed LabRecord protocol is created.</p>
+    </section>
+
+    <section id="catalogue" class="shell catalogue" aria-labelledby="catalogue-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Starting set</p>
+          <h2 id="catalogue-title">60 classic methods to review</h2>
+        </div>
+        <p id="resultCount" class="result-count" aria-live="polite"></p>
+      </div>
+
+      <div class="controls">
+        <label class="search"><span class="sr-only">Search catalogue</span><input id="search" type="search" placeholder="Search method, source or DOI"></label>
+        <label><span>Area</span><select id="area"><option value="all">All areas</option></select></label>
+        <label><span>Review state</span><select id="review"><option value="all">All records</option><option value="complete">Complete category</option><option value="partial">Follow-up entry</option><option value="screen">Peer-screening queue</option></select></label>
+      </div>
+
+      <div id="cards" class="cards"></div>
+      <p id="empty" class="empty" hidden>No records match this filter.</p>
+    </section>
+
+    <section id="about" class="shell about" aria-labelledby="about-title">
+      <div>
+        <p class="eyebrow">Curation boundary</p>
+        <h2 id="about-title">What this page does—and does not—share</h2>
+      </div>
+      <div class="about-grid">
+        <article>
+          <h3>Included</h3>
+          <p>Protocol title, category, source link, DOI when provided, author attribution, and a recorded license label or an explicit “not confirmed” screening flag.</p>
+        </article>
+        <article>
+          <h3>Excluded</h3>
+          <p>Procedure text, reagent tables, figures, videos, PDFs, attachments and any processed LabRecord content.</p>
+        </article>
+        <article>
+          <h3>Next review</h3>
+          <p>Start with the 30 Peer-screening records: check the source record and cited original paper in PLOS or an eligible PMC open-access subset. Replace non-qualifying sources or request author permission before creating a processed version.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <span>Protocol Atlas · metadata-only curation preview</span>
+      <span>Last assembled from local curation results: 2026-08-20</span>
+    </div>
+  </footer>
+
+  <script src="protocols.js"></script>
+  <script>
+    (() => {
+      const records = Array.isArray(window.PROTOCOL_ATLAS_RECORDS) ? window.PROTOCOL_ATLAS_RECORDS : [];
+      const $ = (id) => document.getElementById(id);
+      const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+      const areas = [...new Set(records.map((record) => record.area))].sort();
+      $("recordCount").textContent = String(records.length);
+      $("area").insertAdjacentHTML("beforeend", areas.map((area) => `<option value="${escapeHtml(area)}">${escapeHtml(area)}</option>`).join(""));
+
+      function card(record) {
+        const followUp = record.categoryStatus === "partial";
+        const peerScreen = record.categoryStatus === "screen";
+        const authors = record.authors || "Author metadata available at source";
+        const doi = record.doi ? `<a href="https://doi.org/${encodeURIComponent(record.doi)}" target="_blank" rel="noreferrer">${escapeHtml(record.doi)}</a>` : "Not assigned in the selected record";
+        const evidence = record.licenseEvidenceUrl
+          ? `<a class="text-link" href="${escapeHtml(record.licenseEvidenceUrl)}" target="_blank" rel="noreferrer">License evidence <span aria-hidden="true">↗</span></a>`
+          : `<a class="text-link" href="${escapeHtml(record.url)}" target="_blank" rel="noreferrer">Review source <span aria-hidden="true">↗</span></a>`;
+        const stateClass = peerScreen ? "screen" : (followUp ? "follow-up" : "complete");
+        const stateLabel = peerScreen ? "Peer screening" : (followUp ? "Follow-up needed" : "Category complete");
+        const note = peerScreen
+          ? "A classic-method candidate added for peer screening; confirm the original paper, record version and reuse terms before processing."
+          : (followUp ? "This category is useful for browsing, but coverage or source validation remains incomplete." : "Source metadata and the category record were marked complete in the local curation result.");
+        return `<article class="card">
+          <div class="card-top"><span class="area">${escapeHtml(record.area)}</span><span class="state ${stateClass}">${stateLabel}</span></div>
+          <h3>${escapeHtml(record.title)}</h3>
+          <p class="category">${escapeHtml(record.category)}</p>
+          <dl>
+            <div><dt>Source</dt><dd>${escapeHtml(record.source)}</dd></div>
+            <div><dt>Attribution</dt><dd>${escapeHtml(authors)}</dd></div>
+            <div><dt>DOI</dt><dd>${doi}</dd></div>
+            <div><dt>Recorded license</dt><dd>${escapeHtml(record.license)}</dd></div>
+          </dl>
+          <p class="card-note">${note}</p>
+          <div class="card-actions"><a class="text-link" href="${escapeHtml(record.url)}" target="_blank" rel="noreferrer">Open source <span aria-hidden="true">↗</span></a>${evidence}</div>
+        </article>`;
+      }
+
+      function render() {
+        const query = $("search").value.trim().toLowerCase();
+        const area = $("area").value;
+        const review = $("review").value;
+        const filtered = records.filter((record) => {
+          const matchesQuery = !query || [record.title, record.category, record.area, record.source, record.doi, record.authors].join(" ").toLowerCase().includes(query);
+          const matchesArea = area === "all" || record.area === area;
+          const matchesReview = review === "all" || record.categoryStatus === review;
+          return matchesQuery && matchesArea && matchesReview;
+        });
+        $("cards").innerHTML = filtered.map(card).join("");
+        $("empty").hidden = filtered.length > 0;
+        $("resultCount").textContent = `${filtered.length} of ${records.length} records`;
+      }
+
+      ["search", "area", "review"].forEach((id) => $(id).addEventListener(id === "search" ? "input" : "change", render));
+      render();
+    })();
+  </script>
+</body>
+</html>

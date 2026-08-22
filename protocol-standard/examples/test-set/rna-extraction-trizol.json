@@ -1,0 +1,662 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Total RNA Extraction with TRIzol Reagent",
+    "protocolId": "lr-testset-rna-extraction-trizol",
+    "version": "0.1",
+    "family": "RNA extraction",
+    "category": "Molecular Biology",
+    "purpose": "Isolate high-quality total RNA from cells or tissue using TRIzol Reagent by acid guanidinium/phenol-chloroform phase separation followed by isopropanol precipitation, an ethanol wash, and resuspension for downstream use (RT-PCR, Northern blot, etc.).",
+    "scope": "Single-step total RNA isolation from human, animal, plant, yeast, or bacterial cells and tissues with TRIzol Reagent (Cat. no. 15596026). Covers only the RNA arm; sequential DNA/protein recovery from the interphase/organic phase is out of scope here.",
+    "estimatedTime": "~1 h",
+    "beforeYouBegin": [
+      "Work RNase-free: wear gloves and change them frequently, use sterile RNase-free plasticware and tips, and decontaminate surfaces (e.g. RNaseZap).",
+      "Process samples immediately after collection, or flash-freeze and store at -80 C until extraction.",
+      "The sample volume added should not exceed 25% of the TRIzol volume used for lysis. Perform all steps at 20-25 C unless noted."
+    ],
+    "authors": [
+      {
+        "name": "Thermo Fisher Scientific (Invitrogen)"
+      }
+    ],
+    "tags": [
+      "RNA extraction",
+      "TRIzol",
+      "total RNA",
+      "phenol-chloroform",
+      "guanidinium"
+    ]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "TRIzol Reagent",
+      "role": "reagent",
+      "specification": "Monophasic solution of phenol and guanidine isothiocyanate; ready-to-use",
+      "vendor": "Invitrogen / Thermo Fisher Scientific",
+      "catalogNumber": "15596026",
+      "storage": "2-25 C",
+      "hazard": "Contains phenol and guanidine isothiocyanate; toxic and corrosive - use in a fume hood, avoid skin/eye contact",
+      "rawText": "TRIzol Reagent is a monophasic solution of phenol, guanidine isothiocyanate, and other proprietary components"
+    },
+    {
+      "id": "m2",
+      "name": "Chloroform",
+      "role": "solvent",
+      "workingConcentration": "0.2 mL per 1 mL TRIzol used for lysis",
+      "vendor": "MLS (major laboratory supplier)",
+      "hazard": "Toxic, volatile - use in a fume hood",
+      "rawText": "Add 0.2 mL of chloroform per 1 mL of TRIzol Reagent used for lysis"
+    },
+    {
+      "id": "m3",
+      "name": "Isopropanol",
+      "role": "solvent",
+      "workingConcentration": "0.5 mL per 1 mL TRIzol used for lysis",
+      "vendor": "MLS",
+      "rawText": "Add 0.5 mL of isopropanol to the aqueous phase, per 1 mL of TRIzol Reagent used for lysis"
+    },
+    {
+      "id": "m4",
+      "name": "Ethanol, 75%",
+      "role": "solvent",
+      "workingConcentration": "1 mL per 1 mL TRIzol used for lysis",
+      "specification": "75% (v/v) in RNase-free water",
+      "vendor": "MLS",
+      "rawText": "Resuspend the pellet in 1 mL of 75% ethanol per 1 mL of TRIzol Reagent used for lysis"
+    },
+    {
+      "id": "m5",
+      "name": "RNase-free water",
+      "role": "solvent",
+      "specification": "Or 0.1 mM EDTA, or 0.5% SDS (do not use SDS if the RNA will be used in enzymatic reactions); 20-50 uL to resuspend",
+      "vendor": "MLS",
+      "rawText": "Resuspend the pellet in 20-50 uL of RNase-free water, 0.1 mM EDTA, or 0.5% SDS solution"
+    },
+    {
+      "id": "m6",
+      "name": "RNase-free glycogen",
+      "role": "reagent",
+      "workingConcentration": "5-10 ug per sample",
+      "specification": "Optional carrier for small samples (<10^6 cells or <10 mg tissue); co-precipitates with RNA without interfering downstream",
+      "vendor": "MLS",
+      "rawText": "add 5-10 ug of RNase-free glycogen as a carrier to the aqueous phase"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Homogenizer",
+      "settings": "For tissue lysis in TRIzol"
+    },
+    {
+      "id": "e2",
+      "name": "Refrigerated microcentrifuge",
+      "model": "Capable of 12,000 x g at 4 C",
+      "settings": "12,000 x g, 4 C (phase separation and precipitation); 7500 x g, 4 C (ethanol wash)"
+    },
+    {
+      "id": "e3",
+      "name": "Water bath or heat block",
+      "settings": "55-60 C for RNA resuspension"
+    },
+    {
+      "id": "e4",
+      "name": "UV spectrophotometer (e.g. NanoDrop)",
+      "settings": "Absorbance at 260 nm and 280 nm"
+    }
+  ],
+  "samples": [
+    {
+      "id": "sp1",
+      "name": "Cells or tissue",
+      "role": "input",
+      "description": "50-100 mg tissue, or 1x10^5-1x10^7 monolayer cells, or 5-10x10^6 (animal/plant/yeast) or 1x10^7 (bacterial) suspension cells, per 1 mL TRIzol.",
+      "needsReview": true
+    },
+    {
+      "id": "sp2",
+      "name": "TRIzol lysate/homogenate",
+      "role": "intermediate",
+      "description": "Homogenized sample in TRIzol Reagent."
+    },
+    {
+      "id": "sp3",
+      "name": "Aqueous phase",
+      "role": "intermediate",
+      "description": "Colorless upper phase containing RNA, recovered after chloroform phase separation."
+    },
+    {
+      "id": "sp4",
+      "name": "Total RNA",
+      "role": "output",
+      "description": "Purified total RNA resuspended in RNase-free water; A260/A280 ~2 when pure."
+    }
+  ],
+  "containers": [
+    {
+      "id": "c1",
+      "name": "RNase-free polypropylene microcentrifuge tube (1.5-2 mL)",
+      "type": "tube"
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Starting material per 1 mL of TRIzol Reagent",
+      "columns": [
+        "Sample type",
+        "Starting material per 1 mL TRIzol"
+      ],
+      "rows": [
+        [
+          "Tissues",
+          "50-100 mg"
+        ],
+        [
+          "Cells grown in monolayer",
+          "1x10^5 - 1x10^7 cells (3.5-cm dish, 10 cm^2)"
+        ],
+        [
+          "Cells grown in suspension",
+          "5-10x10^6 cells (animal/plant/yeast) or 1x10^7 cells (bacteria)"
+        ]
+      ],
+      "note": "Sample volume should not exceed 25% of the TRIzol volume used for lysis."
+    },
+    {
+      "id": "t2",
+      "title": "Typical total RNA yields (A260/280 > 1.8)",
+      "columns": [
+        "Starting material",
+        "Quantity",
+        "RNA yield"
+      ],
+      "rows": [
+        [
+          "Epithelial cells",
+          "1x10^6 cells",
+          "8-15 ug"
+        ],
+        [
+          "Fibroblasts",
+          "1x10^6 cells",
+          "5-7 ug"
+        ],
+        [
+          "Liver",
+          "1 mg",
+          "6-10 ug"
+        ],
+        [
+          "Kidney",
+          "1 mg",
+          "3-4 ug"
+        ],
+        [
+          "Skeletal muscle and brain",
+          "1 mg",
+          "1-1.5 ug"
+        ],
+        [
+          "Placenta",
+          "1 mg",
+          "1-4 ug"
+        ],
+        [
+          "New tobacco leaf",
+          "-",
+          "73 ug"
+        ]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Lysis",
+      "action": "Lyse and homogenize the sample in TRIzol Reagent according to starting material (1 mL TRIzol per 50-100 mg tissue, per 1x10^5-1x10^7 monolayer cells, or per 0.25 mL suspension cells). Pipette or homogenize until homogeneous.",
+      "materialIds": [
+        "m1"
+      ],
+      "equipmentIds": [
+        "e1"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "inputIds": [
+        "sp1"
+      ],
+      "outputIds": [
+        "sp2"
+      ],
+      "tableIds": [
+        "t1"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 1,
+          "unit": "mL",
+          "rawText": "Add 1 mL of TRIzol Reagent per 50-100 mg of tissue"
+        }
+      ],
+      "pausePoint": true,
+      "criticalNotes": "Do not wash cells before adding TRIzol (avoids mRNA degradation). Sample volume must not exceed 25% of the TRIzol volume.",
+      "expectedResult": "Fully homogenized lysate."
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Phase separation",
+      "action": "(Optional, high-fat samples) Centrifuge the lysate 5 min at 12,000 x g, 4-10 C, and transfer the clear supernatant to a new tube.",
+      "optional": true,
+      "equipmentIds": [
+        "e2"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "parameters": [
+        {
+          "type": "time",
+          "value": 5,
+          "unit": "min",
+          "rawText": "5 minutes"
+        },
+        {
+          "type": "speed",
+          "value": 12000,
+          "unit": "xg",
+          "rawText": "12,000 x g"
+        },
+        {
+          "type": "temperature",
+          "value": 4,
+          "valueMax": 10,
+          "unit": "degC",
+          "rawText": "4-10 C"
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Phase separation",
+      "action": "Incubate 5 min to allow complete dissociation of the nucleoprotein complexes.",
+      "parameters": [
+        {
+          "type": "time",
+          "value": 5,
+          "unit": "min",
+          "rawText": "Incubate for 5 minutes"
+        },
+        {
+          "type": "temperature",
+          "value": 20,
+          "valueMax": 25,
+          "unit": "degC",
+          "rawText": "room temperature (20-25 C)"
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Phase separation",
+      "action": "Add 0.2 mL chloroform per 1 mL TRIzol used for lysis, securely cap the tube, and mix thoroughly by shaking.",
+      "materialIds": [
+        "m2"
+      ],
+      "inputIds": [
+        "sp2"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 0.2,
+          "unit": "mL",
+          "rawText": "Add 0.2 mL of chloroform per 1 mL of TRIzol Reagent"
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Phase separation",
+      "action": "Incubate 2-3 min.",
+      "parameters": [
+        {
+          "type": "time",
+          "value": 2,
+          "valueMax": 3,
+          "unit": "min",
+          "rawText": "Incubate for 2-3 minutes"
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Phase separation",
+      "action": "Centrifuge 15 min at 12,000 x g, 4 C. The mixture separates into a lower phenol-chloroform phase, an interphase, and a colorless upper aqueous phase.",
+      "equipmentIds": [
+        "e2"
+      ],
+      "parameters": [
+        {
+          "type": "time",
+          "value": 15,
+          "unit": "min",
+          "rawText": "15 minutes"
+        },
+        {
+          "type": "speed",
+          "value": 12000,
+          "unit": "xg",
+          "rawText": "12,000 x g"
+        },
+        {
+          "type": "temperature",
+          "value": 4,
+          "unit": "degC",
+          "rawText": "4 C"
+        }
+      ],
+      "expectedResult": "Three phases; RNA is in the colorless upper aqueous phase."
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Phase separation",
+      "action": "Transfer the aqueous phase (containing RNA) to a new tube by angling the tube at 45 degrees and pipetting; avoid the interphase and organic layer.",
+      "containerIds": [
+        "c1"
+      ],
+      "inputIds": [
+        "sp2"
+      ],
+      "outputIds": [
+        "sp3"
+      ],
+      "criticalNotes": "Do not carry over any interphase or organic phase, which would contaminate the RNA with DNA/protein."
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "RNA precipitation",
+      "action": "(Optional, small samples) Add 5-10 ug RNase-free glycogen as a carrier. Then add 0.5 mL isopropanol to the aqueous phase per 1 mL TRIzol used for lysis.",
+      "materialIds": [
+        "m3",
+        "m6"
+      ],
+      "inputIds": [
+        "sp3"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 0.5,
+          "unit": "mL",
+          "rawText": "Add 0.5 mL of isopropanol to the aqueous phase, per 1 mL of TRIzol Reagent"
+        }
+      ]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "RNA precipitation",
+      "action": "Incubate 10 min at room temperature (15-30 C).",
+      "parameters": [
+        {
+          "type": "time",
+          "value": 10,
+          "unit": "min",
+          "rawText": "10 minutes"
+        },
+        {
+          "type": "temperature",
+          "value": 15,
+          "valueMax": 30,
+          "unit": "degC",
+          "rawText": "room temperature (15-30 C)"
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "phase": "RNA precipitation",
+      "action": "Centrifuge 10 min at 12,000 x g, 4 C. RNA forms a white gel-like pellet at the bottom of the tube. Discard the supernatant with a micropipettor.",
+      "equipmentIds": [
+        "e2"
+      ],
+      "parameters": [
+        {
+          "type": "time",
+          "value": 10,
+          "unit": "min",
+          "rawText": "10 minutes"
+        },
+        {
+          "type": "speed",
+          "value": 12000,
+          "unit": "xg",
+          "rawText": "12,000 x g"
+        },
+        {
+          "type": "temperature",
+          "value": 4,
+          "unit": "degC",
+          "rawText": "4 C"
+        }
+      ],
+      "expectedResult": "White gel-like RNA pellet."
+    },
+    {
+      "id": "s11",
+      "number": 11,
+      "phase": "Wash",
+      "action": "Resuspend the pellet in 1 mL of 75% ethanol per 1 mL TRIzol used for lysis.",
+      "materialIds": [
+        "m4"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 1,
+          "unit": "mL",
+          "rawText": "1 mL of 75% ethanol per 1 mL of TRIzol Reagent"
+        }
+      ],
+      "pausePoint": true,
+      "criticalNotes": "RNA can be stored in 75% ethanol at -20 C for at least 1 year (or 4 C for at least 1 week)."
+    },
+    {
+      "id": "s12",
+      "number": 12,
+      "phase": "Wash",
+      "action": "Vortex the sample briefly, then centrifuge 5 min at 7500 x g, 4 C; discard the supernatant with a micropipettor.",
+      "equipmentIds": [
+        "e2"
+      ],
+      "parameters": [
+        {
+          "type": "time",
+          "value": 5,
+          "unit": "min",
+          "rawText": "5 minutes"
+        },
+        {
+          "type": "speed",
+          "value": 7500,
+          "unit": "xg",
+          "rawText": "7500 x g"
+        },
+        {
+          "type": "temperature",
+          "value": 4,
+          "unit": "degC",
+          "rawText": "4 C"
+        }
+      ]
+    },
+    {
+      "id": "s13",
+      "number": 13,
+      "phase": "Wash",
+      "action": "Vacuum or air dry the RNA pellet for 5-10 min. Do not dry by vacuum centrifuge and do not let the pellet dry completely.",
+      "parameters": [
+        {
+          "type": "time",
+          "value": 5,
+          "valueMax": 10,
+          "unit": "min",
+          "rawText": "5-10 minutes"
+        }
+      ],
+      "criticalNotes": "Over-dried pellets dissolve poorly; partially dissolved RNA gives A230/280 < 1.6."
+    },
+    {
+      "id": "s14",
+      "number": 14,
+      "phase": "Solubilize",
+      "action": "Resuspend the pellet in 20-50 uL of RNase-free water (or 0.1 mM EDTA, or 0.5% SDS) by pipetting up and down.",
+      "materialIds": [
+        "m5"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "outputIds": [
+        "sp4"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 20,
+          "valueMax": 50,
+          "unit": "uL",
+          "rawText": "20-50 uL of RNase-free water"
+        }
+      ],
+      "criticalNotes": "Do not use 0.5% SDS if the RNA will be used in subsequent enzymatic reactions (e.g. reverse transcription)."
+    },
+    {
+      "id": "s15",
+      "number": 15,
+      "phase": "Solubilize",
+      "action": "Incubate in a water bath or heat block at 55-60 C for 10-15 min to fully dissolve the RNA.",
+      "equipmentIds": [
+        "e3"
+      ],
+      "outputIds": [
+        "sp4"
+      ],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 55,
+          "valueMax": 60,
+          "unit": "degC",
+          "rawText": "55-60 C"
+        },
+        {
+          "type": "time",
+          "value": 10,
+          "valueMax": 15,
+          "unit": "min",
+          "rawText": "10-15 minutes"
+        }
+      ],
+      "pausePoint": true,
+      "criticalNotes": "Proceed to downstream applications or store the RNA at -70 C."
+    },
+    {
+      "id": "s16",
+      "number": 16,
+      "phase": "QC",
+      "action": "Determine RNA yield and purity by absorbance: measure A260 and A280, calculate concentration as A260 x dilution x 40 = ug RNA/mL, and compute the A260/A280 ratio (~2 = pure).",
+      "equipmentIds": [
+        "e4"
+      ],
+      "inputIds": [
+        "sp4"
+      ],
+      "tableIds": [
+        "t2"
+      ],
+      "parameters": [
+        {
+          "type": "wavelength",
+          "value": 260,
+          "unit": "nm",
+          "rawText": "absorbance at 260 nm"
+        },
+        {
+          "type": "wavelength",
+          "value": 280,
+          "unit": "nm",
+          "rawText": "absorbance at 280 nm"
+        }
+      ],
+      "branches": [
+        {
+          "condition": "A260/A280 clearly below ~1.8",
+          "action": "Suspect protein/phenol carryover; re-precipitate or repeat the 75% ethanol wash before use."
+        }
+      ],
+      "expectedResult": "A260/A280 ratio of ~2 indicates pure RNA."
+    }
+  ],
+  "expectedOutputs": [
+    "Purified total RNA in RNase-free water with an A260/A280 ratio of ~2.",
+    "Yields in the typical ranges listed in the yields table (e.g. 6-10 ug per mg of liver)."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "Low RNA yield",
+      "cause": "Incomplete homogenization; loss of aqueous phase; pellet over-dried and not fully dissolved",
+      "solution": "Homogenize thoroughly; recover the full aqueous phase without the interphase; do not over-dry; solubilize at 55-60 C"
+    },
+    {
+      "problem": "Low A260/A280 ratio",
+      "cause": "Protein or phenol carryover from the interphase/organic phase",
+      "solution": "Avoid the interphase during transfer; repeat the 75% ethanol wash; re-precipitate"
+    },
+    {
+      "problem": "Low A230/280 (<1.6)",
+      "cause": "Pellet dried too much / RNA only partially dissolved",
+      "solution": "Do not fully dry the pellet; extend solubilization time at 55-60 C"
+    },
+    {
+      "problem": "DNA contamination",
+      "cause": "Interphase carryover; genomic DNA in aqueous phase",
+      "solution": "Treat with DNase I (Amplification Grade) before downstream enzymatic steps"
+    }
+  ],
+  "safety": [
+    "TRIzol contains phenol and guanidine isothiocyanate - toxic and corrosive; wear gloves, eye protection, and lab coat and work in a fume hood.",
+    "Chloroform and isopropanol are volatile and hazardous; handle in a fume hood and dispose of organic waste per institutional rules.",
+    "Guanidine isothiocyanate forms reactive/toxic products with bleach - do not mix TRIzol waste with hypochlorite."
+  ],
+  "biosafetyLevel": "not specified",
+  "limitations": "Phenol/guanidinium chemistry co-purifies small RNAs but is prone to phenol carryover (low A260/A230) and requires careful phase handling. Does not remove genomic DNA (add a DNase step if needed). Yields and sample-input amounts must be adjusted to the specific tissue/cell type.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "kit-insert",
+      "title": "TRIzol Reagent User Guide (Pub. No. MAN0001271 Rev. D), Thermo Fisher Scientific",
+      "url": "https://documents.thermofisher.com/TFS-Assets/LSG/manuals/trizol_reagent.pdf",
+      "license": "Thermo Fisher Scientific product manual; For Research Use Only; reuse terms not specified",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

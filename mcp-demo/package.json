@@ -1,0 +1,19 @@
+{
+  "name": "labrecord-mcp-demo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Local demo: an AI agent imports lab protocols into a website through a standard MCP (stdio) server.",
+  "scripts": {
+    "start": "node website.mjs",
+    "start:local": "node --env-file=labrecord.env website.mjs",
+    "mcp": "node mcp-server.mjs",
+    "verify": "node verify.mjs",
+    "verify:http": "node verify-http.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "express": "^5.1.0",
+    "zod": "^3.24.0"
+  }
+}

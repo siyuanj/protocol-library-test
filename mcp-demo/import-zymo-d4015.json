@@ -1,0 +1,130 @@
+{
+  "importNote": "Imported from the Zymo ZR Plasmid Miniprep-Classic instruction manual (Cat. D4015/D4016/D4054), Ver. 1.0.4, 'For Research Use Only'. Review draft created from PDF at user request. Kit size not confirmed; page references use the manual's PRINTED page numbers (cover unnumbered; protocol = printed 'Page 3' = PDF p.4).",
+  "protocol": {
+    "title": "ZR Plasmid Miniprep-Classic plasmid DNA purification (Zymo D4015/D4016/D4054)",
+    "summary": "Silica spin-column miniprep of plasmid DNA from E. coli via modified alkaline lysis (P1/P2/P3 color-coded buffers) and Zymo-Spin IIN columns. Transcribed from the Zymo instruction manual v1.0.4. All steps are performed at room temperature (15-30 C) and all centrifugation is at 11,000-16,000 x g unless noted. Review pending: confirm kit size and cross-check against your lab's validated SOP before use.",
+    "category": "Molecular biology",
+    "tags": ["plasmid prep", "miniprep", "plasmid DNA", "alkaline lysis", "Zymo Research", "E. coli", "spin column"],
+    "source": {
+      "kind": "pdf",
+      "files": [
+        {
+          "name": "Zymo_ZR_Plasmid_Miniprep_Classic_D4015_D4016_D4054_Protocol.pdf",
+          "reference": "D:\\test20260414\\8-18 质粒提取说明书\\output\\pdf\\Zymo_ZR_Plasmid_Miniprep_Classic_D4015_D4016_D4054_Protocol.pdf",
+          "pages": [2, 3, 4, 5, 6]
+        }
+      ],
+      "userInstruction": "Import this PDF into LabRecord as a review draft: structure into steps and materials, attach source references, and flag anything unconfirmed in needsReview instead of guessing."
+    },
+    "steps": [
+      {
+        "instruction": "One-time buffer preparation (before first use): add 95% ethanol to the concentrated Plasmid Wash Buffer at a 4:1 ethanol:buffer volume ratio. D4015: add 96 ml 95% ethanol to 24 ml Plasmid Wash Buffer. D4016: add 192 ml 95% ethanol to 48 ml. D4054: add 192 ml 95% ethanol to EACH 48 ml bottle. Mark the bottle once ethanol has been added.",
+        "materials": [
+          {"name": "Plasmid Wash Buffer (concentrate)", "sourceReference": "manual p.3, Buffer Preparation"},
+          {"name": "95% ethanol", "sourceReference": "manual p.3, Buffer Preparation"}
+        ],
+        "sourceReference": "manual p.3, Buffer Preparation",
+        "needsReview": [
+          "Skip this step if ethanol has already been added to the Plasmid Wash Buffer (check the bottle label).",
+          "Ethanol volume differs by kit; confirm which kit you have (see protocol-level review flag)."
+        ]
+      },
+      {
+        "instruction": "Centrifuge 0.5-5 ml of bacterial culture in a clear 1.5 ml tube at full speed for 15-20 s in a microcentrifuge. Discard the supernatant. For larger culture volumes, repeat this step in the same tube as needed.",
+        "duration": "15-20 s",
+        "temperature": "Room temperature (15-30 C)",
+        "materials": [
+          {"name": "Bacterial culture (E. coli)", "amount": "0.5-5", "unit": "ml", "sourceReference": "manual p.3, Protocol step 1"}
+        ],
+        "sourceReference": "manual p.3, Protocol step 1",
+        "needsReview": [
+          "Choose the culture volume (0.5-5 ml) for your plasmid copy number / yield needs.",
+          "Step 1 says 'full speed'; the manual's general note specifies all spins at 11,000-16,000 x g. Confirm your rotor's full speed is compatible."
+        ]
+      },
+      {
+        "instruction": "Add 200 ul P1 Buffer (Red) to the tube and resuspend the pellet completely (by vortexing or pipetting).",
+        "materials": [
+          {"name": "P1 Buffer (Red)", "amount": "200", "unit": "ul", "sourceReference": "manual p.3, Protocol step 2"}
+        ],
+        "sourceReference": "manual p.3, Protocol step 2"
+      },
+      {
+        "instruction": "Add 200 ul P2 Buffer (Green) and mix by inverting the tube 2-4 times. Lysis is complete when the solution is clear, purple, and viscous. Proceed to the next step within 1-2 min; do not over-lyse. When processing many samples, work in groups of <=10. Caution: P2 contains NaOH - wear gloves and eye protection.",
+        "duration": "Proceed within 1-2 min",
+        "materials": [
+          {"name": "P2 Buffer (Green)", "amount": "200", "unit": "ul", "sourceReference": "manual p.3, Protocol step 3"}
+        ],
+        "sourceReference": "manual p.3, Protocol step 3"
+      },
+      {
+        "instruction": "Add 400 ul P3 Buffer (Yellow) and mix gently but thoroughly - do NOT vortex. The sample turns yellow when neutralization is complete; a green K-SDS/cell-debris precipitate forms. Incubate at room temperature for 1-2 min. Caution: P3 contains chaotropic reagents - handle with care.",
+        "duration": "1-2 min",
+        "temperature": "Room temperature (15-30 C)",
+        "materials": [
+          {"name": "P3 Buffer (Yellow)", "amount": "400", "unit": "ul", "sourceReference": "manual p.3, Protocol step 4"}
+        ],
+        "sourceReference": "manual p.3, Protocol step 4"
+      },
+      {
+        "instruction": "Centrifuge the sample(s) for 2 min (11,000-16,000 x g).",
+        "duration": "2 min",
+        "sourceReference": "manual p.3, Protocol step 5"
+      },
+      {
+        "instruction": "Place a Zymo-Spin IIN column in a Collection Tube and transfer the supernatant from the previous step into the column. Pipette carefully to avoid disturbing the green pellet / transferring cellular debris.",
+        "materials": [
+          {"name": "Zymo-Spin IIN column", "sourceReference": "manual p.3, Protocol step 6"},
+          {"name": "Collection Tube", "sourceReference": "manual p.3, Protocol step 6"}
+        ],
+        "sourceReference": "manual p.3, Protocol step 6"
+      },
+      {
+        "instruction": "Centrifuge the Zymo-Spin IIN column / Collection Tube assembly for 30 s (11,000-16,000 x g).",
+        "duration": "30 s",
+        "sourceReference": "manual p.3, Protocol step 7"
+      },
+      {
+        "instruction": "Discard the flow-through from the Collection Tube (do not let the flow-through touch the bottom of the column) and return the column to the Collection Tube. The column+tube capacity is ~800 ul; empty the tube whenever necessary to prevent contaminating the column with flow-through.",
+        "sourceReference": "manual p.3, Protocol step 8"
+      },
+      {
+        "instruction": "Add 200 ul Endo-Wash Buffer to the column and centrifuge for 30 s (11,000-16,000 x g).",
+        "duration": "30 s",
+        "materials": [
+          {"name": "Endo-Wash Buffer", "amount": "200", "unit": "ul", "sourceReference": "manual p.3, Protocol step 9"}
+        ],
+        "sourceReference": "manual p.3, Protocol step 9"
+      },
+      {
+        "instruction": "Add 400 ul Plasmid Wash Buffer (with ethanol already added) to the column and centrifuge for 1 min (11,000-16,000 x g).",
+        "duration": "1 min",
+        "materials": [
+          {"name": "Plasmid Wash Buffer (with ethanol)", "amount": "400", "unit": "ul", "sourceReference": "manual p.3, Protocol step 10"}
+        ],
+        "sourceReference": "manual p.3, Protocol step 10",
+        "needsReview": [
+          "Confirm ethanol was added to the Plasmid Wash Buffer before use (see the buffer-preparation step)."
+        ]
+      },
+      {
+        "instruction": "Transfer the column into a clean 1.5 ml microcentrifuge tube. Add 30 ul DNA Elution Buffer directly to the center of the column matrix and centrifuge for 30 s to elute the plasmid DNA. DNA Elution Buffer is 10 mM Tris-HCl pH 8.5, 0.1 mM EDTA; nuclease-free water may be substituted if required.",
+        "duration": "30 s",
+        "materials": [
+          {"name": "DNA Elution Buffer", "amount": "30", "unit": "ul", "sourceReference": "manual p.3, Protocol step 11"},
+          {"name": "Clean 1.5 ml microcentrifuge tube", "sourceReference": "manual p.3, Protocol step 11"}
+        ],
+        "sourceReference": "manual p.3, Protocol step 11",
+        "needsReview": [
+          "For large plasmids (>10 kb), the manual (p.5) recommends incubating the column 5-10 min, pre-warming DNA Elution Buffer to 50 C, and increasing elution volume to >=50 ul. Apply only if your plasmid is large."
+        ]
+      }
+    ],
+    "needsReview": [
+      "Kit size/catalog not identified from context (manual covers D4015 / D4016 / D4054). Confirm which you have - it changes only the Plasmid Wash Buffer ethanol-prep volumes, not the run steps.",
+      "Page references use the manual's PRINTED page numbers: the cover is unnumbered, so printed 'Page 3' (the full protocol) = PDF page 4. Verify when opening the source.",
+      "Source is a vendor instruction manual (Zymo, Ver. 1.0.4, 'For Research Use Only'), transcribed as-is. Cross-check against your lab's validated SOP before use.",
+      "No strain, OD600 target, culture volume, or lot numbers were specified for a particular run - fill these in per experiment."
+    ]
+  }
+}

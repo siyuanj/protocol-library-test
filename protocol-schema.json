@@ -1,0 +1,364 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Protocol Metadata Record",
+  "description": "Metadata-only record for a biological assay or laboratory operation protocol. This schema does not contain protocol instructions or source text.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "title",
+    "protocolType",
+    "assay",
+    "operation",
+    "source",
+    "sourceUrl",
+    "confidence",
+    "clusterId",
+    "clusterSize",
+    "tags",
+    "status"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable title of the protocol or source record."
+    },
+    "protocolType": {
+      "type": "string",
+      "minLength": 1,
+      "description": "High-level format or publication type shown to users, such as wet-lab protocol, peer-reviewed protocol, or methods chapter."
+    },
+    "assay": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Named assay, experimental readout, or biological technique."
+    },
+    "operation": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Primary laboratory operation performed by the protocol."
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Publisher, repository, organization, or database hosting the source record."
+    },
+    "sourceUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL for the source record or its stable discovery page."
+    },
+    "published": {
+      "type": "string",
+      "format": "date",
+      "description": "Publication or first-release date in ISO 8601 date format (YYYY-MM-DD)."
+    },
+    "updated": {
+      "type": "string",
+      "format": "date",
+      "description": "Most recent source-record update date in ISO 8601 date format (YYYY-MM-DD)."
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable license or reuse statement as displayed or reported by the source."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Normalized confidence score used to rank records within a cluster, from 0 (lowest) to 1 (highest)."
+    },
+    "clusterId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable identifier for the assay or operation cluster used to group near-duplicate or equivalent records."
+    },
+    "clusterSize": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of records currently assigned to the cluster."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Search and faceting terms for the record.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Featured",
+        "Alternative",
+        "Hidden",
+        "Pending review",
+        "Archived"
+      ],
+      "description": "UI visibility or curation state for this record."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Short curator note about scope, limitations, or source handling."
+    },
+    "sourceRecordId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "description": "Stable identifier assigned by the source, such as a protocol ID, article ID, accession, or catalog key."
+    },
+    "doi": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^10\\.\\d{4,9}/\\S+$",
+      "description": "Digital Object Identifier in canonical DOI form, without an https://doi.org/ prefix."
+    },
+    "authors": {
+      "type": "array",
+      "description": "Ordered list of credited authors or contributors.",
+      "items": {
+        "$ref": "#/$defs/author"
+      }
+    },
+    "recordType": {
+      "type": "string",
+      "enum": [
+        "individual",
+        "collection",
+        "search",
+        "protocol",
+        "methods_article",
+        "methods_chapter",
+        "review",
+        "dataset",
+        "catalog_record",
+        "search_result",
+        "other"
+      ],
+      "description": "Machine-readable classification of the source record."
+    },
+    "licenseCode": {
+      "type": "string",
+      "enum": [
+        "ARTICLE_LICENSE_VARIANT_UNVERIFIED",
+        "CC_RECORD_LICENSE_UNVERIFIED",
+        "OA_LICENSE_VARIANT_UNVERIFIED",
+        "PROPRIETARY_TERMS_UNVERIFIED",
+        "PUBLISHER_COPYRIGHT_UNVERIFIED",
+        "CC0-1.0",
+        "CC-BY-3.0",
+        "CC-BY-4.0",
+        "CC-BY-SA-4.0",
+        "CC-BY-NC-4.0",
+        "CC-BY-NC-SA-4.0",
+        "CC-BY-ND-4.0",
+        "Public domain",
+        "Proprietary",
+        "All rights reserved",
+        "Custom",
+        "Unknown"
+      ],
+      "description": "Normalized license identifier or reuse category. Prefer an SPDX or Creative Commons identifier when available."
+    },
+    "licenseUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL for the applicable license text or source reuse terms."
+    },
+    "licenseVerifiedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "UTC timestamp when the license code and reuse terms were last checked."
+    },
+    "metadataVerifiedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "UTC timestamp when the core metadata was last checked against the source record."
+    },
+    "evidenceStatus": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "metadata-only",
+        "source-verified",
+        "peer-reviewed",
+        "curated",
+        "conflicted",
+        "deprecated"
+      ],
+      "description": "Evidence and review state for the record metadata; it does not certify experimental performance."
+    },
+    "verificationStatus": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "metadata-only",
+        "source-verified",
+        "peer-reviewed",
+        "curated",
+        "conflicted",
+        "deprecated"
+      ],
+      "description": "Current metadata verification state used by the prototype UI."
+    },
+    "evidenceLevel": {
+      "type": "string",
+      "enum": [
+        "limited",
+        "moderate",
+        "strong",
+        "unverified"
+      ],
+      "description": "Coarse evidence level used to explain the prototype ranking."
+    },
+    "scoreBreakdown": {
+      "$ref": "#/$defs/scoreBreakdown"
+    },
+    "specimen": {
+      "type": "string",
+      "description": "Sample or specimen material addressed by the protocol, such as cultured cells, tissue, or purified DNA."
+    },
+    "organism": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Organism, taxon, cell line, or biological system associated with the protocol."
+    },
+    "platform": {
+      "type": "string",
+      "description": "Required or supported instrument, sequencer, microscope, thermocycler, software, or other platform."
+    },
+    "methodVariant": {
+      "type": "string",
+      "description": "Short description of the protocol variant or distinguishing conditions used for clustering and filtering."
+    },
+    "safetyLevel": {
+      "type": "string",
+      "enum": [
+        "not specified",
+        "Not applicable",
+        "Not assessed",
+        "BSL-1",
+        "BSL-2",
+        "BSL-3",
+        "BSL-4",
+        "RG1",
+        "RG2",
+        "RG3",
+        "RG4",
+        "Other"
+      ],
+      "description": "Biosafety or risk-group label explicitly associated with the record; this is not a substitute for institutional review."
+    },
+    "qcNotes": {
+      "type": "string",
+      "description": "Curator notes on metadata quality checks, missing fields, duplicate resolution, or source inconsistencies."
+    }
+  },
+  "$defs": {
+    "author": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Display name of the author or contributor."
+        },
+        "givenName": {
+          "type": "string",
+          "description": "Given name, when separately available."
+        },
+        "familyName": {
+          "type": "string",
+          "description": "Family name, when separately available."
+        },
+        "orcid": {
+          "type": "string",
+          "pattern": "^https://orcid\\.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]$",
+          "description": "ORCID URL when an author identifier is available."
+        },
+        "affiliation": {
+          "type": "string",
+          "description": "Affiliation associated with this author in the source record."
+        }
+      }
+    },
+    "scoreBreakdown": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional component scores supporting the aggregate confidence value.",
+      "properties": {
+        "sourceAuthority": {
+          "$ref": "#/$defs/normalizedScore",
+          "description": "Assessment of source authority and editorial quality."
+        },
+        "recordSpecificity": {
+          "$ref": "#/$defs/normalizedScore",
+          "description": "Assessment of whether the source is a unique record rather than a collection or search page."
+        },
+        "sourceQuality": {
+          "$ref": "#/$defs/normalizedScore",
+          "description": "Assessment of source authority and editorial quality."
+        },
+        "evidenceStrength": {
+          "$ref": "#/$defs/normalizedScore",
+          "description": "Assessment of direct source evidence and review status."
+        },
+        "metadataCompleteness": {
+          "$ref": "#/$defs/normalizedScore",
+          "description": "Fractional assessment of required metadata completeness."
+        },
+        "recency": {
+          "$ref": "#/$defs/normalizedScore",
+          "description": "Assessment of how current the source record is."
+        },
+        "licenseClarity": {
+          "$ref": "#/$defs/normalizedScore",
+          "description": "Assessment of how clearly reuse rights are stated."
+        },
+        "clusterConsistency": {
+          "$ref": "#/$defs/normalizedScore",
+          "description": "Assessment of agreement with other records in the assigned cluster."
+        },
+        "clusterAgreement": {
+          "$ref": "#/$defs/normalizedScore",
+          "description": "Legacy alias for cluster consistency in prototype records."
+        },
+        "overall": {
+          "$ref": "#/$defs/normalizedScore",
+          "description": "Aggregate score copied into the metadata record for transparency."
+        },
+        "method": {
+          "type": "string",
+          "description": "Scoring method or model identifier used to calculate the aggregate confidence."
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the scoring rubric or model."
+        }
+      }
+    },
+    "normalizedScore": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}

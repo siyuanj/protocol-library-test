@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LabRecord Protocol Viewer</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f5f7fa;color:#1a1a2e;line-height:1.55}
+
+/* ---- top bar (brand + selector only) ---- */
+.topbar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e0e4ea;display:flex;align-items:center;padding:0 24px;height:48px;gap:16px}
+.brand{font-size:17px;font-weight:800;color:#2f6f8f;white-space:nowrap}
+.brand span{font-weight:400;color:#8a9bae;font-size:13px;margin-left:6px}
+#proto-select{font:inherit;font-size:13px;padding:5px 10px;border:1px solid #cdd6df;border-radius:8px;background:#fff;max-width:320px}
+
+/* ---- header area (title + badges + tabs) ---- */
+.header-area{max-width:1100px;margin:0 auto;padding:20px 24px 0;text-align:center}
+.tabs-row{display:flex;justify-content:center;margin-top:12px;clear:both}
+.tabs{display:inline-flex;border:1px solid #cdd6df;border-radius:8px;overflow:hidden}
+.tabs button{border:none;background:#fff;padding:7px 18px;font:inherit;font-size:13px;cursor:pointer;color:#33414f;transition:background .15s,color .15s}
+.tabs button+button{border-left:1px solid #cdd6df}
+.tabs button.active{background:#2f6f8f;color:#fff}
+.tabs button:hover:not(.active){background:#f0f4f8}
+
+/* ---- page layout: sidebar + main ---- */
+.page-layout{display:flex;max-width:1100px;margin:0 auto;padding:0 24px;gap:0;align-items:flex-start}
+
+/* ---- sidebar outline ---- */
+.outline{position:sticky;top:60px;flex:0 0 180px;padding:16px 0 16px 0;margin-right:8px;max-height:calc(100vh - 70px);overflow-y:auto;font-size:12.5px}
+.outline.hidden{display:none}
+.outline a{display:block;padding:5px 12px;color:#5b6b7b;text-decoration:none;border-left:2px solid transparent;border-radius:0 4px 4px 0;transition:all .15s;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.outline a:hover{color:#2f6f8f;background:#f0f4f8}
+.outline a.active{color:#2f6f8f;font-weight:700;border-left-color:#2f6f8f;background:#e7f1f6}
+.outline .ol-group{margin-top:10px;padding:0 12px 3px;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#8a9bae;font-weight:700}
+.outline .ol-group:first-child{margin-top:0}
+
+/* ---- main content ---- */
+.main-content{flex:1;min-width:0;padding:16px 0 40px}
+
+/* ---- shared styles ---- */
+h1{font-size:22px;margin:0 0 8px;color:#1a1a2e}
+h2{font-size:17px;color:#2f6f8f;margin:22px 0 10px;padding-bottom:4px;border-bottom:2px solid #e7f1f6}
+h3{font-size:14px;color:#5b6b7b;margin:16px 0 6px;text-transform:uppercase;letter-spacing:.04em}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;justify-content:center}
+.badge{background:#eef2f6;color:#5b6b7b;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600}
+.badge-disc{background:#e6f4f0;color:#2b7a5f}
+.badge-time{background:#eef6ee;color:#3a6b3a}
+.badge-review{background:#fff4e5;color:#a15c00}
+.badge-status{background:#e8f0fe;color:#3367d6}
+.badge-bsl{background:#fce4ec;color:#c62828}
+
+/* ---- tables ---- */
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0 16px}
+.tbl th{text-align:left;background:#f0f4f8;border:1px solid #e0e4ea;padding:7px 10px;font-size:12px;color:#5b6b7b;font-weight:700}
+.tbl td{border:1px solid #e0e4ea;padding:7px 10px;vertical-align:top}
+.tbl .row-review{background:#fff8ef}
+.review{display:inline-block;background:#fff4e5;color:#a15c00;font-size:10px;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:4px;vertical-align:middle}
+.haz{color:#c62828;font-size:12px}
+
+/* ---- chips ---- */
+.chip{display:inline-block;border-radius:6px;padding:1px 8px;margin:2px 3px 2px 0;font-size:12px;white-space:nowrap}
+.chip-mat{background:#eef2f6;color:#33414f}
+.chip-eq{background:#f0ecfb;color:#5b4b9f}
+.chip-sw{background:#e6f4f0;color:#2b7a5f}
+.chip-in{background:#e8f0fe;color:#3367d6}
+.chip-out{background:#e6f9e8;color:#2e7d32}
+.chip-tbl{background:#fef3e0;color:#8a6d3b}
+.chip-review{background:#fff4e5;color:#a15c00}
+
+/* ---- parameters ---- */
+.pill{display:inline-block;background:#e7f1f6;color:#2f6f8f;border-radius:6px;padding:1px 8px;margin:2px 3px 2px 0;font-size:12.5px;white-space:nowrap}
+.pill i{font-style:normal;font-size:9.5px;text-transform:uppercase;color:#86a2b1;margin-right:4px}
+.pill-review{background:#fff4e5;color:#a15c00}
+.pill-formula{color:#6a4bb0;font-size:10px;margin-left:2px;cursor:help}
+
+/* ---- overview (compact) ---- */
+.ov-cols{display:flex;gap:22px;align-items:flex-start;margin-top:16px}
+.ov-side{flex:0 0 260px;background:#fff;border:1px solid #e0e4ea;border-radius:10px;padding:14px 16px;font-size:13px}
+.ov-side h4{margin:12px 0 4px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#5b6b7b}
+.ov-side h4:first-child{margin-top:0}
+.ov-list{margin:0;padding-left:16px}
+.ov-list li{margin:2px 0}
+.ov-main{flex:1}
+.ov-phase{margin:14px 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#2f6f8f;font-weight:700}
+.ov-steps{margin:0 0 8px;padding-left:26px}
+.ov-steps li{margin:5px 0;font-size:13.5px}
+.ov-expect{color:#3a6b3a;font-size:12px}
+.flag{background:#fff4e5;color:#a15c00;font-size:10px;padding:0 4px;border-radius:3px}
+
+/* ---- timeline ---- */
+.tl{position:relative;margin-left:14px;padding-left:28px;border-left:2px solid #dbe3ea}
+.tl-phase{margin:18px 0 10px -42px}
+.tl-phase span{background:#eef2f6;color:#33414f;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:4px 14px;border-radius:999px}
+.tl-item{position:relative;margin:0 0 18px}
+.tl-dot{position:absolute;left:-39px;top:0;width:24px;height:24px;line-height:24px;text-align:center;background:#2f6f8f;color:#fff;border-radius:50%;font-size:12px;font-weight:700;box-shadow:0 0 0 4px #f5f7fa}
+.tl-review .tl-dot{background:#d98a2b}
+.tl-card{background:#fff;border:1px solid #e0e4ea;border-radius:10px;padding:12px 16px}
+.tl-action{font-size:14.5px;line-height:1.5}
+.tl-row{margin-top:5px}
+.tl-expect{color:#3a6b3a;font-size:13px;margin-top:5px}
+.tl-note{color:#8a5a1a;font-size:12.5px;margin-top:3px}
+.tl-opt{color:#86a2b1;font-size:11px;font-weight:700;text-transform:uppercase}
+.tl-repeat{display:inline-block;background:#f0ecfb;color:#5b4b9f;border-radius:6px;padding:1px 7px;margin-left:6px;font-size:11px;font-weight:600}
+.tl-cmd{margin-top:5px}
+.tl-cmd code{display:inline-block;background:#0f1720;color:#d7e2ec;padding:3px 8px;border-radius:5px;font-size:12px;font-family:"SFMono-Regular",Consolas,monospace;max-width:100%;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+.tl-branch{margin-top:4px;font-size:12.5px;color:#6a4bb0}
+.tl-accept{color:#2f6f8f;font-size:12.5px;margin-top:3px}
+.tl-flow{margin-top:5px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.tl-arrow{color:#5b6b7b;font-weight:700;font-size:14px}
+
+/* ---- info cards for procedure header ---- */
+.info-section{scroll-margin-top:60px}
+.info-card{background:#fff;border:1px solid #e0e4ea;border-radius:10px;padding:16px 20px;margin-bottom:16px}
+.info-card p{margin:6px 0}
+.info-card ul{margin:4px 0 0 18px}
+.info-card li{margin:3px 0}
+.info-label{font-weight:700;color:#2f6f8f}
+
+/* ---- sources ---- */
+.src-link{color:#2f6f8f;text-decoration:none}
+.src-link:hover{text-decoration:underline}
+.lic{color:#5b6b7b;font-size:12px}
+
+/* ---- study design / compliance cards ---- */
+.sd-card{background:#f6f8fa;border:1px solid #e0e4ea;border-radius:10px;padding:12px 16px;margin:10px 0}
+.sd-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#5b6b7b;margin-bottom:6px}
+.sd-detail{font-size:13px;color:#33414f;margin:3px 0}
+
+/* scroll-margin for anchored headings */
+h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin-top:60px}
+
+/* ---- responsive ---- */
+@media(max-width:800px){
+  .outline{display:none!important}
+  .ov-cols{flex-direction:column}
+  .ov-side{flex:none;width:100%}
+  .topbar{height:auto;padding:10px 16px}
+  .header-area{padding:14px 16px 0}
+  .tabs{width:100%}
+  .tabs button{flex:1;font-size:12px;padding:7px 6px}
+  .page-layout{padding:0 16px}
+}
+@media print{.topbar,.outline{display:none!important}.main-content{padding:0}.header-area{padding:12px 0 0}}
+</style>
+</head>
+<body>
+
+<!-- top bar: brand + protocol selector -->
+<div class="topbar">
+  <span class="brand">LabRecord <span>Protocol Viewer</span></span>
+  <select id="proto-select"></select>
+</div>
+
+<!-- header: title + badges + tabs (rendered by JS) -->
+<div class="header-area" id="header-area"></div>
+
+<!-- two-column layout: outline sidebar + main content -->
+<div class="page-layout">
+  <nav class="outline hidden" id="outline"></nav>
+  <div class="main-content" id="content"></div>
+</div>
+
+<script>
+(function () {
+  /* ---- helpers ---- */
+  function esc(s) {
+    if (s == null) return "";
+    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  function reviewMark(n) { return n ? ' <span class="review">needs review</span>' : ""; }
+  function chip(name, cls) { return '<span class="chip ' + (cls||"chip-mat") + '">' + esc(name) + '</span>'; }
+  function slug(s) { return s.replace(/[^a-zA-Z0-9一-鿿]+/g, "-").replace(/^-|-$/g, "").toLowerCase(); }
+
+  function fmtParam(p) {
+    var t = p.rawText;
+    if (!t) {
+      if (p.valueText) t = p.valueText;
+      else if (p.value != null) {
+        var pre = p.comparator === "min" ? "≥ " : p.comparator === "max" ? "≤ " : p.comparator === "approx" ? "~ " : "";
+        t = pre + p.value;
+        if (p.valueMax != null && p.valueMax !== p.value) t += "–" + p.valueMax;
+        if (p.unit) t += " " + p.unit;
+        if (p.perUnit) t += " /" + p.perUnit;
+      } else t = p.unit || p.type || "";
+    }
+    var f = p.formula ? ' <span class="pill-formula" title="' + esc(p.formula) + '">ƒ</span>' : "";
+    return '<span class="pill' + (p.needsReview ? " pill-review" : "") + '"><i>' + esc(p.type) + '</i>' + esc(t) + f + '</span>';
+  }
+
+  function lookups(p) {
+    var m={},e={},sw={},sp={},tbl={};
+    (p.materials||[]).forEach(function(x){m[x.id]=x});
+    (p.equipment||[]).forEach(function(x){e[x.id]=x});
+    (p.software||[]).forEach(function(x){sw[x.id]=x});
+    (p.samples||[]).forEach(function(x){sp[x.id]=x});
+    (p.tables||[]).forEach(function(x){tbl[x.id]=x});
+    return {m:m,e:e,sw:sw,sp:sp,tbl:tbl};
+  }
+  function nmeOf(id,L){return(L.m[id]&&L.m[id].name)||(L.sp[id]&&L.sp[id].name)||id}
+
+  function refChips(s,L){
+    var out=[];
+    if(s.materialUses&&s.materialUses.length){
+      s.materialUses.forEach(function(u){
+        var lbl=L.m[u.materialId]?L.m[u.materialId].name:u.materialId;
+        var q=(u.amount!=null)?(u.amount+(u.unit?" "+u.unit:"")):"";
+        if(u.equivalents)q+=(q?", ":"")+u.equivalents+" equiv";
+        if(u.limitingReagent)q+=(q?", ":"")+"limiting";
+        out.push(chip(lbl+(q?" ("+q+")":""),u.needsReview?"chip-review":"chip-mat"));
+      });
+    } else {
+      (s.materialIds||[]).forEach(function(id){if(L.m[id])out.push(chip(L.m[id].name,L.m[id].needsReview?"chip-review":"chip-mat"))});
+    }
+    (s.equipmentIds||[]).forEach(function(id){if(L.e[id])out.push(chip(L.e[id].name,"chip-eq"))});
+    (s.softwareIds||[]).forEach(function(id){if(L.sw[id])out.push(chip(L.sw[id].name,"chip-sw"))});
+    (s.containerIds||[]).forEach(function(id){out.push(chip(id,"chip-eq"))});
+    (s.tableIds||[]).forEach(function(id){out.push(chip((L.tbl[id]&&L.tbl[id].title)||id,"chip-tbl"))});
+    return out.join(" ");
+  }
+  function byPhase(p){
+    var order=[],g={};
+    (p.steps||[]).forEach(function(s){var k=s.phase||"";if(!(k in g)){g[k]=[];order.push(k)}g[k].push(s)});
+    return {order:order,g:g};
+  }
+  function reviewCount(p){
+    var n=0;
+    (p.materials||[]).forEach(function(x){if(x.needsReview)n++});
+    (p.equipment||[]).forEach(function(x){if(x.needsReview)n++});
+    (p.steps||[]).forEach(function(s){if(s.needsReview)n++;(s.parameters||[]).forEach(function(pr){if(pr.needsReview)n++})});
+    return n;
+  }
+
+  /* ---- header (title + badges + tabs) rendered into header-area ---- */
+  function renderHeader(p) {
+    var m=p.metadata, rc=reviewCount(p), h=[];
+    h.push('<h1>'+esc(m.title)+'</h1>');
+    h.push('<div class="badges">');
+    if(m.discipline) h.push('<span class="badge badge-disc">'+esc(m.discipline)+'</span>');
+    if(m.family) h.push('<span class="badge">'+esc(m.family)+'</span>');
+    if(m.category) h.push('<span class="badge">'+esc(m.category)+'</span>');
+    if(m.version) h.push('<span class="badge">v'+esc(m.version)+'</span>');
+    if(m.estimatedTime) h.push('<span class="badge badge-time">⏱ '+esc(m.estimatedTime)+'</span>');
+    if(rc>0) h.push('<span class="badge badge-review">'+rc+' need review</span>');
+    if(p.provenance&&p.provenance.status) h.push('<span class="badge badge-status">'+esc(p.provenance.status)+'</span>');
+    h.push('</div>');
+    h.push('<div class="tabs-row"><div class="tabs" id="tabs">');
+    h.push('<button'+(currentTab==="overview"?' class="active"':'')+' data-tab="overview">Overview</button>');
+    h.push('<button'+(currentTab==="procedure"?' class="active"':'')+' data-tab="procedure">Procedure</button>');
+    h.push('<button'+(currentTab==="materials"?' class="active"':'')+' data-tab="materials">Materials &amp; Setup</button>');
+    h.push('<button'+(currentTab==="reference"?' class="active"':'')+' data-tab="reference">Notes &amp; Safety</button>');
+    h.push('</div></div>');
+    return h.join("");
+  }
+
+  /* ================================================================
+   *  TAB 1: Overview (compact two-column)
+   * ================================================================ */
+  function renderOverview(p) {
+    var L=lookups(p),ph=byPhase(p),h=[];
+    h.push('<p style="color:#33414f;margin:0 0 4px">'+esc(p.metadata.purpose)+'</p>');
+    h.push('<div class="ov-cols">');
+    h.push('<aside class="ov-side">');
+    var sd=p.studyDesign;
+    if(sd&&(sd.groups||sd.randomization||sd.blinding||sd.statisticalPlan)){
+      h.push('<h4 id="ov-study-design">Study Design</h4>');
+      if(sd.groups&&sd.groups.length){h.push('<ul class="ov-list">');sd.groups.forEach(function(g){h.push('<li><b>'+esc(g.name)+'</b>'+(g.n!=null?' (n='+esc(g.n)+')':'')+(g.treatment?': '+esc(g.treatment):'')+'</li>')});h.push('</ul>')}
+    }
+    if(p.materials&&p.materials.length){
+      h.push('<h4 id="ov-materials">Materials</h4><ul class="ov-list">');
+      p.materials.forEach(function(x){var amt=x.amount!=null?x.amount+(x.unit?' '+x.unit:''):(x.workingConcentration||'');h.push('<li>'+esc(x.name)+(amt?' <b>'+esc(amt)+'</b>':'')+(x.needsReview?' <span class="flag">review</span>':'')+'</li>')});
+      h.push('</ul>');
+    }
+    if(p.equipment&&p.equipment.length){
+      h.push('<h4 id="ov-equipment">Equipment</h4><ul class="ov-list">');
+      p.equipment.forEach(function(x){h.push('<li>'+esc(x.name)+(x.model?' ('+esc(x.model)+')':'')+'</li>')});
+      h.push('</ul>');
+    }
+    if(p.software&&p.software.length){
+      h.push('<h4 id="ov-software">Software</h4><ul class="ov-list">');
+      p.software.forEach(function(x){h.push('<li>'+esc(x.name)+(x.version?' v'+esc(x.version):'')+'</li>')});
+      h.push('</ul>');
+    }
+    if(p.controls&&p.controls.length){
+      h.push('<h4 id="ov-controls">Controls</h4><ul class="ov-list">');
+      p.controls.forEach(function(c){h.push('<li>'+esc(c.name)+'</li>')});
+      h.push('</ul>');
+    }
+    h.push('</aside><main class="ov-main">');
+    ph.order.forEach(function(key){
+      if(key) h.push('<div class="ov-phase" id="ov-phase-'+slug(key)+'">'+esc(key)+'</div>');
+      h.push('<ol class="ov-steps">');
+      ph.g[key].forEach(function(s){
+        var params=(s.parameters||[]).map(fmtParam).join(" ");
+        var extra="";
+        if(s.repeat){var r=s.repeat.count?"↺×"+s.repeat.count:(s.repeat.untilCondition?"until "+s.repeat.untilCondition:"↺");extra+=' <span class="tl-repeat">'+esc(r)+'</span>'}
+        if(s.command) extra+=' <code style="background:#0f1720;color:#d7e2ec;padding:1px 6px;border-radius:4px;font-size:11px">'+esc(s.command)+'</code>';
+        if((s.inputIds&&s.inputIds.length)||(s.outputIds&&s.outputIds.length)){
+          extra+=' ';
+          if(s.inputIds&&s.inputIds.length) extra+=s.inputIds.map(function(id){return chip(nmeOf(id,L),"chip-in")}).join(" ");
+          extra+=' → ';
+          if(s.outputIds&&s.outputIds.length) extra+=s.outputIds.map(function(id){return chip(nmeOf(id,L),"chip-out")}).join(" ");
+        }
+        var acc="";
+        (s.acceptanceCriteria||[]).forEach(function(a){
+          var pre=a.comparator==="min"?"≥ ":a.comparator==="max"?"≤ ":"";
+          acc+=' <span class="tl-accept">✓ '+esc(a.parameter||a.description||"")+(a.value!=null?": "+pre+a.value+(a.unit?" "+a.unit:""):"")+'</span>';
+        });
+        h.push('<li value="'+esc(s.number||"")+'"'+(s.needsReview?' style="background:#fff8ef"':'')+'>'+
+          (s.optional?'<span class="tl-opt">optional</span> ':'')+esc(s.action)+extra+
+          (params?' '+params:'')+
+          (s.expectedResult?' <span class="ov-expect">→ '+esc(s.expectedResult)+'</span>':'')+
+          acc+'</li>');
+      });
+      h.push('</ol>');
+    });
+    h.push('</main></div>');
+    return h.join("");
+  }
+
+  /* ================================================================
+   *  TAB 2: Procedure (info header + timeline)
+   * ================================================================ */
+  function renderProcedure(p) {
+    var L=lookups(p),ph=byPhase(p),h=[];
+    h.push('<div class="info-card">');
+    if(p.metadata.purpose) h.push('<div class="info-section" id="sec-purpose"><p><span class="info-label">Purpose: </span>'+esc(p.metadata.purpose)+'</p></div>');
+    if(p.metadata.scope) h.push('<div class="info-section" id="sec-scope"><p><span class="info-label">Scope: </span>'+esc(p.metadata.scope)+'</p></div>');
+    if(p.metadata.beforeYouBegin&&p.metadata.beforeYouBegin.length){
+      h.push('<div class="info-section" id="sec-before"><p><span class="info-label">Before You Begin:</span></p><ul>');
+      p.metadata.beforeYouBegin.forEach(function(b){h.push('<li>'+esc(b)+'</li>')});
+      h.push('</ul></div>');
+    }
+    if(p.expectedOutputs&&p.expectedOutputs.length){
+      h.push('<div class="info-section" id="sec-expected"><p><span class="info-label">Expected Outputs:</span></p><ul>');
+      p.expectedOutputs.forEach(function(o){h.push('<li>'+esc(o)+'</li>')});
+      h.push('</ul></div>');
+    }
+    h.push('</div>');
+    h.push('<div class="tl">');
+    ph.order.forEach(function(key){
+      if(key) h.push('<div class="tl-phase" id="sec-phase-'+slug(key)+'"><span>'+esc(key)+'</span></div>');
+      ph.g[key].forEach(function(s){
+        var params=(s.parameters||[]).map(fmtParam).join(" ");
+        var refs=refChips(s,L);
+        h.push('<div class="tl-item'+(s.needsReview?' tl-review':'')+'">');
+        h.push('<div class="tl-dot">'+esc(s.number||"")+'</div>');
+        h.push('<div class="tl-card">');
+        h.push('<div class="tl-action">'+(s.optional?'<span class="tl-opt">optional</span> ':'')+esc(s.action));
+        if(s.repeat){var r=s.repeat.count?"↺×"+s.repeat.count:(s.repeat.untilCondition?"until "+s.repeat.untilCondition:"↺");h.push(' <span class="tl-repeat">'+esc(r)+'</span>')}
+        h.push('</div>');
+        if(params) h.push('<div class="tl-row">'+params+'</div>');
+        if(refs) h.push('<div class="tl-row" style="opacity:.9">'+refs+'</div>');
+        if((s.inputIds&&s.inputIds.length)||(s.outputIds&&s.outputIds.length)){
+          h.push('<div class="tl-flow">');
+          if(s.inputIds&&s.inputIds.length) h.push(s.inputIds.map(function(id){return chip(nmeOf(id,L),"chip-in")}).join(" "));
+          h.push(' <span class="tl-arrow">→</span> ');
+          if(s.outputIds&&s.outputIds.length) h.push(s.outputIds.map(function(id){return chip(nmeOf(id,L),"chip-out")}).join(" "));
+          h.push('</div>');
+        }
+        if(s.command) h.push('<div class="tl-cmd"><code>'+esc(s.command)+'</code></div>');
+        if(s.branches&&s.branches.length){s.branches.forEach(function(b){h.push('<div class="tl-branch">⎋ '+esc(b.condition)+(b.targetStepId?' → '+esc(b.targetStepId):'')+(b.action?': '+esc(b.action):'')+'</div>')})}
+        if(s.expectedResult) h.push('<div class="tl-expect">✓ '+esc(s.expectedResult)+'</div>');
+        if(s.acceptanceCriteria&&s.acceptanceCriteria.length){
+          s.acceptanceCriteria.forEach(function(a){
+            var line="✓ "+esc(a.parameter||a.description||"");
+            if(a.value!=null){var pre=a.comparator==="min"?"≥ ":a.comparator==="max"?"≤ ":"";line+=": "+pre+a.value+(a.unit?" "+a.unit:"")}
+            if(a.classification) line+=" ("+esc(a.classification)+")";
+            h.push('<div class="tl-accept">'+line+'</div>');
+          });
+        }
+        if(s.criticalNotes) h.push('<div class="tl-note">! '+esc(s.criticalNotes)+'</div>');
+        if(s.safetyNotes) h.push('<div class="tl-note" style="color:#c62828">⚠ '+esc(s.safetyNotes)+'</div>');
+        h.push('</div></div>');
+      });
+    });
+    h.push('</div>');
+    return h.join("");
+  }
+
+  /* ================================================================
+   *  TAB 3: Materials / Equipment / Controls
+   * ================================================================ */
+  function renderMaterials(p) {
+    var h=[];
+    if(p.materials&&p.materials.length){
+      h.push('<h2 id="sec-materials">Materials and Reagents</h2>');
+      h.push('<table class="tbl"><thead><tr><th>Name</th><th>Amount / Working conc.</th><th>Specification</th><th>Vendor / Cat#</th></tr></thead><tbody>');
+      p.materials.forEach(function(x){
+        var amt="";
+        if(x.amount!=null){amt=String(x.amount);if(x.amountMax!=null&&x.amountMax!==x.amount)amt+="–"+x.amountMax;if(x.unit)amt+=" "+x.unit}
+        else if(x.workingConcentration) amt=x.workingConcentration;
+        var vendor=[x.vendor,x.catalogNumber].filter(Boolean).join(" ");
+        var spec=esc(x.specification||"");
+        if(x.casNumber) spec+=(spec?' · ':'')+'CAS: '+esc(x.casNumber);
+        if(x.smiles) spec+=(spec?' · ':'')+'SMILES: '+esc(x.smiles);
+        if(x.hazard) spec+=(spec?' ':'')+' <span class="haz">⚠ '+esc(x.hazard)+'</span>';
+        if(x.storage) spec+=(spec?' · ':'')+esc(x.storage);
+        h.push('<tr'+(x.needsReview?' class="row-review"':'')+'><td>'+esc(x.name)+reviewMark(x.needsReview)+'</td><td>'+esc(amt)+'</td><td>'+spec+'</td><td>'+esc(vendor)+'</td></tr>');
+      });
+      h.push('</tbody></table>');
+    }
+    if(p.equipment&&p.equipment.length){
+      h.push('<h2 id="sec-equipment">Equipment and Settings</h2>');
+      h.push('<table class="tbl"><thead><tr><th>Name</th><th>Model</th><th>Settings</th></tr></thead><tbody>');
+      p.equipment.forEach(function(x){h.push('<tr'+(x.needsReview?' class="row-review"':'')+'><td>'+esc(x.name)+reviewMark(x.needsReview)+'</td><td>'+esc(x.model||"")+'</td><td>'+esc(x.settings||"")+'</td></tr>')});
+      h.push('</tbody></table>');
+    }
+    if(p.software&&p.software.length){
+      h.push('<h2 id="sec-software">Software and Tools</h2>');
+      h.push('<table class="tbl"><thead><tr><th>Name</th><th>Version</th><th>Command</th><th>Source</th></tr></thead><tbody>');
+      p.software.forEach(function(x){h.push('<tr><td>'+esc(x.name)+'</td><td>'+esc(x.version||"")+'</td><td>'+(x.command?'<code>'+esc(x.command)+'</code>':'')+'</td><td>'+(x.url?'<a href="'+esc(x.url)+'" target="_blank" class="src-link">link</a>':'')+'</td></tr>')});
+      h.push('</tbody></table>');
+    }
+    if(p.samples&&p.samples.length){
+      h.push('<h2 id="sec-samples">Samples</h2>');
+      h.push('<table class="tbl"><thead><tr><th>Name</th><th>Role</th><th>Kind / Type</th></tr></thead><tbody>');
+      p.samples.forEach(function(x){h.push('<tr><td>'+esc(x.name)+reviewMark(x.needsReview)+'</td><td>'+esc(x.role)+'</td><td>'+esc([x.kind,x.dataType,x.organism].filter(Boolean).join(" · "))+'</td></tr>')});
+      h.push('</tbody></table>');
+    }
+    if(p.containers&&p.containers.length){
+      h.push('<h2 id="sec-containers">Containers</h2>');
+      h.push('<table class="tbl"><thead><tr><th>Name</th><th>Type</th><th>Wells</th></tr></thead><tbody>');
+      p.containers.forEach(function(c){h.push('<tr><td>'+esc(c.name)+reviewMark(c.needsReview)+'</td><td>'+esc(c.type||"")+'</td><td>'+esc(c.wells!=null?c.wells:"")+'</td></tr>')});
+      h.push('</tbody></table>');
+      p.containers.forEach(function(c){
+        if(!c.layout||!c.layout.length)return;
+        h.push('<h3>'+esc(c.name)+' Layout</h3>');
+        h.push('<table class="tbl"><thead><tr><th>Well</th><th>Sample / Material</th><th>Factor</th><th>Level</th></tr></thead><tbody>');
+        c.layout.forEach(function(cell){
+          var who=cell.sampleId?(p.samples||[]).find(function(s){return s.id===cell.sampleId}):cell.materialId?(p.materials||[]).find(function(m){return m.id===cell.materialId}):null;
+          h.push('<tr><td>'+esc(cell.well)+'</td><td>'+esc(who?who.name:(cell.sampleId||cell.materialId||""))+'</td><td>'+esc(cell.factor||"")+'</td><td>'+esc(cell.level||"")+'</td></tr>');
+        });
+        h.push('</tbody></table>');
+      });
+    }
+    if(p.tables&&p.tables.length){
+      h.push('<h2 id="sec-tables">Tables</h2>');
+      p.tables.forEach(function(t){
+        h.push('<h3>'+esc(t.title||t.id)+(t.kind?' <span class="badge">'+esc(t.kind)+'</span>':'')+'</h3>');
+        h.push('<table class="tbl"><thead><tr>'+(t.columns||[]).map(function(c){return '<th>'+esc(c)+'</th>'}).join("")+'</tr></thead><tbody>');
+        (t.rows||[]).forEach(function(row){h.push('<tr>'+(row||[]).map(function(c){return '<td>'+esc(c)+'</td>'}).join("")+'</tr>')});
+        h.push('</tbody></table>');
+        if(t.note) h.push('<p style="color:#5b6b7b;font-size:12px;margin:2px 0 12px">'+esc(t.note)+'</p>');
+      });
+    }
+    if(p.controls&&p.controls.length){
+      h.push('<h2 id="sec-controls">Controls</h2><ul>');
+      p.controls.forEach(function(c){h.push('<li><strong>'+esc(c.name)+'</strong>'+(c.description?': '+esc(c.description):'')+reviewMark(c.needsReview)+'</li>')});
+      h.push('</ul>');
+    }
+    return h.join("");
+  }
+
+  /* ================================================================
+   *  TAB 4: Reference (troubleshooting, safety, sources, etc.)
+   * ================================================================ */
+  function renderReference(p) {
+    var h=[];
+    if(p.troubleshooting&&p.troubleshooting.length){
+      h.push('<h2 id="sec-troubleshooting">Troubleshooting</h2>');
+      h.push('<table class="tbl"><thead><tr><th>Problem</th><th>Likely Cause</th><th>Solution</th></tr></thead><tbody>');
+      p.troubleshooting.forEach(function(t){h.push('<tr><td>'+esc(t.problem)+'</td><td>'+esc(t.cause||"")+'</td><td>'+esc(t.solution||"")+'</td></tr>')});
+      h.push('</tbody></table>');
+    }
+    if((p.safety&&p.safety.length)||(p.biosafetyLevel&&p.biosafetyLevel!=="not specified")){
+      h.push('<h2 id="sec-safety">Safety</h2>');
+      if(p.biosafetyLevel&&p.biosafetyLevel!=="not specified") h.push('<p><span class="badge badge-bsl">'+esc(p.biosafetyLevel)+'</span></p>');
+      if(p.safety&&p.safety.length){h.push('<ul>');p.safety.forEach(function(s){h.push('<li>'+esc(s)+'</li>')});h.push('</ul>')}
+    }
+    var sd=p.studyDesign;
+    if(sd&&(sd.groups||sd.randomization||sd.blinding||sd.statisticalPlan||(sd.timepoints&&sd.timepoints.length))){
+      h.push('<h2 id="sec-study-design">Study Design</h2><div class="sd-card">');
+      if(sd.groups&&sd.groups.length){
+        h.push('<table class="tbl"><thead><tr><th>Group</th><th>N</th><th>Treatment</th></tr></thead><tbody>');
+        sd.groups.forEach(function(g){h.push('<tr><td>'+esc(g.name)+'</td><td>'+esc(g.n!=null?g.n:"")+'</td><td>'+esc(g.treatment||g.description||"")+'</td></tr>')});
+        h.push('</tbody></table>');
+      }
+      if(sd.randomization) h.push('<div class="sd-detail"><b>Randomization:</b> '+esc(sd.randomization)+'</div>');
+      if(sd.blinding) h.push('<div class="sd-detail"><b>Blinding:</b> '+esc(sd.blinding)+'</div>');
+      if(sd.timepoints&&sd.timepoints.length) h.push('<div class="sd-detail"><b>Timepoints:</b> '+esc(sd.timepoints.join(", "))+'</div>');
+      if(sd.statisticalPlan) h.push('<div class="sd-detail"><b>Statistical plan:</b> '+esc(sd.statisticalPlan)+'</div>');
+      h.push('</div>');
+    }
+    var cp=p.compliance;
+    if(cp&&(cp.iacuc||cp.irb||cp.approvalId||cp.consent||cp.wasteDisposal)){
+      h.push('<h2 id="sec-compliance">Compliance & Ethics</h2><div class="sd-card">');
+      if(cp.iacuc) h.push('<div class="sd-detail"><b>IACUC:</b> '+esc(cp.iacuc)+'</div>');
+      if(cp.irb) h.push('<div class="sd-detail"><b>IRB:</b> '+esc(cp.irb)+'</div>');
+      if(cp.approvalId) h.push('<div class="sd-detail"><b>Approval:</b> '+esc(cp.approvalId)+'</div>');
+      if(cp.consent) h.push('<div class="sd-detail"><b>Consent:</b> '+esc(cp.consent)+'</div>');
+      if(cp.wasteDisposal) h.push('<div class="sd-detail"><b>Waste disposal:</b> '+esc(cp.wasteDisposal)+'</div>');
+      h.push('</div>');
+    }
+    if(p.limitations) h.push('<h2 id="sec-limitations">Limitations</h2><p>'+esc(p.limitations)+'</p>');
+    if(p.sources&&p.sources.length){
+      h.push('<h2 id="sec-sources">Sources and License</h2><ul>');
+      p.sources.forEach(function(s){
+        var label=s.title||s.file||s.url||s.doi||s.id;
+        var line='<strong>'+esc(s.kind)+':</strong> '+esc(label);
+        if(s.file) line+=' <code style="font-size:12px;color:#5b6b7b">'+esc(s.file)+'</code>';
+        if(s.doi) line+=' — DOI: <a href="https://doi.org/'+esc(s.doi)+'" target="_blank" class="src-link">'+esc(s.doi)+'</a>';
+        else if(s.url) line+=' — <a href="'+esc(s.url)+'" target="_blank" class="src-link">link</a>';
+        if(s.license) line+='<br><span class="lic">License: '+esc(s.license)+(s.licenseVerified?' (verified)':' (unverified)')+'</span>';
+        h.push('<li>'+line+'</li>');
+      });
+      h.push('</ul>');
+    }
+    if(p.provenance){
+      h.push('<h2 id="sec-provenance">Provenance</h2><div class="sd-card">');
+      if(p.provenance.versionId) h.push('<div class="sd-detail"><b>Version:</b> '+esc(p.provenance.versionId)+'</div>');
+      if(p.provenance.contentHash) h.push('<div class="sd-detail"><b>Content hash:</b> <code style="font-size:12px">'+esc(p.provenance.contentHash)+'</code></div>');
+      if(p.provenance.library) h.push('<div class="sd-detail"><b>Library:</b> '+esc(p.provenance.library)+'</div>');
+      if(p.provenance.owner) h.push('<div class="sd-detail"><b>Owner:</b> '+esc(p.provenance.owner)+'</div>');
+      if(p.provenance.status) h.push('<div class="sd-detail"><b>Status:</b> '+esc(p.provenance.status)+'</div>');
+      h.push('</div>');
+    }
+    return h.join("");
+  }
+
+  /* ================================================================
+   *  Outline generation & scroll spy
+   * ================================================================ */
+  var outlineEl = document.getElementById("outline");
+
+  function buildOutline() {
+    outlineEl.classList.remove("hidden");
+    var items = [];
+
+    if (currentTab === "overview") {
+      var sideH4 = content.querySelectorAll("h4[id]");
+      if (sideH4.length) {
+        items.push({group:"Summary"});
+        sideH4.forEach(function(el){ items.push({id:el.id, label:el.textContent.trim()}) });
+      }
+      var phases = content.querySelectorAll(".ov-phase[id]");
+      if (phases.length) {
+        items.push({group:"Steps"});
+        phases.forEach(function(el){ items.push({id:el.id, label:el.textContent.trim()}) });
+      }
+    }
+
+    if (currentTab === "procedure") {
+      // info sections
+      var infoIds = [
+        {id:"sec-purpose",label:"Purpose"},
+        {id:"sec-scope",label:"Scope"},
+        {id:"sec-before",label:"Before You Begin"},
+        {id:"sec-expected",label:"Expected Outputs"}
+      ];
+      items.push({group:"Info"});
+      infoIds.forEach(function(x){ if(document.getElementById(x.id)) items.push(x) });
+      // phases
+      var phases = content.querySelectorAll(".tl-phase[id]");
+      if (phases.length) {
+        items.push({group:"Steps"});
+        phases.forEach(function(el){ items.push({id:el.id, label:el.textContent.trim()}) });
+      }
+    }
+
+    if (currentTab === "materials") {
+      var secs = content.querySelectorAll("h2[id]");
+      secs.forEach(function(el){ items.push({id:el.id, label:el.textContent.trim()}) });
+    }
+
+    if (currentTab === "reference") {
+      var secs = content.querySelectorAll("h2[id]");
+      secs.forEach(function(el){ items.push({id:el.id, label:el.textContent.trim()}) });
+    }
+
+    var html = [];
+    items.forEach(function(it){
+      if (it.group) { html.push('<div class="ol-group">'+esc(it.group)+'</div>'); return; }
+      html.push('<a href="#'+it.id+'" data-target="'+it.id+'">'+esc(it.label)+'</a>');
+    });
+    outlineEl.innerHTML = html.join("");
+    updateActiveOutline();
+  }
+
+  function updateActiveOutline() {
+    var links = outlineEl.querySelectorAll("a[data-target]");
+    if (!links.length) return;
+    var scrollY = window.scrollY + 80;
+    var activeId = null;
+    links.forEach(function(a) {
+      var el = document.getElementById(a.getAttribute("data-target"));
+      if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) activeId = a.getAttribute("data-target");
+    });
+    if (!activeId && links.length) activeId = links[0].getAttribute("data-target");
+    links.forEach(function(a) { a.classList.toggle("active", a.getAttribute("data-target") === activeId) });
+  }
+
+  // smooth scroll on outline click
+  outlineEl.addEventListener("click", function(e) {
+    if (e.target.tagName !== "A") return;
+    e.preventDefault();
+    var id = e.target.getAttribute("data-target");
+    var el = document.getElementById(id);
+    if (el) el.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+
+  window.addEventListener("scroll", updateActiveOutline, {passive:true});
+
+  /* ================================================================
+   *  Tab dispatch & rendering
+   * ================================================================ */
+  var renderers = {
+    overview: renderOverview,
+    procedure: renderProcedure,
+    materials: renderMaterials,
+    reference: renderReference
+  };
+
+  var protocols = [
+    { label: "Western Blot", file: "../examples/western-blot.json" },
+    { label: "RT-qPCR (MIQE)", file: "../examples/qpcr.json" },
+    { label: "Cell Culture", file: "../examples/cell-culture.json" },
+    { label: "Gel Filtration", file: "../examples/gel-filtration.json" },
+    { label: "Protein Concentration", file: "../examples/protein-concentration.json" }
+  ];
+  var stressFiles = ["sds-page","reverse-transcription","rna-extraction-trizol","gibson-assembly","phage-display-biopanning","checkerboard-synergy","rnaseq-pipeline"];
+  stressFiles.forEach(function(name){ protocols.push({ label: name.replace(/-/g," "), file: "../stress-test/" + name + ".json" }) });
+
+  var select = document.getElementById("proto-select");
+  var headerArea = document.getElementById("header-area");
+  var content = document.getElementById("content");
+  var currentTab = "overview";
+  var currentProto = null;
+
+  protocols.forEach(function(p, i) {
+    var o = document.createElement("option");
+    o.value = i; o.textContent = p.label; select.appendChild(o);
+  });
+
+  function render() {
+    if (!currentProto) { content.innerHTML = '<p style="color:#8a9bae;text-align:center;margin-top:60px">Loading...</p>'; return; }
+    headerArea.innerHTML = renderHeader(currentProto);
+    content.innerHTML = renderers[currentTab](currentProto);
+    window.scrollTo(0, 0);
+    // wire tabs
+    document.getElementById("tabs").addEventListener("click", function(e) {
+      if (e.target.tagName !== "BUTTON") return;
+      currentTab = e.target.getAttribute("data-tab");
+      render();
+    });
+    // build outline after content is in DOM
+    setTimeout(buildOutline, 0);
+  }
+
+  function loadProtocol(idx) {
+    fetch(protocols[idx].file)
+      .then(function(r) { return r.json(); })
+      .then(function(data) { currentProto = data; render(); })
+      .catch(function(err) { content.innerHTML = '<p style="color:red">Failed to load: ' + esc(err.message) + '</p>'; });
+  }
+
+  select.addEventListener("change", function() { loadProtocol(+this.value); });
+  loadProtocol(0);
+})();
+</script>
+</body>
+</html>

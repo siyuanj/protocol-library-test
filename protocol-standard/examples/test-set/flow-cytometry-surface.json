@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Flow cytometry - cell-surface marker staining",
+    "protocolId": "lr-testset-flow-surface",
+    "version": "0.1",
+    "family": "Flow cytometry",
+    "category": "Cell Biology / Immunology",
+    "purpose": "Label cell-surface markers on a single-cell suspension with a fluorophore-conjugated antibody (after Fc blocking), wash, optionally fix, and acquire on a flow cytometer to quantify marker-positive populations.",
+    "scope": "Extracellular (surface-only) staining of a single-cell suspension with a directly conjugated antibody; no permeabilization. Fc blocking, cold-and-dark staining, and optional paraformaldehyde fixation. Not covering intracellular/intranuclear staining, which requires fixation + permeabilization.",
+    "estimatedTime": "~1-1.5 h (plus acquisition)",
+    "beforeYouBegin": [
+      "Prepare a single-cell suspension and count cells; keep everything cold (on ice) and protected from light once fluorophores are added.",
+      "Choose directly conjugated antibodies whose fluorophores match the cytometer's lasers/detectors; titrate each antibody to its optimal amount per test.",
+      "Include a viability dye (e.g. 7-AAD or a fixable viability dye) and full compensation/gating controls (unstained, single-stain, FMO); these are recommended but reagent-specific."
+    ],
+    "tags": ["flow cytometry", "FACS", "surface staining", "immunophenotyping", "Fc block", "cell-surface marker"]
+  },
+  "materials": [
+    { "id": "m1", "name": "FACS / staining buffer", "role": "buffer", "specification": "PBS with 0.5-1% BSA (or 5-10% FBS) and 0.1% NaN3; kept ice-cold.", "hazard": "Contains sodium azide (NaN3) - toxic; do not mix with acids.", "storage": "4 C", "rawText": "ice cold FACS Buffer (PBS, 0.5-1% BSA or 5-10% FBS, 0.1% NaN3)", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "m2", "name": "Fc blocking reagent", "role": "antibody", "workingConcentration": "1:50 in FACS buffer", "specification": "Fc-receptor blocking reagent (e.g. anti-CD16/CD32 for mouse, or human FcR blocker). Exact reagent is species-specific.", "rawText": "100 ul of Fc block ... diluted in FACS buffer at 1:50 ratio", "needsReview": true, "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "m3", "name": "Fluorophore-conjugated anti-surface-marker antibody", "role": "antibody", "amount": 0.1, "amountMax": 10, "unit": "ug/mL", "workingConcentration": "0.1-10 ug/mL (titrate per antibody)", "specification": "Directly conjugated primary antibody against the surface marker of interest. Target, clone, fluorophore, and RRID are assay-specific.", "storage": "4 C, protect from light", "rawText": "Concentration: 0.1-10 ug/ml", "needsReview": true, "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "m4", "name": "Paraformaldehyde (1-4% in PBS)", "role": "reagent", "workingConcentration": "1-4% (w/v)", "specification": "Optional fixative for stained cells prior to acquisition.", "hazard": "Toxic; suspected carcinogen; use in a fume hood.", "rawText": "100 ul 1-4% paraformaldehyde ... 10-15 min at room temperature", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "m5", "name": "PBS", "role": "buffer", "specification": "Ice-cold PBS for final resuspension of fixed cells.", "rawText": "200 ul to 1 ml of ice cold PBS", "sourceReferences": [{ "sourceId": "src1" }] }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Flow cytometer", "settings": "Lasers/detectors configured for the chosen fluorophores; set voltages with unstained and single-stain controls", "needsReview": true },
+    { "id": "e2", "name": "Refrigerated centrifuge", "settings": "~1500 rpm, 5 min, 4 C (convert rpm to x g for your rotor)", "needsReview": true }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "Single-cell suspension", "role": "input", "organism": "Mammalian cells (specific source not fixed by this protocol)", "description": "1-5 x 10^6 cells/mL in ice-cold FACS buffer; 100 uL (~1-5 x 10^5 cells) stained per tube.", "needsReview": true },
+    { "id": "sp2", "name": "Surface-stained cells", "role": "intermediate", "description": "Cells after Fc block and antibody labeling, washed to remove unbound antibody." },
+    { "id": "sp3", "name": "Fixed stained cells / acquisition sample", "role": "output", "description": "Optionally fixed, resuspended cells ready for flow-cytometer acquisition and the resulting FCS data." }
+  ],
+  "containers": [
+    { "id": "c1", "name": "FACS tube (12x75 mm round-bottom)", "type": "tube", "wells": null }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Preparation", "action": "Aliquot the single-cell suspension into FACS tubes in ice-cold FACS buffer.", "materialIds": ["m1"], "containerIds": ["c1"], "inputIds": ["sp1"], "parameters": [{ "type": "count", "value": 1, "valueMax": 5, "unit": "x10^6 cells/mL", "rawText": "1-5 x 10^6 cells/ml" }, { "type": "volume", "value": 100, "unit": "uL", "rawText": "100 ul of cell suspension" }], "expectedResult": "Cells aliquoted and kept cold.", "criticalNotes": "Keep cells on ice throughout.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s2", "number": 2, "phase": "Blocking", "action": "Add Fc blocking reagent and incubate on ice.", "materialIds": ["m2"], "containerIds": ["c1"], "inputIds": ["sp1"], "parameters": [{ "type": "volume", "value": 100, "unit": "uL", "rawText": "100 ul of Fc block" }, { "type": "ratio", "value": null, "unit": "dilution", "rawText": "diluted in FACS buffer at 1:50 ratio" }, { "type": "time", "value": 20, "unit": "min", "rawText": "20 min" }, { "type": "temperature", "value": null, "unit": "degC", "rawText": "on ice" }], "optional": true, "expectedResult": "Fc receptors blocked to reduce non-specific antibody binding.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s3", "number": 3, "phase": "Blocking", "action": "Centrifuge and discard supernatant.", "equipmentIds": ["e2"], "containerIds": ["c1"], "parameters": [{ "type": "speed", "value": 1500, "unit": "rpm", "rawText": "1500 rpm" }, { "type": "time", "value": 5, "unit": "min", "rawText": "5 min" }, { "type": "temperature", "value": 4, "unit": "degC", "rawText": "at 4 C" }], "expectedResult": "Cells pelleted; block removed.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s4", "number": 4, "phase": "Staining", "action": "Resuspend cells in fluorophore-conjugated antibody diluted in FACS buffer and incubate in the dark.", "materialIds": ["m3", "m1"], "containerIds": ["c1"], "inputIds": ["m3", "sp1"], "outputIds": ["sp2"], "parameters": [{ "type": "concentration", "value": 0.1, "valueMax": 10, "unit": "ug/mL", "rawText": "0.1-10 ug/ml" }, { "type": "time", "value": 30, "unit": "min", "rawText": "at least 30 min" }, { "type": "temperature", "value": null, "unit": "degC", "rawText": "at room temperature or 4 C in the dark" }], "expectedResult": "Surface marker labeled with fluorophore.", "criticalNotes": "Protect from light; on-ice staining may need longer incubation. Titrate antibody amount per test.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s5", "number": 5, "phase": "Wash", "action": "Wash cells in FACS buffer (centrifuge and resuspend), repeating to remove unbound antibody.", "materialIds": ["m1"], "equipmentIds": ["e2"], "containerIds": ["c1"], "parameters": [{ "type": "count", "value": 3, "unit": "x", "rawText": "washed in staining or assay buffer at least three times" }, { "type": "speed", "value": 1500, "unit": "rpm", "rawText": "1500 rpm" }, { "type": "time", "value": 5, "unit": "min", "rawText": "5 minutes" }], "expectedResult": "Unbound antibody removed.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s6", "number": 6, "phase": "Fixation", "action": "Optionally fix stained cells in paraformaldehyde.", "materialIds": ["m4"], "containerIds": ["c1"], "inputIds": ["sp2"], "optional": true, "parameters": [{ "type": "volume", "value": 100, "unit": "uL", "rawText": "100 ul" }, { "type": "concentration", "value": 1, "valueMax": 4, "unit": "%", "rawText": "1-4% paraformaldehyde" }, { "type": "time", "value": 10, "valueMax": 15, "unit": "min", "rawText": "10-15 min at room temperature" }, { "type": "temperature", "value": null, "unit": "degC", "rawText": "at room temperature" }], "expectedResult": "Cells fixed for delayed acquisition.", "criticalNotes": "Skip if acquiring immediately; some fluorophores/epitopes are fixation-sensitive.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s7", "number": 7, "phase": "Fixation", "action": "Resuspend cells in ice-cold PBS (or FACS buffer) for acquisition.", "materialIds": ["m5"], "containerIds": ["c1"], "outputIds": ["sp3"], "parameters": [{ "type": "volume", "value": 200, "valueMax": 1000, "unit": "uL", "rawText": "200 ul to 1 ml of ice cold PBS" }], "expectedResult": "Cells ready for the cytometer.", "sourceReferences": [{ "sourceId": "src1" }] },
+    { "id": "s8", "number": 8, "phase": "Acquisition", "action": "Acquire samples on the flow cytometer as soon as possible.", "equipmentIds": ["e1"], "containerIds": ["c1"], "inputIds": ["sp3"], "parameters": [], "expectedResult": "Marker-positive populations resolved from unstained/FMO controls.", "criticalNotes": "Analyze promptly; set voltages and compensation with controls.", "sourceReferences": [{ "sourceId": "src1" }] }
+  ],
+  "controls": [
+    { "name": "Unstained control", "description": "Cells with no antibody to set baseline autofluorescence and PMT voltages." },
+    { "name": "Single-stain compensation controls", "description": "One fluorophore per tube (cells or beads) to calculate spectral compensation." },
+    { "name": "FMO (fluorescence-minus-one) controls", "description": "All fluorophores except one, to set accurate positive/negative gates." },
+    { "name": "Viability dye", "description": "e.g. 7-AAD or a fixable viability dye to exclude dead cells; recommended but reagent-specific.", "needsReview": true },
+    { "name": "Isotype control", "description": "Matched isotype conjugate to assess non-specific binding.", "needsReview": true }
+  ],
+  "expectedOutputs": [
+    "FCS data files with marker-positive vs marker-negative populations.",
+    "Percent positive and median fluorescence intensity (MFI) for the surface marker after gating on live single cells."
+  ],
+  "troubleshooting": [
+    { "problem": "High background / poor separation", "cause": "No Fc block; antibody over-titrated; dead-cell binding", "solution": "Add Fc block; titrate antibody; add a viability dye and gate out dead cells" },
+    { "problem": "Weak or no positive signal", "cause": "Antibody too dilute; fluorophore mismatched to detector; marker downregulated", "solution": "Increase antibody; confirm laser/filter match; verify marker expression" },
+    { "problem": "Loss of signal after fixation", "cause": "Fixation-sensitive fluorophore or epitope", "solution": "Acquire before fixing, or use a fixation-compatible fluorophore" }
+  ],
+  "safety": [
+    "FACS buffer contains sodium azide (NaN3) - toxic; never mix with acids; dispose per institutional rules.",
+    "Paraformaldehyde is toxic and a suspected carcinogen - handle in a fume hood.",
+    "Primary cells/samples may be biohazardous - handle at the appropriate biosafety level."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "Values are grounded in one institutional surface-staining protocol (src1); the specific antibody target/clone/fluorophore and its optimal titer, the Fc-block reagent, cell source, viability dye, and cytometer configuration are experiment-specific and marked needsReview. Centrifuge speed is given in rpm as in the source and must be converted to x g for the local rotor. Surface-only workflow; intracellular targets require added fixation + permeabilization (out of scope).",
+  "sources": [
+    { "id": "src1", "kind": "url", "title": "FACS Cell Surface Staining Protocol (UT Health San Antonio Flow Cytometry Core)", "url": "https://wp.uthscsa.edu/flow-cytometry/resource/facs-cell-surface-staining-protocol/", "license": "Institutional core-facility protocol; reuse terms not specified", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

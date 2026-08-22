@@ -1,0 +1,362 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://labrecord.example/schemas/canonical-protocol-0.3.json",
+  "title": "LabRecord Canonical Protocol",
+  "description": "Canonical, machine-readable representation of an executable laboratory protocol across ANY discipline (biology, chemistry, physics, computational, in-vivo). Content, not catalog metadata. Bar: a competent person can execute the experiment by reading this JSON; unstated values are marked needsReview, never fabricated. Versions are additive & backward-compatible: v0.1 and v0.2 documents remain valid. v0.3 adds (all optional) cross-discipline constructs surfaced by a stress test: software/tools + command (computational), studyDesign + compliance (in-vivo/ethics), per-step materialUses (bind amount to material), repeat (iteration/cycles), acceptanceCriteria (structured QC), container.layout (plate geometry), richer parameters (valueText/comparator/perUnit/formula/sourceReferences + physics/chem quantity kinds).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "metadata", "materials", "equipment", "steps", "sources"],
+  "properties": {
+    "schemaVersion": { "type": "string", "enum": ["0.1", "0.2", "0.3"], "description": "Schema version. Additive: older documents remain valid." },
+    "metadata": { "$ref": "#/$defs/metadata" },
+    "materials": { "type": "array", "description": "Reagents, consumables, prepared solutions, chemicals.", "items": { "$ref": "#/$defs/material" } },
+    "equipment": { "type": "array", "description": "Instruments and apparatus, with settings.", "items": { "$ref": "#/$defs/equipment" } },
+    "software": { "type": "array", "description": "Computational tools / software / pipelines used (v0.3). Referenced by step.softwareIds.", "items": { "$ref": "#/$defs/software" } },
+    "samples": { "type": "array", "description": "Entities the protocol acts on and produces (physical samples OR datasets). Referenced by step.inputIds/outputIds.", "items": { "$ref": "#/$defs/sample" } },
+    "containers": { "type": "array", "description": "Labware / vessels; may carry a well layout (v0.3).", "items": { "$ref": "#/$defs/container" } },
+    "tables": { "type": "array", "description": "First-class structured tables (dilution series, programs, recipes).", "items": { "$ref": "#/$defs/table" } },
+    "steps": { "type": "array", "minItems": 1, "description": "Ordered procedure steps; may be grouped into phases.", "items": { "$ref": "#/$defs/step" } },
+    "controls": { "type": "array", "description": "Experimental controls.", "items": { "$ref": "#/$defs/control" } },
+    "expectedOutputs": { "type": "array", "description": "What a successful run should produce.", "items": { "type": "string", "minLength": 1 } },
+    "troubleshooting": { "type": "array", "items": { "$ref": "#/$defs/troubleshooting" } },
+    "safety": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "biosafetyLevel": { "type": ["string", "null"], "enum": [null, "not specified", "BSL-1", "BSL-2", "BSL-3", "BSL-4", "needsReview"], "description": "Biosafety level; not a substitute for institutional review." },
+    "studyDesign": { "$ref": "#/$defs/studyDesign", "description": "Experimental/clinical design layer for in-vivo or comparative studies (v0.3)." },
+    "compliance": { "$ref": "#/$defs/compliance", "description": "Ethics / regulatory / waste (IACUC, IRB, consent) (v0.3)." },
+    "limitations": { "type": "string" },
+    "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } },
+    "provenance": { "$ref": "#/$defs/provenance" }
+  },
+  "$defs": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "purpose"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "protocolId": { "type": "string" },
+        "version": { "type": "string" },
+        "family": { "type": "string" },
+        "category": { "type": "string" },
+        "discipline": { "type": "string", "description": "Broad field, e.g. Biology, Chemistry, Physics, Computational (v0.3)." },
+        "purpose": { "type": "string", "minLength": 1 },
+        "scope": { "type": "string" },
+        "estimatedTime": { "type": "string" },
+        "beforeYouBegin": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "authors": { "type": "array", "items": { "$ref": "#/$defs/author" } },
+        "license": { "type": "string" },
+        "doi": { "type": ["string", "null"], "pattern": "^10\\.\\d{4,9}/\\S+$" },
+        "createdAt": { "type": "string", "format": "date" },
+        "modifiedAt": { "type": "string", "format": "date" },
+        "tags": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+      }
+    },
+    "author": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "orcid": { "type": "string", "pattern": "^https://orcid\\.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]$" },
+        "affiliation": { "type": "string" }
+      }
+    },
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^m[0-9]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "enum": ["reagent", "solvent", "buffer", "standard", "sample", "kit", "consumable", "enzyme", "antibody", "medium", "catalyst", "gas", "other"] },
+        "amount": { "type": ["number", "null"], "description": "Absolute prep amount; per-step usage amounts belong on step.materialUses (v0.3)." },
+        "amountMax": { "type": ["number", "null"] },
+        "unit": { "type": "string" },
+        "workingConcentration": { "type": "string" },
+        "specification": { "type": "string" },
+        "vendor": { "type": "string" },
+        "catalogNumber": { "type": "string" },
+        "casNumber": { "type": "string" },
+        "smiles": { "type": "string", "description": "SMILES for a chemical entity (v0.3)." },
+        "molecularWeight": { "type": ["number", "null"], "description": "g/mol, for stoichiometry (v0.3)." },
+        "rrid": { "type": "string" },
+        "lot": { "type": "string" },
+        "storage": { "type": "string" },
+        "hazard": { "type": "string", "description": "Hazard / GHS note." },
+        "rawText": { "type": "string" },
+        "needsReview": { "type": "boolean", "default": false },
+        "sourceReferences": { "type": "array", "items": { "$ref": "#/$defs/sourceReference" } }
+      }
+    },
+    "equipment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^e[0-9]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "model": { "type": "string" },
+        "settings": { "type": "string" },
+        "rawText": { "type": "string", "description": "Verbatim source phrase (parity with material/parameter) (v0.3)." },
+        "needsReview": { "type": "boolean", "default": false },
+        "sourceReferences": { "type": "array", "items": { "$ref": "#/$defs/sourceReference" } }
+      }
+    },
+    "software": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^sw[0-9]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string" },
+        "vendor": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "repository": { "type": "string" },
+        "command": { "type": "string", "description": "Invocation / entrypoint." },
+        "needsReview": { "type": "boolean", "default": false }
+      }
+    },
+    "sample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "role"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^sp[0-9]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "enum": ["input", "intermediate", "output", "control", "other"] },
+        "kind": { "type": "string", "enum": ["physical", "dataset", "digital", "organism", "other"], "description": "Physical sample vs digital dataset vs live organism (v0.3)." },
+        "dataType": { "type": "string", "description": "For datasets, e.g. 'FASTQ', 'CSV', 'image stack' (v0.3)." },
+        "organism": { "type": "string" },
+        "derivedFromMaterialId": { "type": "string", "pattern": "^m[0-9]+$" },
+        "description": { "type": "string" },
+        "needsReview": { "type": "boolean", "default": false }
+      }
+    },
+    "container": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^c[0-9]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "type": { "type": "string" },
+        "wells": { "type": ["integer", "string", "null"] },
+        "layout": { "type": "array", "description": "Per-well assignment / plate map, incl. factorial axes (v0.3).", "items": { "$ref": "#/$defs/layoutCell" } },
+        "needsReview": { "type": "boolean", "default": false }
+      }
+    },
+    "layoutCell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["well"],
+      "properties": {
+        "well": { "type": "string", "description": "e.g. 'A1', 'B2'." },
+        "sampleId": { "type": "string", "pattern": "^sp[0-9]+$" },
+        "materialId": { "type": "string", "pattern": "^m[0-9]+$" },
+        "factor": { "type": "string", "description": "Factorial axis name, e.g. 'drugA'." },
+        "level": { "type": "string", "description": "Level/value on that axis, e.g. '64 ug/mL'." },
+        "note": { "type": "string" }
+      }
+    },
+    "table": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "columns", "rows"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^t[0-9]+$" },
+        "title": { "type": "string" },
+        "kind": { "type": "string", "enum": ["recipe", "layout", "program", "series", "results", "other"], "description": "What the table represents (v0.3)." },
+        "columns": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "rows": { "type": "array", "items": { "type": "array", "items": { "type": ["string", "number", "null"] } } },
+        "note": { "type": "string" },
+        "needsReview": { "type": "boolean", "default": false }
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "action"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^s[0-9]+$" },
+        "number": { "type": ["integer", "null"], "minimum": 1 },
+        "phase": { "type": "string" },
+        "action": { "type": "string", "minLength": 1 },
+        "optional": { "type": "boolean", "default": false },
+        "pausePoint": { "type": "boolean", "default": false },
+        "repeat": { "$ref": "#/$defs/repeat", "description": "Iteration/cycles for this step or block (v0.3)." },
+        "materialIds": { "type": "array", "items": { "type": "string", "pattern": "^m[0-9]+$" } },
+        "materialUses": { "type": "array", "description": "Per-step material usage binding an amount (and chem role/equivalents) to a material (v0.3).", "items": { "$ref": "#/$defs/materialUse" } },
+        "equipmentIds": { "type": "array", "items": { "type": "string", "pattern": "^e[0-9]+$" } },
+        "softwareIds": { "type": "array", "items": { "type": "string", "pattern": "^sw[0-9]+$" }, "description": "Software/tools used in this step (v0.3)." },
+        "command": { "type": "string", "description": "Command line / code executed (computational steps) (v0.3)." },
+        "inputIds": { "type": "array", "items": { "type": "string", "pattern": "^(sp|m)[0-9]+$" } },
+        "outputIds": { "type": "array", "items": { "type": "string", "pattern": "^sp[0-9]+$" } },
+        "containerIds": { "type": "array", "items": { "type": "string", "pattern": "^c[0-9]+$" } },
+        "tableIds": { "type": "array", "items": { "type": "string", "pattern": "^t[0-9]+$" } },
+        "parameters": { "type": "array", "items": { "$ref": "#/$defs/parameter" } },
+        "acceptanceCriteria": { "type": "array", "description": "Structured QC / go-no-go / result-classification for this step (v0.3).", "items": { "$ref": "#/$defs/acceptance" } },
+        "dependsOn": { "type": "array", "items": { "type": "string", "pattern": "^s[0-9]+$" } },
+        "branches": { "type": "array", "items": { "$ref": "#/$defs/branch" } },
+        "expectedResult": { "type": "string" },
+        "criticalNotes": { "type": "string" },
+        "safetyNotes": { "type": "string" },
+        "needsReview": { "type": "boolean", "default": false },
+        "sourceReferences": { "type": "array", "items": { "$ref": "#/$defs/sourceReference" } }
+      }
+    },
+    "materialUse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["materialId"],
+      "properties": {
+        "materialId": { "type": "string", "pattern": "^m[0-9]+$" },
+        "amount": { "type": ["number", "null"] },
+        "amountMax": { "type": ["number", "null"] },
+        "unit": { "type": "string" },
+        "equivalents": { "type": ["number", "null"], "description": "Molar equivalents (chemistry)." },
+        "limitingReagent": { "type": "boolean", "default": false },
+        "role": { "type": "string", "description": "Role in THIS step, e.g. 'limiting', 'catalyst', 'wash'." },
+        "rawText": { "type": "string" },
+        "needsReview": { "type": "boolean", "default": false }
+      }
+    },
+    "repeat": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "count": { "type": ["integer", "null"], "minimum": 1, "description": "Fixed number of iterations/cycles." },
+        "untilCondition": { "type": "string", "description": "Stop condition when count is not fixed, e.g. 'until OD600 plateaus', 'until TLC shows completion'." },
+        "over": { "type": "string", "description": "What varies each iteration, e.g. 'panning rounds', 'thermocycle', 'timepoints'." },
+        "notes": { "type": "string" }
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "parameter": { "type": "string", "description": "What is measured, e.g. 'A260/A280', 'FIC index', 'mapping rate'." },
+        "comparator": { "type": "string", "enum": ["exact", "approx", "min", "max", "range", "equals"] },
+        "value": { "type": ["number", "null"] },
+        "valueMax": { "type": ["number", "null"] },
+        "unit": { "type": "string" },
+        "classification": { "type": "string", "description": "Numeric->label rubric, e.g. 'FIC<=0.5 = synergy'." },
+        "description": { "type": "string" },
+        "onFailStepId": { "type": "string", "pattern": "^s[0-9]+$" },
+        "needsReview": { "type": "boolean", "default": false }
+      }
+    },
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "rawText"],
+      "properties": {
+        "type": { "type": "string", "enum": ["time", "temperature", "volume", "speed", "concentration", "mass", "amountOfSubstance", "ratio", "pH", "count", "pressure", "wavelength", "frequency", "voltage", "current", "resistance", "capacitance", "conductance", "power", "energy", "force", "flowRate", "titer", "dataSize", "config", "other"], "description": "Discipline-neutral quantity kind. Use 'other' + free-text unit for anything not listed; 'config' for computational flags/settings." },
+        "value": { "type": ["number", "null"] },
+        "valueMax": { "type": ["number", "null"] },
+        "valueText": { "type": "string", "description": "Non-numeric / qualitative / config value, e.g. 'oligo-dT', '--paired', 'inert atmosphere' (v0.3)." },
+        "comparator": { "type": "string", "enum": ["exact", "approx", "min", "max", "range"], "description": "How to read value: min = >= value, max = <= value, range = value..valueMax (v0.3)." },
+        "unit": { "type": "string" },
+        "perUnit": { "type": "string", "description": "Per-unit basis, e.g. 'min/kb', 'uL/ug DNA' (v0.3)." },
+        "formula": { "type": "string", "description": "How the value is computed, e.g. 'pmol=(ng*1000)/(bp*650)' (v0.3)." },
+        "rawText": { "type": "string", "minLength": 1 },
+        "needsReview": { "type": "boolean", "default": false },
+        "sourceReferences": { "type": "array", "items": { "$ref": "#/$defs/sourceReference" }, "description": "Per-value provenance (v0.3)." }
+      }
+    },
+    "branch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition"],
+      "properties": {
+        "condition": { "type": "string", "minLength": 1 },
+        "targetStepId": { "type": "string", "pattern": "^s[0-9]+$" },
+        "action": { "type": "string" }
+      }
+    },
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "needsReview": { "type": "boolean", "default": false }
+      }
+    },
+    "troubleshooting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["problem"],
+      "properties": {
+        "problem": { "type": "string", "minLength": 1 },
+        "cause": { "type": "string" },
+        "solution": { "type": "string" }
+      }
+    },
+    "studyDesign": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Comparative/in-vivo experimental design.",
+      "properties": {
+        "groups": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["name"], "properties": { "name": { "type": "string", "minLength": 1 }, "n": { "type": ["integer", "null"], "minimum": 1 }, "treatment": { "type": "string" }, "description": { "type": "string" } } } },
+        "randomization": { "type": "string" },
+        "blinding": { "type": "string" },
+        "timepoints": { "type": "array", "items": { "type": "string" } },
+        "statisticalPlan": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "compliance": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Ethics / regulatory / disposal.",
+      "properties": {
+        "iacuc": { "type": "string", "description": "Animal-use approval reference." },
+        "irb": { "type": "string", "description": "Human-subjects approval reference." },
+        "approvalId": { "type": "string" },
+        "consent": { "type": "string" },
+        "wasteDisposal": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^src[0-9]+$" },
+        "kind": { "type": "string", "enum": ["file", "article", "standard", "book", "url", "kit-insert", "other"] },
+        "title": { "type": "string" },
+        "file": { "type": "string" },
+        "doi": { "type": ["string", "null"], "pattern": "^10\\.\\d{4,9}/\\S+$" },
+        "url": { "type": "string", "format": "uri" },
+        "license": { "type": "string" },
+        "licenseVerified": { "type": "boolean", "default": false }
+      }
+    },
+    "sourceReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId"],
+      "properties": {
+        "sourceId": { "type": "string", "pattern": "^src[0-9]+$" },
+        "page": { "type": ["integer", "null"], "minimum": 1 },
+        "excerpt": { "type": "string" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "versionId": { "type": "string" },
+        "parentVersionId": { "type": ["string", "null"] },
+        "derivedFromVersionId": { "type": ["string", "null"] },
+        "contentHash": { "type": "string" },
+        "library": { "type": "string", "enum": ["public", "private", "lab"] },
+        "owner": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "submitted", "approved", "changes_requested", "published", "archived"] }
+      }
+    }
+  }
+}

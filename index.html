@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Metadata-first protocol curation workspace for biological assays and operations.">
+  <title>Protocol Atlas | Metadata Curation Workspace</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #687480;
+      --line: #dfe5e9;
+      --paper: #f7f9fa;
+      --surface: #ffffff;
+      --navy: #19354a;
+      --teal: #0f766e;
+      --teal-soft: #e5f4f1;
+      --blue: #2563eb;
+      --blue-soft: #edf3ff;
+      --amber: #ad6b00;
+      --amber-soft: #fff5df;
+      --rose: #b4233f;
+      --rose-soft: #fff0f3;
+      --shadow: 0 8px 22px rgba(23, 33, 43, 0.05);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--paper); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; min-width: 320px; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+
+    .app-shell { min-height: 100vh; }
+    .topbar {
+      align-items: center;
+      background: var(--navy);
+      color: #fff;
+      display: flex;
+      gap: 26px;
+      justify-content: space-between;
+      min-height: 72px;
+      padding: 0 34px;
+    }
+    .brand { align-items: center; display: flex; gap: 12px; min-width: 0; }
+    .brand-mark { align-items: center; background: #d6f5ef; border-radius: 8px; color: var(--navy); display: flex; flex: 0 0 36px; font-size: 14px; font-weight: 800; height: 36px; justify-content: center; letter-spacing: .05em; }
+    .brand-copy { min-width: 0; }
+    .brand-name { font-size: 16px; font-weight: 750; letter-spacing: .01em; }
+    .brand-subtitle { color: #b7c9d4; font-size: 12px; margin-top: 2px; }
+    .topbar-meta { align-items: center; color: #c7d6de; display: flex; font-size: 12px; gap: 16px; white-space: nowrap; }
+    .topbar-meta span { align-items: center; display: inline-flex; gap: 7px; }
+    .topbar-meta a { border: 1px solid rgba(255, 255, 255, .24); border-radius: 5px; color: #d6e4e8; font-size: 11px; font-weight: 800; padding: 5px 8px; text-decoration: none; }
+    .topbar-meta a:hover, .topbar-meta a:focus-visible { background: rgba(255, 255, 255, .12); color: #fff; outline: none; }
+    .live-dot { background: #57d4b7; border-radius: 50%; height: 7px; width: 7px; }
+    .title-mode { align-items: center; display: inline-flex; gap: 6px; margin-left: 4px; white-space: nowrap; }
+    .title-mode-label { color: #c7d6de; font-size: 11px; font-weight: 700; }
+    .title-mode-buttons { border: 1px solid rgba(255, 255, 255, .25); border-radius: 5px; display: inline-flex; overflow: hidden; }
+    .title-mode-button { background: transparent; border: 0; border-right: 1px solid rgba(255, 255, 255, .2); color: #c7d6de; font-size: 10px; font-weight: 800; min-height: 27px; padding: 5px 8px; }
+    .title-mode-button:last-child { border-right: 0; }
+    .title-mode-button:hover, .title-mode-button:focus-visible { background: rgba(255, 255, 255, .12); color: #fff; outline: none; }
+    .title-mode-button.active { background: #d6f5ef; color: var(--navy); }
+
+    .workspace { display: grid; grid-template-columns: 272px minmax(0, 1fr); max-width: 1640px; margin: 0 auto; }
+    .sidebar { background: #fbfcfc; border-right: 1px solid var(--line); min-height: calc(100vh - 72px); padding: 26px 20px 32px; }
+    .sidebar-heading { color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .1em; margin: 0 0 15px; text-transform: uppercase; }
+    .filter-block { border-bottom: 1px solid var(--line); padding: 0 0 22px; margin-bottom: 22px; }
+    .filter-block:last-child { border-bottom: 0; margin-bottom: 0; }
+    .field-label { color: #46535e; display: block; font-size: 12px; font-weight: 700; margin: 0 0 7px; }
+    .field-hint { color: var(--muted); font-size: 11px; line-height: 1.45; margin: 6px 0 0; }
+    .control, .search-input { background: #fff; border: 1px solid #cfd8dd; border-radius: 6px; color: var(--ink); min-height: 38px; outline: none; padding: 8px 10px; width: 100%; }
+    .control:focus, .search-input:focus { border-color: #6aa9bd; box-shadow: 0 0 0 3px rgba(15, 118, 110, .12); }
+    .range-row { align-items: center; display: flex; gap: 10px; }
+    input[type="range"] { accent-color: var(--teal); flex: 1; }
+    .range-value { color: var(--teal); font-size: 12px; font-weight: 800; min-width: 36px; text-align: right; }
+    .toggle-row { align-items: flex-start; display: flex; gap: 10px; }
+    .toggle-row input { accent-color: var(--teal); margin-top: 3px; }
+    .toggle-copy strong { display: block; font-size: 12px; }
+    .toggle-copy span { color: var(--muted); display: block; font-size: 11px; line-height: 1.4; margin-top: 3px; }
+    .reset-button { background: transparent; border: 0; color: var(--teal); font-size: 12px; font-weight: 750; padding: 0; }
+    .reset-button:hover { text-decoration: underline; }
+    .export-actions { display: flex; gap: 8px; margin-top: 18px; }
+    .export-button { background: #fff; border: 1px solid #cfd8dd; border-radius: 6px; color: var(--navy); font-size: 11px; font-weight: 800; min-height: 34px; padding: 7px 9px; }
+    .export-button:hover { border-color: #76aeb8; color: var(--teal); }
+
+    .main { min-width: 0; padding: 30px 34px 42px; }
+    .page-heading { align-items: flex-start; display: flex; gap: 18px; justify-content: space-between; margin-bottom: 22px; }
+    .eyebrow { color: var(--teal); font-size: 11px; font-weight: 800; letter-spacing: .11em; margin: 0 0 8px; text-transform: uppercase; }
+    h1 { font-size: clamp(24px, 3vw, 36px); letter-spacing: -.02em; line-height: 1.12; margin: 0; }
+    .page-intro { color: var(--muted); font-size: 13px; line-height: 1.55; margin: 10px 0 0; max-width: 690px; }
+    .prototype-badge { background: var(--amber-soft); border: 1px solid #f1d79e; border-radius: 6px; color: var(--amber); font-size: 11px; font-weight: 800; line-height: 1.3; padding: 8px 10px; text-align: right; white-space: nowrap; }
+    .prototype-badge span { color: #856124; display: block; font-weight: 600; margin-top: 2px; }
+    .page-heading > div:last-child { align-items:flex-end; display:flex; flex-direction:column; gap:8px; }
+
+    .metrics { display: grid; gap: 12px; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 24px; }
+    .metric { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); min-height: 102px; padding: 16px 17px; }
+    .metric-label { color: var(--muted); font-size: 11px; font-weight: 750; letter-spacing: .03em; }
+    .metric-value { font-size: 28px; font-weight: 780; letter-spacing: -.03em; line-height: 1; margin-top: 12px; }
+    .metric-note { color: var(--muted); font-size: 11px; margin-top: 8px; }
+    .metric.teal { border-top: 3px solid var(--teal); }
+    .metric.blue { border-top: 3px solid var(--blue); }
+    .metric.amber { border-top: 3px solid #d89c33; }
+    .metric.navy { border-top: 3px solid var(--navy); }
+    .data-health { align-items: center; background: #f9fbfb; border: 1px solid var(--line); border-radius: 8px; display: flex; gap: 0; justify-content: space-between; margin-bottom: 22px; overflow: hidden; }
+    .health-item { flex: 1; min-width: 0; padding: 11px 15px; }
+    .health-item + .health-item { border-left: 1px solid var(--line); }
+    .health-label { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+    .health-value { color: var(--ink); font-size: 16px; font-weight: 800; margin-top: 5px; }
+
+    .toolbar { align-items: center; display: flex; gap: 12px; justify-content: space-between; margin-bottom: 14px; }
+    .search-wrap { flex: 1; max-width: 520px; position: relative; }
+    .search-wrap::before { color: #7b8a94; content: ""; border: 2px solid currentColor; border-radius: 50%; height: 11px; left: 12px; position: absolute; top: 10px; width: 11px; }
+    .search-wrap::after { background: currentColor; content: ""; height: 2px; left: 23px; position: absolute; top: 22px; transform: rotate(45deg); width: 6px; }
+    .search-input { padding-left: 34px; }
+    .sort-wrap { align-items: center; display: flex; gap: 8px; }
+    .sort-wrap label { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .sort-wrap .control { min-height: 36px; width: 180px; }
+    .result-line { color: var(--muted); font-size: 12px; margin: 0 0 15px; }
+    .result-line strong { color: var(--ink); }
+    .live-note { background:#f4faf9; border-left:3px solid #7dbbb2; color:#53636c; font-size:11px; line-height:1.45; margin:-4px 0 15px; padding:8px 10px; }
+    .live-note.warning { background:var(--amber-soft); border-left-color:#d89c33; color:#805c1e; }
+
+    .cluster-list { display: grid; gap: 13px; }
+    .cluster-card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); overflow: hidden; }
+    .cluster-main { padding: 18px 19px 17px; }
+    .cluster-heading { align-items: flex-start; display: flex; gap: 18px; justify-content: space-between; }
+    .cluster-title { margin: 0; font-size: 18px; letter-spacing: -.01em; line-height: 1.2; }
+    .title-zh { color: var(--muted); display: block; font-size: .72em; font-weight: 650; letter-spacing: 0; line-height: 1.35; margin-top: 5px; }
+    .cluster-operation { color: var(--muted); font-size: 12px; margin: 5px 0 0; }
+    .confidence { min-width: 160px; text-align: right; }
+    .confidence-label { align-items: center; color: var(--teal); display: flex; font-size: 12px; font-weight: 800; gap: 6px; justify-content: flex-end; }
+    .confidence-label::before { background: var(--teal); border-radius: 50%; content: ""; height: 7px; width: 7px; }
+    .confidence-track { background: #e7eeee; border-radius: 99px; height: 6px; margin-top: 8px; overflow: hidden; }
+    .confidence-fill { background: var(--teal); border-radius: inherit; height: 100%; }
+    .meta-grid { display: grid; gap: 12px 22px; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 18px; }
+    .meta-item dt { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .08em; margin-bottom: 5px; text-transform: uppercase; }
+    .meta-item dd { font-size: 12px; line-height: 1.35; margin: 0; }
+    .meta-item dd a { color: var(--blue); text-decoration: none; }
+    .meta-item dd a:hover { text-decoration: underline; }
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 17px; }
+    .tag { background: #f0f3f5; border-radius: 4px; color: #52616b; font-size: 10px; font-weight: 700; padding: 4px 6px; }
+    .status { border-radius: 4px; display: inline-block; font-size: 10px; font-weight: 800; padding: 4px 6px; text-transform: uppercase; }
+    .status.featured { background: var(--teal-soft); color: var(--teal); }
+    .status.alternative { background: #f0f3f5; color: #64727a; }
+    .status.coverage-complete { background: var(--teal-soft); color: var(--teal); }
+    .status.coverage-partial { background: var(--amber-soft); color: var(--amber); }
+    .status.coverage-blocked, .status.coverage-no-qualified-record { background: var(--rose-soft); color: var(--rose); }
+    .license-signal { align-items: center; display: inline-flex; gap: 6px; }
+    .license-signal::before { border-radius: 50%; content: ""; height: 7px; width: 7px; }
+    .license-signal.reusable::before { background: var(--teal); }
+    .license-signal.verify::before { background: #d89c33; }
+    .license-signal.restricted::before { background: var(--rose); }
+    .cluster-footer { align-items: center; background: #fafbfb; border-top: 1px solid var(--line); display: flex; gap: 15px; justify-content: space-between; padding: 11px 19px; }
+    .cluster-note { color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .cluster-actions { align-items: center; display: flex; gap: 13px; }
+    .cluster-actions button { background: transparent; border: 0; color: var(--teal); font-size: 11px; font-weight: 800; padding: 0; white-space: nowrap; }
+    .cluster-actions button:hover { text-decoration: underline; }
+    .alternatives { background: #fbfcfc; border-top: 1px solid var(--line); display: none; padding: 13px 19px 15px; }
+    .alternatives.open { display: block; }
+    .alternatives-heading { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .1em; margin: 0 0 8px; text-transform: uppercase; }
+    .alternative-row { align-items: center; border-top: 1px solid #edf0f2; display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr) 124px 86px 88px; padding: 10px 0; }
+    .alternative-row:first-of-type { border-top: 0; }
+    .alternative-title { font-size: 12px; font-weight: 700; }
+    .alternative-title .title-zh { font-size: .92em; font-weight: 600; margin-top: 2px; }
+    .alternative-source, .alternative-date { color: var(--muted); font-size: 11px; }
+    .alternative-row a { color: var(--blue); font-size: 11px; text-decoration: none; }
+    .alternative-row a:hover { text-decoration: underline; }
+    .empty-state { background: var(--surface); border: 1px dashed #c6d1d6; border-radius: 8px; color: var(--muted); padding: 42px 24px; text-align: center; }
+    .empty-state strong { color: var(--ink); display: block; font-size: 16px; margin-bottom: 8px; }
+    .method-note { border-left: 3px solid #8cbcc6; color: #53636c; font-size: 11px; line-height: 1.5; margin-top: 23px; padding-left: 11px; }
+    .footer-note { color: #7d8991; font-size: 11px; line-height: 1.5; margin-top: 25px; }
+
+    @media (max-width: 1100px) {
+      .workspace { grid-template-columns: 230px minmax(0, 1fr); }
+      .main { padding-left: 24px; padding-right: 24px; }
+      .meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 790px) {
+      .topbar { min-height: 64px; padding: 0 18px; }
+      .topbar-meta { display: flex; }
+      .topbar-meta > span { display: none; }
+      .workspace { display: block; }
+      .sidebar { border-bottom: 1px solid var(--line); border-right: 0; min-height: 0; padding: 18px; }
+      .filter-block { margin-bottom: 16px; padding-bottom: 16px; }
+      .sidebar .filter-block:nth-of-type(2), .sidebar .filter-block:nth-of-type(3) { display: inline-block; margin-right: 14px; vertical-align: top; width: calc(50% - 10px); }
+      .main { padding: 23px 18px 34px; }
+      .page-heading { display: block; }
+      .page-heading > div:last-child { align-items:flex-start; margin-top:15px; }
+      .prototype-badge { display: inline-block; margin-top: 15px; text-align: left; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .data-health { align-items: stretch; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .health-item + .health-item { border-left: 0; border-top: 1px solid var(--line); }
+      .health-item:nth-child(even) { border-left: 1px solid var(--line); }
+      .health-item:nth-child(2) { border-top: 0; }
+      .toolbar { align-items: stretch; display: block; }
+      .search-wrap { max-width: none; }
+      .sort-wrap { margin-top: 10px; }
+      .sort-wrap .control { flex: 1; width: auto; }
+      .cluster-heading { display: block; }
+      .confidence { margin-top: 15px; text-align: left; }
+      .confidence-label { justify-content: flex-start; }
+      .alternative-row { grid-template-columns: minmax(0, 1fr) 82px; }
+      .alternative-date, .alternative-row a { display: none; }
+      .cluster-footer { align-items: flex-start; display: block; }
+      .cluster-actions { margin-top: 10px; }
+    }
+    @media (max-width: 450px) {
+      .brand-subtitle { display: none; }
+      .brand-name { font-size: 15px; }
+      .title-mode-label { display: none; }
+      .title-mode-button { min-height: 25px; padding: 4px 6px; }
+      .metrics { gap: 8px; }
+      .metric { min-height: 92px; padding: 13px; }
+      .metric-value { font-size: 24px; }
+      .meta-grid { gap: 13px; grid-template-columns: 1fr; }
+      .data-health { display: block; }
+      .health-item, .health-item:nth-child(even) { border-left: 0; border-top: 1px solid var(--line); }
+      .health-item:first-child { border-top: 0; }
+      .sidebar .filter-block:nth-of-type(2), .sidebar .filter-block:nth-of-type(3) { display: block; margin-right: 0; width: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">PA</div>
+        <div class="brand-copy">
+          <div class="brand-name">Protocol Atlas</div>
+          <div class="brand-subtitle">Metadata curation workspace for biological methods</div>
+        </div>
+      </div>
+      <div class="topbar-meta" aria-label="Dataset status">
+        <span><span class="live-dot" aria-hidden="true"></span><span id="datasetStatus">Local data loading</span></span>
+        <span id="lastIndexed">Not indexed yet</span>
+        <a href="archive-dashboard.html">Archive overview</a>
+        <div class="title-mode" role="group" aria-label="Protocol title language">
+          <span class="title-mode-label">Titles</span>
+          <div class="title-mode-buttons">
+            <button class="title-mode-button active" type="button" data-title-mode="en" aria-pressed="true">EN</button>
+            <button class="title-mode-button" type="button" data-title-mode="bilingual" aria-pressed="false">EN + 中文</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Protocol filters">
+        <div class="filter-block">
+          <p class="sidebar-heading">Refine view</p>
+          <label class="field-label" for="assayFilter">Assay / operation</label>
+          <select class="control" id="assayFilter">
+            <option value="all">All assays and operations</option>
+          </select>
+        </div>
+        <div class="filter-block">
+          <label class="field-label" for="sourceFilter">Source</label>
+          <select class="control" id="sourceFilter">
+            <option value="all">All sources</option>
+          </select>
+        </div>
+        <div class="filter-block">
+          <label class="field-label" for="licenseFilter">Reuse signal</label>
+          <select class="control" id="licenseFilter">
+            <option value="all">All license signals</option>
+            <option value="reusable">Potentially reusable</option>
+            <option value="verify">Verify at record level</option>
+            <option value="restricted">Restricted / discovery only</option>
+          </select>
+        </div>
+        <div class="filter-block">
+          <label class="field-label" for="evidenceFilter">Evidence status</label>
+          <select class="control" id="evidenceFilter">
+            <option value="all">All evidence states</option>
+          </select>
+        </div>
+        <div class="filter-block">
+          <label class="field-label" for="confidenceFilter">Minimum confidence</label>
+          <div class="range-row">
+            <input id="confidenceFilter" type="range" min="70" max="99" value="75" step="1">
+            <output class="range-value" id="confidenceValue">75%</output>
+          </div>
+          <p class="field-hint">Confidence is a curation signal, not experimental validity.</p>
+        </div>
+        <div class="filter-block">
+          <label class="toggle-row" for="showAlternatives">
+            <input id="showAlternatives" type="checkbox">
+            <span class="toggle-copy"><strong>Show alternatives</strong><span>Reveal lower-confidence records inside each cluster.</span></span>
+          </label>
+        </div>
+        <button class="reset-button" type="button" id="resetFilters">Reset filters</button>
+        <div class="export-actions" aria-label="Export metadata">
+          <button class="export-button" type="button" id="exportJson">Export JSON</button>
+          <button class="export-button" type="button" id="exportCsv">Export CSV</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <section class="page-heading" aria-labelledby="pageTitle">
+          <div>
+            <p class="eyebrow">Curation overview</p>
+            <h1 id="pageTitle">Biological protocol index</h1>
+            <p class="page-intro">A live metadata-first view of crawler results in <code>data/sessions/</code>. Each category shows its highest-confidence representative first; screened alternatives stay hidden until requested.</p>
+          </div>
+          <div><button class="export-button" type="button" id="refreshData">Refresh local data</button><div class="prototype-badge">METADATA ONLY<span>Dates, licenses and sources require record-level verification.</span></div></div>
+        </section>
+
+        <section class="metrics" aria-label="Dataset metrics">
+          <article class="metric teal"><div class="metric-label">Indexed records</div><div class="metric-value" id="metricRecords">0</div><div class="metric-note">Metadata-only entries</div></article>
+          <article class="metric blue"><div class="metric-label">Visible representatives</div><div class="metric-value" id="metricRepresentatives">0</div><div class="metric-note">One per matching cluster</div></article>
+          <article class="metric amber"><div class="metric-label">Hidden alternatives</div><div class="metric-value" id="metricAlternatives">0</div><div class="metric-note">Available inside clusters</div></article>
+          <article class="metric navy"><div class="metric-label">Protocol clusters</div><div class="metric-value" id="metricClusters">0</div><div class="metric-note">Assay / operation groups</div></article>
+        </section>
+
+        <section class="data-health" aria-label="Metadata verification health">
+          <div class="health-item"><div class="health-label">Record IDs</div><div class="health-value" id="healthIds">0%</div></div>
+          <div class="health-item"><div class="health-label">License checks</div><div class="health-value" id="healthLicenses">0%</div></div>
+          <div class="health-item"><div class="health-label">Metadata checks</div><div class="health-value" id="healthMetadata">0%</div></div>
+          <div class="health-item"><div class="health-label">Crawler coverage</div><div class="health-value" id="healthCoverage">0%</div></div>
+          <div class="health-item"><div class="health-label">Needs review</div><div class="health-value" id="healthReview">0</div></div>
+        </section>
+
+        <section class="toolbar" aria-label="Search and sort">
+          <div class="search-wrap"><label for="searchInput">Search protocols</label><input class="search-input" id="searchInput" type="search" placeholder="Search title, assay, operation, source or tag"></div>
+          <div class="sort-wrap"><label for="sortSelect">Sort by</label><select class="control" id="sortSelect"><option value="confidence">Confidence</option><option value="updated">Recently updated</option><option value="published">Publication date</option><option value="clusterSize">Cluster size</option></select></div>
+        </section>
+        <p class="result-line" id="resultLine"></p>
+        <p class="live-note" id="liveNote" aria-live="polite">Reading expected files from data/sessions/...</p>
+        <section class="cluster-list" id="clusterList" aria-live="polite"></section>
+        <p class="method-note"><strong>How confidence is used:</strong> the prototype ranks records using source type, metadata completeness, recency and cross-source agreement. It does not certify that a protocol is scientifically correct or safe to run.</p>
+        <p class="footer-note">This prototype intentionally stores metadata only. Full protocol text, figures, videos and downloadable files should be added only after record-level license and source-term review. Export files contain metadata only.</p>
+      </main>
+    </div>
+  </div>
+
+  <script src="common-protocol-categories.js"></script>
+  <script src="collection-session-batches.js"></script>
+  <script>
+    (() => {
+      const categories = Array.isArray(window.COMMON_PROTOCOL_CATEGORIES) ? window.COMMON_PROTOCOL_CATEGORIES : [];
+      const sessions = Array.isArray(window.COLLECTION_SESSION_BATCHES) ? window.COLLECTION_SESSION_BATCHES : [];
+      const categoryById = new Map(categories.map((category) => [category.id, category]));
+      let records = [];
+      let liveStats = { expectedPackets: sessions.length, readablePackets: 0, completePackets: 0, categoriesWritten: 0, expectedCategories: categories.length, representativeCount: 0, screenedCount: 0, invalidPackets: 0, unavailable: false, noQualifiedRepresentative: 0 };
+      const $ = (id) => document.getElementById(id);
+      const state = { search: "", assay: "all", source: "all", license: "all", evidence: "all", minConfidence: 75, showAlternatives: false, sort: "confidence" };
+
+      const assayFilter = $("assayFilter");
+      const sourceFilter = $("sourceFilter");
+      const licenseFilter = $("licenseFilter");
+      const evidenceFilter = $("evidenceFilter");
+      const confidenceFilter = $("confidenceFilter");
+      const confidenceValue = $("confidenceValue");
+      const searchInput = $("searchInput");
+      const showAlternatives = $("showAlternatives");
+      const sortSelect = $("sortSelect");
+      const clusterList = $("clusterList");
+
+      const unique = (items) => [...new Set(items.filter(Boolean))].sort((a, b) => a.localeCompare(b));
+      const recordConfidence = (record) => Math.round(record.confidence * 100);
+      const signalFor = (record) => {
+        if (record.reuseStatus === "reuse-verified") return "reusable";
+        if (record.reuseStatus === "permission-required") return "restricted";
+        const code = String(record.licenseCode || "").toLowerCase();
+        if (record.licenseVerifiedAt && (code === "cc0-1.0" || code.startsWith("cc-by"))) return "reusable";
+        if (code.includes("proprietary") || code.includes("all rights") || code.includes("publisher copyright")) return "restricted";
+        const text = `${record.license || ""} ${record.source || ""}`.toLowerCase();
+        if (text.includes("publisher copyright") || text.includes("permission may be required")) return "restricted";
+        if (text.includes("verify") || text.includes("varies") || text.includes("record-level")) return "verify";
+        return record.licenseVerifiedAt ? "reusable" : "verify";
+      };
+      const signalLabel = (signal) => ({ reusable: "Potentially reusable", verify: "Verify at record level", restricted: "Discovery only" }[signal]);
+      const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
+      const formatDate = (date) => {
+        if (!date) return "Not checked";
+        const value = String(date);
+        const parsed = new Date(/^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T00:00:00` : value);
+        return Number.isNaN(parsed.getTime()) ? "Not checked" : new Intl.DateTimeFormat("en", { year: "numeric", month: "short", day: "numeric" }).format(parsed);
+      };
+      const recordIdFor = (record) => record.sourceRecordId || record.doi || (record.recordType === "search" ? "Search / collection page" : "Not assigned");
+      const evidenceFor = (record) => record.verificationStatus || record.evidenceStatus || "provisional";
+      const facetsFor = (record) => [record.sampleType || record.specimen, record.organism, record.platform, record.methodVariant].filter(Boolean).join(" / ") || "Not specified";
+      const authorsFor = (record) => (Array.isArray(record.authors) ? record.authors.map((author) => typeof author === "string" ? author : author?.name).filter(Boolean).join(", ") : "") || "Not listed";
+
+      function categoryTags(category, result) {
+        return [...new Set([category?.id, category?.label, category?.domain, ...(category?.aliases || []), ...(category?.assayTypes || []), result?.protocolType, result?.assay, result?.operation].filter(Boolean))];
+      }
+
+      function representativeRecord(session, categoryResult) {
+        const representative = categoryResult?.representative;
+        if (!representative) return null;
+        const category = categoryById.get(categoryResult.categoryId);
+        const screened = Array.isArray(categoryResult.screened) ? categoryResult.screened : [];
+        const confidence = Number(representative.confidence);
+        return {
+          ...representative,
+          title: representative.title || categoryResult.categoryLabel || category?.label || "Untitled protocol",
+          protocolType: representative.protocolType || "Protocol metadata",
+          assay: representative.assay || categoryResult.categoryLabel || category?.label || "Unclassified assay",
+          operation: representative.operation || "Not specified",
+          source: representative.source || "Source not specified",
+          sourceUrl: representative.sourceUrl || "#",
+          license: representative.license || representative.licenseCode || "License evidence not recorded",
+          confidence: Number.isFinite(confidence) ? confidence : 0,
+          clusterId: `category:${categoryResult.categoryId}`,
+          clusterSize: 1 + screened.length,
+          categoryStatus: categoryResult.status || "complete",
+          coverageGaps: Array.isArray(categoryResult.coverageGaps) ? categoryResult.coverageGaps : [],
+          tags: categoryTags(category, representative),
+          status: "Featured",
+          notes: representative.selectionNote || "Selected by the independent crawler as the strongest available category match.",
+          recordType: "protocol",
+          sampleType: representative.specimen || null,
+          sessionId: session.id,
+          categoryId: categoryResult.categoryId,
+          isAlternative: false
+        };
+      }
+
+      function screenedRecord(session, categoryResult, screened, index, featured) {
+        const category = categoryById.get(categoryResult.categoryId);
+        const confidence = Number(screened?.confidence);
+        return {
+          title: screened?.title || `${categoryResult.categoryLabel || category?.label || "Protocol"} screened candidate ${index + 1}`,
+          protocolType: featured?.protocolType || "Screened candidate",
+          assay: featured?.assay || categoryResult.categoryLabel || category?.label || "Unclassified assay",
+          operation: featured?.operation || "Not specified",
+          source: screened?.source || "Source not specified",
+          sourceUrl: screened?.sourceUrl || featured?.sourceUrl || "#",
+          sourceRecordId: screened?.sourceRecordId || null,
+          doi: screened?.doi || null,
+          authors: [],
+          published: screened?.published || null,
+          updated: screened?.updated || null,
+          license: screened?.licenseCode || "License not verified for screened candidate",
+          licenseCode: screened?.licenseCode || null,
+          licenseUrl: screened?.licenseUrl || null,
+          licenseEvidenceUrl: screened?.licenseEvidenceUrl || null,
+          licenseVerifiedAt: screened?.licenseVerifiedAt || null,
+          metadataVerifiedAt: screened?.metadataVerifiedAt || null,
+          evidenceStatus: screened?.evidenceStatus || "metadata-only",
+          confidence: Number.isFinite(confidence) ? confidence : Math.min(Number(featured?.confidence) || 0, 0.74),
+          clusterId: `category:${categoryResult.categoryId}`,
+          clusterSize: 1 + (Array.isArray(categoryResult.screened) ? categoryResult.screened.length : 0),
+          tags: categoryTags(category, featured),
+          status: "Alternative",
+          notes: screened?.reason || "Screened by the crawler; see the source record for details.",
+          recordType: "screened",
+          sampleType: featured?.specimen || null,
+          organism: featured?.organism || null,
+          platform: featured?.platform || null,
+          methodVariant: featured?.methodVariant || null,
+          safetyLevel: featured?.safetyLevel || "not specified",
+          sessionId: session.id,
+          categoryId: categoryResult.categoryId,
+          screenStatus: screened?.screenStatus || "alternative",
+          isAlternative: true
+        };
+      }
+
+      async function loadLiveData() {
+        const nextRecords = [];
+        const nextStats = { expectedPackets: sessions.length, readablePackets: 0, completePackets: 0, categoriesWritten: 0, expectedCategories: categories.length, representativeCount: 0, screenedCount: 0, invalidPackets: 0, unavailable: false, noQualifiedRepresentative: 0 };
+        await Promise.all(sessions.map(async (session) => {
+          try {
+            const response = await fetch(`data/sessions/${encodeURIComponent(session.id)}/result.json`, { cache: "no-store" });
+            if (response.status === 404) return;
+            if (!response.ok) { nextStats.invalidPackets += 1; return; }
+            const result = await response.json();
+            const categoryResults = Array.isArray(result?.categoryResults) ? result.categoryResults : [];
+            const actualIds = categoryResults.map((item) => item?.categoryId).filter(Boolean);
+            const valid = result?.sessionId === session.id && actualIds.length === session.categoryIds.length && session.categoryIds.every((id) => actualIds.includes(id)) && new Set(actualIds).size === actualIds.length;
+            if (!valid) { nextStats.invalidPackets += 1; return; }
+            nextStats.readablePackets += 1;
+            if (result.packetStatus === "complete") nextStats.completePackets += 1;
+            nextStats.categoriesWritten += categoryResults.length;
+            categoryResults.forEach((categoryResult) => {
+              const featured = representativeRecord(session, categoryResult);
+              const screened = Array.isArray(categoryResult?.screened) ? categoryResult.screened : [];
+              if (featured) {
+                nextRecords.push(featured);
+                nextStats.representativeCount += 1;
+                screened.forEach((candidate, index) => nextRecords.push(screenedRecord(session, categoryResult, candidate, index, featured)));
+                nextStats.screenedCount += screened.length;
+              } else if (categoryResult?.status !== "complete") {
+                nextStats.noQualifiedRepresentative += 1;
+              }
+            });
+          } catch (error) {
+            nextStats.unavailable = true;
+          }
+        }));
+        records = nextRecords;
+        liveStats = nextStats;
+        populateFilters();
+        render();
+        const coverage = liveStats.expectedCategories ? Math.round((liveStats.categoriesWritten / liveStats.expectedCategories) * 100) : 0;
+        $("datasetStatus").textContent = liveStats.unavailable ? "Local data unavailable" : "Live local data";
+        $("lastIndexed").textContent = liveStats.unavailable ? "Run through a local HTTP server" : `Refreshed ${new Date().toLocaleString()}`;
+        $("liveNote").classList.toggle("warning", liveStats.unavailable);
+        $("liveNote").textContent = liveStats.unavailable
+          ? "The browser could not fetch data/session files. Serve this folder over HTTP, then refresh the page."
+          : `${liveStats.readablePackets}/${liveStats.expectedPackets} packet files readable; ${liveStats.categoriesWritten}/${liveStats.expectedCategories} categories written (${coverage}%); ${liveStats.representativeCount} representatives and ${liveStats.screenedCount} screened alternatives loaded.`;
+      }
+
+      function populateFilters() {
+        [assayFilter, sourceFilter, evidenceFilter].forEach((select) => {
+          while (select.options.length > 1) select.remove(1);
+        });
+        unique(records.map((record) => record.assay)).forEach((assay) => assayFilter.insertAdjacentHTML("beforeend", `<option value="${escapeHtml(assay)}">${escapeHtml(assay)}</option>`));
+        unique(records.map((record) => record.source)).forEach((source) => sourceFilter.insertAdjacentHTML("beforeend", `<option value="${escapeHtml(source)}">${escapeHtml(source)}</option>`));
+        unique(records.map((record) => evidenceFor(record)).filter(Boolean)).forEach((status) => evidenceFilter.insertAdjacentHTML("beforeend", `<option value="${escapeHtml(status)}">${escapeHtml(status)}</option>`));
+      }
+
+      function filteredRecords() {
+        const baseMatches = records.filter((record) => {
+          const haystack = [record.title, record.protocolType, record.assay, record.operation, record.source, record.license, record.notes, ...record.tags].join(" ").toLowerCase();
+          return (!state.search || haystack.includes(state.search))
+            && (state.assay === "all" || record.assay === state.assay)
+            && (state.source === "all" || record.source === state.source)
+            && (state.license === "all" || signalFor(record) === state.license)
+            && (state.evidence === "all" || evidenceFor(record) === state.evidence);
+        });
+        const qualifyingClusters = new Set(baseMatches.filter((record) => !record.isAlternative && recordConfidence(record) >= state.minConfidence).map((record) => record.clusterId));
+        return baseMatches.filter((record) => record.isAlternative ? qualifyingClusters.has(record.clusterId) : recordConfidence(record) >= state.minConfidence);
+      }
+
+      function sortRecords(list) {
+        const sorted = [...list];
+        sorted.sort((a, b) => {
+          if (state.sort === "updated") return new Date(b.updated) - new Date(a.updated);
+          if (state.sort === "published") return new Date(b.published) - new Date(a.published);
+          if (state.sort === "clusterSize") return b.clusterSize - a.clusterSize || b.confidence - a.confidence;
+          return b.confidence - a.confidence || new Date(b.updated) - new Date(a.updated);
+        });
+        return sorted;
+      }
+
+      function grouped(list) {
+        const map = new Map();
+        list.forEach((record) => {
+          if (!map.has(record.clusterId)) map.set(record.clusterId, []);
+          map.get(record.clusterId).push(record);
+        });
+        return [...map.values()].map((group) => group.sort((a, b) => b.confidence - a.confidence));
+      }
+
+      function clusterMarkup(group) {
+        const featured = group.find((record) => record.status === "Featured") || group[0];
+        const alternatives = group.filter((record) => record !== featured);
+        const confidence = recordConfidence(featured);
+        const signal = signalFor(featured);
+        const evidence = evidenceFor(featured);
+        const recordId = recordIdFor(featured);
+        const coverageState = ["complete", "partial", "blocked", "no-qualified-record"].includes(featured.categoryStatus) ? featured.categoryStatus : "complete";
+        const coverageLabel = coverageState === "no-qualified-record" ? "No qualified record" : coverageState;
+        const tags = (featured.tags || []).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
+        const alternativeMarkup = alternatives.length ? alternatives.map((record) => `<div class="alternative-row"><div><div class="alternative-title">${escapeHtml(record.title)}</div><div class="alternative-source">${escapeHtml(record.source)} · ${escapeHtml(record.protocolType)}</div></div><div class="alternative-date">${formatDate(record.published)}</div><div><span class="status alternative">${escapeHtml(record.status)}</span></div><a href="${escapeHtml(record.sourceUrl)}" target="_blank" rel="noreferrer">Open source</a></div>`).join("") : `<div class="cluster-note">No alternative records match the active filters.</div>`;
+        return `<article class="cluster-card">
+          <div class="cluster-main">
+            <div class="cluster-heading"><div><p class="eyebrow">${escapeHtml(featured.assay)}</p><h2 class="cluster-title">${escapeHtml(featured.title)}</h2><p class="cluster-operation">${escapeHtml(featured.operation)}</p></div><div class="confidence"><div class="confidence-label" title="Estimated from metadata specificity and completeness; not independently validated">${confidence}% match confidence · prototype</div><div class="confidence-track"><div class="confidence-fill" style="width:${confidence}%"></div></div></div></div>
+            <div class="meta-grid">
+              <dl class="meta-item"><dt>Protocol type</dt><dd>${escapeHtml(featured.protocolType)}</dd></dl>
+              <dl class="meta-item"><dt>Source</dt><dd><a href="${escapeHtml(featured.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(featured.source)}</a></dd></dl>
+              <dl class="meta-item"><dt>Source record</dt><dd>${escapeHtml(recordId)}</dd></dl>
+              <dl class="meta-item"><dt>Authors</dt><dd>${escapeHtml(authorsFor(featured))}</dd></dl>
+              <dl class="meta-item"><dt>Published</dt><dd>${formatDate(featured.published)}</dd></dl>
+              <dl class="meta-item"><dt>Last updated</dt><dd>${formatDate(featured.updated)}</dd></dl>
+              <dl class="meta-item"><dt>Metadata checked</dt><dd>${formatDate(featured.metadataVerifiedAt)}</dd></dl>
+              <dl class="meta-item"><dt>Reuse signal</dt><dd><span class="license-signal ${signal}">${escapeHtml(signalLabel(signal))}</span></dd></dl>
+              <dl class="meta-item"><dt>License checked</dt><dd>${formatDate(featured.licenseVerifiedAt)}</dd></dl>
+              <dl class="meta-item"><dt>Related sources</dt><dd>${group.length} records · ${alternatives.length} hidden</dd></dl>
+              <dl class="meta-item"><dt>Status</dt><dd><span class="status featured">${escapeHtml(featured.status)}</span></dd></dl>
+              <dl class="meta-item"><dt>Category coverage</dt><dd><span class="status coverage-${escapeHtml(coverageState)}">${escapeHtml(coverageLabel)}</span></dd></dl>
+              <dl class="meta-item"><dt>Evidence</dt><dd>${escapeHtml(evidence)}</dd></dl>
+              <dl class="meta-item"><dt>Facets</dt><dd>${escapeHtml(facetsFor(featured))}</dd></dl>
+              <dl class="meta-item"><dt>License note</dt><dd>${escapeHtml(featured.license)}</dd></dl>
+            </div>
+            <div class="tags" aria-label="Tags">${tags}</div>
+          </div>
+          <div class="cluster-footer"><div class="cluster-note">${escapeHtml(featured.notes)}</div><div class="cluster-actions"><button type="button" data-action="toggle" data-cluster="${escapeHtml(featured.clusterId)}">${state.showAlternatives ? "Hide alternatives" : `Show ${alternatives.length} alternatives`}</button><a href="${escapeHtml(featured.sourceUrl)}" target="_blank" rel="noreferrer" style="color:var(--blue);font-size:11px;font-weight:800;text-decoration:none">Open source</a></div></div>
+          <div class="alternatives ${state.showAlternatives ? "open" : ""}" id="alternatives-${escapeHtml(featured.clusterId)}"><p class="alternatives-heading">Cluster alternatives</p>${alternativeMarkup}</div>
+        </article>`;
+      }
+
+      function render() {
+        const filtered = sortRecords(filteredRecords());
+        const groups = grouped(filtered);
+        const visibleRepresentatives = groups.length;
+        const visibleAlternativeCount = groups.reduce((sum, group) => sum + Math.max(0, group.length - 1), 0);
+        const percent = (count) => filtered.length ? `${Math.round((count / filtered.length) * 100)}%` : "0%";
+        const recordsWithIds = filtered.filter((record) => record.sourceRecordId || record.doi).length;
+        const recordsWithLicenseChecks = filtered.filter((record) => record.licenseVerifiedAt).length;
+        const recordsWithMetadataChecks = filtered.filter((record) => record.metadataVerifiedAt).length;
+        const needsReview = filtered.filter((record) => !record.metadataVerifiedAt || !record.licenseVerifiedAt || !record.sourceRecordId && !record.doi).length + liveStats.invalidPackets + liveStats.noQualifiedRepresentative;
+        const coverage = liveStats.expectedCategories ? `${Math.round((liveStats.categoriesWritten / liveStats.expectedCategories) * 100)}%` : "0%";
+        $("metricRecords").textContent = filtered.length;
+        $("metricRepresentatives").textContent = visibleRepresentatives;
+        $("metricAlternatives").textContent = visibleAlternativeCount;
+        $("metricClusters").textContent = groups.length;
+        $("healthIds").textContent = percent(recordsWithIds);
+        $("healthLicenses").textContent = percent(recordsWithLicenseChecks);
+        $("healthMetadata").textContent = percent(recordsWithMetadataChecks);
+        $("healthCoverage").textContent = coverage;
+        $("healthReview").textContent = needsReview;
+        $("resultLine").innerHTML = `<strong>${visibleRepresentatives}</strong> clusters shown · <strong>${filtered.length}</strong> matching metadata records · alternatives ${state.showAlternatives ? "visible" : "hidden"}`;
+        clusterList.innerHTML = groups.length ? groups.map(clusterMarkup).join("") : `<div class="empty-state"><strong>No matching clusters</strong>Try a broader search or lower the confidence threshold.</div>`;
+      }
+
+      function downloadFile(filename, content, type) {
+        const blob = new Blob([content], { type });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      function exportMetadata(format) {
+        const exportRows = sortRecords(filteredRecords()).map((record) => ({ ...record, tags: Array.isArray(record.tags) ? record.tags.join(" | ") : record.tags }));
+        const stamp = new Date().toISOString().slice(0, 10);
+        if (format === "json") {
+          downloadFile(`protocol-atlas-metadata-${stamp}.json`, JSON.stringify(exportRows, null, 2), "application/json");
+          return;
+        }
+        const headers = [...new Set(exportRows.flatMap((row) => Object.keys(row)))];
+        const csvCell = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+        const csv = [headers.map(csvCell).join(","), ...exportRows.map((row) => headers.map((header) => csvCell(typeof row[header] === "object" ? JSON.stringify(row[header]) : row[header])).join(","))].join("\r\n");
+        downloadFile(`protocol-atlas-metadata-${stamp}.csv`, csv, "text/csv;charset=utf-8");
+      }
+
+      function reset() {
+        state.search = ""; state.assay = "all"; state.source = "all"; state.license = "all"; state.evidence = "all"; state.minConfidence = 75; state.showAlternatives = false; state.sort = "confidence";
+        searchInput.value = ""; assayFilter.value = "all"; sourceFilter.value = "all"; licenseFilter.value = "all"; evidenceFilter.value = "all"; confidenceFilter.value = "75"; confidenceValue.value = "75%"; confidenceValue.textContent = "75%"; showAlternatives.checked = false; sortSelect.value = "confidence";
+        render();
+      }
+
+      searchInput.addEventListener("input", (event) => { state.search = event.target.value.trim().toLowerCase(); render(); });
+      assayFilter.addEventListener("change", (event) => { state.assay = event.target.value; render(); });
+      sourceFilter.addEventListener("change", (event) => { state.source = event.target.value; render(); });
+      licenseFilter.addEventListener("change", (event) => { state.license = event.target.value; render(); });
+      evidenceFilter.addEventListener("change", (event) => { state.evidence = event.target.value; render(); });
+      confidenceFilter.addEventListener("input", (event) => { state.minConfidence = Number(event.target.value); confidenceValue.value = `${state.minConfidence}%`; confidenceValue.textContent = `${state.minConfidence}%`; render(); });
+      showAlternatives.addEventListener("change", (event) => { state.showAlternatives = event.target.checked; render(); });
+      sortSelect.addEventListener("change", (event) => { state.sort = event.target.value; render(); });
+      $("resetFilters").addEventListener("click", reset);
+      $("exportJson").addEventListener("click", () => exportMetadata("json"));
+      $("exportCsv").addEventListener("click", () => exportMetadata("csv"));
+      $("refreshData").addEventListener("click", loadLiveData);
+      clusterList.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-action='toggle']");
+        if (!button) return;
+        const target = document.getElementById(`alternatives-${button.dataset.cluster}`);
+        if (!target) return;
+        target.classList.toggle("open");
+        button.textContent = target.classList.contains("open") ? "Hide alternatives" : `Show alternatives`;
+      });
+      loadLiveData();
+    })();
+  </script>
+</body>
+</html>

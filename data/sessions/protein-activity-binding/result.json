@@ -1,0 +1,283 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "protein-activity-binding",
+  "sessionTitle": "Protein activity and binding assays",
+  "packetStatus": "complete",
+  "startedAt": "2026-08-01T22:40:00Z",
+  "writtenAt": "2026-08-01T22:48:41Z",
+  "worker": "protocol-atlas-crawler:protein-activity-binding",
+  "sourcesSearched": [
+    "https://bio-protocol.org/en/bpdetail?id=3599&type=0",
+    "https://dx.doi.org/10.21769/BioProtoc.3599",
+    "https://www.protocols.io/view/rapid-and-accessible-elisa-based-enzyme-kinetics-a-hgxzb3xp7.pdf",
+    "https://www.protocols.io/view/fitting-enzyme-kinetics-data-with-solver-bexhjfj6.pdf",
+    "https://www.protocols.io/view/enzymatic-ethanol-assay-bzi9p4h6.pdf",
+    "https://dx.doi.org/10.17504/protocols.io.bp2l6b8n5gqe/v2",
+    "https://bio-protocol.org/en/bpdetail?id=1949&type=0",
+    "https://www.protocols.io/view/nadh-linked-microtiter-plate-based-assay-for-measu-bgasjsee.pdf",
+    "https://bio-protocol.org/en/bpdetail?id=321&type=0",
+    "https://dx.doi.org/10.21769/BioProtoc.321",
+    "https://www.protocols.io/view/preparation-of-oleylethylene-glycol-sreptavidin-su-byv9pw96.pdf",
+    "https://bio-protocol.org/exchange/minidetail?id=2682462&type=30"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "enzyme-kinetics",
+      "categoryLabel": "Enzyme kinetics assay",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://bio-protocol.org/en/bpdetail?id=3599&type=0",
+        "https://dx.doi.org/10.21769/BioProtoc.3599",
+        "https://www.protocols.io/view/rapid-and-accessible-elisa-based-enzyme-kinetics-a-hgxzb3xp7.pdf",
+        "https://www.protocols.io/view/fitting-enzyme-kinetics-data-with-solver-bexhjfj6.pdf"
+      ],
+      "representative": {
+        "title": "A Sensitive Coupled Enzyme Assay for Measuring Kinase and ATPase Activity",
+        "protocolType": "Enzyme kinetics assay",
+        "assay": "Coupled kinase and ATPase activity assay",
+        "operation": "Measure ATP consumption through an ADP-specific hexokinase/G6PDH coupling readout and fit initial rates across substrate concentrations with a Michaelis-Menten model",
+        "source": "Bio-protocol",
+        "sourceUrl": "https://bio-protocol.org/en/bpdetail?id=3599&type=0",
+        "sourceRecordId": "e3599",
+        "doi": "10.21769/BioProtoc.3599",
+        "authors": [
+          "Zachary A. Couch",
+          "Michael J. S. Bennett"
+        ],
+        "published": "2020-05-05",
+        "updated": null,
+        "licenseCode": null,
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://bio-protocol.org/en/bpdetail?id=3599&type=0",
+        "licenseVerifiedAt": "2026-08-01T22:48:41Z",
+        "metadataVerifiedAt": "2026-08-01T22:48:41Z",
+        "specimen": "Purified enzyme reaction mixture",
+        "organism": null,
+        "platform": "Quartz-cuvette UV-visible spectrophotometer",
+        "methodVariant": "Continuous NADH-linked absorbance readout at 340 nm with ATP substrate series and initial-rate Michaelis-Menten fitting",
+        "safetyLevel": "not specified",
+        "confidence": 0.93,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.98,
+          "sourceAuthority": 0.95,
+          "metadataCompleteness": 0.95,
+          "freshness": 0.86,
+          "corroboration": 0.82,
+          "overall": 0.93
+        },
+        "evidenceStatus": "metadata-and-license-evidence-verified",
+        "selectionNote": "Specific Bio-protocol record with an explicit substrate series, continuous A340 readout, cuvette instrument, and Michaelis-Menten fitting context. The record page documents its publication metadata and states that Bio-protocol is the exclusive licensee; no permissive reuse code was inferred."
+      },
+      "screened": [
+        {
+          "title": "Rapid and Accessible ELISA-Based Enzyme Kinetics Assay",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/rapid-and-accessible-elisa-based-enzyme-kinetics-a-hgxzb3xp7.pdf",
+          "sourceRecordId": "hgxzb3xp7",
+          "doi": "10.17504/protocols.io.hgxzb3xp7",
+          "screenStatus": "alternative",
+          "reason": "Relevant enzyme kinetics record with a quantitative assay, but its endpoint ELISA readout and colorimetric plate workflow are a materially different readout from continuous spectrophotometric kinetics."
+        },
+        {
+          "title": "Fitting enzyme kinetics data with Solver",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/fitting-enzyme-kinetics-data-with-solver-bexhjfj6.pdf",
+          "sourceRecordId": "bexhjfj6",
+          "doi": "10.17504/protocols.io.bexhjfj6",
+          "screenStatus": "wrong-variant",
+          "reason": "Useful Michaelis-Menten fitting workflow, but it is a data-analysis protocol rather than a complete enzyme activity assay."
+        }
+      ],
+      "coverageGaps": [],
+      "nextSearchSuggestions": []
+    },
+    {
+      "categoryId": "spectrophotometric-assay",
+      "categoryLabel": "Spectrophotometric biochemical assay",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/view/enzymatic-ethanol-assay-bzi9p4h6.pdf",
+        "https://dx.doi.org/10.17504/protocols.io.bp2l6b8n5gqe/v2",
+        "https://bio-protocol.org/en/bpdetail?id=1949&type=0",
+        "https://www.protocols.io/view/nadh-linked-microtiter-plate-based-assay-for-measu-bgasjsee.pdf"
+      ],
+      "representative": {
+        "title": "Enzymatic Ethanol Assay V.2",
+        "protocolType": "Spectrophotometric biochemical assay",
+        "assay": "Ethanol concentration measurement by ADH-coupled NADH absorbance",
+        "operation": "Quantify ethanol in a 96-well plate from time-resolved A340 and an ethanol standard curve",
+        "source": "protocols.io",
+        "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.bp2l6b8n5gqe/v2",
+        "sourceRecordId": "54593",
+        "doi": "10.17504/protocols.io.bp2l6b8n5gqe/v2",
+        "authors": [
+          "Shicheng Qi",
+          "Yanjun Lu",
+          "Ming Tian",
+          "Liping Chen",
+          "Yanqiang Li",
+          "Jianping Cao",
+          "Dingyin Tang",
+          "Qingyu Zhang",
+          "Zhenzhen Liu",
+          "Xiaowei Li",
+          "Ying Xu",
+          "Jing Wang",
+          "Yongmei Liu",
+          "Jian Zhang",
+          "Lijun Huang"
+        ],
+        "published": "2023-09-08",
+        "updated": "2024-05-23",
+        "licenseCode": "CC BY",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://www.protocols.io/view/enzymatic-ethanol-assay-bzi9p4h6.pdf",
+        "licenseVerifiedAt": "2026-08-01T22:48:41Z",
+        "metadataVerifiedAt": "2026-08-01T22:48:41Z",
+        "specimen": "Fermentation or other ethanol-containing sample",
+        "organism": null,
+        "platform": "BioTek PowerWave XS microplate spectrophotometer",
+        "methodVariant": "ADH-coupled NADH increase at 340 nm in a 96-well plate at 30 C with kinetic readout and four-parameter standard-curve fitting",
+        "safetyLevel": "not specified",
+        "confidence": 0.96,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.98,
+          "sourceAuthority": 0.92,
+          "metadataCompleteness": 0.98,
+          "freshness": 0.91,
+          "corroboration": 0.84,
+          "overall": 0.96
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Versioned protocols.io record with a stable DOI, explicit target analyte (ethanol), wavelength (340 nm), plate reader, temperature, kinetic readout, and standard-curve model. The record PDF states a CC BY 4.0 license."
+      },
+      "screened": [
+        {
+          "title": "Measurement of Glucose-6-phosphate Dehydrogenase Activity in Cyanobacteria and E. coli",
+          "source": "Bio-protocol",
+          "sourceUrl": "https://bio-protocol.org/en/bpdetail?id=1949&type=0",
+          "sourceRecordId": "e1949",
+          "doi": "10.21769/BioProtoc.1949",
+          "screenStatus": "alternative",
+          "reason": "Strong A340 spectrophotometric assay, but the target is enzyme activity in cell-free extracts rather than direct metabolite concentration and the readout is cuvette-based."
+        },
+        {
+          "title": "NADH-linked microtiter plate-based assay for measuring Rubisco activity",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/nadh-linked-microtiter-plate-based-assay-for-measu-bgasjsee.pdf",
+          "sourceRecordId": "bgasjsee",
+          "doi": "10.17504/protocols.io.bgasjsee",
+          "screenStatus": "alternative",
+          "reason": "Matches the microplate/NADH readout pattern, but is a specific Rubisco enzyme-activity variant and is less general for metabolite measurement."
+        }
+      ],
+      "coverageGaps": [],
+      "nextSearchSuggestions": []
+    },
+    {
+      "categoryId": "spr-binding",
+      "categoryLabel": "Surface plasmon resonance binding assay",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://bio-protocol.org/en/bpdetail?id=321&type=0",
+        "https://dx.doi.org/10.21769/BioProtoc.321",
+        "https://www.protocols.io/view/preparation-of-oleylethylene-glycol-sreptavidin-su-byv9pw96.pdf",
+        "https://bio-protocol.org/exchange/minidetail?id=2682462&type=30"
+      ],
+      "representative": {
+        "title": "Protein-peptide Interaction by Surface Plasmon Resonance",
+        "protocolType": "Surface plasmon resonance binding assay",
+        "assay": "Protein-peptide interaction and kinetic binding measurement",
+        "operation": "Immobilize a protein ligand by amine coupling on a CM5 chip and measure peptide analyte binding on a Biacore X100",
+        "source": "Bio-protocol",
+        "sourceUrl": "https://bio-protocol.org/en/bpdetail?id=321&type=0",
+        "sourceRecordId": "e321",
+        "doi": "10.21769/BioProtoc.321",
+        "authors": [
+          "Eiji Ishii",
+          "Yoko Eguchi",
+          "Ryutaro Utsumi"
+        ],
+        "published": "2013-02-05",
+        "updated": null,
+        "licenseCode": null,
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://bio-protocol.org/en/bpdetail?id=321&type=0",
+        "licenseVerifiedAt": "2026-08-01T22:48:41Z",
+        "metadataVerifiedAt": "2026-08-01T22:48:41Z",
+        "specimen": "Purified protein ligand and synthetic peptide analyte",
+        "organism": null,
+        "platform": "Biacore X100 with CM5 sensor chip and Biacore X100 Evaluation Software",
+        "methodVariant": "Amine-coupled ligand format with peptide analyte prepared in DMSO; direct SPR response and kinetic binding analysis",
+        "safetyLevel": "not specified",
+        "confidence": 0.95,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.99,
+          "sourceAuthority": 0.95,
+          "metadataCompleteness": 0.94,
+          "freshness": 0.78,
+          "corroboration": 0.86,
+          "overall": 0.95
+        },
+        "evidenceStatus": "metadata-and-license-evidence-verified",
+        "selectionNote": "Specific protocol record with ligand immobilization mode, CM5 chip, peptide analyte format, Biacore X100 platform, and DOI. The record page documents publication metadata and states that Bio-protocol is the exclusive licensee; no permissive reuse code was inferred."
+      },
+      "screened": [
+        {
+          "title": "Preparation of Oleyl Ethylene Glycol Sreptavidin Surface for SPR",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/preparation-of-oleylethylene-glycol-sreptavidin-su-byv9pw96.pdf",
+          "sourceRecordId": "byv9pw96",
+          "doi": "10.17504/protocols.io.byv9pw96",
+          "screenStatus": "wrong-variant",
+          "reason": "Relevant SPR platform record, but it is a sensor-surface preparation workflow and does not itself provide a complete ligand-analyte binding assay."
+        },
+        {
+          "title": "Surface Plasmon Resonance (SPR) Assay",
+          "source": "Bio-protocol Exchange",
+          "sourceUrl": "https://bio-protocol.org/exchange/minidetail?id=2682462&type=30",
+          "sourceRecordId": "2682462",
+          "doi": null,
+          "screenStatus": "license-unclear",
+          "reason": "Technically relevant Biacore 3000 binding assay, but the exchange page does not expose a stable DOI or record-level reuse license in the available metadata."
+        }
+      ],
+      "coverageGaps": [],
+      "nextSearchSuggestions": []
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "enzyme-kinetics",
+      "spectrophotometric-assay",
+      "spr-binding"
+    ],
+    "actualCategoryIds": [
+      "enzyme-kinetics",
+      "spectrophotometric-assay",
+      "spr-binding"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": true,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-01T22:48:41Z",
+    "selfCheckNotes": [
+      "Exactly one categoryResult exists for each assigned category and the order matches the packet.",
+      "All representative and screened sourceUrl values are absolute HTTPS URLs.",
+      "License evidence was recorded separately from scientific match confidence; Bio-protocol records retain null licenseCode because no standardized reuse code was verified.",
+      "The representative records preserve readout and instrument differences: continuous quartz-cuvette A340 kinetics, 96-well microplate A340 ethanol assay, and Biacore X100 CM5 SPR binding."
+    ]
+  },
+  "runNotes": [
+    "Scope covered public Bio-protocol, Bio-protocol Exchange, and protocols.io records for the three assigned categories.",
+    "Metadata-only capture: no protocol steps, tables, figures, videos, PDFs, or long source passages were copied into the result.",
+    "Packet marked complete because all categories have a specific representative and screened alternatives, with no unresolved category-level coverage gaps.",
+    "For Bio-protocol records, the source page supplied license evidence but did not provide a permissive license code; this was recorded as unknown rather than inferred."
+  ]
+}

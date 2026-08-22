@@ -1,0 +1,388 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "Whole-Cell Patch-Clamp Electrophysiology (gigaseal -> break-in -> voltage-clamp & current-clamp recording) [v0.3 instrument-physics demo]",
+    "protocolId": "lr-v03-patch-clamp",
+    "version": "0.3-demo",
+    "family": "Patch-clamp electrophysiology",
+    "category": "Electrophysiology",
+    "discipline": "Electrophysiology",
+    "purpose": "Establish the whole-cell patch-clamp configuration on a single neuron and record membrane currents (voltage clamp) and membrane potential / evoked action potentials (current clamp) using a defined instrument stimulus program.",
+    "scope": "Manual whole-cell recording from cultured / iPSC-derived neurons using a K-gluconate internal solution. Covers pipette preparation, gigaseal formation, break-in, a representative voltage-step (IV) family, and current-clamp recording. Demonstrates v0.3 instrument-physics constructs (resistance/capacitance/conductance parameter kinds, step.repeat for the sweep family, acceptanceCriteria for the seal gate). Out of scope: cell-attached / perforated / outside-out patch modes, dynamic clamp, and automated (planar) patch-clamp.",
+    "estimatedTime": "~30-60 min per cell (excluding solution/pipette preparation)",
+    "beforeYouBegin": [
+      "Freshly prepare and filter internal and external solutions; verify pH and osmolarity before use.",
+      "Pull patch pipettes to a resistance of 3-7 MOhm and, if needed, fire-polish; keep dust-free.",
+      "This JSON encodes an instrument STIMULUS PROGRAM (holding potential, voltage-step family, sampling/filter): acquisition parameters must be entered into the amplifier/acquisition software. The voltage-step family is expressed natively via step.repeat (s6) plus the program table (t3).",
+      "Liquid junction potential (LJP) for K-gluconate internal vs aCSF is not corrected here and must be measured/applied per your rig (see s8)."
+    ],
+    "tags": ["patch-clamp", "electrophysiology", "voltage clamp", "current clamp", "whole-cell", "neuron", "stimulus program", "v0.3-demo"]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Internal (pipette) solution, K-gluconate based",
+      "role": "buffer",
+      "specification": "140 mM K-gluconate, 4 mM KCl, 0.5 mM EGTA, 10 mM HEPES, 4 mM MgATP, 0.4 mM NaGTP, 4 mM Na2-phosphocreatine; pH 7.3; osmolarity 295 mOsm/L",
+      "storage": "-20 C aliquots; keep on ice during use",
+      "rawText": "140 K-gluconate, 4 KCl, 0.5 EGTA, 10 HEPES, 4 MgATP, 0.4 NaGTP, 4 Na2-Phosphocreatine ... pH 7.3 and osmolarity 295 mOsm/L",
+      "sourceReferences": [{ "sourceId": "src1", "excerpt": "140 K-gluconate, 4 KCl, 0.5 EGTA, 10 HEPES, 4 MgATP, 0.4 NaGTP, 4 Na2-Phosphocreatine; pH 7.3; 295 mOsm/L" }]
+    },
+    {
+      "id": "m2",
+      "name": "External (bath) recording solution, aCSF",
+      "role": "buffer",
+      "specification": "126 mM NaCl, 3 mM KCl, 2.5 mM CaCl2, 1.3 mM MgCl2, 26 mM NaHCO3, 1.25 mM NaH2PO4, 20 mM glucose; ~310 mOsm/L; bubbled with 95% O2 / 5% CO2",
+      "rawText": "126 NaCl, 3 KCl, 2.5 CaCl2, 1.3 MgCl2, 26 NaHCO3, 1.25 NaH2PO4, 20 glucose ... ~310 mOsm/L",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "excerpt": "aCSF: 126 NaCl, 3 KCl, 2.5 CaCl2, 1.3 MgCl2, 26 NaHCO3, 1.25 NaH2PO4, 20 glucose; ~310 mOsm/L" }]
+    },
+    {
+      "id": "m3",
+      "name": "Borosilicate glass patch pipettes",
+      "role": "consumable",
+      "specification": "Pulled to 3-7 MOhm tip resistance when filled with K-gluconate internal solution",
+      "rawText": "between 3 and 7 MOhm when filled with K-Gluconate based internal solution",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "excerpt": "resistance between 3 and 7 MOhm ... (5 MOhm standard)" }]
+    },
+    {
+      "id": "m4",
+      "name": "Tetrodotoxin (TTX)",
+      "role": "reagent",
+      "workingConcentration": "20 uM",
+      "specification": "Voltage-gated Na+ channel blocker; optional, to isolate non-Na+ currents",
+      "hazard": "Potent neurotoxin; handle per institutional rules",
+      "rawText": "20 uM TTX",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src2", "excerpt": "2 mM CoCl2 and 20 uM TTX to isolate specific channel types" }]
+    },
+    {
+      "id": "m5",
+      "name": "Cobalt chloride (CoCl2)",
+      "role": "reagent",
+      "workingConcentration": "2 mM",
+      "specification": "Non-specific Ca2+ channel blocker; optional",
+      "rawText": "2 mM CoCl2",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src2", "excerpt": "2 mM CoCl2 and 20 uM TTX to isolate specific channel types" }]
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Patch-clamp amplifier",
+      "model": "Axopatch 200B (Axon Instruments)",
+      "settings": "Whole-cell voltage-clamp and current-clamp; fast (pipette) and slow (whole-cell) capacitance compensation; low-pass Bessel filter; series-resistance compensation as needed",
+      "rawText": "analog Axopatch 200B amplifier",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src2", "excerpt": "analog Axopatch 200B amplifier" }]
+    },
+    {
+      "id": "e2",
+      "name": "Digitizer + acquisition software",
+      "model": "Digidata 1322A; pClamp 8.1 / Clampfit (Axon Instruments)",
+      "settings": "Sampling 10 kHz; stimulus waveforms defined in pClamp",
+      "rawText": "DigiData 1322A ... pClamp 8.1 software ... Clampfit",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src2", "excerpt": "DigiData 1322A ... pClamp 8.1 software ... Clampfit" }]
+    },
+    {
+      "id": "e3",
+      "name": "Micropipette puller",
+      "settings": "Program to yield 3-7 MOhm patch pipettes",
+      "needsReview": true
+    },
+    {
+      "id": "e4",
+      "name": "Recording rig: upright microscope, micromanipulator, and gravity/peristaltic perfusion",
+      "settings": "Continuous bath perfusion at ~1.5 mL/min",
+      "rawText": "1.5 mL per minute",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "excerpt": "1.5 mL per minute" }]
+    }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "Cultured / iPSC-derived neurons", "role": "input", "kind": "organism", "organism": "Homo sapiens (iPSC-derived)", "description": "Adherent neurons in the recording chamber; single healthy cell selected for patching.", "needsReview": true },
+    { "id": "sp2", "name": "Whole-cell recording (digitized current/voltage traces)", "role": "output", "kind": "dataset", "dataType": "ABF (voltage-clamp current families and current-clamp membrane-potential / action-potential traces)" },
+    { "id": "sp3", "name": "Analyzed membrane properties", "role": "output", "kind": "dataset", "dataType": "table (IV relationship, input resistance/conductance, membrane capacitance, firing properties)" }
+  ],
+  "containers": [
+    { "id": "c1", "name": "Recording chamber / bath on microscope stage", "type": "chamber", "needsReview": true }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Internal (pipette) solution recipe",
+      "kind": "recipe",
+      "columns": ["Component", "Concentration (mM)"],
+      "rows": [
+        ["K-gluconate", 140],
+        ["KCl", 4],
+        ["EGTA", 0.5],
+        ["HEPES", 10],
+        ["MgATP", 4],
+        ["NaGTP", 0.4],
+        ["Na2-phosphocreatine", 4]
+      ],
+      "note": "pH 7.3; osmolarity 295 mOsm/L. Source src1."
+    },
+    {
+      "id": "t2",
+      "title": "External (bath) aCSF recipe",
+      "kind": "recipe",
+      "columns": ["Component", "Concentration (mM)"],
+      "rows": [
+        ["NaCl", 126],
+        ["KCl", 3],
+        ["CaCl2", 2.5],
+        ["MgCl2", 1.3],
+        ["NaHCO3", 26],
+        ["NaH2PO4", 1.25],
+        ["glucose", 20]
+      ],
+      "note": "~310 mOsm/L; bubble with 95% O2 / 5% CO2. Source src1."
+    },
+    {
+      "id": "t3",
+      "title": "Voltage-clamp step family (stimulus program)",
+      "kind": "program",
+      "columns": ["Parameter", "Value", "Note"],
+      "rows": [
+        ["Command mode", "Voltage clamp", ""],
+        ["Holding potential", "-70 mV", "-70 mV for EPSCs; 0 mV for IPSCs (src1)"],
+        ["First step level", "-80 mV", "representative IV family (src2 examples)"],
+        ["Last step level", "+50 mV", "representative IV family (src2 examples)"],
+        ["Step increment", "5 mV", "src2 examples of +-5 mV steps"],
+        ["Step duration", "50 ms", "src2"],
+        ["Inter-sweep interval", "2 s", "representative"],
+        ["Number of sweeps", 27, "DERIVED = (span -80..+50 mV)/5 + 1; encoded natively as step.repeat.count on s6"]
+      ],
+      "note": "The sweep loop itself is encoded natively on step s6 via step.repeat (count 27); this program table (kind 'program') documents the per-parameter waveform. Values are representative and combined across sources; treat as needsReview and confirm against the target current under study.",
+      "needsReview": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Preparation",
+      "action": "Pull a borosilicate pipette, back-fill it with K-gluconate internal solution, and mount it on the amplifier headstage. Apply light positive pressure, lower the tip into the bath, and measure the pipette (tip) resistance from the response to a small voltage test pulse.",
+      "materialIds": ["m1", "m3"],
+      "equipmentIds": ["e1", "e3"],
+      "tableIds": ["t1"],
+      "inputIds": ["m1"],
+      "parameters": [
+        { "type": "resistance", "value": 3, "valueMax": 7, "comparator": "range", "unit": "MOhm", "rawText": "between 3 and 7 MOhm", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "excerpt": "between 3 and 7 MOhm ... 5 MOhm standard" }] }
+      ],
+      "acceptanceCriteria": [
+        { "parameter": "pipette (tip) resistance", "comparator": "range", "value": 3, "valueMax": 7, "unit": "MOhm", "classification": "accept pipette if 3-7 MOhm (5 MOhm standard)", "description": "Tip-resistance window; reject clogged or over/under-pulled pipettes.", "needsReview": true }
+      ],
+      "expectedResult": "Stable pipette resistance of 3-7 MOhm with no clogging.",
+      "criticalNotes": "v0.3: pipette resistance is a native parameter.type 'resistance' (was 'other' + unit MOhm in the v0.2 workaround).",
+      "sourceReferences": [{ "sourceId": "src1", "excerpt": "3 and 7 MOhm ... 5 MOhm standard" }]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Preparation",
+      "action": "Place cells in the recording chamber and start continuous bath perfusion with oxygenated aCSF; select a single healthy cell for patching.",
+      "materialIds": ["m2"],
+      "equipmentIds": ["e4"],
+      "containerIds": ["c1"],
+      "inputIds": ["sp1", "m2"],
+      "tableIds": ["t2"],
+      "parameters": [
+        { "type": "flowRate", "value": 1.5, "unit": "mL/min", "rawText": "1.5 mL per minute", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "excerpt": "1.5 mL per minute" }] }
+      ],
+      "expectedResult": "Healthy cell identified; stable perfusion, no bubbles over the cell.",
+      "criticalNotes": "v0.3: perfusion flow rate is a native parameter.type 'flowRate' (was 'other' + unit mL/min in the v0.2 workaround).",
+      "sourceReferences": [{ "sourceId": "src1", "excerpt": "1.5 mL per minute" }]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Seal formation",
+      "action": "Apply light positive pressure, lower the pipette onto the cell, then release the pressure to form a gigaseal; monitor seal formation with a repeated voltage test pulse. Once the gigaseal is stable, cancel the fast (pipette) capacitance transients.",
+      "materialIds": ["m3"],
+      "equipmentIds": ["e1"],
+      "inputIds": ["sp1"],
+      "parameters": [
+        { "type": "voltage", "value": 10, "unit": "mV", "rawText": "10 mV test pulse", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "excerpt": "10 mV test pulse at 100 Hz" }] },
+        { "type": "frequency", "value": 100, "unit": "Hz", "rawText": "10 mV test pulse at 100 Hz", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "excerpt": "10 mV test pulse at 100 Hz" }] },
+        { "type": "resistance", "value": 1, "comparator": "min", "unit": "GOhm", "rawText": "obtain a GOhm seal (minimum 1 GOhm)", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "excerpt": "Release the positive pressure to obtain a GOhm seal ... 1 GOhm" }] },
+        { "type": "capacitance", "value": null, "unit": "pF", "rawText": "cancel fast pipette capacitance (Cfast); typical value read from the transient, not fixed by source", "needsReview": true }
+      ],
+      "acceptanceCriteria": [
+        { "parameter": "seal resistance", "comparator": "min", "value": 1, "unit": "GOhm", "classification": "accept cell only if seal resistance >= 1 GOhm (gigaseal)", "description": "Seal-quality go/no-go gate before break-in.", "onFailStepId": "s1" }
+      ],
+      "expectedResult": "Seal resistance >= 1 GOhm (gigaseal).",
+      "criticalNotes": "v0.3: seal resistance is native parameter.type 'resistance', and the >=1 GOhm gate is a native step.acceptanceCriteria (comparator 'min') instead of the v0.2 free-text control. The test pulse combines a voltage (mV) and a repetition frequency (Hz).",
+      "sourceReferences": [
+        { "sourceId": "src1", "excerpt": "10 mV test pulse at 100 Hz ... Release the positive pressure to obtain a GOhm seal ... 1 GOhm" },
+        { "sourceId": "src3", "excerpt": "giga-seals (pipette-membrane seals with resistances of 10^9-10^11 Ohm)" }
+      ]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Break-in",
+      "action": "Rupture the patch to enter whole-cell mode using brief suction pulses or the amplifier 'zap' function. Compensate the whole-cell (slow) capacitance and series resistance, then monitor series (access) resistance and read the whole-cell membrane capacitance.",
+      "equipmentIds": ["e1"],
+      "outputIds": ["sp2"],
+      "parameters": [
+        { "type": "resistance", "value": null, "unit": "MOhm", "rawText": "monitor series (access) resistance (no target value given for this cell type)", "needsReview": true },
+        { "type": "capacitance", "value": null, "unit": "pF", "rawText": "read whole-cell membrane capacitance (Cm) from the capacitive transient / amplifier whole-cell (slow) compensation; value is cell-specific, not fixed by source", "needsReview": true }
+      ],
+      "acceptanceCriteria": [
+        { "parameter": "series (access) resistance", "comparator": "max", "value": null, "unit": "MOhm", "classification": "keep recordings with stable, low access resistance; discard on substantial Ra drift (upper-bound target is rig-dependent, not fixed by the sources)", "description": "Access-resistance monitoring gate; set the numeric ceiling per rig.", "needsReview": true }
+      ],
+      "expectedResult": "Whole-cell configuration achieved; capacitive transients appear; stable, low series resistance.",
+      "criticalNotes": "v0.3: series/access resistance is native parameter.type 'resistance' and whole-cell membrane capacitance is native 'capacitance' (pF) - both were unavailable in v0.2 (resistance was 'other'; capacitance had no representation). Values are null + needsReview because the sources give no target for this cell type.",
+      "sourceReferences": [
+        { "sourceId": "src1", "excerpt": "Apply light and short suction pulses ... or brief electrical pulses via zap function" },
+        { "sourceId": "src3", "excerpt": "whole-cell recording ... access to the cell interior after rupturing the patch" }
+      ]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Acquisition setup",
+      "action": "Configure the acquisition: set the holding potential and the digitizer sampling rate and anti-alias (low-pass) filter.",
+      "equipmentIds": ["e1", "e2"],
+      "parameters": [
+        { "type": "voltage", "value": -70, "unit": "mV", "rawText": "-70 mV to record spontaneous excitatory postsynaptic currents", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "excerpt": "-70 mV ... 0 mV holding" }] },
+        { "type": "voltage", "value": 0, "unit": "mV", "rawText": "0 mV to record spontaneous inhibitory postsynaptic currents", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "excerpt": "-70 mV ... 0 mV holding" }] },
+        { "type": "frequency", "value": 10, "unit": "kHz", "rawText": "sampling frequency of 10 kHz", "needsReview": true, "sourceReferences": [{ "sourceId": "src2", "excerpt": "sampling frequency of 10 kHz" }] },
+        { "type": "frequency", "value": null, "unit": "kHz", "rawText": "low-pass filter; set below Nyquist and appropriate to the signal (src2 reports a Gaussian -3 dB cutoff at 50 Hz for a specific analysis; a fast current family is typically filtered at ~2-5 kHz)", "needsReview": true, "sourceReferences": [{ "sourceId": "src2", "excerpt": "Lowpass filtered (Gaussian, -3 dB cutoff at 50 Hz)" }] }
+      ],
+      "expectedResult": "Amplifier held at command potential; acquisition sampling and filter configured.",
+      "criticalNotes": "Sampling rate and filter cutoff map cleanly to parameter.type 'frequency'; holding potential to 'voltage'. Filter cutoff left null + needsReview: the source's 50 Hz Gaussian is a specific-analysis example, not the setting for a fast IV family.",
+      "sourceReferences": [
+        { "sourceId": "src1", "excerpt": "-70 mV ... 0 mV holding" },
+        { "sourceId": "src2", "excerpt": "sampling frequency of 10 kHz; Lowpass filtered (Gaussian, -3 dB cutoff at 50 Hz)" }
+      ]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Voltage-clamp recording",
+      "action": "Run the voltage-step (IV) family: from the holding potential, apply command steps across the range in fixed increments, each held for the step duration, repeating every inter-sweep interval; acquire the current family.",
+      "equipmentIds": ["e1", "e2"],
+      "tableIds": ["t3"],
+      "outputIds": ["sp2"],
+      "repeat": {
+        "count": 27,
+        "over": "voltage-step sweeps from -80 mV to +50 mV in 5 mV increments",
+        "notes": "n = (Vmax - Vmin)/increment + 1 = (50 - (-80))/5 + 1 = 27 sweeps; representative family, verify against the rig and the current under study."
+      },
+      "parameters": [
+        { "type": "voltage", "value": -80, "valueMax": 50, "comparator": "range", "unit": "mV", "rawText": "steps from -80 mV to +50 mV", "needsReview": true, "sourceReferences": [{ "sourceId": "src2", "excerpt": "+-5 mV, +-10 mV steps (50 ms); steps to +50/+60 mV" }] },
+        { "type": "voltage", "value": 5, "unit": "mV", "rawText": "5-mV increments", "needsReview": true, "sourceReferences": [{ "sourceId": "src2", "excerpt": "+-5 mV steps" }] },
+        { "type": "time", "value": 50, "unit": "ms", "rawText": "50 ms per step", "needsReview": true, "sourceReferences": [{ "sourceId": "src2", "excerpt": "steps (50 ms)" }] },
+        { "type": "time", "value": 2, "unit": "s", "rawText": "every 2 s (representative inter-sweep interval)", "needsReview": true },
+        { "type": "count", "value": 27, "unit": "sweeps", "formula": "n = (Vmax - Vmin)/increment + 1 = (50 - (-80))/5 + 1", "rawText": "DERIVED number of sweeps for the -80..+50 mV family in 5 mV steps", "needsReview": true }
+      ],
+      "expectedResult": "A family of voltage-dependent membrane currents; an IV relationship can be constructed.",
+      "criticalNotes": "v0.3: the sweep loop is encoded natively via step.repeat (count 27) instead of the v0.2 table-only workaround; the derived sweep count also demonstrates parameter.formula. Table t3 (kind 'program') documents the waveform.",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src2", "excerpt": "+-5 mV, +-10 mV steps (50 ms); steps to +50/+60 mV" }]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Current-clamp recording",
+      "action": "Switch the amplifier to current-clamp; hold the cell near rest with a small bias current, then inject a family of depolarizing current steps to evoke action potentials.",
+      "equipmentIds": ["e1", "e2"],
+      "outputIds": ["sp2"],
+      "repeat": {
+        "count": null,
+        "over": "depolarizing current-step sweeps",
+        "notes": "Number and amplitude of current steps not specified in the sources; set per experiment (e.g. incrementing pA steps until firing saturates)."
+      },
+      "parameters": [
+        { "type": "voltage", "value": -70, "valueMax": -60, "comparator": "range", "unit": "mV", "rawText": "current-clamp target close to the expected resting potential (-60 to -70 mV)", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "excerpt": "Change to a negative voltage close to the expected cell resting potential (-60 to -70 mV)" }] },
+        { "type": "current", "value": null, "unit": "pA", "rawText": "inject depolarizing current steps (step size/range not specified in source)", "needsReview": true }
+      ],
+      "expectedResult": "Resting membrane potential recorded; graded action-potential firing with increasing current injection.",
+      "criticalNotes": "v0.3: the current-step family is encoded via step.repeat (open count + untilCondition-style note). The injection amplitude (pA) is native parameter.type 'current' with value null + needsReview because the sources do not specify the step size/range.",
+      "sourceReferences": [{ "sourceId": "src1", "excerpt": "Change to a negative voltage close to the expected cell resting potential (-60 to -70 mV)" }]
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Analysis",
+      "action": "Save and analyze traces (e.g., in Clampfit); apply the liquid junction potential correction and report membrane properties (IV curves, input resistance/conductance, membrane capacitance, firing properties).",
+      "equipmentIds": ["e2"],
+      "inputIds": ["sp2"],
+      "outputIds": ["sp3"],
+      "parameters": [
+        { "type": "voltage", "value": null, "unit": "mV", "formula": "V_corrected = V_command - V_LJP", "rawText": "liquid junction potential (K-gluconate internal vs aCSF) not corrected during recording; measure and subtract per rig", "needsReview": true },
+        { "type": "resistance", "value": null, "unit": "MOhm", "rawText": "input resistance (Rin) from the steady-state response to a small hyperpolarizing step", "needsReview": true },
+        { "type": "conductance", "value": null, "unit": "nS", "formula": "Gin = 1 / Rin", "rawText": "input conductance (Gin), reciprocal of input resistance", "needsReview": true },
+        { "type": "capacitance", "value": null, "unit": "pF", "rawText": "report whole-cell membrane capacitance (Cm) per cell", "needsReview": true }
+      ],
+      "expectedResult": "IV curves, input resistance/conductance, membrane capacitance, and firing properties reported.",
+      "criticalNotes": "v0.3: input resistance ('resistance'), input conductance ('conductance', with formula Gin = 1/Rin), and membrane capacitance ('capacitance') are all native parameter kinds. The LJP correction uses parameter.formula. All values null + needsReview: they are measured per cell, not fixed by the sources.",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src2", "excerpt": "Clampfit (pClamp, Axon Instruments)" }]
+    }
+  ],
+  "controls": [
+    { "name": "Gigaseal quality control", "description": "Accept a cell only if seal resistance is >= 1 GOhm before break-in (enforced by the acceptanceCriteria on s3)." },
+    { "name": "Series-resistance monitoring", "description": "Track series (access) resistance throughout (acceptanceCriteria on s4); discard the recording if it drifts substantially.", "needsReview": true },
+    { "name": "Pharmacological isolation control", "description": "Optionally apply 20 uM TTX and/or 2 mM CoCl2 to confirm the identity of recorded currents (Na+ / Ca2+).", "needsReview": true }
+  ],
+  "expectedOutputs": [
+    "Gigaohm seal (>= 1 GOhm) followed by stable whole-cell access.",
+    "Voltage-clamp current family and derived current-voltage (IV) relationship.",
+    "Current-clamp resting membrane potential and evoked action-potential traces.",
+    "Digitized recording files with the stimulus program metadata, plus reported input resistance/conductance and membrane capacitance."
+  ],
+  "troubleshooting": [
+    { "problem": "Cannot form a gigaseal", "cause": "Dirty pipette tip, unhealthy cell, or too much positive pressure", "solution": "Use a fresh pipette, select a healthier cell, and reduce positive pressure before contact" },
+    { "problem": "Seal lost on break-in", "cause": "Excessive suction/zap", "solution": "Use gentler, briefer suction pulses or a shorter zap" },
+    { "problem": "Rundown / unstable currents", "cause": "Rising series resistance or dialysis of the cell", "solution": "Monitor and compensate series resistance; limit recording duration" },
+    { "problem": "Distorted / aliased currents", "cause": "Filter cutoff or sampling rate set inappropriately", "solution": "Set the low-pass filter below the Nyquist frequency and sample at >= 2x the filter cutoff" }
+  ],
+  "safety": [
+    "TTX is a potent neurotoxin; CoCl2 is toxic - handle and dispose per institutional rules.",
+    "Follow institutional biosafety approval for the specific cell source (human iPSC-derived neurons)."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "The voltage-step family (range/increment/duration/interval/sweep count) and the current-clamp injection family are representative, combined across sources, and marked needsReview; tailor them to the current/cell under study. Filter cutoff, series-resistance ceiling, membrane capacitance, temperature, and the liquid junction potential are not fixed by the primary sources and are flagged needsReview. Manual whole-cell recording only.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "url",
+      "title": "Whole Cell Patch Clamp Recordings for Characterizing Neuronal Electrical Properties of iPSC-derived neurons (Ana Gonzalez Rueda, Ole Paulsen Lab, University of Cambridge)",
+      "url": "https://axolbio.com/publications/whole-cell-patch-clamp-protocol/",
+      "license": "(c) AXOL Bioscience Ltd. All Rights Reserved; reuse terms not specified",
+      "licenseVerified": false
+    },
+    {
+      "id": "src2",
+      "kind": "article",
+      "title": "Whole-cell patch-clamp recording and parameters (Kodirov, Biophysical Reviews, 2023)",
+      "doi": "10.1007/s12551-023-01055-8",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10133435/",
+      "license": "(c) IUPAB and Springer-Verlag GmbH Germany, part of Springer Nature 2023",
+      "licenseVerified": false
+    },
+    {
+      "id": "src3",
+      "kind": "article",
+      "title": "Improved patch-clamp techniques for high-resolution current recording from cells and cell-free membrane patches (Hamill, Marty, Neher, Sakmann, Sigworth; Pflugers Archiv 391:85-100, 1981)",
+      "doi": "10.1007/BF00656997",
+      "url": "https://doi.org/10.1007/BF00656997",
+      "license": "Cited (foundational method), not reproduced",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft",
+    "derivedFromVersionId": "lr-stress-patch-clamp"
+  }
+}

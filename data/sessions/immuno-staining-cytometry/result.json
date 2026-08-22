@@ -1,0 +1,366 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "immuno-staining-cytometry",
+  "sessionTitle": "Immunostaining and cytometry",
+  "packetStatus": "complete",
+  "startedAt": "2026-08-01T22:42:57Z",
+  "writtenAt": "2026-08-01T22:42:57Z",
+  "worker": "codex-protocol-atlas-immuno-staining-cytometry-2026-08-01",
+  "sourcesSearched": [
+    "https://www.protocols.io/",
+    "https://api.crossref.org/works/10.17504/protocols.io.5jyl8e5p8l2w/v1",
+    "https://api.crossref.org/works/10.17504/protocols.io.kxygxzqyzv8j/v1",
+    "https://api.crossref.org/works/10.17504/protocols.io.5qpvorb49v4o/v1",
+    "https://api.crossref.org/works/10.17504/protocols.io.bfqzjmx6",
+    "https://doi.org/10.17504/protocols.io.5jyl8e5p8l2w/v1",
+    "https://doi.org/10.17504/protocols.io.kxygxzqyzv8j/v1",
+    "https://doi.org/10.17504/protocols.io.5qpvorb49v4o/v1",
+    "https://doi.org/10.17504/protocols.io.bfqzjmx6",
+    "https://www.thermofisher.com/us/en/home/life-science/cell-analysis/cellular-imaging/fluorescence-microscopy/immunofluorescence.html",
+    "https://www.abcam.com/protocols/immunohistochemistry-protocol",
+    "https://www.bdbiosciences.com/en-us/learn/research-stem-cell-research/flow-cytometry-basics",
+    "https://www.bdbiosciences.com/en-us/resources/protocols/flow-cytometry",
+    "https://www.bdbiosciences.com/en-us/resources/protocols/cell-sorting",
+    "https://www.protocols.io/view/immunofluorescence-staining-d7j89krw/v1",
+    "https://www.protocols.io/view/dab-antibody-ihc-staining-protocol-caukseuw/v1",
+    "https://www.protocols.io/view/protocols-for-processing-of-fresh-murine-tissues-f-cieyubfw/v1",
+    "https://www.protocols.io/view/hubmap-uf-tmc-facs-sorting-of-live-cells-for-10x-s-bfqzjmx6",
+    "https://www.protocols.io/view/immunofluorescence-staining-protocol-with-antigen-retrieval-bp2l62nk1gqe/v1",
+    "https://www.protocols.io/view/immunohistochemistry-ihc-on-frozen-sections-pkmdku6",
+    "https://www.protocols.io/view/flow-cytometry-protocol-mgdc3s6",
+    "https://www.protocols.io/view/microglia-facs-staining-after-isolation-from-ucsd-b9gzr3x6",
+    "https://doi.org/10.17504/protocols.io.5qpvo1j6bg4o"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "immunofluorescence",
+      "categoryLabel": "Immunofluorescence staining",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://doi.org/10.17504/protocols.io.5jyl8e5p8l2w/v1",
+        "https://api.crossref.org/works/10.17504/protocols.io.5jyl8e5p8l2w/v1",
+        "https://www.protocols.io/view/immunofluorescence-staining-d7j89krw/v1",
+        "https://www.protocols.io/view/immunofluorescence-staining-protocol-with-antigen-retrieval-bp2l62nk1gqe/v1",
+        "https://www.thermofisher.com/us/en/home/life-science/cell-analysis/cellular-imaging/fluorescence-microscopy/immunofluorescence.html"
+      ],
+      "representative": {
+        "title": "Immunofluorescence staining v1",
+        "protocolType": "Public experimental protocol",
+        "assay": "Cell immunofluorescence imaging and protein localization",
+        "operation": "Fixation, permeabilization, antibody staining, nuclear counterstaining, and fluorescence imaging of cells on coverslips",
+        "source": "protocols.io",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.5jyl8e5p8l2w/v1",
+        "sourceRecordId": "5jyl8e5p8l2w",
+        "doi": "10.17504/protocols.io.5jyl8e5p8l2w/v1",
+        "authors": [
+          "Devin M. Fuller",
+          "Yumei Wu",
+          "Florian Schueder",
+          "Burha Rasool",
+          "Shanta Nag",
+          "Justin L. Korfhage",
+          "Rolando Garcia-Milian",
+          "Katerina D. Melnyk",
+          "Joerg Bewersdorf",
+          "Pietro De Camilli",
+          "Thomas Melia"
+        ],
+        "published": "2025-04-07",
+        "updated": null,
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.5jyl8e5p8l2w/v1",
+        "licenseVerifiedAt": "2026-08-01T22:42:57Z",
+        "metadataVerifiedAt": "2026-08-01T22:42:57Z",
+        "specimen": "Cells grown on coverslips",
+        "organism": null,
+        "platform": "Fluorescence microscopy; instrument not specified in the verified metadata",
+        "methodVariant": "Coverslip-based cell IF with formaldehyde fixation, Triton X-100 permeabilization, antibody staining, and DAPI counterstain",
+        "safetyLevel": "not specified",
+        "confidence": 0.93,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.88,
+          "metadataCompleteness": 0.93,
+          "freshness": 0.95,
+          "corroboration": 0.86,
+          "overall": 0.93
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because it is a recent DOI-backed cell immunofluorescence record with explicit fixation, permeabilization, antibody staining, nuclear counterstaining, and imaging context. Tissue-section antigen retrieval is kept separate as a meaningful variant."
+      },
+      "screened": [
+        {
+          "title": "Immunofluorescence staining protocol with Antigen Retrieval v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.bp2l62nk1gqe/v1",
+          "sourceRecordId": "bp2l62nk1gqe",
+          "doi": "10.17504/protocols.io.bp2l62nk1gqe/v1",
+          "screenStatus": "wrong-variant",
+          "reason": "Strong public IF record, but it is centered on fixed mouse brain tissue sections and antigen retrieval rather than the selected cell-on-coverslip workflow."
+        }
+      ],
+      "coverageGaps": [
+        "Tissue-section IF, frozen-section IF, and antigen-retrieval workflows are materially distinct from the selected cultured-cell representative.",
+        "The verified metadata does not specify a confocal versus widefield instrument, acquisition settings, or spectral unmixing workflow.",
+        "Primary antibody target, clone, secondary fluorophore, and quantitative image-analysis method remain assay-specific facets."
+      ],
+      "nextSearchSuggestions": [
+        "Split cultured-cell IF, frozen-section IF, and paraffin-section IF into child categories if tissue staining is required.",
+        "Add imaging-platform and antigen-retrieval fields for confocal, widefield, and tissue-section variants."
+      ]
+    },
+    {
+      "categoryId": "immunohistochemistry",
+      "categoryLabel": "Immunohistochemistry",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://doi.org/10.17504/protocols.io.kxygxzqyzv8j/v1",
+        "https://api.crossref.org/works/10.17504/protocols.io.kxygxzqyzv8j/v1",
+        "https://www.protocols.io/view/dab-antibody-ihc-staining-protocol-caukseuw/v1",
+        "https://www.protocols.io/view/immunohistochemistry-ihc-on-frozen-sections-pkmdku6",
+        "https://www.abcam.com/protocols/immunohistochemistry-protocol"
+      ],
+      "representative": {
+        "title": "DAB ANTIBODY (IHC) STAINING PROTOCOL v1",
+        "protocolType": "Public experimental protocol",
+        "assay": "Chromogenic immunohistochemistry",
+        "operation": "Antibody-based DAB staining of formalin-fixed paraffin-embedded tissue sections",
+        "source": "protocols.io",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.kxygxzqyzv8j/v1",
+        "sourceRecordId": "kxygxzqyzv8j",
+        "doi": "10.17504/protocols.io.kxygxzqyzv8j/v1",
+        "authors": [
+          "Michael Lee"
+        ],
+        "published": "2022-06-07",
+        "updated": "2024-05-31",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.kxygxzqyzv8j/v1",
+        "licenseVerifiedAt": "2026-08-01T22:42:57Z",
+        "metadataVerifiedAt": "2026-08-01T22:42:57Z",
+        "specimen": "Formalin-fixed paraffin-embedded tissue sections",
+        "organism": null,
+        "platform": "Chromogenic brightfield microscopy; instrument not specified in the verified metadata",
+        "methodVariant": "Paraffin-section DAB IHC with antigen-retrieval and antibody-incubation steps",
+        "safetyLevel": "not specified",
+        "confidence": 0.94,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.98,
+          "sourceAuthority": 0.89,
+          "metadataCompleteness": 0.94,
+          "freshness": 0.84,
+          "corroboration": 0.9,
+          "overall": 0.94
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because it is a DOI-backed, explicitly chromogenic DAB IHC record with a paraffin-section variant, source author, publication date, update evidence, and CC BY 4.0 metadata. Frozen-section IHC is retained as a separate screened variant."
+      },
+      "screened": [
+        {
+          "title": "Immunohistochemistry (IHC) on Frozen Sections",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/immunohistochemistry-ihc-on-frozen-sections-pkmdku6",
+          "sourceRecordId": "pkmdku6",
+          "doi": null,
+          "screenStatus": "wrong-variant",
+          "reason": "Directly in scope for IHC but uses frozen sections, so fixation, section handling, antigen retrieval, and morphology are not interchangeable with the selected FFPE/DAB workflow."
+        }
+      ],
+      "coverageGaps": [
+        "Frozen-section IHC is not represented by the selected paraffin-section record and should remain a separate child category.",
+        "Antibody target, clone, retrieval chemistry, chromogen development endpoint, counterstain, and digital image-analysis settings are target- and laboratory-specific.",
+        "Fluorescent IHC/IF and multiplex chromogenic or spectral IHC are distinct readout variants."
+      ],
+      "nextSearchSuggestions": [
+        "Add a dedicated frozen-section IHC representative with its own retrieval and morphology facets.",
+        "Add multiplex IHC, fluorescent IHC, and digital pathology as separate method variants."
+      ]
+    },
+    {
+      "categoryId": "flow-cytometry",
+      "categoryLabel": "Flow cytometry immunophenotyping",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://doi.org/10.17504/protocols.io.5qpvorb49v4o/v1",
+        "https://api.crossref.org/works/10.17504/protocols.io.5qpvorb49v4o/v1",
+        "https://www.protocols.io/view/protocols-for-processing-of-fresh-murine-tissues-f-cieyubfw/v1",
+        "https://www.protocols.io/view/flow-cytometry-protocol-mgdc3s6",
+        "https://www.protocols.io/view/microglia-facs-staining-after-isolation-from-ucsd-b9gzr3x6",
+        "https://www.bdbiosciences.com/en-us/learn/research-stem-cell-research/flow-cytometry-basics",
+        "https://www.bdbiosciences.com/en-us/resources/protocols/flow-cytometry"
+      ],
+      "representative": {
+        "title": "Protocols for processing of fresh murine tissues for flow cytometry v1",
+        "protocolType": "Public experimental protocol",
+        "assay": "Multicolor flow cytometry immunophenotyping",
+        "operation": "Single-cell preparation and antibody-panel staining of fresh murine tissues for multicolor flow cytometry",
+        "source": "protocols.io",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.5qpvorb49v4o/v1",
+        "sourceRecordId": "5qpvorb49v4o",
+        "doi": "10.17504/protocols.io.5qpvorb49v4o/v1",
+        "authors": [
+          "Diana Rose E Ranoa"
+        ],
+        "published": "2022-10-27",
+        "updated": "2023-05-24",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.5qpvorb49v4o/v1",
+        "licenseVerifiedAt": "2026-08-01T22:42:57Z",
+        "metadataVerifiedAt": "2026-08-01T22:42:57Z",
+        "specimen": "Fresh murine tissue single-cell suspensions",
+        "organism": "Mouse",
+        "platform": "BD LSRII flow cytometer; analysis with FlowJo or FCS Express",
+        "methodVariant": "Multicolor surface and intracellular staining with viability dye, fluorescence-minus-one controls, single-stain compensation controls, and tissue-specific antibody panels",
+        "safetyLevel": "not specified",
+        "confidence": 0.95,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.97,
+          "sourceAuthority": 0.91,
+          "metadataCompleteness": 0.96,
+          "freshness": 0.8,
+          "corroboration": 0.92,
+          "overall": 0.95
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because the record exposes the key immunophenotyping facets requested for this category: tissue-derived single-cell preparation, multicolor antibody panels, viability staining, compensation and fluorescence-minus-one controls, named cytometer, and analysis software. Human blood/PBMC and spectral-cytometry variants are kept separate."
+      },
+      "screened": [
+        {
+          "title": "Flow Cytometry Protocol",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/flow-cytometry-protocol-mgdc3s6",
+          "sourceRecordId": "mgdc3s6",
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Broad public flow-cytometry workflow with useful staining and control context, but it is less specific about a complete panel, tissue preparation, instrument, and analysis configuration than the selected record."
+        },
+        {
+          "title": "Microglia FACS staining after isolation from UCSD",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/microglia-facs-staining-after-isolation-from-ucsd-b9gzr3x6",
+          "sourceRecordId": "b9gzr3x6",
+          "doi": "10.17504/protocols.io.b9gzr3x6",
+          "screenStatus": "wrong-variant",
+          "reason": "Strong immunophenotyping alternative, but it is restricted to an isolated microglia population and is narrower than the selected tissue-panel representative."
+        }
+      ],
+      "coverageGaps": [
+        "Human blood, PBMC, clinical immunophenotyping, spectral cytometry, and mass cytometry require distinct sample-preparation and panel facets.",
+        "The selected record is mouse-tissue focused; panel markers and fluorophore assignments should not be generalized to other species or instruments.",
+        "Compensation and fluorescence-minus-one controls are represented, but instrument-specific unmixing, spillover-spreading assessment, and standardized gating templates are not normalized here."
+      ],
+      "nextSearchSuggestions": [
+        "Split murine tissue, human blood/PBMC, intracellular cytokine, phospho-flow, spectral, and mass-cytometry workflows.",
+        "Add structured fields for panel markers, fluorophores, viability dye, controls, cytometer, compensation or unmixing, and analysis software."
+      ]
+    },
+    {
+      "categoryId": "cell-sorting",
+      "categoryLabel": "Fluorescence-activated cell sorting",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://doi.org/10.17504/protocols.io.bfqzjmx6",
+        "https://api.crossref.org/works/10.17504/protocols.io.bfqzjmx6",
+        "https://www.protocols.io/view/hubmap-uf-tmc-facs-sorting-of-live-cells-for-10x-s-bfqzjmx6",
+        "https://doi.org/10.17504/protocols.io.5qpvo1j6bg4o",
+        "https://www.bdbiosciences.com/en-us/resources/protocols/cell-sorting"
+      ],
+      "representative": {
+        "title": "HuBMAP UF TMC - FACS Sorting of Live Cells for 10x scRNASeq v1",
+        "protocolType": "Public experimental protocol",
+        "assay": "Fluorescence-activated cell sorting",
+        "operation": "Live-cell FACS isolation for single-cell RNA-seq library preparation",
+        "source": "protocols.io / HuBMAP UF TMC",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.bfqzjmx6",
+        "sourceRecordId": "bfqzjmx6",
+        "doi": "10.17504/protocols.io.bfqzjmx6",
+        "authors": [
+          "Maigan Brusko"
+        ],
+        "published": "2020-04-28",
+        "updated": "2020-10-02",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.bfqzjmx6",
+        "licenseVerifiedAt": "2026-08-01T22:42:57Z",
+        "metadataVerifiedAt": "2026-08-01T22:42:57Z",
+        "specimen": "Live single-cell suspension prepared for sorting",
+        "organism": null,
+        "platform": "BD FACSAria III; downstream 10x Genomics single-cell RNA sequencing",
+        "methodVariant": "Viability-gated fluorescent sorting with collection into downstream single-cell RNA-seq-compatible tubes",
+        "safetyLevel": "not specified",
+        "confidence": 0.94,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.98,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.94,
+          "freshness": 0.7,
+          "corroboration": 0.88,
+          "overall": 0.94
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because it is a DOI-backed live-cell sorting record with a named BD FACSAria III platform, viability-gated workflow, and explicit 10x Genomics downstream use. Sort purity metrics, post-sort culture recovery, and non-single-cell-RNA downstream uses remain separate facets."
+      },
+      "screened": [
+        {
+          "title": "FACS sorting in C. elegans",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.5qpvo1j6bg4o",
+          "sourceRecordId": "5qpvo1j6bg4o",
+          "doi": "10.17504/protocols.io.5qpvo1j6bg4o",
+          "screenStatus": "wrong-variant",
+          "reason": "Directly relevant to fluorescence-activated sorting, but it is organism-specific and is not a suitable representative for the selected live-cell mammalian single-cell-RNA downstream context."
+        }
+      ],
+      "coverageGaps": [
+        "The representative is optimized for live-cell sorting into a 10x single-cell RNA-seq workflow rather than downstream culture, transplantation, genomics, or bulk assays.",
+        "Numeric sort purity, post-sort viability, event rate, yield, collection buffer, and recovery criteria are not normalized in the metadata fields.",
+        "Sort nozzle, pressure, gating hierarchy, doublet exclusion, and biosafety configuration can vary by instrument and specimen."
+      ],
+      "nextSearchSuggestions": [
+        "Add separate representatives for sorting intended for downstream culture, bulk sequencing, transplantation, and single-cell genomics.",
+        "Add structured sort-quality fields for purity, viability, yield, recovery, nozzle, pressure, and collection format."
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "immunofluorescence",
+      "immunohistochemistry",
+      "flow-cytometry",
+      "cell-sorting"
+    ],
+    "actualCategoryIds": [
+      "immunofluorescence",
+      "immunohistochemistry",
+      "flow-cytometry",
+      "cell-sorting"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": true,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-01T22:42:57Z",
+    "selfCheckNotes": [
+      "Exactly four categoryResults are present in the assigned packet order.",
+      "Every representative has a stable HTTP(S) DOI URL, source record ID, metadata verification timestamp, and Crossref license evidence URL.",
+      "All four representatives carry explicit CC BY 4.0 license metadata from Crossref; no license was inferred from a site-wide statement.",
+      "IF and IHC tissue-section variants, flow-panel species and instrument variants, and sorting downstream-use variants are documented as explicit gaps or screened records rather than mixed silently.",
+      "No protocol steps, tables, figures, videos, PDFs, or long source passages were stored in the result."
+    ]
+  },
+  "runNotes": [
+    "Metadata-first collection covered Protocols.io records plus Crossref, Thermo Fisher, Abcam, and BD Biosciences source-family corroboration.",
+    "Crossref was used to verify DOI-linked title, author, publication date, and CC BY 4.0 license metadata for the four representatives.",
+    "The packet is complete at the four assigned category level; materially distinct tissue, species, instrument, panel, and downstream-use variants are recorded as coverage gaps for future child categories."
+  ]
+}

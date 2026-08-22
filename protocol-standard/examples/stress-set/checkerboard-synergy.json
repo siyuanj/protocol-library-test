@@ -1,0 +1,934 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Antibiotic Checkerboard Synergy Assay (FIC Index) in a 96-Well Plate",
+    "protocolId": "lr-stress-checkerboard-fic",
+    "version": "0.2",
+    "family": "Antimicrobial synergy testing",
+    "category": "Microbiology",
+    "purpose": "Determine whether two antimicrobial agents (drug A x drug B) act synergistically, indifferently, or antagonistically against a bacterial isolate by testing a two-dimensional grid of 2-fold serial-dilution combinations across a 96-well plate and computing the Fractional Inhibitory Concentration (FIC) index.",
+    "scope": "Broth-microdilution checkerboard for two-drug combinations against a single aerobic bacterial isolate, following the simplified multichannel method of Bellio et al. (2021) with CLSI/EUCAST-referenced media and inoculum, and FIC-index interpretation per Odds (2003). Out of scope: three-drug combinations, time-kill kinetics, anaerobes/fastidious organisms requiring special atmospheres, and fully automated (inkjet) dispensing.",
+    "estimatedTime": "~3 days (Day 1: media + stocks + overnight culture; Day 2: plate setup + inoculation + 18 h incubation; Day 3: OD reading + analysis)",
+    "beforeYouBegin": [
+      "Choose the two drugs and, from prior single-drug MICs, set each drug's highest tested concentration to at least 2x-4x its standalone MIC so the FIC index can be computed.",
+      "Decide the plate orientation: drug A is serially diluted DOWN the rows (A high -> G low), drug B is serially diluted ACROSS the columns (column 12 high -> column 2 low); row H is drug-B-alone and column 1 is drug-A-alone.",
+      "Prepare a mirror (no-bacteria) plate with identical reagents to serve as the sterility / OD-background control.",
+      "Confirm the biosafety level required for your isolate with your institution before beginning."
+    ],
+    "authors": [
+      {
+        "name": "Bellio, P."
+      },
+      {
+        "name": "Fagnani, L."
+      },
+      {
+        "name": "Nazzicone, L."
+      },
+      {
+        "name": "Celenza, G."
+      }
+    ],
+    "license": "Method transcribed from an open-access (CC-BY) MethodsX article; verify reuse terms at record level.",
+    "tags": [
+      "checkerboard",
+      "FIC index",
+      "synergy",
+      "antimicrobial combination",
+      "broth microdilution",
+      "96-well plate",
+      "MIC"
+    ]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Mueller-Hinton broth (MHB)",
+      "role": "medium",
+      "specification": "Prepared per package insert; sterilised by autoclaving at 121 C for 15 min",
+      "rawText": "Mueller-Hinton broth (MHB)."
+    },
+    {
+      "id": "m2",
+      "name": "Cation-adjusted Mueller-Hinton broth (CAMHB)",
+      "role": "medium",
+      "specification": "Ca2+/Mg2+ adjusted per CLSI; sterilised by autoclaving at 121 C for 15 min",
+      "rawText": "Cation-adjusted Mueller-Hinton broth (CAMHB)."
+    },
+    {
+      "id": "m3",
+      "name": "Double-concentrated cation-adjusted Mueller-Hinton broth (2x CAMHB)",
+      "role": "medium",
+      "workingConcentration": "2x",
+      "specification": "Diluted 1:2 by the aqueous drug/inoculum additions to reach 1x final in the well",
+      "rawText": "Double concentrated Cation-adjusted Mueller-Hinton broth (2XCAMHB)."
+    },
+    {
+      "id": "m4",
+      "name": "Antimicrobial drug A",
+      "role": "reagent",
+      "specification": "From stock solution or powder; dissolved in the CLSI/EUCAST-recommended solvent/diluent for that agent. Specific agent and concentration range depend on the user's combination.",
+      "rawText": "Two antimicrobics or compounds from stock solutions or powder.",
+      "needsReview": true
+    },
+    {
+      "id": "m5",
+      "name": "Antimicrobial drug B",
+      "role": "reagent",
+      "specification": "From stock solution or powder; dissolved in the CLSI/EUCAST-recommended solvent/diluent for that agent. Specific agent and concentration range depend on the user's combination.",
+      "rawText": "Two antimicrobics or compounds from stock solutions or powder.",
+      "needsReview": true
+    },
+    {
+      "id": "m6",
+      "name": "Sterile 0.9% NaCl (saline)",
+      "role": "other",
+      "workingConcentration": "0.9% (w/v)",
+      "specification": "0.9 g NaCl in 100 mL deionised water; autoclaved 121 C, 15 min. Diluent for the bacterial inoculum.",
+      "rawText": "dissolve 0.9 g of NaCl into 100 mL of deionised water and then sterilise by autoclaving at 121 C for 15 min."
+    },
+    {
+      "id": "m7",
+      "name": "Sterile distilled reagent-grade water",
+      "role": "solvent",
+      "rawText": "Sterile distilled reagent-grade water."
+    },
+    {
+      "id": "m8",
+      "name": "Antimicrobial solvents/diluents",
+      "role": "solvent",
+      "specification": "As specified in CLSI 'Solvents and Diluents for Preparing Stock Solutions of Antimicrobial Agents' or EUCAST guidance; agent-dependent.",
+      "rawText": "Diluents for the antimicrobial agent stock solutions.",
+      "needsReview": true
+    },
+    {
+      "id": "m9",
+      "name": "Bacterial isolate (isolated colonies)",
+      "role": "sample",
+      "specification": "Pure, freshly grown isolated colonies on nutrient agar",
+      "rawText": "Isolated bacterial colonies.",
+      "needsReview": true
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Autoclave",
+      "settings": "121 C, 15 min"
+    },
+    {
+      "id": "e2",
+      "name": "Magnetic stirrer",
+      "settings": "For dissolving media/salt powders"
+    },
+    {
+      "id": "e3",
+      "name": "Vortex mixer",
+      "settings": "Mix inoculum >= 20 s before dilution"
+    },
+    {
+      "id": "e4",
+      "name": "Orbital shaker-incubator",
+      "settings": "35 +/- 2 C, 200 rpm, aerobic (overnight culture)"
+    },
+    {
+      "id": "e5",
+      "name": "Static air incubator",
+      "settings": "35 +/- 2 C, 18 +/- 2 h (assay plate)"
+    },
+    {
+      "id": "e6",
+      "name": "Multichannel pipette (8- or 12-channel)",
+      "settings": "200 uL tips; used for dispensing and serial dilutions"
+    },
+    {
+      "id": "e7",
+      "name": "Single-channel pipettes",
+      "settings": "1000, 200, 10 uL"
+    },
+    {
+      "id": "e8",
+      "name": "96-well microplate reader",
+      "model": "Any",
+      "settings": "Absorbance at 600 nm (or 595/605 nm)"
+    }
+  ],
+  "samples": [
+    {
+      "id": "sp1",
+      "name": "Bacterial isolate (input)",
+      "role": "input",
+      "organism": "User-specified aerobic bacterium",
+      "derivedFromMaterialId": "m9",
+      "description": "Isolated colony picked from a nutrient agar plate.",
+      "needsReview": true
+    },
+    {
+      "id": "sp2",
+      "name": "Overnight MHB culture",
+      "role": "intermediate",
+      "description": "Colony grown 18 +/- 2 h at 35 +/- 2 C, 200 rpm; reaches ~1 x 10^9 CFU/mL.",
+      "needsReview": true
+    },
+    {
+      "id": "sp3",
+      "name": "Standardized working inoculum",
+      "role": "intermediate",
+      "description": "Diluted in 0.9% NaCl so that the FINAL concentration in each well after 1:2 addition is 5 x 10^5 CFU/mL."
+    }
+  ],
+  "containers": [
+    {
+      "id": "c1",
+      "name": "96-well microplate (assay plate)",
+      "type": "plate",
+      "wells": "8x12",
+      "needsReview": false
+    },
+    {
+      "id": "c2",
+      "name": "96-well microplate (mirror no-growth / OD-background plate)",
+      "type": "plate",
+      "wells": "8x12"
+    },
+    {
+      "id": "c3",
+      "name": "V-shaped sterile reservoir (or sterile Petri dish)",
+      "type": "reservoir"
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Checkerboard axis layout (2D drug A x drug B combination grid)",
+      "columns": [
+        "Drug",
+        "Plate dimension varied",
+        "Highest-concentration position",
+        "Serial-dilution direction",
+        "Drug-alone lane",
+        "No-drug (of this drug) lane"
+      ],
+      "rows": [
+        [
+          "Drug A (m4)",
+          "Rows A-G",
+          "Row A",
+          "Down: A -> G (2-fold), discard 100 uL from G",
+          "Column 1 (no drug B)",
+          "Row H (drug B alone)"
+        ],
+        [
+          "Drug B (m5)",
+          "Columns 12-2",
+          "Column 12",
+          "Leftward: 12 -> 2 (2-fold), discard 100 uL from column 2",
+          "Row H (no drug A)",
+          "Column 1 (drug A alone)"
+        ]
+      ],
+      "note": "Every interior well (rows A-G x columns 2-12) is a DISTINCT A+B combination. Well H1 = growth control (no drug). Column 1 rows A-G = drug A dilution series alone. Row H columns 2-12 = drug B dilution series alone. Well A12 receives drug A as 2x-strength stock (2xS) so its concentration stays constant during the row dilution. There is no native schema construct for a 2D combinatorial well matrix; this table encodes it."
+    },
+    {
+      "id": "t2",
+      "title": "Illustrative 2-fold concentration series (SET TO YOUR OWN MICs before use)",
+      "columns": [
+        "Position",
+        "Drug A concentration (rows A->G)",
+        "Drug B concentration (columns 12->2)"
+      ],
+      "rows": [
+        [
+          "Step 1 (highest)",
+          "1x MICx (e.g. 64)",
+          "1x MICx (e.g. 64)"
+        ],
+        [
+          "Step 2",
+          "1/2",
+          "1/2"
+        ],
+        [
+          "Step 3",
+          "1/4",
+          "1/4"
+        ],
+        [
+          "Step 4",
+          "1/8",
+          "1/8"
+        ],
+        [
+          "Step 5",
+          "1/16",
+          "1/16"
+        ],
+        [
+          "Step 6",
+          "1/32",
+          "1/32"
+        ],
+        [
+          "Step 7 (lowest, drug A only to row G)",
+          "1/64",
+          "1/64"
+        ],
+        [
+          "Zero",
+          "0 (row H)",
+          "0 (column 1)"
+        ]
+      ],
+      "note": "Placeholder ratios only - the source is a method paper that does not fix specific drugs/concentrations. Choose the highest tested concentration >= 2x-4x each drug's standalone MIC. Units (e.g. ug/mL) depend on the agents. needsReview."
+    },
+    {
+      "id": "t3",
+      "title": "FIC index (Sum-FIC) interpretation",
+      "columns": [
+        "FIC index (Sum-FIC)",
+        "Interpretation"
+      ],
+      "rows": [
+        [
+          "<= 0.5",
+          "Synergy"
+        ],
+        [
+          "> 0.5 to <= 4.0",
+          "No interaction (indifference/additive)"
+        ],
+        [
+          "> 4.0",
+          "Antagonism"
+        ]
+      ],
+      "note": "Per Odds (2003), who recommends these three categories. Many labs subdivide the middle band as >0.5-1.0 additive and >1.0-4.0 indifferent; report whichever scheme you adopt. FIC index = (MIC of A in combination / MIC of A alone) + (MIC of B in combination / MIC of B alone)."
+    },
+    {
+      "id": "t4",
+      "title": "Control wells / lanes",
+      "columns": [
+        "Location",
+        "Content",
+        "Purpose"
+      ],
+      "rows": [
+        [
+          "Well H1",
+          "Medium + inoculum, no drug",
+          "Positive growth control"
+        ],
+        [
+          "Column 1 (rows A-G)",
+          "Drug A only + inoculum",
+          "Drug A alone MIC (denominator for FIC_A)"
+        ],
+        [
+          "Row H (columns 2-12)",
+          "Drug B only + inoculum",
+          "Drug B alone MIC (denominator for FIC_B)"
+        ],
+        [
+          "Mirror plate (c2)",
+          "All reagents, no bacteria",
+          "Sterility control + OD background subtraction"
+        ]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Day 1 - Preparation",
+      "action": "Weigh and dissolve MHB, CAMHB and 2x CAMHB powders in deionised water per package insert using a magnetic stirrer, then sterilise by autoclaving.",
+      "materialIds": [
+        "m1",
+        "m2",
+        "m3",
+        "m7"
+      ],
+      "equipmentIds": [
+        "e2",
+        "e1"
+      ],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 121,
+          "unit": "degC",
+          "rawText": "autoclaving at 121 C for 15 min"
+        },
+        {
+          "type": "time",
+          "value": 15,
+          "unit": "min",
+          "rawText": "for 15 min"
+        }
+      ],
+      "expectedResult": "Sterile MHB, CAMHB and 2x CAMHB ready.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "dissolve the powder ... sterilise by autoclaving at 121 C for 15 min."
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Day 1 - Preparation",
+      "action": "Prepare 100 mL sterile 0.9% saline: dissolve 0.9 g NaCl in 100 mL deionised water and autoclave.",
+      "materialIds": [
+        "m6",
+        "m7"
+      ],
+      "equipmentIds": [
+        "e2",
+        "e1"
+      ],
+      "parameters": [
+        {
+          "type": "mass",
+          "value": 0.9,
+          "unit": "g",
+          "rawText": "0.9 g of NaCl"
+        },
+        {
+          "type": "volume",
+          "value": 100,
+          "unit": "mL",
+          "rawText": "into 100 mL of deionised water"
+        }
+      ],
+      "expectedResult": "Sterile 0.9% NaCl diluent."
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Day 1 - Preparation",
+      "action": "Prepare stock solutions of drug A and drug B by dissolving each powder in its CLSI/EUCAST-recommended solvent/diluent (or the solvent that maximises stability if not listed).",
+      "materialIds": [
+        "m4",
+        "m5",
+        "m8"
+      ],
+      "expectedResult": "Concentrated, sterile-filtered drug stocks.",
+      "criticalNotes": "Specific solvent and stock concentration are agent-dependent and must be confirmed against CLSI/EUCAST tables or the datasheet.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "dissolve each one into its appropriate solvent as requested by CLSI ... or as recommended by the EUCAST guidelines."
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Day 1 - Preparation",
+      "action": "Inoculate one isolated colony into 10 mL MHB and grow overnight in an orbital shaker-incubator under aerobic conditions.",
+      "materialIds": [
+        "m1",
+        "m9"
+      ],
+      "equipmentIds": [
+        "e4"
+      ],
+      "inputIds": [
+        "sp1"
+      ],
+      "outputIds": [
+        "sp2"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 10,
+          "unit": "mL",
+          "rawText": "into a 10 mL of MHB"
+        },
+        {
+          "type": "temperature",
+          "value": 35,
+          "unit": "degC",
+          "rawText": "35 +/- 2 C"
+        },
+        {
+          "type": "speed",
+          "value": 200,
+          "unit": "rpm",
+          "rawText": "orbital shaker incubator at 200 rpm"
+        },
+        {
+          "type": "time",
+          "value": 18,
+          "unit": "h",
+          "rawText": "for 18 h +/- 2"
+        },
+        {
+          "type": "concentration",
+          "value": null,
+          "unit": "CFU/mL",
+          "rawText": "the culture will reach the concentration of ~ 10^9 CFU/mL",
+          "needsReview": true
+        }
+      ],
+      "expectedResult": "Overnight culture at ~1 x 10^9 CFU/mL.",
+      "pausePoint": false
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Day 2 - Plate setup",
+      "action": "Dispense 100 uL of 2x CAMHB into every well of the 96-well assay plate using a multichannel pipette, proceeding column by column.",
+      "materialIds": [
+        "m3"
+      ],
+      "equipmentIds": [
+        "e6"
+      ],
+      "containerIds": [
+        "c1",
+        "c3"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 100,
+          "unit": "uL",
+          "rawText": "Place 100 uL of the 2 x CAMHB medium ... dispense into each well"
+        }
+      ],
+      "expectedResult": "All 96 wells contain 100 uL 2x CAMHB.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Place 100 uL of the 2 x CAMHB medium in a V-shaped reservoir ... dispense into each well of the microplate."
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Day 2 - Plate setup",
+      "action": "Prepare drug A working stocks in 2x CAMHB: 1.5 mL of stock S at 4x the highest tested concentration, and 500 uL of 2xS at 8x the highest tested concentration.",
+      "materialIds": [
+        "m4",
+        "m3"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 1.5,
+          "unit": "mL",
+          "rawText": "Prepare 1.5 mL of stock solution (S)"
+        },
+        {
+          "type": "ratio",
+          "value": 4,
+          "unit": "fold",
+          "rawText": "4-fold more concentrated than the highest concentration of the drug A"
+        },
+        {
+          "type": "volume",
+          "value": 500,
+          "unit": "uL",
+          "rawText": "Prepare 500 uL of 2 x stock solution (2 x S)"
+        },
+        {
+          "type": "ratio",
+          "value": 8,
+          "unit": "fold",
+          "rawText": "8-fold more concentrated than the highest concentration of the drug A"
+        }
+      ],
+      "expectedResult": "Drug A S and 2xS stocks ready.",
+      "criticalNotes": "The 2xS aliquot is added to well A12 so drug A concentration stays constant there during the row serial dilution."
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Day 2 - Plate setup",
+      "action": "Dispense 100 uL of drug A stock S into row A, columns 1-11; dispense 100 uL of drug A 2xS into well A12.",
+      "materialIds": [
+        "m4"
+      ],
+      "equipmentIds": [
+        "e6"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "tableIds": [
+        "t1"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 100,
+          "unit": "uL",
+          "rawText": "Dispense 100 uL of S into row A from columns 1-11."
+        },
+        {
+          "type": "volume",
+          "value": 100,
+          "unit": "uL",
+          "rawText": "Dispense 100 uL of 2 x S into well A12."
+        }
+      ],
+      "expectedResult": "Row A loaded with drug A (highest concentration)."
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Day 2 - Plate setup",
+      "action": "Serially dilute drug A DOWN the plate from row A to row G (transfer 100 uL, mix), discarding the final 100 uL taken from row G. Change tips between the two halves if using an 8-channel pipette.",
+      "equipmentIds": [
+        "e6"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "tableIds": [
+        "t1",
+        "t2"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 100,
+          "unit": "uL",
+          "rawText": "multichannel pipette set to 100 uL"
+        },
+        {
+          "type": "ratio",
+          "value": 2,
+          "unit": "fold",
+          "rawText": "two-fold serial dilution A -> G"
+        }
+      ],
+      "expectedResult": "2-fold decreasing drug A gradient across rows A (high) to G (low); row H has no drug A.",
+      "criticalNotes": "Discard the remaining volume from row G so row H stays drug-A-free.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Dilute the drug A from row A to G ... and discard the remaining volume from row G."
+        }
+      ]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "Day 2 - Plate setup",
+      "action": "Prepare 1.0 mL of drug B stock S in 2x CAMHB at 4x the highest tested concentration, then dispense 100 uL into every well of column 12.",
+      "materialIds": [
+        "m5",
+        "m3"
+      ],
+      "equipmentIds": [
+        "e6"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 1,
+          "unit": "mL",
+          "rawText": "Prepare 1.0 mL of stock solution (S)"
+        },
+        {
+          "type": "ratio",
+          "value": 4,
+          "unit": "fold",
+          "rawText": "4-fold more concentrated than the highest concentration of drug B"
+        },
+        {
+          "type": "volume",
+          "value": 100,
+          "unit": "uL",
+          "rawText": "Dispense 100 uL of S into each column 12 wells."
+        }
+      ],
+      "expectedResult": "Column 12 loaded with drug B (highest concentration)."
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "phase": "Day 2 - Plate setup",
+      "action": "Serially dilute drug B ACROSS the plate from column 12 to column 2 (transfer 100 uL, mix), discarding the final 100 uL taken from column 2.",
+      "equipmentIds": [
+        "e6"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "tableIds": [
+        "t1",
+        "t2"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 100,
+          "unit": "uL",
+          "rawText": "multichannel pipette set to 100 uL"
+        },
+        {
+          "type": "ratio",
+          "value": 2,
+          "unit": "fold",
+          "rawText": "two-fold serial dilution column 12 -> 2"
+        }
+      ],
+      "expectedResult": "2-fold decreasing drug B gradient from column 12 (high) to column 2 (low); column 1 has no drug B. Interior wells now hold every A x B combination.",
+      "criticalNotes": "Discard the remaining volume from column 2 so column 1 stays drug-B-free.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Dilute the drug B Column 12-2 ... and discard the remaining volume taken from column 2."
+        }
+      ]
+    },
+    {
+      "id": "s11",
+      "number": 11,
+      "phase": "Day 2 - Inoculation",
+      "action": "Prepare 10-40 mL of bacterial inoculum at ~1 x 10^6 CFU/mL in 0.9% NaCl from the overnight culture (vortex >= 20 s first), then dispense 100 uL into every well of the assay plate. Set up a mirror plate with the same reagents but no bacteria.",
+      "materialIds": [
+        "m6"
+      ],
+      "equipmentIds": [
+        "e3",
+        "e6"
+      ],
+      "containerIds": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "inputIds": [
+        "sp2"
+      ],
+      "outputIds": [
+        "sp3"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 10,
+          "valueMax": 40,
+          "unit": "mL",
+          "rawText": "Prepare from 10 to 40 mL of bacterial inoculum"
+        },
+        {
+          "type": "volume",
+          "value": 100,
+          "unit": "uL",
+          "rawText": "Place 100 uL of inoculum ... dispense into each well"
+        },
+        {
+          "type": "concentration",
+          "value": 5,
+          "unit": "x10^5 CFU/mL",
+          "rawText": "The final inoculum concentration in the microplate will be 5 x 10^5 CFU/mL",
+          "needsReview": true
+        }
+      ],
+      "expectedResult": "Every well at 200 uL total, 1x CAMHB, final inoculum 5 x 10^5 CFU/mL; mirror plate prepared.",
+      "criticalNotes": "Final volume per well is 200 uL; the 1:2 addition brings 2x CAMHB and drug stocks to 1x working strength."
+    },
+    {
+      "id": "s12",
+      "number": 12,
+      "phase": "Day 2 - Incubation",
+      "action": "Cover and incubate the assay plate (and mirror plate) statically at 35 +/- 2 C for 18 +/- 2 h. Seal with film and/or add a water tray to limit evaporation if needed.",
+      "equipmentIds": [
+        "e5"
+      ],
+      "containerIds": [
+        "c1",
+        "c2"
+      ],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 35,
+          "unit": "degC",
+          "rawText": "static incubator at 35 +/- 2 C"
+        },
+        {
+          "type": "time",
+          "value": 18,
+          "unit": "h",
+          "rawText": "for 18 +/- 2 h"
+        }
+      ],
+      "expectedResult": "Growth in the no-drug control (H1); inhibition in effective combinations.",
+      "pausePoint": true
+    },
+    {
+      "id": "s13",
+      "number": 13,
+      "phase": "Day 3 - Read",
+      "action": "Mix the contents of each well with a multichannel pipette, then read optical density at 600 nm (or 595/605 nm) on a microplate reader; read the mirror plate for background.",
+      "equipmentIds": [
+        "e6",
+        "e8"
+      ],
+      "containerIds": [
+        "c1",
+        "c2"
+      ],
+      "parameters": [
+        {
+          "type": "wavelength",
+          "value": 600,
+          "unit": "nm",
+          "rawText": "Read the optical density (OD) at 600 nm or around 600 nm (e.g. 595 or 605)."
+        }
+      ],
+      "expectedResult": "OD600 value recorded for all 96 wells (assay and mirror)."
+    },
+    {
+      "id": "s14",
+      "number": 14,
+      "phase": "Day 3 - Analysis",
+      "action": "Compute percent growth per well (background-subtracted, relative to the H1 growth control) and read the MIC of each drug alone and of each combination as the lowest concentration reducing growth by more than 80%.",
+      "tableIds": [
+        "t4"
+      ],
+      "parameters": [
+        {
+          "type": "other",
+          "value": 80,
+          "unit": "% growth reduction",
+          "rawText": "MIC is defined as the lowest drug concentration, which reduces bacterial growth by more than 80%."
+        },
+        {
+          "type": "other",
+          "value": null,
+          "unit": "formula",
+          "rawText": "% growth = (OD_well - OD_background) / (OD_growth_control - OD_background) x 100 (exact formula not reproduced in source text)",
+          "needsReview": true
+        }
+      ],
+      "expectedResult": "MIC_A alone, MIC_B alone, and the MIC of each drug within its most effective combination.",
+      "criticalNotes": "The percent-growth equation was not captured verbatim from the source (rendered as omitted); the form given here is the standard background-subtracted normalisation - verify against the source before reporting."
+    },
+    {
+      "id": "s15",
+      "number": 15,
+      "phase": "Day 3 - Analysis",
+      "action": "Compute the FIC index for the combination and classify the interaction as synergy, no interaction, or antagonism.",
+      "tableIds": [
+        "t3"
+      ],
+      "parameters": [
+        {
+          "type": "other",
+          "value": null,
+          "unit": "FIC index",
+          "rawText": "FIC index = (MIC of A in combination / MIC of A alone) + (MIC of B in combination / MIC of B alone)"
+        }
+      ],
+      "expectedResult": "A numeric FIC index and its interpretation (e.g. FIC <= 0.5 => synergy).",
+      "criticalNotes": "Use the lowest Sum-FIC among wells on the growth/no-growth boundary (the 'turbidity edge'). Loewe-additivity and Bliss-independence surface models can also be applied for a fuller picture.",
+      "sourceReferences": [
+        {
+          "sourceId": "src2",
+          "excerpt": "FIC index <= 0.5 synergy; > 0.5 to 4.0 no interaction; > 4.0 antagonism."
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "name": "Positive growth control (well H1)",
+      "description": "Medium + inoculum, no drug; defines 100% growth and confirms viability."
+    },
+    {
+      "name": "Drug A alone (column 1, rows A-G)",
+      "description": "Drug A serial dilution without drug B; yields MIC_A alone (FIC_A denominator)."
+    },
+    {
+      "name": "Drug B alone (row H, columns 2-12)",
+      "description": "Drug B serial dilution without drug A; yields MIC_B alone (FIC_B denominator)."
+    },
+    {
+      "name": "Mirror sterility / background plate",
+      "description": "All reagents, no bacteria; checks sterility and provides OD background for subtraction, including drug precipitation artifacts."
+    },
+    {
+      "name": "QC reference strain (recommended)",
+      "description": "Run a CLSI/EUCAST QC strain with known MIC to validate the run.",
+      "needsReview": true
+    }
+  ],
+  "expectedOutputs": [
+    "OD600 map of the 96-well combination grid.",
+    "MIC of drug A alone, drug B alone, and within combination.",
+    "A computed FIC index and a synergy/no-interaction/antagonism call.",
+    "Optional Loewe/Bliss interaction analysis across the surface."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "No growth in the H1 control",
+      "cause": "Inoculum too dilute, non-viable, or wrong incubation",
+      "solution": "Re-verify inoculum density (0.5 McFarland -> 1:100/1:200 dilution), re-check 35 +/- 2 C incubation and colony viability"
+    },
+    {
+      "problem": "Growth in the mirror (no-bacteria) plate",
+      "cause": "Reagent or media contamination",
+      "solution": "Discard, re-autoclave media, remake drug stocks with sterile technique"
+    },
+    {
+      "problem": "Excessive evaporation / edge-well volume loss",
+      "cause": "Dry incubator over 18 h",
+      "solution": "Seal plate with film and/or add a water tray to the incubator"
+    },
+    {
+      "problem": "FIC index differs between replicate runs",
+      "cause": "MIC is discontinuous over 2-fold steps; reading at a single boundary well is noisy",
+      "solution": "Run in duplicate/triplicate and report the range or median FIC"
+    },
+    {
+      "problem": "Drug precipitation raises OD",
+      "cause": "Poor solubility at high concentration",
+      "solution": "Subtract the mirror-plate background well-by-well; reduce the highest tested concentration"
+    }
+  ],
+  "safety": [
+    "Handle live bacterial cultures per the biosafety level assigned to your isolate; decontaminate plates and inoculum waste before disposal.",
+    "Some antimicrobial solvents (e.g. DMSO, DMF) and concentrated drug stocks are irritants/toxic - handle with gloves and follow SDS guidance.",
+    "Autoclave hot media and glassware with heat-resistant gloves."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "The source is a simplified two-drug checkerboard method paper that does not fix specific antibiotics or concentration values; the concentration series here is illustrative and must be set to the user's drugs and MICs. MIC over 2-fold dilutions is coarse, so FIC-index category boundaries are inherently uncertain; the percent-growth equation and some inoculum exponents were not cleanly captured from the source text and are flagged needsReview. Not validated for anaerobes, three-drug combinations, or time-kill dynamics.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "article",
+      "title": "New and simplified method for drug combination studies by checkerboard assay (Bellio et al., MethodsX 2021)",
+      "doi": "10.1016/j.mex.2021.101543",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8563647/",
+      "license": "CC-BY (open access, MethodsX)",
+      "licenseVerified": false
+    },
+    {
+      "id": "src2",
+      "kind": "article",
+      "title": "Synergy, antagonism, and what the chequerboard puts between them (Odds, J. Antimicrob. Chemother. 2003) - FIC index interpretation",
+      "doi": "10.1093/jac/dkg301",
+      "url": "https://academic.oup.com/jac/article/52/1/1/930000",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

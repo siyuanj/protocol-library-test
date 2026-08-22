@@ -1,0 +1,598 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Reverse Transcription: First-Strand cDNA Synthesis (SuperScript First-Strand Synthesis System for RT-PCR)",
+    "protocolId": "lr-testset-reverse-transcription",
+    "version": "0.1",
+    "family": "Reverse transcription",
+    "category": "Molecular Biology",
+    "purpose": "Synthesize first-strand cDNA from total or poly(A)+ RNA using SuperScript II Reverse Transcriptase primed with oligo(dT) (or a gene-specific primer), producing single-stranded cDNA suitable for downstream PCR (RT-PCR).",
+    "scope": "First-strand cDNA synthesis with the SuperScript First-Strand Synthesis System for RT-PCR (Cat. no. 11904-018), oligo(dT)12-18 priming path, for 1 ng-5 ug total RNA or 50-500 ng poly(A)+ RNA. Random-hexamer priming is captured as a branch. Downstream target PCR itself is out of scope (only the kit's control PCR is described).",
+    "estimatedTime": "~1.5 h (RNA/primer denaturation, 42 C/50 min synthesis, termination, RNase H step)",
+    "beforeYouBegin": [
+      "Use high-quality, intact, RNase-free RNA; work with RNase-free technique and reagents.",
+      "If genomic DNA carryover must be eliminated, pre-treat the RNA with DNase I (Amplification Grade) before starting.",
+      "Choose the priming strategy: oligo(dT) is recommended for new mRNA targets; random hexamers for difficult/long or non-polyadenylated templates; gene-specific primer for maximum specificity."
+    ],
+    "authors": [
+      {
+        "name": "Invitrogen / Thermo Fisher Scientific"
+      }
+    ],
+    "tags": [
+      "reverse transcription",
+      "cDNA",
+      "first-strand synthesis",
+      "RT-PCR",
+      "SuperScript",
+      "oligo(dT)"
+    ]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Oligo(dT)12-18 primer",
+      "role": "reagent",
+      "specification": "0.5 ug/uL stock; anneals to 3' poly(A) tails of mRNA",
+      "vendor": "Invitrogen",
+      "catalogNumber": "supplied with 11904-018",
+      "storage": "-20 C",
+      "rawText": "Oligo(dT)12-18 (0.5 ug/ul) 50 ul"
+    },
+    {
+      "id": "m2",
+      "name": "Random hexamers",
+      "role": "reagent",
+      "specification": "50 ng/uL stock; nonspecific priming (alternative to oligo(dT))",
+      "vendor": "Invitrogen",
+      "storage": "-20 C",
+      "rawText": "Random hexamers (50 ng/ul) 250 ul"
+    },
+    {
+      "id": "m3",
+      "name": "10X RT buffer",
+      "role": "buffer",
+      "specification": "200 mM Tris-HCl (pH 8.4), 500 mM KCl",
+      "vendor": "Invitrogen",
+      "storage": "-20 C",
+      "rawText": "10X RT buffer*  ... *200 mM Tris-HCl (pH 8.4), 500 mM KCl"
+    },
+    {
+      "id": "m4",
+      "name": "Magnesium chloride (MgCl2)",
+      "role": "reagent",
+      "specification": "25 mM stock",
+      "vendor": "Invitrogen",
+      "storage": "-20 C",
+      "rawText": "25 mM MgCl2 500 ul"
+    },
+    {
+      "id": "m5",
+      "name": "DTT (dithiothreitol)",
+      "role": "reagent",
+      "specification": "0.1 M stock",
+      "vendor": "Invitrogen",
+      "storage": "-20 C",
+      "hazard": "Irritant",
+      "rawText": "0.1 M DTT 250 ul"
+    },
+    {
+      "id": "m6",
+      "name": "dNTP mix",
+      "role": "reagent",
+      "specification": "10 mM each dNTP",
+      "vendor": "Invitrogen",
+      "storage": "-20 C",
+      "rawText": "10 mM dNTP mix 250 ul"
+    },
+    {
+      "id": "m7",
+      "name": "SuperScript II Reverse Transcriptase",
+      "role": "enzyme",
+      "specification": "50 U/uL; RNase H-reduced MMLV RT; usable up to 50 C",
+      "vendor": "Invitrogen",
+      "catalogNumber": "supplied with 11904-018",
+      "storage": "-20 C",
+      "rawText": "SuperScript II RT (50 U/ul) 50 ul"
+    },
+    {
+      "id": "m8",
+      "name": "RNaseOUT Recombinant Ribonuclease Inhibitor",
+      "role": "enzyme",
+      "specification": "40 U/uL; protects RNA from ribonucleases",
+      "vendor": "Invitrogen",
+      "storage": "-20 C",
+      "rawText": "RNaseOUT (40 U/ul) 100 ul"
+    },
+    {
+      "id": "m9",
+      "name": "E. coli RNase H",
+      "role": "enzyme",
+      "specification": "2 U/uL; degrades RNA in the RNA:cDNA hybrid after synthesis",
+      "vendor": "Invitrogen",
+      "storage": "-20 C",
+      "rawText": "E. coli RNase H (2 U/ul) 50 ul"
+    },
+    {
+      "id": "m10",
+      "name": "DEPC-treated water",
+      "role": "solvent",
+      "specification": "Nuclease-free water",
+      "vendor": "Invitrogen",
+      "rawText": "DEPC-treated water 1.2 ml"
+    },
+    {
+      "id": "m11",
+      "name": "Control RNA",
+      "role": "standard",
+      "specification": "50 ng/uL; positive-control template (use 1 uL); yields a 500-bp product with Control Primers A+B",
+      "vendor": "Invitrogen",
+      "storage": "-20 C",
+      "rawText": "Control RNA (50 ng/ul) 15 ul"
+    },
+    {
+      "id": "m12",
+      "name": "Control Primer A (antisense)",
+      "role": "reagent",
+      "specification": "10 uM; sequence 5'-GAC ATG GAA GCC ATC ACA GAC-3'",
+      "vendor": "Invitrogen",
+      "rawText": "Control Primer A: 5'-GAC ATG GAA GCC ATC ACA GAC-3'"
+    },
+    {
+      "id": "m13",
+      "name": "Control Primer B (sense)",
+      "role": "reagent",
+      "specification": "10 uM; sequence 5'-AGA CCG TTC AGC TGG ATA TTA C-3'",
+      "vendor": "Invitrogen",
+      "rawText": "Control Primer B: 5'-AGA CCG TTC AGC TGG ATA TTA C-3'"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Thermal cycler or water baths/heat blocks",
+      "settings": "Set points at 37, 42, 65, and 70 C"
+    },
+    {
+      "id": "e2",
+      "name": "Microcentrifuge",
+      "model": "Capable of 14,000 x g",
+      "settings": "Brief spins to collect components"
+    }
+  ],
+  "samples": [
+    {
+      "id": "sp1",
+      "name": "Total RNA",
+      "role": "input",
+      "description": "1 ng-5 ug total RNA (or 50-500 ng poly(A)+ RNA) per reaction; e.g. RNA from a TRIzol extraction.",
+      "needsReview": true
+    },
+    {
+      "id": "sp2",
+      "name": "RNA/primer mix (annealed)",
+      "role": "intermediate",
+      "description": "RNA + oligo(dT) + dNTPs denatured at 65 C then snap-cooled on ice."
+    },
+    {
+      "id": "sp3",
+      "name": "First-strand cDNA",
+      "role": "output",
+      "description": "Single-stranded first-strand cDNA; store at -20 C or use directly in PCR (use ~10% / 2 uL per PCR)."
+    }
+  ],
+  "containers": [
+    {
+      "id": "c1",
+      "name": "Sterile 0.2 or 0.5 mL microcentrifuge / thin-walled PCR tube",
+      "type": "tube"
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "RNA/primer mix (per reaction, oligo(dT) or GSP path)",
+      "columns": [
+        "Component",
+        "Amount per reaction"
+      ],
+      "rows": [
+        [
+          "RNA (1 ng-5 ug total RNA)",
+          "n uL"
+        ],
+        [
+          "10 mM dNTP mix",
+          "1 uL"
+        ],
+        [
+          "Oligo(dT)12-18 (0.5 ug/uL) or 2 uM gene-specific primer",
+          "1 uL"
+        ],
+        [
+          "DEPC-treated water",
+          "to 10 uL"
+        ]
+      ]
+    },
+    {
+      "id": "t2",
+      "title": "2X reaction mix (add components in the order listed)",
+      "columns": [
+        "Component",
+        "1 reaction",
+        "10 reactions"
+      ],
+      "rows": [
+        [
+          "10X RT buffer",
+          "2 uL",
+          "20 uL"
+        ],
+        [
+          "25 mM MgCl2",
+          "4 uL",
+          "40 uL"
+        ],
+        [
+          "0.1 M DTT",
+          "2 uL",
+          "20 uL"
+        ],
+        [
+          "RNaseOUT (40 U/uL)",
+          "1 uL",
+          "10 uL"
+        ]
+      ],
+      "note": "9 uL of this 2X mix is added to each 10 uL RNA/primer mix."
+    },
+    {
+      "id": "t3",
+      "title": "Incubation / thermal program (oligo(dT) path)",
+      "columns": [
+        "Step",
+        "Temperature",
+        "Time"
+      ],
+      "rows": [
+        [
+          "RNA/primer denaturation",
+          "65 C",
+          "5 min"
+        ],
+        [
+          "Snap cool",
+          "ice",
+          ">=1 min"
+        ],
+        [
+          "Equilibrate (after adding 2X mix)",
+          "42 C",
+          "2 min"
+        ],
+        [
+          "First-strand synthesis (after adding RT)",
+          "42 C",
+          "50 min"
+        ],
+        [
+          "Reaction termination",
+          "70 C",
+          "15 min"
+        ],
+        [
+          "RNase H digestion",
+          "37 C",
+          "20 min"
+        ]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Anneal",
+      "action": "In a sterile PCR tube, combine the RNA/primer mix per the table: n uL RNA (1 ng-5 ug), 1 uL 10 mM dNTP mix, 1 uL oligo(dT)12-18 (0.5 ug/uL), and DEPC-treated water to 10 uL.",
+      "materialIds": [
+        "m1",
+        "m6",
+        "m10"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "inputIds": [
+        "sp1",
+        "m1"
+      ],
+      "outputIds": [
+        "sp2"
+      ],
+      "tableIds": [
+        "t1"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 10,
+          "unit": "uL",
+          "rawText": "DEPC-treated water to 10 ul"
+        }
+      ],
+      "branches": [
+        {
+          "condition": "If priming with random hexamers instead of oligo(dT)",
+          "action": "Use 1-5 uL random hexamers (50 ng/uL) in place of oligo(dT), and after adding RT (step 6) add a 25 C / 10 min incubation before the 42 C / 50 min synthesis."
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Anneal",
+      "action": "Incubate the RNA/primer mix at 65 C for 5 min to denature secondary structure, then place on ice for at least 1 min.",
+      "equipmentIds": [
+        "e1"
+      ],
+      "inputIds": [
+        "sp2"
+      ],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 65,
+          "unit": "degC",
+          "rawText": "65 C"
+        },
+        {
+          "type": "time",
+          "value": 5,
+          "unit": "min",
+          "rawText": "5 minutes"
+        },
+        {
+          "type": "time",
+          "value": 1,
+          "unit": "min",
+          "rawText": "on ice for at least 1 minute"
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Synthesis",
+      "action": "In a separate tube, prepare the 2X reaction mix per the table, adding components in the order listed: 2 uL 10X RT buffer, 4 uL 25 mM MgCl2, 2 uL 0.1 M DTT, 1 uL RNaseOUT (per reaction).",
+      "materialIds": [
+        "m3",
+        "m4",
+        "m5",
+        "m8"
+      ],
+      "tableIds": [
+        "t2"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 9,
+          "unit": "uL",
+          "rawText": "2X reaction mix (2+4+2+1 = 9 ul per reaction)"
+        }
+      ],
+      "criticalNotes": "Add components in the indicated order. Scale by the number of reactions (see 10-reaction column)."
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Synthesis",
+      "action": "Add 9 uL of the 2X reaction mix to each RNA/primer mix, mix gently, and collect by brief centrifugation.",
+      "equipmentIds": [
+        "e2"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 9,
+          "unit": "uL",
+          "rawText": "Add 9 ul of the 2X reaction mix to each RNA/primer mixture"
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Synthesis",
+      "action": "Incubate at 42 C for 2 min to equilibrate.",
+      "equipmentIds": [
+        "e1"
+      ],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 42,
+          "unit": "degC",
+          "rawText": "42 C"
+        },
+        {
+          "type": "time",
+          "value": 2,
+          "unit": "min",
+          "rawText": "2 minutes"
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Synthesis",
+      "action": "Add 1 uL SuperScript II RT to each tube (for the minus-RT control, add 1 uL DEPC-treated water instead).",
+      "materialIds": [
+        "m7",
+        "m10"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 1,
+          "unit": "uL",
+          "rawText": "Add 1 ul of SuperScript II RT to each tube"
+        }
+      ],
+      "criticalNotes": "Include a minus-RT control (water instead of RT) to detect genomic-DNA-derived signal in downstream PCR."
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Synthesis",
+      "action": "Incubate at 42 C for 50 min to synthesize first-strand cDNA.",
+      "equipmentIds": [
+        "e1"
+      ],
+      "inputIds": [
+        "sp2",
+        "m7"
+      ],
+      "outputIds": [
+        "sp3"
+      ],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 42,
+          "unit": "degC",
+          "rawText": "42 C"
+        },
+        {
+          "type": "time",
+          "value": 50,
+          "unit": "min",
+          "rawText": "50 minutes"
+        }
+      ],
+      "expectedResult": "First-strand cDNA synthesized along the RNA template."
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Synthesis",
+      "action": "Terminate the reaction at 70 C for 15 min, then chill on ice.",
+      "equipmentIds": [
+        "e1"
+      ],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 70,
+          "unit": "degC",
+          "rawText": "70 C"
+        },
+        {
+          "type": "time",
+          "value": 15,
+          "unit": "min",
+          "rawText": "15 minutes"
+        }
+      ]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "RNase H",
+      "action": "Collect by brief centrifugation, add 1 uL E. coli RNase H to each tube, and incubate at 37 C for 20 min to remove RNA from the RNA:cDNA hybrid.",
+      "materialIds": [
+        "m9"
+      ],
+      "equipmentIds": [
+        "e1",
+        "e2"
+      ],
+      "inputIds": [
+        "sp3"
+      ],
+      "outputIds": [
+        "sp3"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 1,
+          "unit": "uL",
+          "rawText": "Add 1 ul of RNase H to each tube"
+        },
+        {
+          "type": "temperature",
+          "value": 37,
+          "unit": "degC",
+          "rawText": "37 C"
+        },
+        {
+          "type": "time",
+          "value": 20,
+          "unit": "min",
+          "rawText": "20 minutes"
+        }
+      ],
+      "pausePoint": true,
+      "criticalNotes": "The reaction can be stored at -20 C or used for PCR immediately (use ~10% / 2 uL per 50 uL PCR).",
+      "expectedResult": "Single-stranded first-strand cDNA ready for PCR."
+    }
+  ],
+  "controls": [
+    {
+      "name": "Minus-RT control",
+      "description": "Parallel reaction with DEPC-treated water in place of SuperScript II RT; downstream PCR signal indicates genomic-DNA contamination rather than cDNA."
+    },
+    {
+      "name": "Plus-RT positive control (Control RNA)",
+      "description": "1 uL Control RNA (50 ng/uL) reverse-transcribed then amplified with Control Primers A+B gives a 500-bp product, confirming the first-strand reaction worked."
+    }
+  ],
+  "expectedOutputs": [
+    "First-strand cDNA suitable for PCR (use ~10% / 2 uL of the reaction per PCR).",
+    "For the kit control: a 500-bp band from Control RNA in the plus-RT reaction, with the minus-RT band <=50% of that intensity."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "No bands after downstream PCR",
+      "cause": "Procedural error or RNase contamination in first-strand synthesis; too little cDNA used in PCR",
+      "solution": "Verify with Control RNA; use RNaseOUT and aseptic technique; use up to 10 uL of the first-strand reaction in PCR"
+    },
+    {
+      "problem": "Unexpected bands / signal in minus-RT",
+      "cause": "Genomic DNA contamination of the RNA",
+      "solution": "Pre-treat RNA with DNase I (Amplification Grade); design primers spanning an intron/exon-exon boundary"
+    },
+    {
+      "problem": "Short or truncated cDNA / strong transcriptional pauses",
+      "cause": "Stable RNA secondary structure or high GC content",
+      "solution": "Raise synthesis temperature toward 50 C (SuperScript II) or use SuperScript III (42-55 C); consider random hexamers"
+    }
+  ],
+  "safety": [
+    "DTT is an irritant; wear gloves and eye protection.",
+    "Maintain RNase-free technique; handle all reagents per institutional chemical-safety rules."
+  ],
+  "biosafetyLevel": "not specified",
+  "limitations": "SuperScript II RT is usable only up to 50 C, so very GC-rich or highly structured templates may transcribe poorly (SuperScript III / Thermo-X are recommended for higher temperatures). Genomic DNA is not removed unless the RNA is DNase-treated. Exact RNA input, primer choice, and downstream PCR conditions are target-dependent.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "kit-insert",
+      "title": "SuperScript First-Strand Synthesis System for RT-PCR (Cat. no. 11904-018), Part no. 11904.pps, Invitrogen (Thermo Fisher Scientific)",
+      "url": "https://assets.fishersci.com/TFS-Assets/LSG/manuals/superscript_firststrand_man.pdf",
+      "license": "Invitrogen product manual; For Research Use Only; reuse terms not specified",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

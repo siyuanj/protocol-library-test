@@ -1,0 +1,703 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Bulk RNA-seq Analysis Pipeline (nf-core/rnaseq: QC → trim → align → quantify)",
+    "protocolId": "lr-stress-rnaseq-pipeline",
+    "version": "0.1",
+    "family": "RNA-seq analysis",
+    "category": "Bioinformatics / Computational",
+    "purpose": "Take a samplesheet of paired-end FASTQ files and produce a gene/transcript expression matrix plus an aggregated QC report, by running read QC, adapter/quality trimming, strandedness inference, genome alignment (STAR) and transcript quantification (Salmon), followed by post-alignment QC gates.",
+    "scope": "Reference-based bulk RNA-seq of organisms with a genome assembly and annotation, using the default nf-core/rnaseq v3.14.0 star_salmon route. Out of scope: de novo assembly, single-cell RNA-seq, HISAT2/RSEM routes (available but not encoded here), and downstream differential-expression modelling beyond the pipeline's built-in DESeq2 QC.",
+    "estimatedTime": "~4-12 h wall-clock for a typical human dataset on an HPC/cloud executor (dominated by STAR alignment); highly dataset- and compute-dependent.",
+    "beforeYouBegin": [
+      "Install Nextflow (>=25.04.3 for the current release; v3.14.0 requires Nextflow >=23.04.0) and a container engine (Docker/Singularity/Conda).",
+      "Prepare a samplesheet CSV (see table t1) with one row per FASTQ pair and a strandedness column ('auto' lets the pipeline infer it).",
+      "Obtain a reference genome FASTA and matching GTF annotation, or specify an --genome iGenomes key so the pipeline builds the STAR/Salmon indices.",
+      "Decide compute resources: STAR needs ~38 GB RAM for the human GRCh37 index; set process resource limits accordingly."
+    ],
+    "authors": [
+      {
+        "name": "nf-core/rnaseq community",
+        "affiliation": "nf-core"
+      }
+    ],
+    "license": "MIT (pipeline code)",
+    "tags": [
+      "RNA-seq",
+      "bulk",
+      "nf-core",
+      "STAR",
+      "Salmon",
+      "Nextflow",
+      "differential expression",
+      "computational"
+    ]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Reference genome FASTA",
+      "role": "other",
+      "specification": "Genome assembly for the target organism (e.g. GRCh38); supplied via --fasta or an --genome iGenomes key. Digital input, not a physical reagent.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "m2",
+      "name": "Genome annotation GTF",
+      "role": "other",
+      "specification": "Gene models matching the FASTA; supplied via --gtf. Used to build the transcriptome and to assign reads to genes.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "m3",
+      "name": "rRNA database (SortMeRNA)",
+      "role": "other",
+      "specification": "Ribosomal RNA sequence set used only when --remove_ribo_rna is enabled (default: off). Digital reference.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "m4",
+      "name": "Samplesheet CSV",
+      "role": "other",
+      "specification": "Input manifest of FASTQ files; see table t1 for column layout.",
+      "rawText": "--input samplesheet.csv",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Nextflow workflow engine",
+      "model": ">=25.04.3 (v3.14.0 requires >=23.04.0)",
+      "settings": "-profile docker|singularity|conda; nf-core/rnaseq v3.14.0",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "e2",
+      "name": "FastQC (software tool)",
+      "model": "version not pinned here",
+      "settings": "Per-read quality metrics on raw and trimmed FASTQ.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "e3",
+      "name": "Trim Galore! (software tool; Cutadapt + FastQC)",
+      "model": "version not pinned here",
+      "settings": "Adapter + quality trimming; auto-detects adapter.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "e4",
+      "name": "Salmon (software tool)",
+      "model": "version not pinned here",
+      "settings": "Used both for strandedness inference (subsampled) and for transcript quantification from STAR alignments.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "e5",
+      "name": "STAR (software tool; aligner)",
+      "model": "version not pinned here",
+      "settings": "Default aligner (--aligner star_salmon); spliced alignment to the genome.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "e6",
+      "name": "SAMtools (software tool)",
+      "model": "version not pinned here",
+      "settings": "Sort / index / flagstat on alignments.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "e7",
+      "name": "picard MarkDuplicates (software tool)",
+      "model": "version not pinned here",
+      "settings": "Duplicate marking for QC.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "e8",
+      "name": "RSeQC / Qualimap / dupRadar / Preseq (QC tools)",
+      "model": "versions not pinned here",
+      "settings": "Post-alignment QC; Preseq skipped by default.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "e9",
+      "name": "MultiQC (software tool)",
+      "model": "version not pinned here",
+      "settings": "Aggregates all module logs into one HTML report.",
+      "needsReview": true,
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "id": "sp1",
+      "name": "Raw paired-end FASTQ reads",
+      "role": "input",
+      "description": "One or more FASTQ pairs per biological sample, listed in the samplesheet (t1). Digital sequencing dataset.",
+      "derivedFromMaterialId": "m4"
+    },
+    {
+      "id": "sp2",
+      "name": "Trimmed reads",
+      "role": "intermediate",
+      "description": "Adapter/quality-trimmed FASTQ from Trim Galore!."
+    },
+    {
+      "id": "sp3",
+      "name": "Coordinate-sorted genome BAM",
+      "role": "intermediate",
+      "description": "STAR alignments, sorted and indexed by SAMtools."
+    },
+    {
+      "id": "sp4",
+      "name": "Gene/transcript expression matrix",
+      "role": "output",
+      "description": "Salmon quantifications merged across samples (counts + TPM), plus a DESeq2 VST-based sample-similarity QC."
+    },
+    {
+      "id": "sp5",
+      "name": "MultiQC report",
+      "role": "output",
+      "description": "Single aggregated HTML QC report for the run."
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Input samplesheet layout (--input samplesheet.csv)",
+      "columns": [
+        "sample",
+        "fastq_1",
+        "fastq_2",
+        "strandedness"
+      ],
+      "rows": [
+        [
+          "CONTROL_REP1",
+          "AEG588A1_S1_L002_R1_001.fastq.gz",
+          "AEG588A1_S1_L002_R2_001.fastq.gz",
+          "auto"
+        ],
+        [
+          "CONTROL_REP1",
+          "AEG588A1_S1_L003_R1_001.fastq.gz",
+          "AEG588A1_S1_L003_R2_001.fastq.gz",
+          "auto"
+        ],
+        [
+          "TREATMENT_REP1",
+          "AEG588A4_S4_L003_R1_001.fastq.gz",
+          "AEG588A4_S4_L003_R2_001.fastq.gz",
+          "reverse"
+        ]
+      ],
+      "note": "One row per FASTQ pair; rows sharing a 'sample' value are merged (technical replicates). 'strandedness' may be auto|forward|reverse|unstranded. Example rows adapted from the nf-core/rnaseq docs; substitute real paths."
+    },
+    {
+      "id": "t2",
+      "title": "QC gates and key default parameters (nf-core/rnaseq v3.14.0)",
+      "columns": [
+        "parameter",
+        "default value",
+        "meaning / gate"
+      ],
+      "rows": [
+        [
+          "min_trimmed_reads",
+          10000,
+          "Samples with fewer reads after trimming are removed from downstream analysis."
+        ],
+        [
+          "min_mapped_reads",
+          5,
+          "Percent (%) uniquely-mapped reads below which a BAM is failed/flagged (STAR route)."
+        ],
+        [
+          "pseudo_aligner_kmer_size",
+          31,
+          "k-mer length for the Salmon/Kallisto (pseudo)index."
+        ],
+        [
+          "aligner",
+          "star_salmon",
+          "Default alignment+quantification route."
+        ],
+        [
+          "deseq2_vst",
+          "true",
+          "Use VST (not rlog) for the DESeq2 sample-similarity QC."
+        ],
+        [
+          "remove_ribo_rna",
+          "false",
+          "SortMeRNA rRNA depletion off by default."
+        ],
+        [
+          "skip_bbsplit",
+          "true",
+          "Host/contaminant BBSplit removal off by default."
+        ],
+        [
+          "skip_preseq",
+          "true",
+          "Preseq library-complexity estimation off by default."
+        ]
+      ],
+      "note": "Values verified against the nf-core/rnaseq v3.14.0 parameters page."
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Input",
+      "action": "Stage the run: provide --input samplesheet.csv (t1), the reference FASTA + GTF, choose an executor profile, and launch `nextflow run nf-core/rnaseq -r 3.14.0`.",
+      "materialIds": [
+        "m1",
+        "m2",
+        "m4"
+      ],
+      "equipmentIds": [
+        "e1"
+      ],
+      "inputIds": [
+        "sp1",
+        "m4"
+      ],
+      "tableIds": [
+        "t1"
+      ],
+      "expectedResult": "Pipeline resolves the samplesheet and reference; work directory initialised.",
+      "criticalNotes": "LOOP: the pipeline runs steps s2-s10 once per samplesheet row/sample in parallel; the schema has no loop construct, so per-sample iteration is expressed only via the samplesheet table (t1) and this note.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Preprocessing",
+      "action": "Concatenate FASTQ files that belong to the same sample (technical replicates) with `cat`.",
+      "inputIds": [
+        "sp1"
+      ],
+      "expectedResult": "One merged R1/R2 pair per sample.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "QC",
+      "action": "Run FastQC on the raw reads to capture per-base quality, GC and adapter-contamination metrics.",
+      "equipmentIds": [
+        "e2"
+      ],
+      "inputIds": [
+        "sp1"
+      ],
+      "expectedResult": "Per-sample FastQC report; no hard gate, informs trimming.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Preprocessing",
+      "action": "Infer library strandedness by subsampling reads and pseudo-mapping with Salmon (only when strandedness='auto' in t1).",
+      "equipmentIds": [
+        "e4"
+      ],
+      "inputIds": [
+        "sp1"
+      ],
+      "optional": true,
+      "expectedResult": "Strandedness assigned per sample for downstream quantification.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ],
+      "branches": [
+        {
+          "condition": "If samplesheet strandedness is explicit (forward/reverse/unstranded), skip inference and use the stated value."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Trimming",
+      "action": "Trim adapters and low-quality bases with Trim Galore!, then re-run FastQC on trimmed reads.",
+      "equipmentIds": [
+        "e3",
+        "e2"
+      ],
+      "inputIds": [
+        "sp1"
+      ],
+      "outputIds": [
+        "sp2"
+      ],
+      "tableIds": [
+        "t2"
+      ],
+      "parameters": [
+        {
+          "type": "count",
+          "value": 10000,
+          "unit": "reads",
+          "rawText": "min_trimmed_reads = 10000",
+          "needsReview": false
+        }
+      ],
+      "branches": [
+        {
+          "condition": "if trimmed reads for a sample < min_trimmed_reads (10000)",
+          "action": "Remove that sample from all downstream steps (fails the trimming QC gate)."
+        }
+      ],
+      "expectedResult": "Adapter-free trimmed FASTQ (sp2) passing the 10,000-read gate.",
+      "criticalNotes": "QC GATE encoded as a branch: schema has no dedicated acceptance-threshold field, so the numeric gate lives in parameters + branches + table t2.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Filtering",
+      "action": "(Optional) Remove genome contaminants with BBSplit and/or deplete rRNA with SortMeRNA.",
+      "materialIds": [
+        "m3"
+      ],
+      "inputIds": [
+        "sp2"
+      ],
+      "optional": true,
+      "parameters": [
+        {
+          "type": "other",
+          "value": null,
+          "unit": "flag",
+          "rawText": "skip_bbsplit = true (default off); remove_ribo_rna = false (default off)"
+        }
+      ],
+      "expectedResult": "Cleaned reads when enabled; otherwise passthrough.",
+      "criticalNotes": "Both sub-steps are OFF by default; enable via --bbsplit_fasta_list / --remove_ribo_rna.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Alignment",
+      "action": "Align trimmed reads to the genome with STAR (default --aligner star_salmon).",
+      "equipmentIds": [
+        "e5"
+      ],
+      "materialIds": [
+        "m1",
+        "m2"
+      ],
+      "inputIds": [
+        "sp2"
+      ],
+      "outputIds": [
+        "sp3"
+      ],
+      "parameters": [
+        {
+          "type": "dataSize",
+          "value": 38,
+          "unit": "GB",
+          "rawText": "STAR needs ~38 GB RAM for the human GRCh37 index",
+          "needsReview": true
+        }
+      ],
+      "expectedResult": "Genome BAM per sample.",
+      "criticalNotes": "COMPUTE PARAMETER: memory is a resource requirement, not a bench quantity; encoded via parameter.type 'dataSize'. Value is the documented GRCh37 figure and is genome-dependent (needsReview).",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Alignment",
+      "action": "Sort and index alignments with SAMtools; optionally mark duplicates with picard.",
+      "equipmentIds": [
+        "e6",
+        "e7"
+      ],
+      "inputIds": [
+        "sp3"
+      ],
+      "outputIds": [
+        "sp3"
+      ],
+      "expectedResult": "Coordinate-sorted, indexed BAM with duplicate flags.",
+      "dependsOn": [
+        "s7"
+      ],
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "Quantification",
+      "action": "Quantify transcript/gene expression with Salmon against the STAR alignments; build the k-mer index if needed.",
+      "equipmentIds": [
+        "e4"
+      ],
+      "materialIds": [
+        "m2"
+      ],
+      "inputIds": [
+        "sp3"
+      ],
+      "outputIds": [
+        "sp4"
+      ],
+      "parameters": [
+        {
+          "type": "count",
+          "value": 31,
+          "unit": "k-mer",
+          "rawText": "pseudo_aligner_kmer_size = 31"
+        }
+      ],
+      "dependsOn": [
+        "s8"
+      ],
+      "expectedResult": "Per-sample counts + TPM.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "phase": "QC",
+      "action": "Run post-alignment QC (RSeQC, Qualimap, dupRadar) and apply the mapping-rate gate.",
+      "equipmentIds": [
+        "e8"
+      ],
+      "inputIds": [
+        "sp3"
+      ],
+      "tableIds": [
+        "t2"
+      ],
+      "parameters": [
+        {
+          "type": "other",
+          "value": 5,
+          "unit": "%",
+          "rawText": "min_mapped_reads = 5 (percent uniquely mapped)",
+          "needsReview": false
+        }
+      ],
+      "branches": [
+        {
+          "condition": "if uniquely-mapped reads (%) < min_mapped_reads (5%)",
+          "action": "Fail/flag the sample in QC."
+        }
+      ],
+      "expectedResult": "QC metrics per sample; low-mapping samples flagged.",
+      "criticalNotes": "QC GATE: percentage acceptance threshold has no native parameter.type; encoded as type 'other' with unit '%' plus a branch.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    },
+    {
+      "id": "s11",
+      "number": 11,
+      "phase": "Aggregation",
+      "action": "Merge per-sample quantifications into a study-wide matrix, run DESeq2 sample-similarity QC (VST), and aggregate every module log into a MultiQC report.",
+      "equipmentIds": [
+        "e9"
+      ],
+      "inputIds": [
+        "sp4"
+      ],
+      "outputIds": [
+        "sp4",
+        "sp5"
+      ],
+      "tableIds": [
+        "t2"
+      ],
+      "parameters": [
+        {
+          "type": "other",
+          "value": null,
+          "unit": "flag",
+          "rawText": "deseq2_vst = true"
+        }
+      ],
+      "dependsOn": [
+        "s9",
+        "s10"
+      ],
+      "expectedResult": "Gene/transcript expression matrix (sp4) and a single MultiQC HTML report (sp5).",
+      "criticalNotes": "COMPUTED RESULT: the merged matrix is derived from all per-sample outputs; the schema has no 'derived/aggregated result' construct, so it is modelled as an output sample plus expectedOutputs.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "name": "Strandedness sanity check",
+      "description": "Salmon-inferred strandedness should match the library-prep kit expectation; mismatches indicate a samplesheet or kit error."
+    },
+    {
+      "name": "Sample-similarity QC (DESeq2 VST)",
+      "description": "PCA/heatmap should cluster replicates together; outliers suggest swaps or batch effects."
+    },
+    {
+      "name": "Positive/negative biological controls",
+      "description": "Spike-ins or known housekeeping genes if included in the experimental design.",
+      "needsReview": true
+    }
+  ],
+  "expectedOutputs": [
+    "Gene- and transcript-level expression matrices (raw counts and TPM) merged across all samples.",
+    "A single MultiQC HTML report aggregating FastQC, trimming, alignment, quantification and QC-tool metrics.",
+    "Per-sample BAM alignments, coverage bigWig tracks, and QC tables in the results directory.",
+    "A software_versions.yml recording the exact tool versions used for the run (resolves the version-pinning gaps flagged as needsReview here)."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "Sample dropped after trimming",
+      "cause": "Fewer than min_trimmed_reads (10000) survived",
+      "solution": "Check raw read depth and adapter settings; lower --min_trimmed_reads only if justified."
+    },
+    {
+      "problem": "Low uniquely-mapped rate",
+      "cause": "Wrong reference, contamination, or degraded RNA",
+      "solution": "Verify genome/GTF match; enable BBSplit; inspect RSeQC read distribution."
+    },
+    {
+      "problem": "STAR out-of-memory",
+      "cause": "Index too large for allocated RAM (~38 GB for human)",
+      "solution": "Increase process memory or use a shared/prebuilt index."
+    },
+    {
+      "problem": "Unexpected strandedness",
+      "cause": "Mislabelled library or wrong samplesheet column",
+      "solution": "Set strandedness explicitly instead of 'auto' and re-run the affected samples."
+    }
+  ],
+  "safety": [
+    "Purely computational protocol: no physical, chemical, or biological hazards. Standard data-governance/privacy rules apply to human sequencing data."
+  ],
+  "biosafetyLevel": "not specified",
+  "limitations": "Encodes only the default star_salmon route of nf-core/rnaseq v3.14.0; HISAT2/RSEM routes, UMI handling, and full differential-expression modelling are not represented. Individual tool version numbers were not pinned from the source and are marked needsReview; the run's software_versions.yml is authoritative.",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "url",
+      "title": "nf-core/rnaseq pipeline documentation and parameters (v3.14.0)",
+      "url": "https://nf-co.re/rnaseq/3.14.0/",
+      "doi": "10.5281/zenodo.1400710",
+      "license": "MIT",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

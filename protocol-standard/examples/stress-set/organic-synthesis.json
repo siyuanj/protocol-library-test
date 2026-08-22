@@ -1,0 +1,332 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Preparation of 5-(Triisopropylalkynyl)dibenzo[b,d]thiophenium Triflate (3-step synthesis)",
+    "protocolId": "lr-stress-organic-synthesis",
+    "version": "0.1",
+    "family": "Organic synthesis",
+    "category": "Synthetic chemistry",
+    "purpose": "Prepare an alkynylating reagent (electrophilic alkyne-transfer salt) in three isolated steps: (A) oxidation of dibenzo[b,d]thiophene to its 5-oxide, (B) synthesis of a silyl-protected alkyne, and (C) triflic-anhydride-mediated coupling of the sulfoxide and the alkyne to the thiophenium triflate.",
+    "scope": "Bench-scale (tens of mmol) preparation following Org. Synth. 2019, 96, 258-276. Requires Schlenk/inert-atmosphere technique, cryogenic cooling to -70 C, and flash chromatography. Not a green/large-scale process; product 3 is energetic and must not be heated above 100 C in the solid state.",
+    "estimatedTime": "~3-4 days (Step A: oxidation + overnight-equivalent drying/recrystallization; Step B: reaction warms over 16 h; Step C: reaction stirred 12 h + chromatography)",
+    "beforeYouBegin": [
+      "Perform a full hazard/risk assessment for every reagent and operation at the planned scale (see Prudent Practices in the Laboratory, Ch. 4).",
+      "Steps B and C require rigorously dry solvents (THF, DCM, Et2O) and inert atmosphere; flame-dry glassware for Step C.",
+      "Have internal-temperature monitoring (thermocouple) ready for Steps A, B and C; the H2O2 oxidation in Step A can undergo a delayed runaway exotherm.",
+      "Step A intermediate 1 feeds Step C; Step B intermediate 2 feeds Step C. Scales are not identical across steps (A made on 54.3 mmol, C consumes 25.0 mmol of 1)."
+    ],
+    "authors": [
+      { "name": "Bernd Waldecker", "affiliation": "Institut fur Organische und Biomolekulare Chemie, Georg-August-Universitat Gottingen" },
+      { "name": "Kevin Kafuta", "affiliation": "Institut fur Organische und Biomolekulare Chemie, Georg-August-Universitat Gottingen" },
+      { "name": "Manuel Alcarazo", "affiliation": "Institut fur Organische und Biomolekulare Chemie, Georg-August-Universitat Gottingen" }
+    ],
+    "license": "Organic Syntheses articles are freely accessible; reuse terms per publisher.",
+    "doi": "10.15227/orgsyn.096.0258",
+    "tags": ["organic synthesis", "sulfoxide oxidation", "alkynylation", "triflic anhydride", "Schlenk", "flash chromatography", "multi-step"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Dibenzo[b,d]thiophene", "role": "reagent", "amount": 10.0, "unit": "g", "specification": "98%; limiting reagent for Step A", "vendor": "J&K Scientific / Sigma-Aldrich", "casNumber": "132-65-0", "hazard": "Combustible solid; aquatic toxicity; wear gloves. GHS details not stated in source.", "rawText": "Dibenzo[b,d]thiophene (10.00 g, 54.3 mmol, 1.00 equiv) (Note 2)", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 258, "excerpt": "Dibenzo[b,d]thiophene (10.00 g, 54.3 mmol, 1.00 equiv)" }] },
+    { "id": "m2", "name": "Trifluoroacetic acid (TFA)", "role": "solvent", "amount": 40.0, "unit": "mL", "specification": ">=99.9%; reaction medium/acid for Step A", "vendor": "Carl Roth / Sigma-Aldrich", "casNumber": "76-05-1", "hazard": "Corrosive to skin and eyes; use in fume hood.", "rawText": "trifluoroacetic acid (40.0 mL)(Note 3)", "needsReview": true },
+    { "id": "m3", "name": "Hydrogen peroxide, 35% w/w aqueous", "role": "reagent", "amount": 4.67, "unit": "mL", "specification": "35% aqueous; oxidant, 1.00 equiv", "vendor": "Acros Organics", "casNumber": "7722-84-1", "hazard": "Strong oxidizer; corrosive; reaction is highly exothermic. Keep from contact with metals (use PTFE tubing).", "rawText": "A 35%w/w aqueous solution of H2O2 (4.67 mL, 54.3 mmol, 1.00 equiv)", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 258, "excerpt": "35%w/w aqueous solution of H2O2 (4.67 mL, 54.3 mmol, 1.00 equiv)" }] },
+    { "id": "m4", "name": "Water (chilled / ice-cold)", "role": "solvent", "specification": "Chilled quench (350 mL) and ice-cold wash (2 x 60 mL)", "rawText": "chilled water (350 mL) ... washed with ice-cold water (2 x 60 mL)" },
+    { "id": "m5", "name": "Toluene", "role": "solvent", "amount": 400.0, "unit": "mL", "specification": ">=99.5% ACS reagent grade; recrystallization solvent for 1", "vendor": "Sigma-Aldrich", "casNumber": "108-88-3", "hazard": "Flammable; harmful. Fume hood.", "rawText": "recrystallized from toluene (400 mL) (Notes 8 and 9)", "needsReview": true },
+    { "id": "m6", "name": "Trimethylsilylacetylene (TMS-acetylene)", "role": "reagent", "amount": 4.58, "unit": "mL", "specification": "98%; 1.08 equiv (Step B)", "vendor": "Sigma-Aldrich", "casNumber": "1066-54-2", "hazard": "Highly flammable liquid.", "rawText": "TMS-acetylene (4.58 mL, 33.0 mmol, 1.08 equiv) (Note 12)", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 259, "excerpt": "TMS-acetylene (4.58 mL, 33.0 mmol, 1.08 equiv)" }] },
+    { "id": "m7", "name": "Tetrahydrofuran (THF), anhydrous", "role": "solvent", "amount": 50.0, "unit": "mL", "specification": "Anhydrous, inhibitor-free (99.9%) or SPS-dried", "casNumber": "109-99-9", "hazard": "Highly flammable; peroxide former.", "rawText": "dry THF (50 mL) (Note 13)" },
+    { "id": "m8", "name": "n-Butyllithium (n-BuLi), 2.5 M in hexane", "role": "reagent", "amount": 13.2, "unit": "mL", "workingConcentration": "2.5 M in hexane", "specification": "1.08 equiv; strong base (Step B)", "vendor": "Acros Organics", "casNumber": "109-72-8", "hazard": "Pyrophoric; reacts violently with water; corrosive. Handle under inert atmosphere.", "rawText": "n-BuLi (2.5 M in hexane; 13.2 mL, 33.0 mmol, 1.08 equiv)", "needsReview": true },
+    { "id": "m9", "name": "Triisopropylsilyl chloride (TIPSCl)", "role": "reagent", "amount": 6.55, "unit": "mL", "specification": "97%; limiting reagent for Step B, 1.0 equiv", "vendor": "Fluorochem / Sigma-Aldrich", "casNumber": "13154-24-0", "hazard": "Corrosive; moisture sensitive.", "rawText": "TIPSCl (6.55 mL, 30.6 mmol, 1.0 equiv) (Note 15)", "needsReview": true },
+    { "id": "m10", "name": "Ammonium chloride, saturated aqueous", "role": "reagent", "amount": 150.0, "unit": "mL", "specification": "Saturated aqueous; Step B quench/workup", "casNumber": "12125-02-9", "rawText": "saturated aqueous solution of ammonium chloride (150 mL)" },
+    { "id": "m11", "name": "Methyl tert-butyl ether (MTBE)", "role": "solvent", "specification": "Extraction solvent; 50 mL + 2 x 100 mL", "casNumber": "1634-04-4", "hazard": "Highly flammable.", "rawText": "Addition of MTBE (50 mL) ... extracted twice (MTBE, 2 x 100 mL)" },
+    { "id": "m12", "name": "Brine (saturated aqueous NaCl)", "role": "reagent", "amount": 100.0, "unit": "mL", "specification": "Wash of combined organic phases (Step B)", "rawText": "washed with brine (1 x 100 mL)" },
+    { "id": "m13", "name": "Magnesium sulfate (MgSO4)", "role": "reagent", "amount": 10.0, "unit": "g", "specification": "Anhydrous drying agent (Step B)", "casNumber": "7487-88-9", "rawText": "dried over MgSO4 (10 g)" },
+    { "id": "m14", "name": "Dichloromethane (DCM), anhydrous", "role": "solvent", "specification": "Reaction solvent Step C (150 mL + 10 mL) and chromatography eluent", "casNumber": "75-09-2", "hazard": "Suspected carcinogen; use in fume hood.", "rawText": "dry DCM (150 mL) (Note 18) ... alkyne 2 ... in dry DCM (10 mL)", "needsReview": true },
+    { "id": "m15", "name": "Trifluoromethanesulfonic anhydride (Tf2O)", "role": "reagent", "amount": 4.2, "unit": "mL", "specification": "97-99%; 1.0 equiv (Step C)", "vendor": "Fluorochem / Sigma-Aldrich", "casNumber": "358-23-6", "hazard": "Corrosive; reacts violently with water; lachrymator.", "rawText": "Triflic anhydride (4.20 mL, 25.0 mmol, 1.0 equiv)", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 260, "excerpt": "Triflic anhydride (4.20 mL, 25.0 mmol, 1.0 equiv)" }] },
+    { "id": "m16", "name": "Methanol", "role": "solvent", "amount": 5.0, "unit": "mL", "specification": "Quench for Step C", "casNumber": "67-56-1", "hazard": "Flammable; toxic.", "rawText": "quenched by addition of methanol (5 mL)" },
+    { "id": "m17", "name": "Silica gel (230-400 mesh, grade 60)", "role": "consumable", "specification": "50 mL to adsorb crude; 95 g for the column (16.0 x 6.0 cm)", "vendor": "Fisher Chemical", "rawText": "Silica gel (50 mL) ... slurry of silica gel in CH2Cl2 (95 g silica gel, 16.0 x 6.0 cm)" },
+    { "id": "m18", "name": "Acetone", "role": "solvent", "specification": ">=99.5%; chromatography co-eluent (DCM:acetone 4:1) and TLC eluent (20% acetone/DCM)", "casNumber": "67-64-1", "hazard": "Highly flammable.", "rawText": "DCM:acetone mixture, 4:1 (2 L)" },
+    { "id": "m19", "name": "Diethyl ether (Et2O), anhydrous", "role": "solvent", "specification": ">=99.5% / anhydrous; precipitation (100 mL) and wash (50 mL) of 3", "casNumber": "60-29-7", "hazard": "Extremely flammable; peroxide former.", "rawText": "Slow addition of Et2O (100 mL) ... washed with Et2O (50 mL)" },
+    { "id": "m20", "name": "1,3,5-Trimethoxybenzene", "role": "standard", "specification": "QNMR internal standard used to determine wt% purity of 1, 2 and 3", "casNumber": "621-23-8", "rawText": "purity by QNMR using 1,3,5-trimethoxybenzene as an internal standard" }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "100 mL two-necked round-bottomed flask", "settings": "Thermocouple in one neck; 1.5 cm PTFE-coated oval stir bar; second neck open for addition (Step A)" },
+    { "id": "e2", "name": "Syringe pump", "settings": "Controlled dropwise addition: H2O2 over 2 h (Step A); Tf2O and alkyne 2 over 5 min each (Step C). Use PTFE tubing (no metal) for H2O2." },
+    { "id": "e3", "name": "Sintered glass frit (10 um pore)", "settings": "Filtration of crude 1 and washes" },
+    { "id": "e4", "name": "250 mL three-necked round-bottomed flask (Schlenk)", "settings": "N2 inlet (Schlenk line + bubbler), rubber septum, thermocouple; flame-dried for Step C" },
+    { "id": "e5", "name": "Cryogenic cooling bath / cryocooler", "settings": "Isopropanol-dry ice bath to internal -70 C (Step B); cryocooler to -50 C (Step C)" },
+    { "id": "e6", "name": "Rotary evaporator", "settings": "Step B: 40 C, 375 -> 75 mmHg. Step C: 40 C, 600 -> 375 mmHg (partial)." },
+    { "id": "e7", "name": "500 mL separatory funnel", "settings": "Aqueous workup / phase separation (Step B)" },
+    { "id": "e8", "name": "Flash chromatography column", "settings": "95 g silica, 16.0 x 6.0 cm, sand cap; eluent DCM (500 mL) then DCM:acetone 4:1 (2 L)" },
+    { "id": "e9", "name": "TLC plate + 254 nm UV lamp", "settings": "Reaction monitoring; eluents per table t2" }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "Dibenzo[b,d]thiophene-5-oxide (1)", "role": "intermediate", "derivedFromMaterialId": "m1", "description": "Sulfoxide product of Step A (9.03 g, 81%, 97 wt%); serves as input to Step C." },
+    { "id": "sp2", "name": "Triisopropyl((trimethylsilyl)ethynyl)silane (2)", "role": "intermediate", "description": "Silylated alkyne product of Step B (7.42 g, 95%, 99 wt%); serves as input to Step C." },
+    { "id": "sp3", "name": "5-(Triisopropylalkynyl)dibenzo[b,d]thiophenium triflate (3)", "role": "output", "description": "Final electrophilic alkynylating reagent (7.50 g, 58%, 98 wt%); energetic solid, do not heat >100 C." }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Reagent stoichiometry / derived amounts (mass -> mmol -> equivalents). WORKAROUND: the material.amount field holds a single value only, so full mass/mmol/equiv triples are captured here.",
+      "columns": ["Step", "Reagent", "Amount (mass or volume)", "mmol", "Molar equiv"],
+      "rows": [
+        ["A", "Dibenzo[b,d]thiophene (limiting)", "10.00 g", 54.3, "1.00"],
+        ["A", "Trifluoroacetic acid", "40.0 mL", null, "solvent"],
+        ["A", "H2O2 (35% w/w aq)", "4.67 mL", 54.3, "1.00"],
+        ["B", "TMS-acetylene", "4.58 mL", 33.0, "1.08"],
+        ["B", "n-BuLi (2.5 M in hexane)", "13.2 mL", 33.0, "1.08"],
+        ["B", "TIPSCl (limiting)", "6.55 mL", 30.6, "1.00"],
+        ["C", "Dibenzo[b,d]thiophene-5-oxide (1)", "5.0 g", 25.0, "1.0"],
+        ["C", "Triflic anhydride (Tf2O)", "4.20 mL", 25.0, "1.0"],
+        ["C", "Alkyne 2", "7.90 mL", 25.0, "1.0"]
+      ],
+      "note": "Step scales differ: A/B are run on ~54/31 mmol; C consumes 25.0 mmol of 1. mmol/equiv not natively representable per-material in the schema."
+    },
+    {
+      "id": "t2",
+      "title": "TLC reaction monitoring (WORKAROUND: schema has no native TLC construct; eluent + Rf captured as a table).",
+      "columns": ["Step", "Eluent", "Species", "Rf", "Visualization"],
+      "rows": [
+        ["A", "1:4 ethyl acetate / hexanes", "starting material (dibenzothiophene)", 0.75, "UV 254 nm"],
+        ["A", "1:4 ethyl acetate / hexanes", "product (sulfoxide 1)", 0.05, "UV 254 nm"],
+        ["A", "1:4 ethyl acetate / hexanes", "sulfone over-oxidation by-product", 0.16, "UV 254 nm"],
+        ["C", "20% acetone in CH2Cl2", "starting material", 0.72, "UV 254 nm"],
+        ["C", "20% acetone in CH2Cl2", "product (thiophenium salt 3)", 0.34, "UV 254 nm"]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1", "number": 1, "phase": "A. Oxidation to sulfoxide 1",
+      "action": "Equip a 100 mL two-necked flask with a thermocouple and stir bar (second neck open). Add dibenzo[b,d]thiophene, then trifluoroacetic acid; a white suspension forms.",
+      "materialIds": ["m1", "m2"], "equipmentIds": ["e1"], "inputIds": ["m1"],
+      "parameters": [
+        { "type": "mass", "value": 10.0, "unit": "g", "rawText": "Dibenzo[b,d]thiophene (10.00 g, 54.3 mmol, 1.00 equiv)" },
+        { "type": "ratio", "value": 1.0, "unit": "equiv", "rawText": "1.00 equiv" },
+        { "type": "volume", "value": 40.0, "unit": "mL", "rawText": "trifluoroacetic acid (40.0 mL)" }
+      ],
+      "expectedResult": "White suspension of dibenzothiophene in TFA.",
+      "criticalNotes": "Use internal-temperature monitoring throughout; the following peroxide addition is highly exothermic.",
+      "safetyNotes": "TFA is corrosive; work in a fume hood with gloves."
+    },
+    {
+      "id": "s2", "number": 2, "phase": "A. Oxidation to sulfoxide 1",
+      "action": "Add 35% aqueous H2O2 dropwise by syringe pump (via PTFE tubing, no metal) over 2 h. Keep internal temperature below 30 C. After addition a clear solution forms; stir 10 min more, then confirm consumption of starting material by TLC.",
+      "materialIds": ["m3"], "equipmentIds": ["e2", "e9"], "tableIds": ["t2"], "inputIds": ["m3"],
+      "parameters": [
+        { "type": "volume", "value": 4.67, "unit": "mL", "rawText": "H2O2 (4.67 mL, 54.3 mmol, 1.00 equiv)" },
+        { "type": "ratio", "value": 1.0, "unit": "equiv", "rawText": "1.00 equiv" },
+        { "type": "time", "value": 2.0, "unit": "h", "rawText": "over 2 h" },
+        { "type": "temperature", "value": 30.0, "unit": "degC", "rawText": "keeping the internal temperature below 30 C", "needsReview": true },
+        { "type": "time", "value": 10.0, "unit": "min", "rawText": "stirred for an additional 10 min" },
+        { "type": "other", "value": null, "unit": "Rf", "rawText": "product Rf 0.05; SM Rf 0.75; sulfone Rf 0.16 (1:4 EtOAc-hexanes, UV 254 nm)" }
+      ],
+      "expectedResult": "Clear solution; starting material no longer detectable by TLC (Rf 0.05 product spot).",
+      "criticalNotes": "Highly exothermic with possible delayed runaway if run cold; internal T rises ~21 -> 29 C during a 2 h addition, no external cooling needed at 20-25 C lab temp. Keeping T below 30 C avoids sulfone by-product.",
+      "safetyNotes": "H2O2 is a strong oxidizer; avoid metal contact. Caution: highly exothermic reaction.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 258, "excerpt": "added dropwise by syringe pump ... over 2 h. Caution: the reaction is highly exothermic" }]
+    },
+    {
+      "id": "s3", "number": 3, "phase": "A. Oxidation to sulfoxide 1",
+      "action": "Pour the reaction mixture into chilled water; filter the resulting suspension through a 10 um sintered glass frit and wash with ice-cold water. Dry the solid on the frit under a stream of air.",
+      "materialIds": ["m4"], "equipmentIds": ["e3"],
+      "parameters": [
+        { "type": "volume", "value": 350.0, "unit": "mL", "rawText": "chilled water (350 mL)" },
+        { "type": "count", "value": 2, "unit": "x", "rawText": "washed with ice-cold water (2 x 60 mL)" },
+        { "type": "volume", "value": 60.0, "unit": "mL", "rawText": "2 x 60 mL" },
+        { "type": "time", "value": 2.0, "unit": "h", "rawText": "dried on the frit under passage of air for 2 h" }
+      ],
+      "expectedResult": "Crude off-white solid of 1 (typically ~10.5 g damp/dry).",
+      "criticalNotes": "Aqueous workup only; no extraction. Solid is collected by filtration, not phase separation."
+    },
+    {
+      "id": "s4", "number": 4, "phase": "A. Oxidation to sulfoxide 1", "pausePoint": true,
+      "action": "Recrystallize the crude solid from toluene: suspend in toluene and heat until dissolved (~90 C), cool to room temperature unassisted to grow needles, age 2 h, filter, wash with ice-cold toluene (10 mL), and dry in vacuo to afford 1 as white needles.",
+      "materialIds": ["m5"], "equipmentIds": ["e3"], "outputIds": ["sp1"], "tableIds": ["t1"],
+      "parameters": [
+        { "type": "volume", "value": 400.0, "unit": "mL", "rawText": "recrystallized from toluene (400 mL)" },
+        { "type": "temperature", "value": 90.0, "unit": "degC", "rawText": "heated until dissolved (around 90 C)" },
+        { "type": "time", "value": 2.0, "unit": "h", "rawText": "aged at room temperature for 2 h" },
+        { "type": "mass", "value": 9.03, "unit": "g", "rawText": "9.03 g" },
+        { "type": "other", "value": 81, "unit": "% yield", "rawText": "81% yield" },
+        { "type": "other", "value": 97, "unit": "wt% purity", "rawText": "97 wt% purity (QNMR)" }
+      ],
+      "expectedResult": "1 as white needles: 9.03 g, 81% yield, 97 wt% purity; mp 188 C.",
+      "criticalNotes": "Unreacted dibenzothiophene is removed by recrystallization; if sulfone by-product formed, use flash chromatography (DCM/MeOH 50:1 -> 25:1, Rf 0.55 at 25:1) instead. Safe pause point: 1 can be stored."
+    },
+    {
+      "id": "s5", "number": 5, "phase": "B. Synthesis of silyl alkyne 2",
+      "action": "Under N2, charge a flame-flushed 250 mL three-necked flask (N2 inlet, septum, thermocouple, stir bar) with TMS-acetylene and dry THF. Cool the clear solution in an isopropanol/dry-ice bath to internal -70 C.",
+      "materialIds": ["m6", "m7"], "equipmentIds": ["e4", "e5"], "inputIds": ["m6"],
+      "parameters": [
+        { "type": "volume", "value": 4.58, "unit": "mL", "rawText": "TMS-acetylene (4.58 mL, 33.0 mmol, 1.08 equiv)" },
+        { "type": "ratio", "value": 1.08, "unit": "equiv", "rawText": "1.08 equiv" },
+        { "type": "volume", "value": 50.0, "unit": "mL", "rawText": "dry THF (50 mL)" },
+        { "type": "temperature", "value": -70.0, "unit": "degC", "rawText": "internal temperature -70 C" }
+      ],
+      "expectedResult": "Clear cold solution ready for deprotonation.",
+      "safetyNotes": "TMS-acetylene and THF are highly flammable; maintain inert atmosphere."
+    },
+    {
+      "id": "s6", "number": 6, "phase": "B. Synthesis of silyl alkyne 2",
+      "action": "Add n-BuLi dropwise at a rate that keeps the internal temperature below -60 C. Ten minutes after addition, remove the cooling bath and let the solution warm to 0 C.",
+      "materialIds": ["m8"], "equipmentIds": ["e5"], "inputIds": ["m8"],
+      "parameters": [
+        { "type": "volume", "value": 13.2, "unit": "mL", "rawText": "n-BuLi (2.5 M in hexane; 13.2 mL, 33.0 mmol, 1.08 equiv)" },
+        { "type": "concentration", "value": 2.5, "unit": "M", "rawText": "2.5 M in hexane" },
+        { "type": "ratio", "value": 1.08, "unit": "equiv", "rawText": "1.08 equiv" },
+        { "type": "temperature", "value": -60.0, "unit": "degC", "rawText": "keeps the internal temperature below -60 C" },
+        { "type": "temperature", "value": 0.0, "unit": "degC", "rawText": "allowed to warm to 0 C" }
+      ],
+      "expectedResult": "Lithium acetylide solution formed.",
+      "safetyNotes": "n-BuLi is pyrophoric and reacts violently with water; add under N2 with syringe technique."
+    },
+    {
+      "id": "s7", "number": 7, "phase": "B. Synthesis of silyl alkyne 2",
+      "action": "Re-cool to internal -60 C, add TIPSCl over 5 min, then allow the clear solution to warm slowly to room temperature over 16 h.",
+      "materialIds": ["m9"], "equipmentIds": ["e5"], "inputIds": ["m9"],
+      "parameters": [
+        { "type": "temperature", "value": -60.0, "unit": "degC", "rawText": "cooled ... to an internal temperature of -60 C" },
+        { "type": "volume", "value": 6.55, "unit": "mL", "rawText": "TIPSCl (6.55 mL, 30.6 mmol, 1.0 equiv)" },
+        { "type": "ratio", "value": 1.0, "unit": "equiv", "rawText": "1.0 equiv (limiting)" },
+        { "type": "time", "value": 5.0, "unit": "min", "rawText": "added over 5 min" },
+        { "type": "time", "value": 16.0, "unit": "h", "rawText": "warm up to room temperature over 16 h" }
+      ],
+      "expectedResult": "Silylation complete after overnight warming."
+    },
+    {
+      "id": "s8", "number": 8, "phase": "B. Synthesis of silyl alkyne 2", "pausePoint": true,
+      "action": "Pour the mixture into a separatory funnel containing saturated aqueous NH4Cl; add MTBE to form a biphasic mixture and separate. Extract the aqueous phase twice more with MTBE, wash the combined organics with brine, dry over MgSO4, and evaporate under reduced pressure to give 2 as a colorless oil.",
+      "materialIds": ["m10", "m11", "m12", "m13"], "equipmentIds": ["e7", "e6"], "outputIds": ["sp2"], "tableIds": ["t1"],
+      "parameters": [
+        { "type": "volume", "value": 150.0, "unit": "mL", "rawText": "saturated aqueous ammonium chloride (150 mL)" },
+        { "type": "volume", "value": 50.0, "unit": "mL", "rawText": "MTBE (50 mL)" },
+        { "type": "count", "value": 2, "unit": "x", "rawText": "extracted twice (MTBE, 2 x 100 mL)" },
+        { "type": "volume", "value": 100.0, "unit": "mL", "rawText": "2 x 100 mL" },
+        { "type": "volume", "value": 100.0, "unit": "mL", "rawText": "washed with brine (1 x 100 mL)" },
+        { "type": "mass", "value": 10.0, "unit": "g", "rawText": "dried over MgSO4 (10 g)" },
+        { "type": "temperature", "value": 40.0, "unit": "degC", "rawText": "evaporated under reduced pressure (40 C)" },
+        { "type": "pressure", "value": null, "unit": "mmHg", "rawText": "375 to 75 mmHg" },
+        { "type": "mass", "value": 7.42, "unit": "g", "rawText": "7.42 g" },
+        { "type": "other", "value": 95, "unit": "% yield", "rawText": "95% yield" },
+        { "type": "other", "value": 99, "unit": "wt% purity", "rawText": "99 wt% purity (QNMR)" }
+      ],
+      "expectedResult": "2 as a colorless oil: 7.42 g, 95% yield, 99 wt% purity. Safe pause point.",
+      "criticalNotes": "Standard aqueous workup: quench, three-fold MTBE extraction, brine wash, MgSO4 drying, rotary evaporation."
+    },
+    {
+      "id": "s9", "number": 9, "phase": "C. Coupling to thiophenium triflate 3",
+      "action": "Flame-dry a 250 mL three-necked flask (N2 line, septum, thermocouple, 2.5 cm stir bar) under N2. Charge with sulfoxide 1 and dry DCM, then cool to internal -50 C with a cryocooler.",
+      "materialIds": ["m14"], "equipmentIds": ["e4", "e5"], "inputIds": ["sp1"], "tableIds": ["t1"],
+      "parameters": [
+        { "type": "mass", "value": 5.0, "unit": "g", "rawText": "dibenzo[b,d]thiophene 5-oxide 1 (5.0 g, 25.0 mmol, 1.0 equiv)" },
+        { "type": "ratio", "value": 1.0, "unit": "equiv", "rawText": "1.0 equiv" },
+        { "type": "volume", "value": 150.0, "unit": "mL", "rawText": "dry DCM (150 mL)" },
+        { "type": "temperature", "value": -50.0, "unit": "degC", "rawText": "cooled to -50 C (internal temperature)" }
+      ],
+      "expectedResult": "Clear cold solution of 1 in DCM.",
+      "criticalNotes": "Uses intermediate 1 from Step A; rigorously anhydrous conditions required."
+    },
+    {
+      "id": "s10", "number": 10, "phase": "C. Coupling to thiophenium triflate 3",
+      "action": "Add triflic anhydride slowly over 5 min by syringe pump, forming an intense orange/red suspension. Stir 45 min at -50 C.",
+      "materialIds": ["m15"], "equipmentIds": ["e2", "e5"], "inputIds": ["m15"],
+      "parameters": [
+        { "type": "volume", "value": 4.2, "unit": "mL", "rawText": "Triflic anhydride (4.20 mL, 25.0 mmol, 1.0 equiv)" },
+        { "type": "ratio", "value": 1.0, "unit": "equiv", "rawText": "1.0 equiv" },
+        { "type": "time", "value": 5.0, "unit": "min", "rawText": "added over 5 min by syringe pump" },
+        { "type": "time", "value": 45.0, "unit": "min", "rawText": "stirred for 45 min at this temperature" },
+        { "type": "temperature", "value": -50.0, "unit": "degC", "rawText": "at -50 C" }
+      ],
+      "expectedResult": "Intense orange/red suspension (activated sulfoxide).",
+      "safetyNotes": "Tf2O is corrosive, moisture-sensitive and a lachrymator; add under N2."
+    },
+    {
+      "id": "s11", "number": 11, "phase": "C. Coupling to thiophenium triflate 3",
+      "action": "Add a solution of alkyne 2 in dry DCM over 5 min by syringe pump. Warm to -15 C over 1 h (suspension becomes a clear light-brown solution) and stir at -15 C under N2 for 12 h. Monitor by TLC (product Rf 0.34 vs SM Rf 0.72, 20% acetone/DCM).",
+      "materialIds": ["m14", "m18"], "equipmentIds": ["e2", "e5", "e9"], "inputIds": ["sp2"], "tableIds": ["t2"],
+      "parameters": [
+        { "type": "volume", "value": 7.9, "unit": "mL", "rawText": "alkyne 2 (7.90 mL, 25.0 mmol, 1.0 equiv)" },
+        { "type": "ratio", "value": 1.0, "unit": "equiv", "rawText": "1.0 equiv" },
+        { "type": "volume", "value": 10.0, "unit": "mL", "rawText": "in dry DCM (10 mL)" },
+        { "type": "time", "value": 5.0, "unit": "min", "rawText": "added ... over 5 min by syringe pump" },
+        { "type": "temperature", "value": -15.0, "unit": "degC", "rawText": "allowed to warm to -15 C over one hour" },
+        { "type": "time", "value": 1.0, "unit": "h", "rawText": "over one hour" },
+        { "type": "time", "value": 12.0, "unit": "h", "rawText": "stirred at this temperature under N2 for another 12 h" },
+        { "type": "other", "value": 0.34, "unit": "Rf", "rawText": "reaction mixture Rf 0.34 vs SM Rf 0.72 (20% acetone in CH2Cl2, UV 254 nm)" }
+      ],
+      "expectedResult": "Clear light-brown solution; TLC shows conversion to product (Rf 0.34).",
+      "dependsOn": ["s4", "s8"]
+    },
+    {
+      "id": "s12", "number": 12, "phase": "C. Coupling to thiophenium triflate 3",
+      "action": "Quench with methanol. Transfer to a 500 mL single-necked flask, add silica gel, and concentrate to dryness to adsorb the crude product onto silica.",
+      "materialIds": ["m16", "m17"],
+      "parameters": [
+        { "type": "volume", "value": 5.0, "unit": "mL", "rawText": "quenched by addition of methanol (5 mL)" },
+        { "type": "volume", "value": 50.0, "unit": "mL", "rawText": "Silica gel (50 mL) is added" }
+      ],
+      "expectedResult": "Crude 3 dry-adsorbed on silica gel."
+    },
+    {
+      "id": "s13", "number": 13, "phase": "C. Coupling to thiophenium triflate 3",
+      "action": "Dry-load onto a packed silica column (95 g, 16.0 x 6.0 cm, sand cap). Elute first with DCM (500 mL; discard) then with DCM:acetone 4:1 (2 L), collecting fractions.",
+      "materialIds": ["m14", "m18", "m17"], "equipmentIds": ["e8", "e9"], "tableIds": ["t2"],
+      "parameters": [
+        { "type": "mass", "value": 95.0, "unit": "g", "rawText": "95 g silica gel, 16.0 x 6.0 cm" },
+        { "type": "volume", "value": 500.0, "unit": "mL", "rawText": "eluted first with DCM (500 mL)" },
+        { "type": "ratio", "value": 4.0, "unit": ":1", "rawText": "DCM:acetone mixture, 4:1" },
+        { "type": "volume", "value": 2.0, "unit": "L", "rawText": "DCM:acetone mixture, 4:1 (2 L)" }
+      ],
+      "expectedResult": "Product-containing fractions identified by TLC; first 500 mL DCM fraction discarded.",
+      "criticalNotes": "By-products are non-polar or near-baseline, so large fractions can be collected."
+    },
+    {
+      "id": "s14", "number": 14, "phase": "C. Coupling to thiophenium triflate 3", "pausePoint": true,
+      "action": "Partially evaporate product fractions to ~15 mL. Add Et2O slowly over 5 min to precipitate 3 as a white microcrystalline powder; cool to 0 C, filter, and wash with Et2O to afford pure 3.",
+      "materialIds": ["m19"], "equipmentIds": ["e6", "e3"], "outputIds": ["sp3"], "tableIds": ["t1"],
+      "parameters": [
+        { "type": "temperature", "value": 40.0, "unit": "degC", "rawText": "solvent partially evaporated (40 C, 600 to 375 mmHg)" },
+        { "type": "pressure", "value": null, "unit": "mmHg", "rawText": "600 to 375 mmHg" },
+        { "type": "volume", "value": 15.0, "unit": "mL", "rawText": "approximately 15 mL of the ... solution" },
+        { "type": "volume", "value": 100.0, "unit": "mL", "rawText": "Slow addition of Et2O (100 mL) over 5 min" },
+        { "type": "time", "value": 5.0, "unit": "min", "rawText": "over 5 min" },
+        { "type": "temperature", "value": 0.0, "unit": "degC", "rawText": "cooled to 0 C in an ice bath" },
+        { "type": "volume", "value": 50.0, "unit": "mL", "rawText": "washed with Et2O (50 mL)" },
+        { "type": "mass", "value": 7.5, "unit": "g", "rawText": "7.50 g" },
+        { "type": "other", "value": 58, "unit": "% yield", "rawText": "58% yield" },
+        { "type": "other", "value": 98, "unit": "wt% purity", "rawText": "98 wt% purity (QNMR)" }
+      ],
+      "expectedResult": "3 as a white microcrystalline powder: 7.50 g, 58% yield, 98 wt% purity; mp 155 C (with decomposition).",
+      "criticalNotes": "3 is energetic (>600 J/g on melting/decomposition above 155 C). Do not expose the solid to temperatures above 100 C; examine any planned heating of multigram quantities above 80 C by isothermal DSC.",
+      "safetyNotes": "Energetic solid; store cool, avoid heat and mechanical/thermal stress.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 261, "excerpt": "afford pure 3 (7.50 g, 58% yield, 98 wt% purity)" }]
+    }
+  ],
+  "expectedOutputs": [
+    "Step A: Dibenzo[b,d]thiophene-5-oxide (1) as white needles, 9.03 g, 81% yield, 97 wt% purity, mp 188 C.",
+    "Step B: Triisopropyl((trimethylsilyl)ethynyl)silane (2) as a colorless oil, 7.42 g, 95% yield, 99 wt% purity.",
+    "Step C: 5-(Triisopropylalkynyl)dibenzo[b,d]thiophenium triflate (3) as a white microcrystalline powder, 7.50 g, 58% yield, 98 wt% purity, mp 155 C (dec).",
+    "Characterization data (1H/13C/19F NMR, IR, HRMS) consistent with each structure."
+  ],
+  "troubleshooting": [
+    { "problem": "Sulfone over-oxidation by-product in Step A", "cause": "Internal temperature allowed to exceed 40 C during H2O2 addition", "solution": "Keep internal T below 30 C and quench promptly once SM is consumed; if formed, purify 1 by flash chromatography (DCM/MeOH 50:1 -> 25:1) rather than recrystallization." },
+    { "problem": "Delayed runaway exotherm in Step A", "cause": "Reaction run cold (e.g. 0 C) so oxidation is slow with delayed onset", "solution": "Run at 20-25 C with internal-T monitoring and 2 h peroxide addition; test for onset by adding a small peroxide portion and watching for a T rise." },
+    { "problem": "Poor TLC resolution in Step A monitoring", "cause": "Spotting the TFA solution directly", "solution": "Dilute an aliquot with ethyl acetate / saturated aqueous NaHCO3 and spot the organic layer." },
+    { "problem": "Low recovery of 3 from chromatography", "cause": "Product co-eluting or lost in early DCM fraction", "solution": "Discard the first 500 mL DCM fraction; collect and TLC 100-200 mL fractions of the 4:1 DCM:acetone eluent." }
+  ],
+  "safety": [
+    "Carry out a full hazard/risk assessment for every substance and operation before starting (see Prudent Practices in the Laboratory, Ch. 4).",
+    "Step A H2O2/TFA oxidation is highly exothermic with possible delayed runaway if run cold; use internal-temperature monitoring and add peroxide over 2 h via PTFE tubing (no metal contact).",
+    "n-BuLi is pyrophoric; Tf2O and TIPSCl are moisture-sensitive and corrosive; TMS-acetylene, THF, MTBE and Et2O are highly flammable; DCM is a suspected carcinogen. Use inert atmosphere and a fume hood.",
+    "Product 3 is an energetic solid (>600 J/g on decomposition above 155 C). Do not heat the solid above 100 C; evaluate any heating of multigram quantities above 80 C by isothermal DSC. Drop-weight testing (3 x 30 J) showed no impact sensitivity."
+  ],
+  "biosafetyLevel": "not specified",
+  "limitations": "Bench-scale procedure; larger scales of the Step A oxidation may require added cooling and slower peroxide addition due to reduced surface-area-to-volume ratio. GHS hazard codes are not provided in the source and are marked needsReview where supplemented. Product 3 is thermally sensitive and not suitable for high-temperature storage or use.",
+  "sources": [
+    { "id": "src1", "kind": "article", "title": "Preparation of 5-(Triisopropylalkynyl)dibenzo[b,d]thiophenium Triflate (Waldecker, Kafuta, Alcarazo)", "doi": "10.15227/orgsyn.096.0258", "url": "http://orgsyn.org/Content/pdfs/procedures/v96p0258.pdf", "license": "Organic Syntheses (freely accessible; reuse per publisher terms)", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Protocol Atlas Crawler Session Result",
+  "description": "Metadata-only result written by one independent protocol-collection crawler session.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "sessionId",
+    "sessionTitle",
+    "packetStatus",
+    "writtenAt",
+    "categoryResults",
+    "verification"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "sessionId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sessionTitle": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packetStatus": {
+      "enum": [
+        "complete",
+        "partial",
+        "blocked",
+        "in-progress"
+      ]
+    },
+    "startedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "writtenAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "worker": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sourcesSearched": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "categoryResults": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/categoryResult"
+      }
+    },
+    "verification": {
+      "$ref": "#/$defs/verification"
+    },
+    "runNotes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "categoryResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "categoryId",
+        "categoryLabel",
+        "status",
+        "searchedAt",
+        "sourcesSearched",
+        "representative",
+        "screened",
+        "coverageGaps",
+        "nextSearchSuggestions"
+      ],
+      "properties": {
+        "categoryId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "categoryLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "partial",
+            "blocked",
+            "no-qualified-record"
+          ]
+        },
+        "searchedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "sourcesSearched": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "representative": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "required": [
+            "title",
+            "protocolType",
+            "assay",
+            "operation",
+            "source",
+            "sourceUrl",
+            "sourceRecordId",
+            "doi",
+            "authors",
+            "published",
+            "updated",
+            "licenseCode",
+            "licenseUrl",
+            "licenseEvidenceUrl",
+            "licenseVerifiedAt",
+            "metadataVerifiedAt",
+            "specimen",
+            "organism",
+            "platform",
+            "methodVariant",
+            "safetyLevel",
+            "confidence",
+            "scoreBreakdown",
+            "evidenceStatus",
+            "selectionNote"
+          ],
+          "properties": {
+            "title": { "type": "string" },
+            "protocolType": { "type": "string" },
+            "assay": { "type": "string" },
+            "operation": { "type": "string" },
+            "source": { "type": "string" },
+            "sourceUrl": { "type": "string", "format": "uri" },
+            "sourceRecordId": { "type": ["string", "null"] },
+            "doi": { "type": ["string", "null"] },
+            "authors": { "type": "array", "items": { "type": "string" } },
+            "published": { "type": ["string", "null"], "format": "date" },
+            "updated": { "type": ["string", "null"], "format": "date" },
+            "licenseCode": { "type": ["string", "null"] },
+            "licenseUrl": { "type": ["string", "null"], "format": "uri" },
+            "licenseEvidenceUrl": { "type": ["string", "null"], "format": "uri" },
+            "licenseVerifiedAt": { "type": ["string", "null"], "format": "date-time" },
+            "metadataVerifiedAt": { "type": ["string", "null"], "format": "date-time" },
+            "specimen": { "type": ["string", "null"] },
+            "organism": { "type": ["string", "null"] },
+            "platform": { "type": ["string", "null"] },
+            "methodVariant": { "type": ["string", "null"] },
+            "safetyLevel": { "type": "string" },
+            "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+            "scoreBreakdown": { "type": "object" },
+            "evidenceStatus": { "type": "string" },
+            "selectionNote": { "type": "string" }
+          }
+        },
+        "screened": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "source", "sourceUrl", "sourceRecordId", "doi", "screenStatus", "reason"],
+            "properties": {
+              "title": { "type": "string" },
+              "source": { "type": "string" },
+              "sourceUrl": { "type": "string", "format": "uri" },
+              "sourceRecordId": { "type": ["string", "null"] },
+              "doi": { "type": ["string", "null"] },
+              "published": { "type": ["string", "null"], "format": "date" },
+              "updated": { "type": ["string", "null"], "format": "date" },
+              "confidence": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+              "licenseCode": { "type": ["string", "null"] },
+              "licenseUrl": { "type": ["string", "null"], "format": "uri" },
+              "licenseEvidenceUrl": { "type": ["string", "null"], "format": "uri" },
+              "licenseVerifiedAt": { "type": ["string", "null"], "format": "date-time" },
+              "metadataVerifiedAt": { "type": ["string", "null"], "format": "date-time" },
+              "evidenceStatus": { "type": ["string", "null"] },
+              "screenStatus": { "type": "string" },
+              "reason": { "type": "string" }
+            }
+          }
+        },
+        "coverageGaps": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "nextSearchSuggestions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expectedCategoryIds",
+        "actualCategoryIds",
+        "missingCategoryIds",
+        "duplicateCategoryIds",
+        "coveragePass",
+        "selfVerifiedAt",
+        "selfCheckNotes"
+      ],
+      "properties": {
+        "expectedCategoryIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "actualCategoryIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "missingCategoryIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "duplicateCategoryIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "unexpectedCategoryIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "coveragePass": { "type": "boolean" },
+        "sourceUrlPass": { "type": "boolean" },
+        "licenseEvidencePass": { "type": "boolean" },
+        "selfVerifiedAt": { "type": "string", "format": "date-time" },
+        "selfCheckNotes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

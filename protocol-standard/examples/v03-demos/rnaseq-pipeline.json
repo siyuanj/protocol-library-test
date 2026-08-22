@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "Bulk RNA-seq analysis pipeline (v0.3 computational demo)",
+    "protocolId": "lr-v03-rnaseq",
+    "version": "0.3-demo",
+    "family": "RNA-seq analysis",
+    "category": "Bioinformatics",
+    "discipline": "Computational",
+    "purpose": "Quantify gene expression and call differentially expressed genes from bulk RNA-seq FASTQ files: QC, trim, align, count, and run differential expression.",
+    "scope": "Illumina paired-end bulk RNA-seq against a reference genome. Demonstrates v0.3 computational constructs (software, command, config parameters, dataset samples, acceptance gates, repeat/scatter). Not for single-cell or long-read data.",
+    "estimatedTime": "~few hours on an HPC/cluster depending on sample count",
+    "beforeYouBegin": [
+      "Confirm reference genome FASTA + GTF annotation for the organism.",
+      "Ensure compute environment (containers/conda) and sufficient scratch storage."
+    ],
+    "tags": ["RNA-seq", "bioinformatics", "differential expression", "pipeline"]
+  },
+  "materials": [],
+  "equipment": [
+    { "id": "e1", "name": "HPC / compute cluster", "settings": "multi-core node; container runtime (Singularity/Docker)", "needsReview": true }
+  ],
+  "software": [
+    { "id": "sw1", "name": "FastQC", "version": "0.12.1", "url": "https://www.bioinformatics.babraham.ac.uk/projects/fastqc/", "command": "fastqc" },
+    { "id": "sw2", "name": "Trim Galore", "version": "0.6.10", "url": "https://github.com/FelixKrueger/TrimGalore", "command": "trim_galore --paired" },
+    { "id": "sw3", "name": "STAR", "version": "2.7.11a", "url": "https://github.com/alexdobin/STAR", "command": "STAR" },
+    { "id": "sw4", "name": "Salmon", "version": "1.10.2", "url": "https://github.com/COMBINE-lab/salmon", "command": "salmon quant" },
+    { "id": "sw5", "name": "DESeq2", "version": "1.42.0", "url": "https://bioconductor.org/packages/DESeq2/", "command": "R (DESeq2)" }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "Raw paired-end reads", "role": "input", "kind": "dataset", "dataType": "FASTQ (R1/R2 per sample)" },
+    { "id": "sp2", "name": "Trimmed reads", "role": "intermediate", "kind": "dataset", "dataType": "FASTQ" },
+    { "id": "sp3", "name": "Gene count matrix", "role": "intermediate", "kind": "dataset", "dataType": "counts (genes x samples)" },
+    { "id": "sp4", "name": "Differential expression results", "role": "output", "kind": "dataset", "dataType": "table (log2FC, padj)" }
+  ],
+  "tables": [
+    { "id": "t1", "title": "Reference inputs", "kind": "recipe", "columns": ["Input", "Value"], "rows": [["Genome FASTA", "organism reference (needsReview)"], ["Annotation GTF", "matching release (needsReview)"]], "needsReview": true }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "QC", "action": "Run read quality control on raw FASTQ.", "softwareIds": ["sw1"], "inputIds": ["sp1"], "command": "fastqc *.fastq.gz -o qc/", "parameters": [{ "type": "config", "valueText": "--paired", "rawText": "paired-end reads" }], "acceptanceCriteria": [{ "parameter": "per-base quality (Phred)", "comparator": "min", "value": 28, "unit": "Q", "classification": "flag samples with median Q<28", "description": "QC gate before trimming" }], "expectedResult": "FastQC report per sample." },
+    { "id": "s2", "number": 2, "phase": "Trim", "action": "Trim adapters and low-quality bases.", "softwareIds": ["sw2"], "inputIds": ["sp1"], "outputIds": ["sp2"], "command": "trim_galore --paired --quality 20 R1.fastq.gz R2.fastq.gz", "parameters": [{ "type": "config", "valueText": "--quality 20", "rawText": "Phred quality cutoff 20" }], "repeat": { "over": "each sample (scatter)", "untilCondition": "all samples processed" }, "expectedResult": "Adapter-trimmed reads." },
+    { "id": "s3", "number": 3, "phase": "Align", "action": "Align trimmed reads to the reference genome.", "softwareIds": ["sw3"], "equipmentIds": ["e1"], "inputIds": ["sp2"], "tableIds": ["t1"], "command": "STAR --runThreadN 8 --genomeDir idx/ --readFilesIn R1_trimmed R2_trimmed", "parameters": [{ "type": "count", "value": 8, "unit": "threads", "rawText": "--runThreadN 8" }, { "type": "dataSize", "value": null, "unit": "GB RAM", "rawText": "~30 GB RAM for a mammalian genome index", "needsReview": true }], "acceptanceCriteria": [{ "parameter": "uniquely mapped reads", "comparator": "min", "value": 70, "unit": "%", "classification": "pass if >=70% (human/mouse)", "onFailStepId": "s1" }], "repeat": { "over": "each sample (scatter)" }, "expectedResult": "Coordinate-sorted BAM per sample." },
+    { "id": "s4", "number": 4, "phase": "Quantify", "action": "Quantify transcript/gene abundance and build the count matrix.", "softwareIds": ["sw4"], "inputIds": ["sp2"], "outputIds": ["sp3"], "command": "salmon quant -i idx -l A -1 R1 -2 R2 --validateMappings", "parameters": [{ "type": "config", "valueText": "-l A", "rawText": "automatic library type detection" }], "expectedResult": "Gene count matrix (genes x samples)." },
+    { "id": "s5", "number": 5, "phase": "Differential expression", "action": "Run differential expression between conditions.", "softwareIds": ["sw5"], "inputIds": ["sp3"], "outputIds": ["sp4"], "command": "R: DESeq2 -> results(dds, contrast=c('condition','treated','control'))", "parameters": [{ "type": "other", "value": 0.05, "unit": "padj", "comparator": "max", "rawText": "adjusted p-value threshold 0.05" }, { "type": "other", "value": 1, "unit": "log2FC", "comparator": "min", "rawText": "|log2 fold-change| >= 1" }], "acceptanceCriteria": [{ "parameter": "significant DEGs", "comparator": "min", "value": 0, "description": "report count of genes passing padj and log2FC thresholds" }], "expectedResult": "Table of DEGs with log2FC and adjusted p-values." }
+  ],
+  "controls": [
+    { "name": "Biological replicates", "description": ">=3 per condition recommended for DESeq2 dispersion estimation." },
+    { "name": "Reference/version pinning", "description": "Genome build + annotation release + tool versions recorded for reproducibility." }
+  ],
+  "expectedOutputs": [
+    "Per-sample QC reports and alignment statistics.",
+    "Gene count matrix.",
+    "Differential-expression table (log2FC, adjusted p-value) and summary counts."
+  ],
+  "troubleshooting": [
+    { "problem": "Low uniquely-mapped %", "cause": "wrong genome/index; rRNA/adapter contamination", "solution": "verify reference build; re-check trimming; inspect FastQC" },
+    { "problem": "Few/no DEGs", "cause": "insufficient replicates; batch effects", "solution": "add replicates; include batch in the design formula" }
+  ],
+  "safety": [],
+  "biosafetyLevel": "not specified",
+  "studyDesign": {
+    "groups": [
+      { "name": "control", "n": 3, "treatment": "vehicle/untreated" },
+      { "name": "treated", "n": 3, "treatment": "condition of interest" }
+    ],
+    "statisticalPlan": "DESeq2 negative-binomial GLM; Wald test; Benjamini-Hochberg adjustment; design ~ batch + condition.",
+    "notes": "Replicate structure drives the differential-expression power."
+  },
+  "limitations": "Demonstrator: reference genome/annotation, exact resource sizes, and sample sheet are marked needsReview and must be set per project.",
+  "sources": [
+    { "id": "src1", "kind": "article", "title": "The nf-core framework for community-curated bioinformatics pipelines (Ewels et al., Nat Biotechnol 2020)", "doi": "10.1038/s41587-020-0439-x", "url": "https://doi.org/10.1038/s41587-020-0439-x", "license": "Cited, not reproduced", "licenseVerified": true },
+    { "id": "src2", "kind": "url", "title": "nf-core/rnaseq pipeline documentation", "url": "https://nf-co.re/rnaseq", "license": "MIT (pipeline)", "licenseVerified": false }
+  ],
+  "provenance": { "library": "public", "owner": "LabRecord", "status": "draft" }
+}

@@ -1,0 +1,341 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "cell-delivery",
+  "sessionTitle": "Cell transfection and viral delivery",
+  "packetStatus": "partial",
+  "startedAt": "2026-08-01T23:06:51Z",
+  "writtenAt": "2026-08-01T23:06:51Z",
+  "worker": "cell-delivery",
+  "sourcesSearched": [
+    "https://www.addgene.org/protocols/",
+    "https://www.addgene.org/protocols/transfection/",
+    "https://www.addgene.org/protocols/lentivirus-production/",
+    "https://www.addgene.org/protocols/aav-production-hek293-cells/",
+    "https://www.addgene.org/protocols/aav-titration-qpcr-using-sybr-green-technology/",
+    "https://www.addgene.org/protocols/aav-ddpcr-titration/",
+    "https://www.addgene.org/viral-vectors/aav/",
+    "https://www.addgene.org/viral-vectors/lentivirus/",
+    "https://www.protocols.io/view/transfection-of-mammalian-cell-lines-with-plasmids-261ge55byg47/v1",
+    "https://www.protocols.io/view/mrna-synthesis-and-transfection-81wgbp6k3vpk/v1",
+    "https://www.nature.com/articles/s41596-018-0075-9",
+    "https://www.nature.com/articles/nprot.2011.327",
+    "https://www.nature.com/articles/nprot.2006.37",
+    "https://www.nature.com/articles/s41598-021-98657-7",
+    "https://www.nature.com/articles/srep13875",
+    "https://api.crossref.org/works/10.1038/s41596-018-0075-9",
+    "https://api.crossref.org/works/10.1038/nprot.2011.327",
+    "https://api.crossref.org/works/10.1038/nprot.2006.37",
+    "https://api.crossref.org/works/10.1038/s41598-021-98657-7",
+    "https://api.crossref.org/works/10.1038/srep13875"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "transfection",
+      "categoryLabel": "Mammalian cell transfection",
+      "status": "partial",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.addgene.org/protocols/transfection/",
+        "https://www.protocols.io/view/transfection-of-mammalian-cell-lines-with-plasmids-261ge55byg47/v1",
+        "https://www.protocols.io/view/mrna-synthesis-and-transfection-81wgbp6k3vpk/v1",
+        "https://www.thermofisher.com/us/en/home/references/protocols/cell-culture/transfection-protocol/lipofectamine-3000-reagent-protocol.html",
+        "https://www.thermofisher.com/us/en/home/references/protocols/cell-culture/transfection-protocol/transfecting-mammalian-cells-with-lipofectamine-rnaiMAX-reagent.html",
+        "https://www.thermofisher.com/us/en/home/references/protocols/cell-culture/transfection-protocol/transfecting-mrna-with-lipofectamine-messengermax-reagent.html"
+      ],
+      "representative": {
+        "title": "Transfection of mammalian cell lines with plasmids and siRNAs",
+        "protocolType": "experimental protocol record",
+        "assay": "mammalian cell gene delivery and expression",
+        "operation": "plasmid DNA and siRNA transfection of cultured mammalian cell lines",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/transfection-of-mammalian-cell-lines-with-plasmids-261ge55byg47/v1",
+        "sourceRecordId": "261ge55byg47",
+        "doi": null,
+        "authors": [
+          "Agnes Roczniak-Ferguson",
+          "Shawn M. Ferguson"
+        ],
+        "published": "2024-06-05",
+        "updated": null,
+        "licenseCode": null,
+        "licenseUrl": null,
+        "licenseEvidenceUrl": null,
+        "licenseVerifiedAt": null,
+        "metadataVerifiedAt": "2026-08-01T23:06:51Z",
+        "specimen": "cultured mammalian cell lines",
+        "organism": "mammalian",
+        "platform": "plasmid DNA and siRNA chemical transfection",
+        "methodVariant": "nonviral plasmid/siRNA transfection; exact reagent platform is not asserted in metadata",
+        "safetyLevel": "not specified",
+        "confidence": 0.88,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.92,
+          "sourceAuthority": 0.82,
+          "metadataCompleteness": 0.8,
+          "freshness": 0.9,
+          "corroboration": 0.65,
+          "overall": 0.82
+        },
+        "evidenceStatus": "metadata-verified",
+        "selectionNote": "Selected because the public record directly names both plasmid and siRNA transfection in mammalian cell lines; mRNA and reagent-specific records remain separate."
+      },
+      "screened": [
+        {
+          "title": "Addgene: General Transfection",
+          "source": "Addgene",
+          "sourceUrl": "https://www.addgene.org/protocols/transfection/",
+          "sourceRecordId": null,
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Authoritative public DNA-transfection protocol page, but less record-specific and not sufficient for the RNA and reagent-platform facets."
+        },
+        {
+          "title": "mRNA Synthesis and Transfection",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/mrna-synthesis-and-transfection-81wgbp6k3vpk/v1",
+          "sourceRecordId": "81wgbp6k3vpk",
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Direct mRNA-specific record retained as a separate variant; it is not substituted for the plasmid/siRNA representative."
+        }
+      ],
+      "coverageGaps": [
+        "mRNA transfection needs a dedicated representative record rather than only a screened alternative",
+        "reagent-platform variants such as lipofection reagents and electroporation are not separated into verified records",
+        "primary, stem, suspension, and other cell-type-specific transfection variants are not covered",
+        "record-level license evidence was not exposed by the checked protocols.io pages"
+      ],
+      "nextSearchSuggestions": [
+        "Verify dedicated Thermo Fisher Lipofectamine 3000, RNAiMAX, and MessengerMAX records",
+        "Search public electroporation and primary-cell transfection protocols",
+        "Add a separate mRNA-transfection representative after source and license verification"
+      ]
+    },
+    {
+      "categoryId": "viral-transduction",
+      "categoryLabel": "Viral transduction of cultured cells",
+      "status": "partial",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.nature.com/articles/s41596-018-0075-9",
+        "https://www.nature.com/articles/nprot.2011.327",
+        "https://www.addgene.org/viral-vectors/aav/",
+        "https://www.addgene.org/viral-vectors/lentivirus/",
+        "https://www.addgene.org/protocols/aav-production-hek293-cells/",
+        "https://www.addgene.org/protocols/aav-titration-qpcr-using-sybr-green-technology/",
+        "https://api.crossref.org/works/10.1038/s41596-018-0075-9",
+        "https://api.crossref.org/works/10.1038/nprot.2011.327"
+      ],
+      "representative": {
+        "title": "Lentiviral transduction of mammalian cells for fast, scalable and high-level production of soluble and membrane proteins",
+        "protocolType": "Nature Protocols research protocol",
+        "assay": "stable gene delivery and expression",
+        "operation": "lentiviral transduction of cultured mammalian cells",
+        "source": "Nature Protocols",
+        "sourceUrl": "https://www.nature.com/articles/s41596-018-0075-9",
+        "sourceRecordId": "s41596-018-0075-9",
+        "doi": "10.1038/s41596-018-0075-9",
+        "authors": [
+          "Jonathan Elegheert",
+          "Ester Behiels",
+          "Benjamin Bishop",
+          "Suzanne Scott",
+          "Rachel E. Woolley",
+          "Samuel C. Griffiths",
+          "Eamon F. X. Byrne",
+          "Veronica T. Chang",
+          "David I. Stuart",
+          "E. Yvonne Jones",
+          "Christian Siebold",
+          "A. Radu Aricescu"
+        ],
+        "published": "2018-11-19",
+        "updated": null,
+        "licenseCode": null,
+        "licenseUrl": null,
+        "licenseEvidenceUrl": null,
+        "licenseVerifiedAt": null,
+        "metadataVerifiedAt": "2026-08-01T23:06:51Z",
+        "specimen": "cultured mammalian cells",
+        "organism": "mammalian",
+        "platform": "lentiviral vector",
+        "methodVariant": "lentiviral transduction; target-cell optimization remains variant-specific",
+        "safetyLevel": "not specified",
+        "confidence": 0.91,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.9,
+          "sourceAuthority": 0.95,
+          "metadataCompleteness": 0.93,
+          "freshness": 0.75,
+          "corroboration": 0.8,
+          "overall": 0.88
+        },
+        "evidenceStatus": "metadata-verified",
+        "selectionNote": "Selected as the broadest directly matched cultured-mammalian-cell lentiviral transduction record; AAV and target-cell-specific variants remain separate coverage branches."
+      },
+      "screened": [
+        {
+          "title": "A simple, versatile and efficient method to genetically modify human monocyte-derived dendritic cells with HIV-1-derived lentiviral vectors",
+          "source": "Nature Protocols",
+          "sourceUrl": "https://www.nature.com/articles/nprot.2011.327",
+          "sourceRecordId": "nprot.2011.327",
+          "doi": "10.1038/nprot.2011.327",
+          "screenStatus": "alternative",
+          "reason": "Strong lentiviral transduction record for human monocyte-derived dendritic cells, but narrower than the cultured-mammalian-cell representative."
+        },
+        {
+          "title": "Addgene: AAV Production",
+          "source": "Addgene",
+          "sourceUrl": "https://www.addgene.org/protocols/aav-production-hek293-cells/",
+          "sourceRecordId": null,
+          "doi": null,
+          "screenStatus": "wrong-variant",
+          "reason": "AAV production in HEK293T cells, not a protocol for transducing cultured target cells."
+        },
+        {
+          "title": "Addgene: AAV Titration by qPCR",
+          "source": "Addgene",
+          "sourceUrl": "https://www.addgene.org/protocols/aav-titration-qpcr-using-sybr-green-technology/",
+          "sourceRecordId": null,
+          "doi": null,
+          "screenStatus": "wrong-variant",
+          "reason": "AAV vector titration record, not a cultured-cell viral-transduction protocol."
+        }
+      ],
+      "coverageGaps": [
+        "no verified AAV cultured-cell transduction representative was found in the checked public source set",
+        "adenovirus, retrovirus, and other vector-family transduction records need separate representatives",
+        "primary, stem, immune, neuronal, and suspension-cell target variants are not covered by the broad representative",
+        "record-level license evidence was not confirmed for the Nature Protocols record"
+      ],
+      "nextSearchSuggestions": [
+        "Search public AAV transduction protocols by target cell type",
+        "Add separate adenovirus, retrovirus, and lentiviral target-cell records",
+        "Verify primary, stem, immune, neuronal, and suspension-cell transduction variants"
+      ]
+    },
+    {
+      "categoryId": "lentivirus-production",
+      "categoryLabel": "Lentivirus production and titration",
+      "status": "partial",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.addgene.org/protocols/lentivirus-production/",
+        "https://www.nature.com/articles/nprot.2006.37",
+        "https://www.nature.com/articles/srep13875",
+        "https://www.nature.com/articles/s41598-021-98657-7",
+        "https://api.crossref.org/works/10.1038/nprot.2006.37",
+        "https://api.crossref.org/works/10.1038/srep13875",
+        "https://api.crossref.org/works/10.1038/s41598-021-98657-7"
+      ],
+      "representative": {
+        "title": "Production and purification of lentiviral vectors",
+        "protocolType": "Nature Protocols research protocol",
+        "assay": "viral vector production and titer assessment",
+        "operation": "production, purification/concentration, and titration of lentiviral vectors",
+        "source": "Nature Protocols",
+        "sourceUrl": "https://www.nature.com/articles/nprot.2006.37",
+        "sourceRecordId": "nprot.2006.37",
+        "doi": "10.1038/nprot.2006.37",
+        "authors": [
+          "Gustavo Tiscornia",
+          "Oded Singer",
+          "Inder M. Verma"
+        ],
+        "published": null,
+        "updated": null,
+        "licenseCode": null,
+        "licenseUrl": null,
+        "licenseEvidenceUrl": null,
+        "licenseVerifiedAt": null,
+        "metadataVerifiedAt": "2026-08-01T23:06:51Z",
+        "specimen": "lentiviral vector preparation",
+        "organism": null,
+        "platform": "lentiviral vector",
+        "methodVariant": "production with purification/concentration and titer assessment; functional titration is not separately represented",
+        "safetyLevel": "not specified",
+        "confidence": 0.9,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.95,
+          "sourceAuthority": 0.95,
+          "metadataCompleteness": 0.78,
+          "freshness": 0.55,
+          "corroboration": 0.85,
+          "overall": 0.86
+        },
+        "evidenceStatus": "metadata-verified",
+        "selectionNote": "Selected because the public record directly matches lentiviral production and describes purification and titration as related facets; independent concentration and functional-titer records remain screened/gaps."
+      },
+      "screened": [
+        {
+          "title": "Addgene: Lentivirus Production Protocol",
+          "source": "Addgene",
+          "sourceUrl": "https://www.addgene.org/protocols/lentivirus-production/",
+          "sourceRecordId": null,
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Current authoritative production protocol page; retained as an alternative because its public page did not expose comparable author, date, or license metadata."
+        },
+        {
+          "title": "An optimized method for high-titer lentivirus preparations without ultracentrifugation",
+          "source": "Scientific Reports",
+          "sourceUrl": "https://www.nature.com/articles/srep13875",
+          "sourceRecordId": "srep13875",
+          "doi": "10.1038/srep13875",
+          "screenStatus": "alternative",
+          "reason": "Open-access high-titer preparation and concentration variant; it does not independently cover the full production and functional-titration scope."
+        },
+        {
+          "title": "A guide in lentiviral vector production for hard-to-transfect cells, using cardiac-derived c-kit expressing cells as a model system",
+          "source": "Scientific Reports",
+          "sourceUrl": "https://www.nature.com/articles/s41598-021-98657-7",
+          "sourceRecordId": "s41598-021-98657-7",
+          "doi": "10.1038/s41598-021-98657-7",
+          "screenStatus": "alternative",
+          "reason": "Open-access hard-to-transfect-cell production variant; target-cell and production context is narrower than the selected general record."
+        }
+      ],
+      "coverageGaps": [
+        "production, physical concentration/purification, and functional transduction-based titration need separate verified records",
+        "producer-cell, scale, and concentration-method variants are not independently represented",
+        "the Nature Protocols record has only month-level publication metadata in the checked Crossref response, so published remains null",
+        "record-level license evidence was not confirmed for the selected Nature Protocols record"
+      ],
+      "nextSearchSuggestions": [
+        "Search public functional lentivirus titration protocols using transduction-based readouts",
+        "Add separate concentration/purification records for ultracentrifugation and non-ultracentrifugation workflows",
+        "Verify current production records with explicit producer-cell and license metadata"
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "transfection",
+      "viral-transduction",
+      "lentivirus-production"
+    ],
+    "actualCategoryIds": [
+      "transfection",
+      "viral-transduction",
+      "lentivirus-production"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": true,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": false,
+    "selfVerifiedAt": "2026-08-01T23:11:54Z",
+    "selfCheckNotes": [
+      "The written file was parsed as JSON after creation.",
+      "categoryResults contains exactly the three assigned IDs in packet order.",
+      "Representative and screened sourceUrl fields use absolute HTTP(S) URLs; guessed unavailable Addgene protocol paths were excluded.",
+      "licenseEvidencePass is false because record-level licenses were not confirmed for the protocols.io and Nature Protocols representatives; unknown license fields remain null.",
+      "The packet is partial because the broad categories retain explicit AAV, mRNA/reagent-platform, target-cell, and independent lentivirus concentration/functional-titer gaps."
+    ]
+  },
+  "runNotes": [
+    "Metadata-only capture: no protocol steps, tables, figures, videos, PDFs, or long source passages were stored.",
+    "Crossref public metadata was used to verify DOI titles, authors, and available publication dates for the Nature records."
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "MTT Cell Viability Assay (96-well, colorimetric)",
+    "protocolId": "lr-testset-mtt-viability",
+    "version": "0.1",
+    "family": "Cell viability assay",
+    "category": "Cell Biology",
+    "purpose": "Quantify the number of metabolically active (viable) cells in a 96-well plate by measuring the reduction of yellow MTT tetrazolium to purple formazan, solubilizing the crystals, and reading absorbance at 570 nm.",
+    "scope": "Colorimetric endpoint viability/proliferation/cytotoxicity assay for adherent or suspension mammalian cells in a 96-well microplate, read on a plate absorbance reader. Cell line and test-compound treatment scheme are user-defined and not specified by the source kit insert.",
+    "estimatedTime": "~2-3 days cell growth + ~4.5 h assay (4 h MTT incubation)",
+    "beforeYouBegin": [
+      "Use cells in log-phase growth and confirm the final medium volume per well is 100 uL.",
+      "Plan no-cell blank wells and untreated (vehicle) control wells; run treatments in replicate.",
+      "Keep the MTT solution protected from light; if sediment is present, warm to 37 C until clear before use."
+    ],
+    "tags": ["MTT", "cell viability", "cytotoxicity", "proliferation", "formazan", "96-well", "colorimetric"]
+  },
+  "materials": [
+    { "id": "m1", "name": "MTT solution", "role": "reagent", "workingConcentration": "10 uL per 100 uL medium", "specification": "Ready-to-use tetrazolium (MTT) solution; kit supplies 10 x 1 mL for 1000 assays", "vendor": "Biotium", "catalogNumber": "30006", "storage": "-20 C, protect from light", "rawText": "Add 10 uL MTT solution to the 100 uL of medium in each well.", "needsReview": false },
+    { "id": "m2", "name": "Dimethyl sulfoxide (DMSO)", "role": "solvent", "specification": "Formazan solubilization solvent; required but not provided in kit", "hazard": "Skin-penetrating solvent / irritant", "rawText": "Add 200 uL DMSO directly into the medium in each well ... to dissolve the formazan salt." },
+    { "id": "m3", "name": "Cell culture medium", "role": "medium", "workingConcentration": "up to 10% Fetal Bovine Serum", "specification": "Complete growth medium; final volume 100 uL per well", "rawText": "The final volume of culture medium in each well should be 100 uL, and the medium may contain up to 10% Fetal Bovine Serum.", "needsReview": true }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "CO2 cell-culture incubator", "settings": "37 C during cell growth and 4 h MTT incubation" },
+    { "id": "e2", "name": "Microplate absorbance reader (spectrophotometer)", "settings": "Signal at 570 nm; background at 630 nm; subtract background from signal" },
+    { "id": "e3", "name": "Orbital shaker", "settings": "Brief gentle mixing after MTT addition", "needsReview": true }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "Cultured cells (log-phase)", "role": "input", "organism": "mammalian cell line", "description": "Adherent or suspension cells plated into the 96-well assay plate.", "needsReview": true },
+    { "id": "sp2", "name": "Cells with intracellular formazan", "role": "intermediate", "description": "Viable cells that have reduced MTT to purple formazan crystals." },
+    { "id": "sp3", "name": "Solubilized formazan solution", "role": "output", "description": "DMSO-dissolved formazan whose absorbance at 570 nm is proportional to viable cell number." }
+  ],
+  "containers": [
+    { "id": "c1", "name": "96-well tissue culture plate", "type": "plate", "wells": 96 }
+  ],
+  "tables": [
+    { "id": "t1", "title": "Per-well reagent and volume scheme (96-well)", "columns": ["Step", "Component", "Volume per well"], "rows": [
+      ["Plating / treatment", "Culture medium (+/- test compound)", "100 uL"],
+      ["MTT labeling", "MTT solution", "10 uL"],
+      ["Solubilization", "DMSO", "200 uL"],
+      ["Read", "Final well volume", "300 uL"]
+    ], "note": "Final volume 300 uL; a standard 96-well plate holds a maximum of 400 uL. Test-compound dose series is user-defined (not specified by the kit insert)." }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "action": "Plate cells into a 96-well tissue culture plate at a density that reaches optimal confluency within 48-72 h.", "materialIds": ["m3"], "containerIds": ["c1"], "inputIds": ["sp1"], "parameters": [
+      { "type": "count", "value": 5000, "valueMax": 10000, "unit": "cells/well", "rawText": "seeded at densities between 5000 and 10,000 cells per well" },
+      { "type": "time", "value": 48, "valueMax": 72, "unit": "h", "rawText": "reach optimal density within 48 to 72 hours" }
+    ], "expectedResult": "Even monolayer / suspension at optimal density." },
+    { "id": "s2", "number": 2, "action": "Carry out the desired cell treatments; keep the final culture medium volume at 100 uL per well (medium may contain up to 10% FBS).", "materialIds": ["m3"], "containerIds": ["c1"], "tableIds": ["t1"], "parameters": [
+      { "type": "volume", "value": 100, "unit": "uL", "rawText": "final volume of culture medium in each well should be 100 uL" }
+    ], "criticalNotes": "Include untreated (vehicle) control wells and no-cell blank wells on the same plate." },
+    { "id": "s3", "number": 3, "action": "If sediment is present in the MTT solution, warm it to 37 C and mix gently until clear.", "materialIds": ["m1"], "optional": true, "parameters": [
+      { "type": "temperature", "value": 37, "unit": "degC", "rawText": "heat the solution to 37 C" }
+    ] },
+    { "id": "s4", "number": 4, "action": "Add MTT solution to each well and mix by tapping the tray gently or shaking briefly on an orbital shaker.", "materialIds": ["m1"], "equipmentIds": ["e3"], "containerIds": ["c1"], "inputIds": ["m1", "sp1"], "parameters": [
+      { "type": "volume", "value": 10, "unit": "uL", "rawText": "Add 10 uL MTT solution to the 100 uL of medium in each well." }
+    ] },
+    { "id": "s5", "number": 5, "action": "Incubate the plate at 37 C to allow viable cells to reduce MTT to formazan.", "equipmentIds": ["e1"], "containerIds": ["c1"], "outputIds": ["sp2"], "parameters": [
+      { "type": "temperature", "value": 37, "unit": "degC", "rawText": "Incubate at 37 C" },
+      { "type": "time", "value": 4, "unit": "h", "rawText": "Incubate at 37 C for 4 hours." }
+    ], "criticalNotes": "At high cell densities (>100,000 cells per well) the incubation time can be shortened to 2 hours." },
+    { "id": "s6", "number": 6, "action": "Add DMSO directly into the medium in each well and pipette up and down several times to dissolve the formazan crystals.", "materialIds": ["m2"], "containerIds": ["c1"], "inputIds": ["sp2", "m2"], "outputIds": ["sp3"], "parameters": [
+      { "type": "volume", "value": 200, "unit": "uL", "rawText": "Add 200 uL DMSO directly into the medium in each well" },
+      { "type": "volume", "value": 300, "unit": "uL", "rawText": "The final volume in the well will be 300 uL" }
+    ], "expectedResult": "Homogeneous purple solution; no undissolved crystals." },
+    { "id": "s7", "number": 7, "action": "Measure absorbance on the plate reader at 570 nm and the background at 630 nm; subtract background from signal to obtain normalized absorbance.", "equipmentIds": ["e2"], "containerIds": ["c1"], "inputIds": ["sp3"], "parameters": [
+      { "type": "wavelength", "value": 570, "unit": "nm", "rawText": "Measure the absorbance signal on a spectrophotometer at 570 nm." },
+      { "type": "wavelength", "value": 630, "unit": "nm", "rawText": "Measure background absorbance at 630 nm." }
+    ], "expectedResult": "Normalized OD570 (minus OD630) proportional to viable cell number." }
+  ],
+  "controls": [
+    { "name": "No-cell blank wells", "description": "Medium + MTT + DMSO without cells; defines assay background to subtract.", "needsReview": true },
+    { "name": "Untreated (vehicle) control cells", "description": "Cells receiving vehicle only; 100% viability reference for normalizing treated wells.", "needsReview": true }
+  ],
+  "expectedOutputs": [
+    "Normalized absorbance (OD570 - OD630) per well, proportional to viable cell number.",
+    "Percent viability of treated wells relative to untreated control (and dose-response curve if a concentration series is used)."
+  ],
+  "troubleshooting": [
+    { "problem": "Undissolved formazan / erratic OD", "cause": "Incomplete solubilization", "solution": "Pipette DMSO up and down thoroughly; ensure formazan fully dissolved before reading" },
+    { "problem": "High or uneven background", "cause": "Phenol red / serum interference or edge-well evaporation", "solution": "Subtract 630 nm background and no-cell blanks; avoid outer wells or add humidity" },
+    { "problem": "Signal too low", "cause": "Too few cells or short incubation", "solution": "Increase seeding density or extend MTT incubation toward 4 h" }
+  ],
+  "safety": [
+    "DMSO penetrates skin and can carry dissolved compounds with it; wear gloves and work in a fume hood.",
+    "MTT is a possible mutagen; handle solutions and formazan waste per institutional rules.",
+    "Follow aseptic cell-culture practice; biosafety level depends on the cell line used."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "MTT reports mitochondrial/metabolic activity as a proxy for viability, not a direct cell count; readout can be confounded by compounds that alter metabolism. The kit insert does not specify a cell line or a test-compound dilution series - both are user-defined.",
+  "sources": [
+    { "id": "src1", "kind": "kit-insert", "title": "MTT Cell Viability Assay Kit, Product Information (Cat. 30006, PSF006, rev. Feb 7 2014)", "url": "https://biotium.com/wp-content/uploads/2013/07/PI-30006.pdf", "license": "Manufacturer product insert; reuse terms not specified", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

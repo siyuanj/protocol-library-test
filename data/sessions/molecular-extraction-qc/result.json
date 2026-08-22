@@ -1,0 +1,366 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "molecular-extraction-qc",
+  "sessionTitle": "Nucleic acid extraction and cleanup",
+  "packetStatus": "complete",
+  "startedAt": "2026-08-01T19:23:53Z",
+  "writtenAt": "2026-08-01T19:28:12Z",
+  "worker": "crawler-molecular-extraction-qc-2026-08-01",
+  "sourcesSearched": [
+    "https://www.protocols.io/",
+    "https://www.fda.gov/food/laboratory-methods-food/bam",
+    "https://www.neb.com/protocols/",
+    "https://www.qiagen.com/",
+    "https://www.thermofisher.com/",
+    "https://www.zymo-research.com/"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "dna-extraction",
+      "categoryLabel": "Genomic DNA extraction",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/",
+        "https://www.fda.gov/food/laboratory-methods-food/bam",
+        "https://www.qiagen.com/"
+      ],
+      "representative": {
+        "title": "Manual DNA Extraction using Qiagen DNeasy Blood and Tissue Kit",
+        "protocolType": "Genomic DNA extraction protocol",
+        "assay": "Sample lysis and DNA purification",
+        "operation": "Genomic DNA isolation",
+        "source": "FDA GenomeTrakr / protocols.io",
+        "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.bi4dkgs6",
+        "sourceRecordId": "bi4dkgs6",
+        "doi": "10.17504/protocols.io.bi4dkgs6",
+        "authors": [
+          "Alyssa E. Bird",
+          "Marilyn L. H. Wong",
+          "Catherine H. C. Chen",
+          "Sarah E. Allard"
+        ],
+        "published": "2020-08-14",
+        "updated": "2021-11-10",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.bi4dkgs6",
+        "licenseVerifiedAt": "2026-08-01T19:26:00Z",
+        "metadataVerifiedAt": "2026-08-01T19:26:00Z",
+        "specimen": "Bacterial cells",
+        "organism": null,
+        "platform": "Qiagen DNeasy Blood and Tissue silica spin column",
+        "methodVariant": "Manual silica spin-column genomic DNA extraction for bacterial-cell samples",
+        "safetyLevel": "not specified",
+        "confidence": 0.91,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.93,
+          "metadataCompleteness": 0.91,
+          "freshness": 0.79,
+          "corroboration": 0.82,
+          "overall": 0.89
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as a uniquely identified, authoritative genomic-DNA record with explicit specimen scope, kit chemistry, authorship, dates, and record-level license evidence. The bacterial-cell scope is retained as a named method variant rather than generalized to tissue or plant DNA."
+      },
+      "screened": [
+        {
+          "title": "DNA Extraction from Fungi using DNeasy PowerSoil Pro Kit",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.jxxcppn",
+          "sourceRecordId": "jxxcppn",
+          "doi": "10.17504/protocols.io.jxxcppn",
+          "screenStatus": "wrong-variant",
+          "reason": "Fungal and soil-specific extraction chemistry; useful variant coverage but not the best generic bacterial genomic-DNA representative."
+        },
+        {
+          "title": "DNA Extraction from Buccal Swabs",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.ewov1p4",
+          "sourceRecordId": "ewov1p4",
+          "doi": "10.17504/protocols.io.ewov1p4",
+          "screenStatus": "wrong-variant",
+          "reason": "Human buccal-swab specimen and collection-specific workflow; does not represent the assigned bacterial/tissue genomic-DNA scope."
+        }
+      ],
+      "coverageGaps": [
+        "The representative is a bacterial-cell silica-column variant; plant, mammalian tissue, blood, and magnetic-bead genomic-DNA workflows remain distinct subvariants.",
+        "Suggested child category: plant genomic-DNA extraction.",
+        "Suggested child category: mammalian tissue or blood genomic-DNA extraction."
+      ],
+      "nextSearchSuggestions": [
+        "Screen plant CTAB genomic-DNA protocols as a separate chemistry and specimen variant.",
+        "Screen magnetic-bead genomic-DNA extraction for blood or tissue as a separate technology variant."
+      ]
+    },
+    {
+      "categoryId": "rna-extraction",
+      "categoryLabel": "Total RNA extraction",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/",
+        "https://www.neb.com/protocols/",
+        "https://www.zymo-research.com/"
+      ],
+      "representative": {
+        "title": "Quick Protocol for Monarch Total RNA Miniprep Kit (NEB #T2010)",
+        "protocolType": "Total RNA extraction protocol",
+        "assay": "RNA purification and sample preparation",
+        "operation": "Total RNA isolation",
+        "source": "New England Biolabs / protocols.io",
+        "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.bg9njz5e",
+        "sourceRecordId": "bg9njz5e",
+        "doi": "10.17504/protocols.io.bg9njz5e",
+        "authors": [
+          "New England Biolabs",
+          "Isabel Gautreau"
+        ],
+        "published": "2020-06-07",
+        "updated": "2022-02-20",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.bg9njz5e",
+        "licenseVerifiedAt": "2026-08-01T19:26:00Z",
+        "metadataVerifiedAt": "2026-08-01T19:26:00Z",
+        "specimen": "Cultured cells, tissue, or blood samples",
+        "organism": null,
+        "platform": "Monarch Total RNA Miniprep Kit, NEB T2010",
+        "methodVariant": "Silica spin-column total-RNA miniprep with sample-type-specific input variants",
+        "safetyLevel": "not specified",
+        "confidence": 0.9,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.95,
+          "sourceAuthority": 0.95,
+          "metadataCompleteness": 0.9,
+          "freshness": 0.84,
+          "corroboration": 0.84,
+          "overall": 0.9
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because it is a uniquely identified NEB total-RNA record with explicit kit identity, sample-type coverage, named contributors, version dates, and record-level license evidence. Small-RNA enrichment and plant or phenol-based workflows remain separate variants."
+      },
+      "screened": [
+        {
+          "title": "Total RNA Isolation from Bulk Tissue or Isolated Cells",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.8dehs3e",
+          "sourceRecordId": "8dehs3e",
+          "doi": "10.17504/protocols.io.8dehs3e",
+          "screenStatus": "alternative",
+          "reason": "Strong broad tissue-and-cell alternative, retained for coverage, but less kit-specific than the selected NEB record."
+        },
+        {
+          "title": "Total RNA Extraction from Adherent Mammalian Cancer Cells using Zymo Quick-RNA Miniprep Kit",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.e6nvwqxq7vmk",
+          "sourceRecordId": "e6nvwqxq7vmk",
+          "doi": "10.17504/protocols.io.e6nvwqxq7vmk",
+          "screenStatus": "alternative",
+          "reason": "Recent, specific mammalian-cell workflow, but narrower specimen scope than the selected multi-input total-RNA record."
+        }
+      ],
+      "coverageGaps": [
+        "Plant total-RNA extraction and phenol/guanidinium workflows are not represented by the selected silica-column record.",
+        "Suggested child category: plant total-RNA extraction.",
+        "Suggested child category: phenol-based total-RNA extraction.",
+        "Small-RNA enrichment is intentionally tracked in the separate small-rna-extraction category."
+      ],
+      "nextSearchSuggestions": [
+        "Add a plant CTAB or guanidinium-based total-RNA record if plant workflows become a required child category.",
+        "Add a phenol-based total-RNA record if chemistry-specific comparison is required."
+      ]
+    },
+    {
+      "categoryId": "small-rna-extraction",
+      "categoryLabel": "Small RNA enrichment",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/",
+        "https://www.neb.com/protocols/",
+        "https://www.qiagen.com/"
+      ],
+      "representative": {
+        "title": "Drosophila Small RNA Isolation",
+        "protocolType": "Small RNA enrichment protocol",
+        "assay": "Small RNA preparation",
+        "operation": "Size-selected small RNA isolation",
+        "source": "protocols.io",
+        "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.yxmvm2xpog3p/v1",
+        "sourceRecordId": "yxmvm2xpog3p",
+        "doi": "10.17504/protocols.io.yxmvm2xpog3p",
+        "authors": [
+          "Anton Enright",
+          "Alistair Davis",
+          "Sarah Moxon",
+          "Daniel Lobb",
+          "Karin Straub"
+        ],
+        "published": "2022-10-14",
+        "updated": "2022-10-14",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.yxmvm2xpog3p/v1",
+        "licenseVerifiedAt": "2026-08-01T19:26:00Z",
+        "metadataVerifiedAt": "2026-08-01T19:26:00Z",
+        "specimen": "Drosophila melanogaster material",
+        "organism": "Drosophila melanogaster",
+        "platform": "Urea-PAGE and gel-size selection",
+        "methodVariant": "Gel-based isolation of size-selected small RNAs, including miRNA-scale products",
+        "safetyLevel": "not specified",
+        "confidence": 0.86,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.83,
+          "metadataCompleteness": 0.88,
+          "freshness": 0.75,
+          "corroboration": 0.72,
+          "overall": 0.84
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because it makes the enrichment chemistry and size-selection operation explicit, unlike generic total-RNA records. The Drosophila scope is preserved and is not presented as a universal miRNA extraction workflow."
+      },
+      "screened": [
+        {
+          "title": "Quick Protocol for Monarch Total RNA Miniprep Kit (NEB #T2010)",
+          "source": "New England Biolabs / protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.bg9njz5e",
+          "sourceRecordId": "bg9njz5e",
+          "doi": "10.17504/protocols.io.bg9njz5e",
+          "screenStatus": "wrong-variant",
+          "reason": "Total-RNA miniprep record; it does not provide explicit size-selection chemistry for small-RNA enrichment."
+        },
+        {
+          "title": "Total RNA Extraction from Adherent Mammalian Cancer Cells using Zymo Quick-RNA Miniprep Kit",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.e6nvwqxq7vmk",
+          "sourceRecordId": "e6nvwqxq7vmk",
+          "doi": "10.17504/protocols.io.e6nvwqxq7vmk",
+          "screenStatus": "wrong-variant",
+          "reason": "Whole-total-RNA extraction from mammalian cells, not a dedicated small-RNA enrichment record."
+        }
+      ],
+      "coverageGaps": [
+        "The representative is a Drosophila gel-size-selection workflow; column-based miRNA enrichment and magnetic-bead small-RNA workflows remain distinct variants.",
+        "Suggested child category: column-based miRNA enrichment.",
+        "Suggested child category: bead-based small-RNA enrichment."
+      ],
+      "nextSearchSuggestions": [
+        "Screen a miRNeasy-style column record with explicit small-RNA retention or enrichment.",
+        "Screen a magnetic-bead small-RNA enrichment record for a technology-balanced comparison."
+      ]
+    },
+    {
+      "categoryId": "dna-rna-cleanup",
+      "categoryLabel": "Nucleic acid cleanup and concentration",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/",
+        "https://www.thermofisher.com/",
+        "https://www.neb.com/protocols/"
+      ],
+      "representative": {
+        "title": "Modified protocol for AMPure XP clean-up of High Molecular Weight DNA",
+        "protocolType": "Nucleic acid cleanup and concentration protocol",
+        "assay": "DNA cleanup and concentration",
+        "operation": "Magnetic-bead cleanup and concentration",
+        "source": "Biodiversity Genomics Europe / protocols.io",
+        "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.4r3l21d7pg1y/v1",
+        "sourceRecordId": "4r3l21d7pg1y",
+        "doi": "10.17504/protocols.io.4r3l21d7pg1y",
+        "authors": [
+          "Grazia Visci",
+          "Simona Buonanno",
+          "Carmela Gissi"
+        ],
+        "published": "2026-02-13",
+        "updated": "2026-02-13",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://dx.doi.org/10.17504/protocols.io.4r3l21d7pg1y/v1",
+        "licenseVerifiedAt": "2026-08-01T19:26:00Z",
+        "metadataVerifiedAt": "2026-08-01T19:26:00Z",
+        "specimen": "Purified high-molecular-weight DNA",
+        "organism": null,
+        "platform": "AMPure XP magnetic beads",
+        "methodVariant": "Magnetic-bead DNA cleanup and concentration for long-read sequencing input",
+        "safetyLevel": "not specified",
+        "confidence": 0.9,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.97,
+          "sourceAuthority": 0.86,
+          "metadataCompleteness": 0.9,
+          "freshness": 0.98,
+          "corroboration": 0.8,
+          "overall": 0.9
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as a recent, uniquely identified, reproducible-looking AMPure XP cleanup record with explicit input type, cleanup technology, application context, authorship, dates, and record-level license evidence. PCR cleanup, RNA cleanup, and buffer-exchange variants are retained as separate gaps or alternatives."
+      },
+      "screened": [
+        {
+          "title": "Purification of RNA from a DNA/RNA Extract V.2",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.bftbjnin",
+          "sourceRecordId": "bftbjnin",
+          "doi": "10.17504/protocols.io.bftbjnin",
+          "screenStatus": "alternative",
+          "reason": "Useful RNA-specific cleanup alternative, but the selected record better represents DNA cleanup and concentration with explicit AMPure XP input context."
+        },
+        {
+          "title": "Clean up of Index PCRs Using SPRI Beads",
+          "source": "protocols.io",
+          "sourceUrl": "https://dx.doi.org/10.17504/protocols.io.ewov1p4",
+          "sourceRecordId": "ewov1p4",
+          "doi": "10.17504/protocols.io.ewov1p4",
+          "screenStatus": "alternative",
+          "reason": "PCR-product cleanup is in scope as a named variant, but it is a short-fragment library cleanup rather than the selected high-molecular-weight DNA concentration workflow."
+        }
+      ],
+      "coverageGaps": [
+        "The representative is a high-molecular-weight DNA magnetic-bead cleanup workflow; PCR-product cleanup, RNA cleanup, and buffer exchange are distinct input or operation variants.",
+        "Suggested child category: PCR-product SPRI cleanup.",
+        "Suggested child category: RNA cleanup and concentration.",
+        "Suggested child category: nucleic-acid buffer exchange."
+      ],
+      "nextSearchSuggestions": [
+        "Add a PCR cleanup record with explicit SPRI size-selection or concentration behavior.",
+        "Add an RNA cleanup record using a clearly identified silica or magnetic-bead technology."
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "dna-extraction",
+      "rna-extraction",
+      "small-rna-extraction",
+      "dna-rna-cleanup"
+    ],
+    "actualCategoryIds": [
+      "dna-extraction",
+      "rna-extraction",
+      "small-rna-extraction",
+      "dna-rna-cleanup"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": true,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-01T19:28:12Z",
+    "selfCheckNotes": [
+      "The result contains exactly four categoryResults entries in the assigned packet order.",
+      "Each representative has a unique DOI landing URL and a record-level license evidence URL.",
+      "Category and packet statuses are complete, with variant boundaries recorded in coverageGaps and screened alternatives.",
+      "The output stores metadata and short evidence notes only; no protocol steps, tables, figures, videos, PDFs, or long source passages were copied."
+    ]
+  },
+  "runNotes": [
+    "Focused coverage completed across genomic DNA extraction, total RNA extraction, small-RNA enrichment, and nucleic-acid cleanup/concentration.",
+    "Organism, specimen, chemistry, and input-type differences were retained as explicit method variants or coverage gaps."
+  ]
+}

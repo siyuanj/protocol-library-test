@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "His-tagged Protein Purification by Ni-NTA Affinity Chromatography (Batch, Native Conditions)",
+    "protocolId": "lr-test-ni-nta-purification",
+    "version": "0.1",
+    "family": "Affinity chromatography",
+    "category": "Protein",
+    "purpose": "Purify a 6xHis-tagged recombinant protein from a cleared E. coli lysate by binding it to Ni-NTA resin, washing away contaminants at low imidazole, and eluting the target with high imidazole under native (non-denaturing) conditions.",
+    "scope": "Batch (gravity-flow) Ni-NTA purification of soluble 6xHis-tagged protein expressed in E. coli under native conditions, following QIAexpressionist Protocol 9 (cleared lysate) + Protocol 12 (batch purification). Denaturing purification (urea/GuHCl), FPLC/IMAC on a chromatography system, and periplasmic preparations are out of scope.",
+    "estimatedTime": "~3-4 h after cell harvest (30 min lysozyme + sonication + 20-30 min spin + 60 min binding + washes/elution)",
+    "beforeYouBegin": [
+      "Confirm the target protein is soluble; even mostly-insoluble proteins may yield trace soluble material on Ni-NTA.",
+      "Prepare Lysis, Wash, and Elution buffers per the buffer table; all three differ only in imidazole (10 / 20 / 250 mM). Adjust pH to 8.0 with NaOH.",
+      "Keep cells and lysate at 0-4 C throughout; consider adding 1 mM PMSF or other protease inhibitors on a case-by-case basis.",
+      "Ni-NTA resins are supplied as 50% slurries with a binding capacity of ~5-10 mg protein per mL resin."
+    ],
+    "tags": ["Ni-NTA", "IMAC", "His-tag", "6xHis", "affinity chromatography", "protein purification", "native conditions"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Lysis buffer (NPI-10)", "role": "buffer", "specification": "50 mM NaH2PO4, 300 mM NaCl, 10 mM imidazole; adjust pH to 8.0 with NaOH", "rawText": "Lysis buffer: 50 mM NaH2PO4 (6.90 g/L), 300 mM NaCl (17.54 g/L), 10 mM imidazole (0.68 g/L); adjust pH to 8.0 using NaOH", "sourceReferences": [{ "sourceId": "src1", "page": 114, "excerpt": "Lysis buffer (1 liter): 50 mM NaH2PO4 ... 300 mM NaCl ... 10 mM imidazole ... Adjust pH to 8.0 using NaOH." }] },
+    { "id": "m2", "name": "Wash buffer (NPI-20)", "role": "buffer", "specification": "50 mM NaH2PO4, 300 mM NaCl, 20 mM imidazole; adjust pH to 8.0 with NaOH", "rawText": "Wash buffer (1 liter): 50 mM NaH2PO4, 300 mM NaCl, 20 mM imidazole (1.36 g/L); Adjust pH to 8.0 using NaOH", "sourceReferences": [{ "sourceId": "src1", "page": 114, "excerpt": "Wash buffer (1 liter): ... 20 mM imidazole ... Adjust pH to 8.0 using NaOH." }] },
+    { "id": "m3", "name": "Elution buffer (NPI-250)", "role": "buffer", "specification": "50 mM NaH2PO4, 300 mM NaCl, 250 mM imidazole; adjust pH to 8.0 with NaOH", "rawText": "Elution buffer (1 liter): 50 mM NaH2PO4, 300 mM NaCl, 250 mM imidazole (17.00 g/L); Adjust pH to 8.0 using NaOH", "sourceReferences": [{ "sourceId": "src1", "page": 114, "excerpt": "Elution buffer (1 liter): ... 250 mM imidazole ... Adjust pH to 8.0 using NaOH." }] },
+    { "id": "m4", "name": "Ni-NTA agarose (50% slurry)", "role": "reagent", "vendor": "QIAGEN", "workingConcentration": "1 mL of 50% slurry per 4 mL cleared lysate", "specification": "Binding capacity ~5-10 mg protein/mL resin (0.3 umol/mL, 8.0 mg/mL for 6xHis-DHFR); supplied as 50% slurry", "storage": "4 C", "rawText": "The resins are supplied as 50% slurries. ... binding capacity ... between 5 and 10 mg/ml.", "sourceReferences": [{ "sourceId": "src1", "page": 81, "excerpt": "The resins are supplied as 50% slurries." }] },
+    { "id": "m5", "name": "Lysozyme", "role": "enzyme", "workingConcentration": "1 mg/mL final", "specification": "Added to resuspended cells for enzymatic lysis", "rawText": "Add lysozyme to 1 mg/ml and incubate on ice for 30 min." },
+    { "id": "m6", "name": "RNase A", "role": "enzyme", "workingConcentration": "10 ug/mL", "specification": "Optional; add if lysate is very viscous", "rawText": "add RNase A (10 ug/ml) ... incubate on ice for 10-15 min", "needsReview": true },
+    { "id": "m7", "name": "DNase I", "role": "enzyme", "workingConcentration": "5 ug/mL", "specification": "Optional; add if lysate is very viscous", "rawText": "add ... DNase I (5 ug/ml) ... incubate on ice for 10-15 min", "needsReview": true },
+    { "id": "m8", "name": "2x SDS-PAGE sample buffer", "role": "buffer", "specification": "For preparing fraction aliquots (flow-through, wash, eluate) for SDS-PAGE analysis", "rawText": "Add 5 ul 2x SDS-PAGE sample buffer to 5 ul supernatant and store at -20 C for SDS-PAGE analysis." },
+    { "id": "m9", "name": "PMSF (protease inhibitor)", "role": "reagent", "workingConcentration": "1 mM", "specification": "Optional; case-by-case for native-condition lysis to limit degradation", "hazard": "Toxic; corrosive", "rawText": "Addition of PMSF or other protease inhibitors may be helpful on a case-by-case basis", "needsReview": true }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Ultrasonic cell disruptor (sonicator with microtip)", "settings": "Six 10 s bursts at 200-300 W with a 10 s cooling period between bursts; keep sample on ice" },
+    { "id": "e2", "name": "Refrigerated centrifuge", "settings": "10,000 x g, 20-30 min, 4 C" },
+    { "id": "e3", "name": "Rotary shaker (cold room / 4 C)", "settings": "200 rpm, 4 C for batch binding" }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "E. coli cell pellet expressing 6xHis-tagged protein", "role": "input", "organism": "Escherichia coli", "description": "Frozen pellet from a 40-200 mL induced culture" },
+    { "id": "sp2", "name": "Cleared lysate (soluble fraction)", "role": "intermediate", "description": "Supernatant after sonication and 10,000 x g clarification" },
+    { "id": "sp3", "name": "Ni-NTA resin-bound 6xHis protein", "role": "intermediate", "description": "Target protein captured on Ni-NTA during batch binding" },
+    { "id": "sp4", "name": "Purified 6xHis-tagged protein eluate", "role": "output", "description": "Protein released by 250 mM imidazole, collected in four 0.5 mL fractions" },
+    { "id": "sp5", "name": "Column flow-through", "role": "other", "description": "Unbound material; saved for SDS-PAGE" },
+    { "id": "sp6", "name": "Wash fractions", "role": "other", "description": "20 mM imidazole washes; saved for SDS-PAGE" }
+  ],
+  "containers": [
+    { "id": "c1", "name": "Empty gravity-flow column", "type": "column", "wells": null },
+    { "id": "c2", "name": "1.5 mL collection tubes (x4)", "type": "tube", "wells": 4 }
+  ],
+  "tables": [
+    { "id": "t1", "title": "Ni-NTA native buffers (imidazole step gradient)", "columns": ["Buffer", "NaH2PO4", "NaCl", "Imidazole", "pH"], "rows": [["Lysis (NPI-10)", "50 mM", "300 mM", "10 mM", "8.0"], ["Wash (NPI-20)", "50 mM", "300 mM", "20 mM", "8.0"], ["Elution (NPI-250)", "50 mM", "300 mM", "250 mM", "8.0"]], "note": "All three buffers are identical except imidazole; the 10 -> 20 -> 250 mM step gradient gives binding, washing, and elution. Buffer names in parentheses follow the QIAGEN NPI convention." }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Lysate preparation", "action": "Thaw the cell pellet 15 min on ice and resuspend in Lysis buffer at 2-5 mL per gram wet weight.", "materialIds": ["m1"], "inputIds": ["sp1", "m1"], "tableIds": ["t1"], "parameters": [{ "type": "time", "value": 15, "unit": "min", "rawText": "Thaw the cell pellet for 15 min on ice" }, { "type": "ratio", "value": 2, "valueMax": 5, "unit": "mL/g", "rawText": "resuspend the cells in lysis buffer at 2-5 ml per gram wet weight" }], "criticalNotes": "Lysis buffer contains 10 mM imidazole to suppress binding of untagged proteins. If the tagged protein does not bind, reduce imidazole to 1-5 mM; high-affinity tags tolerate up to 20 mM.", "sourceReferences": [{ "sourceId": "src1", "page": 79 }] },
+    { "id": "s2", "number": 2, "phase": "Lysate preparation", "action": "Add lysozyme to 1 mg/mL and incubate on ice.", "materialIds": ["m5"], "parameters": [{ "type": "concentration", "value": 1, "unit": "mg/mL", "rawText": "Add lysozyme to 1 mg/ml" }, { "type": "time", "value": 30, "unit": "min", "rawText": "incubate on ice for 30 min" }], "sourceReferences": [{ "sourceId": "src1", "page": 79 }] },
+    { "id": "s3", "number": 3, "phase": "Lysate preparation", "action": "Sonicate on ice with a microtip.", "equipmentIds": ["e1"], "parameters": [{ "type": "count", "value": 6, "unit": "bursts", "rawText": "six 10 s bursts" }, { "type": "time", "value": 10, "unit": "s", "rawText": "10 s bursts" }, { "type": "other", "value": 200, "valueMax": 300, "unit": "W", "rawText": "at 200-300 W" }, { "type": "time", "value": 10, "unit": "s", "rawText": "10 s cooling period between each burst" }], "criticalNotes": "Keep the sample on ice; allow the cooling period between bursts to avoid heating.", "sourceReferences": [{ "sourceId": "src1", "page": 79 }] },
+    { "id": "s4", "number": 4, "phase": "Lysate preparation", "action": "If the lysate is very viscous, add RNase A and DNase I and incubate on ice.", "optional": true, "materialIds": ["m6", "m7"], "parameters": [{ "type": "concentration", "value": 10, "unit": "ug/mL", "rawText": "RNase A (10 ug/ml)" }, { "type": "concentration", "value": 5, "unit": "ug/mL", "rawText": "DNase I (5 ug/ml)" }, { "type": "time", "value": 10, "valueMax": 15, "unit": "min", "rawText": "incubate on ice for 10-15 min" }], "sourceReferences": [{ "sourceId": "src1", "page": 79 }] },
+    { "id": "s5", "number": 5, "phase": "Lysate preparation", "action": "Centrifuge the lysate to pellet cell debris and save the supernatant (cleared lysate).", "equipmentIds": ["e2"], "outputIds": ["sp2"], "pausePoint": true, "parameters": [{ "type": "speed", "value": 10000, "unit": "xg", "rawText": "Centrifuge lysate at 10,000 x g" }, { "type": "time", "value": 20, "valueMax": 30, "unit": "min", "rawText": "for 20-30 min" }, { "type": "temperature", "value": 4, "unit": "degC", "rawText": "at 4 C" }], "criticalNotes": "Insoluble target protein stays in the pellet; recover it only via denaturing purification if needed.", "sourceReferences": [{ "sourceId": "src1", "page": 79 }] },
+    { "id": "s6", "number": 6, "phase": "Lysate preparation", "action": "Reserve an aliquot of cleared lysate in 2x SDS-PAGE sample buffer for gel analysis.", "optional": true, "materialIds": ["m8"], "inputIds": ["sp2"], "parameters": [{ "type": "volume", "value": 5, "unit": "uL", "rawText": "Add 5 ul 2x SDS-PAGE sample buffer to 5 ul supernatant" }], "sourceReferences": [{ "sourceId": "src1", "page": 79 }] },
+    { "id": "s7", "number": 7, "phase": "Binding", "action": "Add 1 mL of 50% Ni-NTA slurry to 4 mL cleared lysate and mix gently by shaking at 4 C.", "materialIds": ["m4"], "equipmentIds": ["e3"], "inputIds": ["sp2", "m4"], "outputIds": ["sp3"], "parameters": [{ "type": "volume", "value": 1, "unit": "mL", "rawText": "Add 1 ml of the 50% Ni-NTA slurry" }, { "type": "volume", "value": 4, "unit": "mL", "rawText": "to 4 ml cleared lysate" }, { "type": "speed", "value": 200, "unit": "rpm", "rawText": "200 rpm on a rotary shaker" }, { "type": "temperature", "value": 4, "unit": "degC", "rawText": "at 4 C" }, { "type": "time", "value": 60, "unit": "min", "rawText": "for 60 min" }], "sourceReferences": [{ "sourceId": "src1", "page": 81, "excerpt": "Add 1 ml of the 50% Ni-NTA slurry to 4 ml cleared lysate and mix gently by shaking (200 rpm on a rotary shaker) at 4 C for 60 min." }] },
+    { "id": "s8", "number": 8, "phase": "Binding", "action": "Load the lysate-Ni-NTA mixture into a column with the bottom outlet capped.", "containerIds": ["c1"], "inputIds": ["sp3"], "sourceReferences": [{ "sourceId": "src1", "page": 82 }] },
+    { "id": "s9", "number": 9, "phase": "Washing", "action": "Remove the bottom cap and collect the flow-through; save it for SDS-PAGE.", "containerIds": ["c1"], "outputIds": ["sp5"], "sourceReferences": [{ "sourceId": "src1", "page": 82 }] },
+    { "id": "s10", "number": 10, "phase": "Washing", "action": "Wash twice with 4 mL Wash buffer (20 mM imidazole); collect wash fractions for SDS-PAGE.", "materialIds": ["m2"], "containerIds": ["c1"], "tableIds": ["t1"], "outputIds": ["sp6"], "parameters": [{ "type": "count", "value": 2, "unit": "x", "rawText": "Wash twice" }, { "type": "volume", "value": 4, "unit": "mL", "rawText": "with 4 ml wash buffer" }], "sourceReferences": [{ "sourceId": "src1", "page": 82, "excerpt": "Wash twice with 4 ml wash buffer; collect wash fractions for SDS-PAGE analysis." }] },
+    { "id": "s11", "number": 11, "phase": "Elution", "action": "Elute the target protein 4 times with 0.5 mL Elution buffer (250 mM imidazole), collecting each in a separate tube; analyze by SDS-PAGE.", "materialIds": ["m3"], "containerIds": ["c2"], "tableIds": ["t1"], "inputIds": ["sp3"], "outputIds": ["sp4"], "parameters": [{ "type": "count", "value": 4, "unit": "x", "rawText": "Elute the protein 4 times" }, { "type": "volume", "value": 0.5, "unit": "mL", "rawText": "with 0.5 ml elution buffer" }], "expectedResult": "6xHis-tagged protein released in the eluate; typically most concentrated in the first 1-2 fractions.", "criticalNotes": "Buffers may be modified (e.g. 0.1% Tween, 5-10 mM beta-ME, 1 mM PMSF, higher NaCl or glycerol) to suit the protein.", "sourceReferences": [{ "sourceId": "src1", "page": 82, "excerpt": "Elute the protein 4 times with 0.5 ml elution buffer. Collect the eluate in four tubes and analyze by SDS-PAGE." }] }
+  ],
+  "controls": [
+    { "name": "Fraction ladder for SDS-PAGE", "description": "Run cleared lysate, flow-through, wash, and eluate fractions side by side to assess capture, wash stringency, and purity." },
+    { "name": "Uninduced-culture control", "description": "Lysate from an uninduced culture confirms the eluted band is the induced 6xHis-tagged protein.", "needsReview": true }
+  ],
+  "expectedOutputs": [
+    "Purified 6xHis-tagged protein in the 250 mM imidazole elution fractions.",
+    "SDS-PAGE showing enrichment of the target band from lysate -> flow-through -> wash -> eluate.",
+    "Saved flow-through and wash fractions documenting binding/wash performance."
+  ],
+  "troubleshooting": [
+    { "problem": "Target protein in flow-through (poor binding)", "cause": "Imidazole in lysis buffer too high; protein insoluble; overloaded resin", "solution": "Reduce lysis-buffer imidazole to 1-5 mM; verify solubility; add more resin (capacity 5-10 mg/mL)" },
+    { "problem": "Low purity / contaminating bands in eluate", "cause": "Wash stringency too low", "solution": "Increase imidazole in wash buffer (up to ~20 mM) or add more wash steps" },
+    { "problem": "Protein does not elute", "cause": "Very high-affinity binding", "solution": "Elute with a higher imidazole step or a pH step-gradient" }
+  ],
+  "safety": [
+    "Imidazole is an irritant; wear gloves and eye protection.",
+    "PMSF is toxic and corrosive; prepare and handle with care.",
+    "Follow institutional rules for the E. coli expression host and the recombinant protein."
+  ],
+  "biosafetyLevel": "not specified",
+  "limitations": "Native-conditions batch protocol; recovers only soluble target. Resin lot, exact culture size, and protein-specific imidazole optimum are not fixed here. Insoluble protein requires a separate denaturing (urea/GuHCl) purification.",
+  "sources": [
+    { "id": "src1", "kind": "book", "title": "The QIAexpressionist - A handbook for high-level expression and purification of 6xHis-tagged proteins (QIAGEN, 5th ed., 06/2003)", "url": "https://kirschner.med.harvard.edu/files/protocols/QIAGEN_QIAexpressionist_EN.pdf", "license": "QIAGEN handbook; reuse terms per QIAGEN", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

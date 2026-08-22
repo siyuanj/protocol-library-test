@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Bacterial Growth Curve by Optical Density (OD600)",
+    "protocolId": "lr-testset-bacterial-growth-curve",
+    "version": "0.1",
+    "family": "Microbial growth kinetics",
+    "category": "Microbiology",
+    "purpose": "Track the increase in a liquid bacterial culture over time by measuring turbidity (optical density at 600 nm) at fixed intervals, then plot OD600 versus time to resolve the lag, log (exponential), stationary, and death phases.",
+    "scope": "Turbidimetric (cuvette) growth curve for a fast-growing bacterium (e.g. E. coli) in nutrient/LB broth, read on a visible-range spectrophotometer at 600 nm. Species-specific timing and doubling time vary; the source protocol is generic.",
+    "estimatedTime": "~1 day (18-24 h agar step + overnight preculture + several hours of timed readings)",
+    "beforeYouBegin": [
+      "Prepare and autoclave nutrient/LB broth and agar; work aseptically throughout.",
+      "Blank the spectrophotometer at 600 nm with sterile, uninoculated broth before reading samples.",
+      "Spectrophotometer OD600 is linear only to about 1.0; plan to dilute over-range samples in fresh broth and multiply back."
+    ],
+    "tags": ["growth curve", "OD600", "optical density", "bacteria", "E. coli", "turbidity", "microbiology"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Nutrient / LB broth", "role": "medium", "amount": 250, "unit": "mL", "specification": "Sterile, autoclaved liquid medium; also used sterile as the spectrophotometer blank", "rawText": "Transfer 5 ml of overnight culture into 250 ml fresh broth" },
+    { "id": "m2", "name": "Nutrient agar plate", "role": "medium", "specification": "For streaking to isolate a single colony", "rawText": "Streak bacterial culture on agar plate; incubate 18-24 hours at 37 C" }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Shaking incubator", "settings": "37 C with shaking" },
+    { "id": "e2", "name": "Visible-range spectrophotometer", "settings": "600 nm; zeroed against a sterile-broth blank" }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "Overnight bacterial culture (inoculum)", "role": "input", "organism": "bacterium (e.g. E. coli)", "derivedFromMaterialId": "m1", "description": "Saturated overnight culture grown from a single colony.", "needsReview": true },
+    { "id": "sp2", "name": "Growing bacterial culture", "role": "output", "organism": "bacterium (e.g. E. coli)", "description": "Freshly diluted culture sampled over time to build the growth curve." }
+  ],
+  "containers": [
+    { "id": "c1", "name": "Test tube (10 mL broth)", "type": "tube" },
+    { "id": "c2", "name": "Erlenmeyer flask (250 mL culture)", "type": "flask" },
+    { "id": "c3", "name": "Spectrophotometer cuvette", "type": "cuvette" }
+  ],
+  "tables": [
+    { "id": "t1", "title": "OD600 time-point recording grid", "columns": ["Time (min)", "Time (h)", "OD600", "Phase"], "rows": [
+      [0, 0, null, null],
+      [30, 0.5, null, null],
+      [60, 1, null, null],
+      [90, 1.5, null, null],
+      [120, 2, null, null],
+      [150, 2.5, null, null],
+      [180, 3, null, null],
+      [210, 3.5, null, null],
+      [240, 4, null, null]
+    ], "note": "Record OD600 every 30 min from time zero; continue until readings become static (stationary phase). Extend the grid as needed. Values left null are measured during the run." }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "action": "Streak the bacterial culture onto a nutrient agar plate and incubate to obtain isolated single colonies.", "materialIds": ["m2"], "equipmentIds": ["e1"], "parameters": [
+      { "type": "time", "value": 18, "valueMax": 24, "unit": "h", "rawText": "incubate 18-24 hours" },
+      { "type": "temperature", "value": 37, "unit": "degC", "rawText": "at 37 C" }
+    ], "expectedResult": "Well-isolated single colonies." },
+    { "id": "s2", "number": 2, "action": "Inoculate a single colony into a test tube containing 10 mL sterile broth and grow overnight with shaking.", "materialIds": ["m1"], "equipmentIds": ["e1"], "containerIds": ["c1"], "outputIds": ["sp1"], "parameters": [
+      { "type": "volume", "value": 10, "unit": "mL", "rawText": "inoculate it into a test tube containing 10 ml of autoclaved broth" },
+      { "type": "temperature", "value": 37, "unit": "degC", "rawText": "grow overnight at 37 C" },
+      { "type": "time", "value": null, "unit": "h", "rawText": "overnight" }
+    ], "expectedResult": "Turbid, saturated overnight culture." },
+    { "id": "s3", "number": 3, "action": "Transfer overnight culture into a sterile flask of fresh broth to start the growth-curve culture.", "materialIds": ["m1"], "containerIds": ["c2"], "inputIds": ["sp1"], "outputIds": ["sp2"], "parameters": [
+      { "type": "volume", "value": 5, "unit": "mL", "rawText": "Transfer 5 ml of overnight culture" },
+      { "type": "volume", "value": 250, "unit": "mL", "rawText": "into 250 ml fresh broth" },
+      { "type": "ratio", "value": null, "unit": "fold", "rawText": "20-fold dilution", "needsReview": true }
+    ], "criticalNotes": "Source states '20-fold dilution' but 5 mL into 250 mL is ~50-fold; verify intended dilution before use." },
+    { "id": "s4", "number": 4, "action": "Blank the spectrophotometer at 600 nm using sterile uninoculated broth.", "materialIds": ["m1"], "equipmentIds": ["e2"], "containerIds": ["c3"], "parameters": [
+      { "type": "wavelength", "value": 600, "unit": "nm", "rawText": "absorbance at 600 nm" }
+    ], "expectedResult": "Instrument zeroed at 600 nm." },
+    { "id": "s5", "number": 5, "action": "Measure and record the initial OD600 of the culture at time zero.", "equipmentIds": ["e2"], "containerIds": ["c3"], "inputIds": ["sp2"], "tableIds": ["t1"], "parameters": [
+      { "type": "time", "value": 0, "unit": "min", "rawText": "Measure initial OD at time zero" },
+      { "type": "wavelength", "value": 600, "unit": "nm", "rawText": "at 600 nm" }
+    ] },
+    { "id": "s6", "number": 6, "action": "Incubate the flask at 37 C with shaking; withdraw a 1 mL sample and read OD600 every 30 min, recording each value in the time-point grid.", "materialIds": ["m1"], "equipmentIds": ["e1", "e2"], "containerIds": ["c2", "c3"], "inputIds": ["sp2"], "tableIds": ["t1"], "parameters": [
+      { "type": "temperature", "value": 37, "unit": "degC", "rawText": "37 C" },
+      { "type": "volume", "value": 1, "unit": "mL", "rawText": "Collect 1 ml samples" },
+      { "type": "time", "value": 30, "unit": "min", "rawText": "every 30 minutes" },
+      { "type": "wavelength", "value": 600, "unit": "nm", "rawText": "measure absorbance at 600 nm" }
+    ], "branches": [
+      { "condition": "if OD600 > 1.0 (above the linear range)", "action": "Dilute 100 uL culture in 900 uL fresh broth (1:10), re-read, and multiply the recorded value by 10." }
+    ], "criticalNotes": "OD600 is linear only up to about 1.0; over-range readings must be diluted and scaled back." },
+    { "id": "s7", "number": 7, "action": "Continue sampling every 30 min until OD600 plateaus, then plot time (x-axis) versus OD600 (y-axis) and identify the lag, log, stationary, and death phases.", "equipmentIds": ["e2"], "tableIds": ["t1"], "parameters": [
+      { "type": "time", "value": 30, "unit": "min", "rawText": "Collect samples every 30 minutes ... until optical density plateaus" }
+    ], "expectedResult": "Growth curve resolving lag, log (exponential), and stationary phases; doubling time estimable from the log phase." }
+  ],
+  "controls": [
+    { "name": "Uninoculated broth (sterility + blank control)", "description": "Sterile broth incubated/handled in parallel; confirms no contamination and serves as the 600 nm blank." }
+  ],
+  "expectedOutputs": [
+    "OD600-versus-time growth curve.",
+    "Identified lag, log (exponential), stationary, and death phases.",
+    "Doubling / generation time estimated from the exponential-phase slope."
+  ],
+  "troubleshooting": [
+    { "problem": "OD600 reading above ~1.0 / non-linear", "cause": "Culture too dense for the linear range", "solution": "Dilute 1:10 in fresh broth, re-read, multiply by 10" },
+    { "problem": "No growth / flat curve", "cause": "Non-viable inoculum, wrong temperature, or inhibitory medium", "solution": "Re-streak for fresh colonies; confirm 37 C shaking; use fresh sterile broth" },
+    { "problem": "Erratic readings", "cause": "Bubbles, condensation, or dirty cuvette", "solution": "Wipe cuvette, avoid bubbles, mix sample before reading" }
+  ],
+  "safety": [
+    "Use aseptic technique; treat all cultures as potential biohazards.",
+    "Decontaminate (autoclave) spent cultures and contaminated labware before disposal.",
+    "Biosafety level depends on the organism; laboratory E. coli K-12 strains are BSL-1."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "OD600 measures light scattering (turbidity), not viable-cell number, and includes dead cells and debris; it saturates at high density and requires dilution. The source protocol is generic and does not fix the organism, exact shaking speed, or total duration.",
+  "sources": [
+    { "id": "src1", "kind": "url", "title": "Bacterial Growth Curve Protocol (OD600 method), Microbe Notes", "url": "https://microbenotes.com/bacterial-growth-curve-protocol/", "license": "Educational web resource; reuse terms not specified", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

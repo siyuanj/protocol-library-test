@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Lipofection: Transient Transfection of Mammalian Cells with Lipofectamine 3000 (24-well)",
+    "protocolId": "lr-testset-lipofection",
+    "version": "0.1",
+    "family": "Transfection",
+    "category": "Cell Biology",
+    "purpose": "Introduce plasmid DNA into adherent mammalian cells by complexing the DNA with the cationic lipid Lipofectamine 3000 (plus P3000 enhancer) in Opti-MEM and applying the DNA-lipid complexes to cells for transient gene expression.",
+    "scope": "Lipid-mediated transient transfection of adherent mammalian cells in a 24-well plate using Lipofectamine 3000 with plasmid DNA. Amounts are the manufacturer's 24-well values (two-dose optimization). For siRNA, omit P3000 Reagent. Stable transfection and electroporation are out of scope.",
+    "estimatedTime": "Day 0 seed cells; Day 1 transfect (10 min prep + 10-15 min complex formation); Day 2-4 analyze",
+    "beforeYouBegin": [
+      "Seed cells so they are 70-90% confluent at the time of transfection.",
+      "Prepare complexes in serum-free Opti-MEM; it is not necessary to remove complexes or change medium after transfection.",
+      "Test two doses of Lipofectamine 3000 (0.75 and 1.5 uL for 24-well) to find the optimum for your cells."
+    ],
+    "tags": ["transfection", "lipofection", "Lipofectamine 3000", "plasmid DNA", "transient expression", "24-well"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Lipofectamine 3000 Reagent", "role": "reagent", "workingConcentration": "0.75 and 1.5 uL per 24-well (two-dose optimization)", "specification": "Proprietary cationic lipid transfection reagent", "vendor": "Invitrogen / Thermo Fisher", "catalogNumber": "L3000015 / L3000008 (size-dependent)", "storage": "4 C (do not freeze)", "rawText": "Lipofectamine 3000 Reagent per well: 0.75 and 1.5 uL (24-well)" },
+    { "id": "m2", "name": "P3000 Reagent", "role": "reagent", "workingConcentration": "2 uL per ug DNA", "specification": "DNA enhancer supplied with Lipofectamine 3000; omit for siRNA", "vendor": "Invitrogen / Thermo Fisher", "storage": "4 C (do not freeze)", "rawText": "P3000 Reagent (2 uL/ug DNA)" },
+    { "id": "m3", "name": "Plasmid DNA", "role": "reagent", "workingConcentration": "0.5-5 ug/uL stock", "specification": "Purified plasmid; 1 ug used per 24-well reaction (delivers ~500 ng per well)", "rawText": "Plasmid DNA (0.5-5 ug/uL stock)", "needsReview": true },
+    { "id": "m4", "name": "Opti-MEM I Reduced Serum Medium", "role": "medium", "specification": "Serum-free medium for diluting reagent and DNA", "vendor": "Thermo Fisher", "rawText": "Dilute Lipofectamine 3000 Reagent in Opti-MEM Medium; dilute DNA in Opti-MEM Medium" },
+    { "id": "m5", "name": "Complete growth medium", "role": "medium", "specification": "Normal culture medium on the cells; complexes may be added in presence or absence of serum/antibiotic", "rawText": "Make DNA-Lipofectamine 3000 complexes ... in the presence or absence of serum/antibiotic", "needsReview": true },
+    { "id": "m6", "name": "Microcentrifuge tubes", "role": "consumable", "rawText": "Microcentrifuge tubes" }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "CO2 cell-culture incubator", "settings": "37 C; final incubation 2-4 days" },
+    { "id": "e2", "name": "Vortex mixer", "settings": "Vortex 2-3 sec when diluting Lipofectamine 3000" },
+    { "id": "e3", "name": "Inverted microscope", "settings": "For visualizing/analyzing transfected cells", "needsReview": true }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "Adherent mammalian cells (70-90% confluent)", "role": "input", "organism": "mammalian cell line", "description": "Cells seeded one day earlier to reach 70-90% confluency at transfection.", "needsReview": true },
+    { "id": "sp2", "name": "DNA-lipid complex", "role": "intermediate", "description": "Plasmid DNA + P3000 combined 1:1 with diluted Lipofectamine 3000 in Opti-MEM." },
+    { "id": "sp3", "name": "Transfected cells", "role": "output", "organism": "mammalian cell line", "description": "Cells that have taken up the DNA-lipid complex and transiently express the delivered gene." }
+  ],
+  "containers": [
+    { "id": "c1", "name": "24-well cell culture plate", "type": "plate", "wells": 24 },
+    { "id": "c2", "name": "Microcentrifuge tube (diluted Lipofectamine 3000)", "type": "tube" },
+    { "id": "c3", "name": "Microcentrifuge tube (DNA master mix)", "type": "tube" }
+  ],
+  "tables": [
+    { "id": "t1", "title": "Lipofectamine 3000 reaction components (24-well, two-dose optimization)", "columns": ["Step / component", "Amount (per 24-well)"], "rows": [
+      ["Adherent cells at seeding", "0.5-2 x 10^5 cells/well"],
+      ["Opti-MEM to dilute Lipofectamine 3000 (2 tubes)", "25 uL x 2"],
+      ["Lipofectamine 3000 Reagent (2 doses)", "0.75 and 1.5 uL"],
+      ["Opti-MEM to dilute DNA", "50 uL"],
+      ["DNA (0.5-5 ug/uL)", "1 ug"],
+      ["P3000 Reagent (2 uL/ug DNA)", "2 uL"],
+      ["Diluted DNA added to each lipid tube (1:1)", "25 uL"],
+      ["DNA-lipid complex added per well", "50 uL"]
+    ], "note": "Each reaction mix is for one well and accounts for pipetting variation; scale proportionally for more wells. Delivers ~500 ng DNA and 1 uL P3000 per well." }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Day 0", "action": "Seed cells so they will be 70-90% confluent at the time of transfection.", "materialIds": ["m5"], "containerIds": ["c1"], "outputIds": ["sp1"], "parameters": [
+      { "type": "count", "value": 50000, "valueMax": 200000, "unit": "cells/well", "rawText": "Adherent cells (24-well): 0.5-2 x 10^5" },
+      { "type": "other", "value": 70, "valueMax": 90, "unit": "% confluency", "rawText": "Seed cells to be 70-90% confluent at transfection" }
+    ], "expectedResult": "Healthy adherent monolayer at 70-90% confluency." },
+    { "id": "s2", "number": 2, "phase": "Day 1", "action": "Dilute Lipofectamine 3000 Reagent in Opti-MEM in two tubes (one per dose) and mix well by vortexing 2-3 sec.", "materialIds": ["m1", "m4"], "equipmentIds": ["e2"], "containerIds": ["c2"], "tableIds": ["t1"], "inputIds": ["m1", "m4"], "parameters": [
+      { "type": "volume", "value": 25, "unit": "uL", "rawText": "Opti-MEM Medium: 25 uL x 2 (24-well)" },
+      { "type": "volume", "value": 0.75, "valueMax": 1.5, "unit": "uL", "rawText": "Lipofectamine 3000 Reagent: 0.75 and 1.5 uL (24-well)" },
+      { "type": "time", "value": 2, "valueMax": 3, "unit": "s", "rawText": "Vortex 2-3 sec" }
+    ], "criticalNotes": "Prepare two Lipofectamine 3000 doses to determine the optimum amount for your cells." },
+    { "id": "s3", "number": 3, "phase": "Day 1", "action": "Prepare a master mix of DNA by diluting DNA in Opti-MEM, then add P3000 Reagent and mix well.", "materialIds": ["m3", "m4", "m2"], "containerIds": ["c3"], "tableIds": ["t1"], "inputIds": ["m3", "m4", "m2"], "parameters": [
+      { "type": "volume", "value": 50, "unit": "uL", "rawText": "Opti-MEM Medium: 50 uL (24-well)" },
+      { "type": "mass", "value": 1, "unit": "ug", "rawText": "DNA (0.5-5 ug/uL): 1 ug (24-well)" },
+      { "type": "volume", "value": 2, "unit": "uL", "rawText": "P3000 Reagent (2 uL/ug DNA): 2 uL (24-well)" }
+    ], "branches": [
+      { "condition": "if transfecting siRNA instead of plasmid DNA", "action": "Do NOT add P3000 Reagent when diluting the nucleic acid (step 3)." }
+    ] },
+    { "id": "s4", "number": 4, "phase": "Day 1", "action": "Add the diluted DNA to each tube of diluted Lipofectamine 3000 at a 1:1 ratio and mix.", "materialIds": ["m1", "m2", "m3", "m4"], "containerIds": ["c2", "c3"], "inputIds": ["m1", "m2", "m3", "m4"], "outputIds": ["sp2"], "parameters": [
+      { "type": "volume", "value": 25, "unit": "uL", "rawText": "Diluted DNA (with P3000): 25 uL; Diluted Lipofectamine 3000: 25 uL (24-well)" },
+      { "type": "ratio", "value": 1, "valueMax": 1, "unit": "v/v", "rawText": "Add Diluted DNA to each tube of Diluted Lipofectamine 3000 Reagent (1:1 ratio)" }
+    ], "expectedResult": "50 uL DNA-lipid complex per reaction." },
+    { "id": "s5", "number": 5, "phase": "Day 1", "action": "Incubate the DNA-lipid mixture at room temperature to allow complexes to form.", "containerIds": ["c2"], "inputIds": ["sp2"], "parameters": [
+      { "type": "time", "value": 10, "valueMax": 15, "unit": "min", "rawText": "Incubate for 10-15 minutes at room temperature." },
+      { "type": "temperature", "value": null, "unit": "degC", "rawText": "at room temperature" }
+    ] },
+    { "id": "s6", "number": 6, "phase": "Day 1", "action": "Add the DNA-lipid complex to the cells (one complex volume per well).", "containerIds": ["c1"], "inputIds": ["sp1", "sp2"], "outputIds": ["sp3"], "parameters": [
+      { "type": "volume", "value": 50, "unit": "uL", "rawText": "DNA-lipid complex (per well): 50 uL (24-well)" },
+      { "type": "mass", "value": 500, "unit": "ng", "rawText": "DNA amount (per well): 500 ng (24-well)" }
+    ], "criticalNotes": "It is not necessary to remove complexes or change/add medium after transfection." },
+    { "id": "s7", "number": 7, "phase": "Day 2-4", "action": "Incubate the cells at 37 C, then visualize/analyze the transfected cells.", "equipmentIds": ["e1", "e3"], "containerIds": ["c1"], "inputIds": ["sp3"], "parameters": [
+      { "type": "time", "value": 2, "valueMax": 4, "unit": "days", "rawText": "Incubate cells for 2-4 days at 37 C." },
+      { "type": "temperature", "value": 37, "unit": "degC", "rawText": "at 37 C" }
+    ], "expectedResult": "Transient expression of the delivered gene; optimal Lipofectamine 3000 dose identified by comparing the two doses." }
+  ],
+  "controls": [
+    { "name": "Untransfected (mock) cells", "description": "Cells receiving reagent complexes made without DNA, or no treatment; baseline for expression and reagent toxicity.", "needsReview": true },
+    { "name": "Positive-control reporter plasmid", "description": "A well-expressing reporter (e.g. GFP) to confirm transfection efficiency.", "needsReview": true }
+  ],
+  "expectedOutputs": [
+    "Cells transiently expressing the delivered gene, assayable 24-72 h (2-4 days) post-transfection.",
+    "Optimal Lipofectamine 3000 dose for the cell line, from the two-dose comparison."
+  ],
+  "troubleshooting": [
+    { "problem": "Low transfection efficiency", "cause": "Suboptimal lipid dose, low confluency, or poor DNA quality", "solution": "Test both lipid doses, transfect at 70-90% confluency, use clean plasmid prep" },
+    { "problem": "High cytotoxicity", "cause": "Too much lipid or too long an exposure for sensitive cells", "solution": "Use the lower (0.75 uL) dose; optionally change medium a few hours post-transfection" },
+    { "problem": "No expression", "cause": "P3000 omitted for DNA, or complexes not formed", "solution": "Include P3000 for plasmid DNA (omit only for siRNA); allow 10-15 min complex formation" }
+  ],
+  "safety": [
+    "Follow aseptic cell-culture practice; handle recombinant DNA per institutional biosafety rules.",
+    "Opti-MEM and transfection reagents are for research use only; wear gloves.",
+    "Biosafety level depends on the cell line and the encoded insert."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "Provides transient (not stable) expression; efficiency and toxicity are cell-line dependent and require dose optimization. Amounts shown are the manufacturer's 24-well values; the source does not fix the cell line or the specific plasmid.",
+  "sources": [
+    { "id": "src1", "kind": "kit-insert", "title": "Lipofectamine 3000 Reagent Protocol (Pub. No. MAN0009872 Rev. C.0; Doc. Part No. 100022234)", "url": "https://documents.thermofisher.com/TFS-Assets/LSG/manuals/lipofectamine3000_protocol.pdf", "license": "Manufacturer user guide; For Research Use Only; reuse terms not specified", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

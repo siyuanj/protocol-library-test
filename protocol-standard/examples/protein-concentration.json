@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "0.1",
+  "metadata": {
+    "title": "Measurement of Protein Concentration (A280 / BCA / Bradford)",
+    "protocolId": "lr-test-protein-concentration",
+    "version": "0.1",
+    "family": "Protein quantitation",
+    "category": "Protein",
+    "purpose": "Determine the concentration of an unknown protein solution by three independent methods - UV absorbance at 280 nm, the BCA assay, and the Bradford assay - each calibrated against a standard protein, and compare the results.",
+    "scope": "Colorimetric/UV protein quantitation of soluble samples against a BSA standard curve, in test tubes/cuvettes (A280, Bradford) and a 96-well plate (BCA). No single assay suits all proteins. Bradford is included for reference (also used in the CK activity assay).",
+    "estimatedTime": "~2-3 h (BCA incubation 15-20 min; Bradford color stable ~1 h)",
+    "beforeYouBegin": [
+      "Run standard samples in duplicate (or triplicate).",
+      "Use the 0 mg/mL tube (sample 1) as the blank for spectrophotometer zeroing.",
+      "Because the same volume is examined in each assay, plot absorbance directly against standard concentration.",
+      "When computing the unknown concentration, multiply by the dilution factor."
+    ],
+    "tags": ["protein concentration", "A280", "BCA assay", "Bradford assay", "standard curve"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Standard protein (BSA)", "workingConcentration": "1.0 mg/mL stock", "specification": "Known-concentration standard", "needsReview": true },
+    { "id": "m2", "name": "Unknown protein solution", "specification": "Sample to quantify" },
+    { "id": "m3", "name": "Deionized water" },
+    { "id": "m4", "name": "PBS", "specification": "Diluent for BCA", "needsReview": true },
+    { "id": "m5", "name": "BCA Reagent A (BCA solution)", "amount": 4, "unit": "mL", "specification": "per working-solution batch", "needsReview": true },
+    { "id": "m6", "name": "BCA Reagent B (Cu2+)", "amount": 80, "unit": "uL", "specification": "per working-solution batch", "needsReview": true },
+    { "id": "m7", "name": "Bradford working buffer", "amount": 3, "unit": "mL", "specification": "Acidic Coomassie Brilliant Blue G-250, per tube", "needsReview": true }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Vortex mixer", "settings": "Mix each sample", "needsReview": true },
+    { "id": "e2", "name": "UV/Vis spectrophotometer + 1 mL plastic cuvette", "settings": "Read A280", "needsReview": true },
+    { "id": "e3", "name": "Microplate reader + 96-well plate", "settings": "Read A562", "needsReview": true },
+    { "id": "e4", "name": "37 degC incubator", "settings": "BCA color development", "needsReview": true },
+    { "id": "e5", "name": "Vis spectrophotometer + 3 mL plastic cuvette", "settings": "Read A595 (380-780 nm)", "needsReview": true },
+    { "id": "e6", "name": "Test tubes (10 mL / 5 mL / 1.5 mL)", "settings": "Sample preparation" }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "A280 (UV) assay", "action": "Prepare 14 test tubes with standards, unknown, and deionized water per Table 1; mix on vortex.", "materialIds": ["m1", "m2", "m3"], "equipmentIds": ["e1", "e6"], "parameters": [{ "type": "volume", "value": 2.0, "unit": "mL", "rawText": "total volume 2.0 mL per tube" }], "expectedResult": "Standard series (0-1.0 mg/mL) + unknown ready.", "criticalNotes": "Table 1: standard 1.0 mg/mL 0/0.4/0.8/1.2/1.6/2.0 mL; water 2.0->0 mL; -> 0/0.2/0.4/0.6/0.8/1.0 mg/mL; tube 7 = 2.0 mL unknown." },
+    { "id": "s2", "number": 2, "phase": "A280 (UV) assay", "action": "Read A280 in a 1 mL cuvette; zero with sample 1 (0 mg/mL).", "equipmentIds": ["e2"], "parameters": [{ "type": "other", "value": 280, "unit": "nm", "rawText": "read A280" }], "expectedResult": "A280 per tube.", "criticalNotes": "Sample 1 is the blank." },
+    { "id": "s3", "number": 3, "phase": "A280 (UV) assay", "action": "Plot A280 vs mg/mL standard; estimate the unknown; calculate A(1%,1cm) at 280 nm.", "expectedResult": "Calibration curve + unknown concentration." },
+    { "id": "s4", "number": 4, "phase": "BCA assay (96-well)", "action": "Prepare BCA working solution: 4 mL Reagent A + 80 uL Reagent B in a 5-mL tube.", "materialIds": ["m5", "m6"], "equipmentIds": ["e6"], "parameters": [{ "type": "volume", "value": 4, "unit": "mL", "rawText": "4 mL of Reagent A" }, { "type": "volume", "value": 80, "unit": "uL", "rawText": "80 uL Reagent B" }], "expectedResult": "Working solution ready.", "criticalNotes": "Cu2+ + BCA -> colored complex." },
+    { "id": "s5", "number": 5, "phase": "BCA assay (96-well)", "action": "Dilute standard BSA to 0.5 mg/mL (500 uL + 500 uL PBS); serial-dilute per Table 2 in duplicate.", "materialIds": ["m1", "m4"], "equipmentIds": ["e6"], "parameters": [{ "type": "concentration", "value": 0.5, "unit": "mg/mL", "rawText": "dilute standard protein (BSA) to 0.5 mg/mL" }], "expectedResult": "Standard series 0-0.25 mg/mL ready.", "criticalNotes": "Table 2: standard 0.5 mg/mL 0/50/100/150/200/250 uL; PBS 500/450/400/350/300/250 uL; -> 0/0.05/0.10/0.15/0.20/0.25 mg/mL. Repeat for duplicate." },
+    { "id": "s6", "number": 6, "phase": "BCA assay (96-well)", "action": "Load standards to wells B-G (two columns); load experimental sample: 20 uL, 10 uL+10 uL PBS (1/2), 5 uL+15 uL PBS (1/4).", "materialIds": ["m2", "m4"], "equipmentIds": ["e3"], "parameters": [{ "type": "volume", "value": 20, "unit": "uL", "rawText": "20 uL experimental sample; 10 uL+10 uL PBS (1/2); 5 uL+15 uL PBS (1/4)" }], "expectedResult": "Plate loaded per Figure 1 layout.", "criticalNotes": "Dilutions may be pre-made in 1.5-mL tubes." },
+    { "id": "s7", "number": 7, "phase": "BCA assay (96-well)", "action": "Add 200 uL BCA working solution to each well; incubate; read A562.", "materialIds": ["m5", "m6"], "equipmentIds": ["e3", "e4"], "parameters": [{ "type": "volume", "value": 200, "unit": "uL", "rawText": "200 uL BCA-working solution" }, { "type": "temperature", "value": 37, "unit": "degC", "rawText": "37 degC" }, { "type": "time", "value": 15, "valueMax": 20, "unit": "min", "rawText": "15-20 min" }, { "type": "other", "value": 562, "unit": "nm", "rawText": "read at 562 nm" }], "expectedResult": "A562 per well." },
+    { "id": "s8", "number": 8, "phase": "BCA assay (96-well)", "action": "Plot the standard curve (A562 vs mg/mL); calculate the unknown.", "expectedResult": "Unknown concentration.", "criticalNotes": "Multiply by the dilution factor." },
+    { "id": "s9", "number": 9, "phase": "Bradford microassay", "action": "Dilute standard protein to 0.1 mg/mL (~10 mL).", "materialIds": ["m1"], "optional": true, "parameters": [{ "type": "concentration", "value": 0.1, "unit": "mg/mL", "rawText": "dilute standard protein solution to 0.1 mg/mL for about 10 mL" }], "expectedResult": "Working standard.", "criticalNotes": "Bradford is included for reference (used in CK activity assay)." },
+    { "id": "s10", "number": 10, "phase": "Bradford microassay", "action": "Prepare 17 test tubes per Table 3 (standards/unknown/water) + 3 mL Bradford buffer each; mix on vortex.", "materialIds": ["m1", "m2", "m3", "m7"], "equipmentIds": ["e1", "e6"], "optional": true, "parameters": [{ "type": "volume", "value": 3, "unit": "mL", "rawText": "3 mL Bradford working buffer per tube" }], "expectedResult": "Color develops.", "criticalNotes": "Table 3: standard 0.1 mg/mL 0/0.1/0.2/0.4/0.6/0.8/1.0 mL -> 0/10/20/40/60/80/100 ug; unknown 0.05/0.1/0.2 mL; water to 1.0 mL. Dye shift 465 -> 595 nm." },
+    { "id": "s11", "number": 11, "phase": "Bradford microassay", "action": "Read A595 in a 3 mL cuvette; read low->high protein.", "equipmentIds": ["e5"], "optional": true, "parameters": [{ "type": "other", "value": 595, "unit": "nm", "rawText": "measure A595" }, { "type": "time", "value": 2, "unit": "min", "rawText": "color development complete in 2 min, stable up to 1 hour" }], "expectedResult": "A595 per tube.", "criticalNotes": "Read sequentially to limit dye carryover." },
+    { "id": "s12", "number": 12, "phase": "Bradford microassay", "action": "Plot ug standard vs A595; estimate the unknown.", "optional": true, "expectedResult": "Calibration curve + unknown concentration." }
+  ],
+  "controls": [
+    { "name": "Blank / zero", "description": "0 mg/mL tube (sample 1) for spectrophotometer zeroing in each assay." },
+    { "name": "Standard curve", "description": "BSA dilution series in each assay (run in duplicate/triplicate)." },
+    { "name": "Dilution-factor correction", "description": "Apply to diluted unknown wells (BCA 1/2, 1/4)." },
+    { "name": "Method comparison", "description": "Compare A280 vs BCA vs Bradford results and discuss discrepancies." }
+  ],
+  "expectedOutputs": [
+    "Three standard curves (A280, A562, A595) and the estimated unknown concentration from each.",
+    "A(1%,1cm) at 280 nm for the unknown.",
+    "A comparison/discussion of the three methods."
+  ],
+  "troubleshooting": [
+    { "problem": "Nonlinear standard curve", "cause": "Out-of-range concentrations; pipetting error", "solution": "Keep within the series range; re-pipette; use duplicates" },
+    { "problem": "Bradford dye carryover between reads", "cause": "Incomplete cuvette rinsing", "solution": "Read low->high protein content; rinse cuvette" },
+    { "problem": "Method results disagree", "cause": "Amino-acid-composition dependence of each assay", "solution": "Choose a suitable standard; report the method; discuss" },
+    { "problem": "BCA under/over-reads", "cause": "Wrong dilution factor applied", "solution": "Multiply diluted wells by the correct dilution factor" }
+  ],
+  "safety": [
+    "BCA Reagent B (Cu2+) and acidic Coomassie dye are irritants - wear gloves; follow disposal rules.",
+    "Standard laboratory PPE."
+  ],
+  "biosafetyLevel": "not specified",
+  "limitations": "Each assay depends on amino-acid composition and the chosen standard; only ranges/volumes from the teaching handout are captured. The source's dilution tables are represented compactly in step notes (the schema has no first-class table object - a known limitation).",
+  "sources": [
+    { "id": "src1", "kind": "file", "title": "Measurement of Protein Concentration (2025 teaching protocol)", "file": "test_protocol/2-Measurement of Protein Concentration2025.pdf", "license": "Institutional teaching material; reuse terms not specified", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

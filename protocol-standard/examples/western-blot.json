@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "0.1",
+  "metadata": {
+    "title": "Western Blot (SDS-PAGE → Transfer → Immunoblotting)",
+    "protocolId": "lr-example-western-blot",
+    "version": "0.1",
+    "family": "Western blot",
+    "category": "Protein",
+    "purpose": "Separate proteins by SDS-PAGE, transfer them onto a membrane, and detect a target protein with a specific primary antibody and an enzyme-conjugated secondary antibody.",
+    "scope": "Denaturing (SDS) western blot of soluble protein samples on a nitrocellulose membrane, developed by AP or HRP chromogenic/ECL detection. Not validated here for native PAGE, PVDF membranes, or quantitative fluorescent western blot.",
+    "estimatedTime": "~2 days (Day 1: gel + transfer + overnight block; Day 2: antibody incubations, washes, development)",
+    "beforeYouBegin": [
+      "Design the blot first: which lanes report each tag, which lane is the input control, how the interaction is read out, and what controls are loaded.",
+      "Mix every sample with 2× SDS sample buffer at 1:1 (v/v) and denature before loading.",
+      "Prepare all buffers listed in Materials and Reagents."
+    ],
+    "tags": ["western blot", "SDS-PAGE", "immunoblot", "protein", "pull-down"]
+  },
+  "materials": [
+    { "id": "m1", "name": "2× SDS sample (loading) buffer", "workingConcentration": "1:1 (v/v) with sample", "specification": "Reducing, SDS-PAGE grade", "needsReview": true },
+    { "id": "m2", "name": "SDS-polyacrylamide resolving gel", "amount": 12, "unit": "%", "specification": "Cast in-house" },
+    { "id": "m3", "name": "Nitrocellulose (NC) membrane", "amount": 1, "unit": "× gel size", "specification": "Blotting grade", "needsReview": true },
+    { "id": "m4", "name": "Filter paper", "amount": 8, "unit": "sheets", "specification": "Cut to gel size, blotting grade" },
+    { "id": "m5", "name": "Transfer buffer", "specification": "25 mM Tris, 200 mM glycine, 20% methanol, 0.1% SDS, pH 8.5", "rawText": "Transfer Buffer: 25mmol/L Tris, 200mmol/L Glycine, 20% Methanol, 0.1%SDS, pH 8.5" },
+    { "id": "m6", "name": "TBS", "specification": "20 mM Tris-HCl, 150 mM NaCl, pH 7.5", "rawText": "TBS (20mmol/L Tris-HCl, 150 mmol/L NaCl, pH7.5)" },
+    { "id": "m7", "name": "TBST", "specification": "TBS + 0.05% (v/v) Tween-20", "rawText": "TBST (... 0.05%-v/v Tween 20)" },
+    { "id": "m8", "name": "Block solution", "workingConcentration": "2-3% (w/v)", "specification": "Non-fat dry milk in TBST" },
+    { "id": "m9", "name": "Primary antibody — mouse α-Strep", "workingConcentration": "1:5000 (range 1:8000-1:5000)", "specification": "Monoclonal", "needsReview": true },
+    { "id": "m10", "name": "Primary antibody — mouse α-T7", "workingConcentration": "1:5000", "specification": "Monoclonal", "needsReview": true },
+    { "id": "m11", "name": "Secondary antibody — Goat-anti-mouse IgG(H/L)-AP or -HRP", "workingConcentration": "1:5000", "specification": "Enzyme-conjugated", "needsReview": true },
+    { "id": "m12", "name": "AP substrate (BCIP-T + NBT)", "specification": "35 uL BCIP-T (50 mg/mL in DMF) + 45 uL NBT (50 mg/mL in DMF) per 10 mL AP buffer (100 mM Tris-HCl, 100 mM NaCl, 5 mM MgCl2, pH 9.5)" },
+    { "id": "m13", "name": "HRP substrate (CN/DAB, chromogenic)", "specification": "30 mg CN + 10 mg DAB, PBS to 50 mL; add 10 uL 30% H2O2 per 10 mL just before use", "vendor": "Sigma" },
+    { "id": "m14", "name": "HRP substrate (ECL)", "specification": "Chemiluminescent detection kit", "needsReview": true },
+    { "id": "m15", "name": "Coomassie Brilliant Blue R-250", "specification": "For optional total-protein gel staining/destaining" },
+    { "id": "m16", "name": "ddH2O", "specification": "Stop / rinse" }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Vertical SDS-PAGE electrophoresis cell + power supply", "settings": "Run until target range resolved", "needsReview": true },
+    { "id": "e2", "name": "Wet (tank) transfer apparatus", "settings": "Constant current I (mA) = gel area (cm^2) × 0.8 mA/cm^2; 40-60 min", "needsReview": true },
+    { "id": "e3", "name": "Orbital shaker / rocking platform", "settings": "Room temperature, gentle", "needsReview": true },
+    { "id": "e4", "name": "4 degC incubator / cold room", "settings": "Overnight blocking (optional)" }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "SDS-PAGE", "action": "Treat all samples with 2× SDS sample buffer and denature.", "materialIds": ["m1"], "parameters": [{ "type": "ratio", "value": 1, "valueMax": 1, "unit": "v/v", "rawText": "1:1 (v/v)" }], "expectedResult": "Samples ready to load.", "criticalNotes": "Confirm the pull-down samples (tubes AB, CB) and the input sample." },
+    { "id": "s2", "number": 2, "phase": "SDS-PAGE", "action": "Cast a 12% SDS-polyacrylamide gel.", "materialIds": ["m2"], "parameters": [{ "type": "concentration", "value": 12, "unit": "%", "rawText": "12%" }], "expectedResult": "Even, bubble-free gel." },
+    { "id": "s3", "number": 3, "phase": "SDS-PAGE", "action": "Load samples per the blot design.", "equipmentIds": ["e1"], "expectedResult": "Ladder + all lanes loaded.", "criticalNotes": "Reserve a lane for MW ladder and for controls." },
+    { "id": "s4", "number": 4, "phase": "SDS-PAGE", "action": "Run the gel to separate proteins.", "equipmentIds": ["e1"], "expectedResult": "Dye front migrates; bands resolved." },
+    { "id": "s5", "number": 5, "phase": "SDS-PAGE", "action": "Remove the gel from the cassette; cut per design if needed.", "expectedResult": "Intact gel.", "criticalNotes": "Handle gently to avoid tearing." },
+    { "id": "s6", "number": 6, "phase": "SDS-PAGE", "action": "(Optional) Stain a portion/duplicate gel with Coomassie R-250; destain later.", "materialIds": ["m15"], "optional": true, "parameters": [{ "type": "time", "value": null, "unit": "overnight", "rawText": "stain overnight" }], "expectedResult": "Total-protein pattern visible.", "criticalNotes": "Use a second gel or cut the gel if both Coomassie and transfer are required." },
+    { "id": "s7", "number": 7, "phase": "Transfer", "action": "Soak 8 filter papers in transfer buffer; rinse the NC membrane.", "materialIds": ["m4", "m3", "m5"], "parameters": [{ "type": "time", "value": 5, "valueMax": 10, "unit": "min", "rawText": "at least 5-10 min" }], "expectedResult": "Papers/membrane wetted, no trapped air.", "criticalNotes": "Drive off all bubbles between layers." },
+    { "id": "s8", "number": 8, "phase": "Transfer", "action": "Assemble the stack in the tank: cathode(−) → filter paper → gel → NC membrane → filter paper → anode(+).", "materialIds": ["m3", "m4"], "equipmentIds": ["e2"], "expectedResult": "Stack in correct polarity order.", "criticalNotes": "Protein migrates from gel toward the membrane on the anode side." },
+    { "id": "s9", "number": 9, "phase": "Transfer", "action": "Run constant-current transfer; then rinse membrane with TBS.", "equipmentIds": ["e2"], "materialIds": ["m6"], "parameters": [{ "type": "current", "value": null, "unit": "mA", "rawText": "I (mA) = gel area (cm^2) × 0.8" }, { "type": "time", "value": 40, "valueMax": 60, "unit": "min", "rawText": "40-60 min" }, { "type": "time", "value": 3, "valueMax": 5, "unit": "s", "rawText": "rinse by TBS for 3-5 s" }], "expectedResult": "Proteins transferred to membrane." },
+    { "id": "s10", "number": 10, "phase": "Transfer", "action": "Block the membrane in block solution.", "materialIds": ["m8"], "equipmentIds": ["e4", "e3"], "parameters": [{ "type": "temperature", "value": 4, "unit": "degC", "rawText": "4 degC overnight" }, { "type": "time", "value": 1, "valueMax": 2, "unit": "h", "rawText": "or RT 1-2 h" }], "expectedResult": "Non-specific sites blocked.", "criticalNotes": "Choose overnight (4 degC) vs RT 1-2 h per optimized protocol." },
+    { "id": "s11", "number": 11, "phase": "Immunoblotting", "action": "Wash membrane with fresh TBST; keep wet.", "materialIds": ["m7"], "expectedResult": "Membrane never dries.", "criticalNotes": "Drying causes high background." },
+    { "id": "s12", "number": 12, "phase": "Immunoblotting", "action": "Incubate with primary antibody.", "materialIds": ["m9", "m10", "m7"], "equipmentIds": ["e3"], "parameters": [{ "type": "volume", "value": 5, "unit": "mL", "rawText": "about 5 mL" }, { "type": "concentration", "value": null, "unit": "dilution", "rawText": "1:8000-1:5000 in TBST" }, { "type": "time", "value": 1.5, "unit": "h", "rawText": "RT for 1.5 h" }], "expectedResult": "Antibody bound to target.", "criticalNotes": "Match antibody to the tag being probed." },
+    { "id": "s13", "number": 13, "phase": "Immunoblotting", "action": "Wash with fresh TBST.", "materialIds": ["m7"], "parameters": [{ "type": "count", "value": 3, "unit": "×", "rawText": "3×" }, { "type": "time", "value": 5, "unit": "min", "rawText": "5 min" }], "expectedResult": "Unbound primary removed." },
+    { "id": "s14", "number": 14, "phase": "Immunoblotting", "action": "Incubate with secondary antibody.", "materialIds": ["m11", "m7"], "equipmentIds": ["e3"], "parameters": [{ "type": "volume", "value": 5, "unit": "mL", "rawText": "about 5 mL" }, { "type": "concentration", "value": null, "unit": "dilution", "rawText": "1:5000 in TBST" }, { "type": "time", "value": 30, "unit": "min", "rawText": "RT for 30 min" }], "expectedResult": "Enzyme-conjugate bound.", "criticalNotes": "Use AP- or HRP-conjugate matching your substrate." },
+    { "id": "s15", "number": 15, "phase": "Immunoblotting", "action": "Wash with TBST.", "materialIds": ["m7"], "parameters": [{ "type": "count", "value": 3, "unit": "×", "rawText": "3×" }, { "type": "time", "value": 5, "unit": "min", "rawText": "5 min" }], "expectedResult": "Unbound secondary removed." },
+    { "id": "s16", "number": 16, "phase": "Immunoblotting", "action": "Wash with TBS to remove Tween-20.", "materialIds": ["m6"], "parameters": [{ "type": "time", "value": 5, "unit": "s", "rawText": "5 s" }], "expectedResult": "Tween-20 removed.", "criticalNotes": "Required before AP/chromogenic development." },
+    { "id": "s17", "number": 17, "phase": "Immunoblotting", "action": "Develop in substrate solution.", "materialIds": ["m12", "m13", "m14"], "parameters": [{ "type": "volume", "value": 10, "unit": "mL", "rawText": "10 mL substrate" }], "expectedResult": "Specific bands appear.", "criticalNotes": "For HRP/DAB add H2O2 immediately before use." },
+    { "id": "s18", "number": 18, "phase": "Immunoblotting", "action": "Stop development in ddH2O; dry membrane on filter paper.", "materialIds": ["m16"], "expectedResult": "Reaction stopped; membrane dried.", "criticalNotes": "Chromogenic band color fades over a few days — image promptly." }
+  ],
+  "controls": [
+    { "name": "Input control", "description": "Load the input (T7-tag-B) sample to confirm expression/loading." },
+    { "name": "Tag-specificity controls", "description": "Probe Strep-tag lanes (A, C) with α-Strep and the input with α-T7." },
+    { "name": "Interaction readout", "description": "Compare pull-down lanes (AB vs CB) to test protein-protein interaction." },
+    { "name": "Secondary-only control", "description": "No-primary-antibody lane to detect non-specific secondary binding.", "needsReview": true }
+  ],
+  "expectedOutputs": [
+    "Discrete immunoreactive band(s) at the expected molecular weight for each tag.",
+    "Optional Coomassie gel showing total-protein loading.",
+    "A recorded image of the developed membrane (bands fade, so capture promptly)."
+  ],
+  "troubleshooting": [
+    { "problem": "High background", "cause": "Membrane dried; insufficient blocking; antibody too concentrated", "solution": "Keep membrane wet; extend blocking; dilute antibody / add washes" },
+    { "problem": "No / weak signal", "cause": "Poor transfer; antibody too dilute; substrate exhausted", "solution": "Verify transfer (Ponceau/Coomassie); increase antibody; use fresh substrate" },
+    { "problem": "Bands at wrong size", "cause": "Degradation; incomplete denaturation; wrong antibody", "solution": "Add protease inhibitors; ensure full denaturation; confirm antibody specificity" },
+    { "problem": "Uneven / patchy bands", "cause": "Air bubbles in transfer stack", "solution": "Re-roll the stack to remove bubbles before transfer" }
+  ],
+  "safety": [
+    "Unpolymerized acrylamide is a neurotoxin — wear gloves; handle gels and stocks with care.",
+    "Methanol (transfer buffer) and DMF (substrate stocks) are flammable/toxic — use in a fume hood.",
+    "DAB is a suspected carcinogen; NBT/BCIP and H2O2 are irritants — follow institutional disposal rules."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "Chromogenic detection is non-quantitative and fades; transfer efficiency for high-MW proteins is not addressed. Sample biosafety level depends on the source material.",
+  "sources": [
+    { "id": "src1", "kind": "file", "title": "The protocol of Western blotting (2026 teaching protocol)", "file": "test_protocol/9-Westernblotting-2026.pdf", "license": "Institutional teaching material; reuse terms not specified", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

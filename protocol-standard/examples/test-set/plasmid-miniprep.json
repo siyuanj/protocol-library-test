@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Plasmid DNA Miniprep by Alkaline Lysis",
+    "protocolId": "lr-test-plasmid-miniprep",
+    "version": "0.1",
+    "family": "Plasmid purification",
+    "category": "Molecular Biology",
+    "purpose": "Isolate plasmid DNA from a small E. coli overnight culture by alkaline lysis with SDS, neutralization with potassium acetate, phenol/chloroform extraction, and ethanol precipitation.",
+    "scope": "Classic (Birnboim-Doly / Sambrook) alkaline-lysis miniprep with phenol/chloroform and ethanol precipitation from ~1.5 mL of overnight culture. Silica-column kit minipreps are out of scope.",
+    "estimatedTime": "~1 h (after the overnight culture)",
+    "beforeYouBegin": [
+      "Grow a fresh overnight culture from a single colony in LB with the appropriate antibiotic.",
+      "Prepare Solution 2 fresh; keep Solutions 1 and 3 ice-cold.",
+      "Work in a fume hood for the phenol/chloroform step."
+    ],
+    "tags": ["miniprep", "plasmid", "alkaline lysis", "SDS", "E. coli", "Birnboim-Doly"]
+  },
+  "materials": [
+    { "id": "m1", "name": "E. coli overnight culture", "role": "sample", "amount": 5, "unit": "mL", "specification": "Single-colony overnight culture in LB with the appropriate antibiotic", "rawText": "Grow up a 5 ml culture overnight in the presence of the appropriate antibiotic.", "sourceReferences": [{ "sourceId": "src1", "excerpt": "Grow up a 5 ml culture overnight in the presence of the appropriate antibiotic." }] },
+    { "id": "m2", "name": "Alkaline lysis Solution 1 (resuspension)", "role": "buffer", "specification": "50 mM glucose, 25 mM Tris-Cl (pH 8.0), 10 mM EDTA (pH 8.0)", "storage": "4 C", "rawText": "50 mM glucose, 25 mM Tris-Cl (pH 8.0), 10mM EDTA (pH 8.0)", "sourceReferences": [{ "sourceId": "src1", "excerpt": "solution 1: 50 mM glucose, 25 mM Tris-Cl (pH 8.0), 10mM EDTA (pH 8.0)" }] },
+    { "id": "m3", "name": "Alkaline lysis Solution 2 (lysis)", "role": "buffer", "specification": "0.2 N NaOH (freshly diluted from 10 N stock), 1% SDS", "hazard": "NaOH is corrosive; prepare fresh", "rawText": "0.2N NaOH (freshly diluted from 10N stock), 1% SDS", "sourceReferences": [{ "sourceId": "src1", "excerpt": "solution 2: 0.2N NaOH (freshly diluted from 10N stock), 1% SDS" }] },
+    { "id": "m4", "name": "Alkaline lysis Solution 3 (neutralization)", "role": "buffer", "specification": "60 mL 5 M potassium acetate, 11.5 mL glacial acetic acid, 28.5 mL H2O", "storage": "4 C", "rawText": "solution 3: 5 M potassium acetate 60 ml, glacial acetic acid 11.5 ml, H2O 28.5 ml", "sourceReferences": [{ "sourceId": "src1", "excerpt": "solution 3 ... 5 M potassium acetate 60 ml, glacial acetic acid 11.5 ml, H2O 28.5 ml" }] },
+    { "id": "m5", "name": "Phenol/chloroform", "role": "solvent", "specification": "Used at an equal volume to the cleared lysate", "hazard": "Toxic and corrosive; use in a fume hood", "rawText": "add an equal volume of phenol/chloroform", "sourceReferences": [{ "sourceId": "src1", "excerpt": "add an equal volume of phenol/chloroform" }] },
+    { "id": "m6", "name": "Ethanol", "role": "solvent", "casNumber": "64-17-5", "specification": "100% for precipitation (2 volumes); 70% for the wash (1 mL)", "storage": "-20 C (ice-cold)", "hazard": "Flammable", "rawText": "two volumes of ethanol ... 1 ml of 70% ethanol" },
+    { "id": "m7", "name": "TE buffer (pH 8.0)", "role": "buffer", "specification": "10 mM Tris-Cl (pH 8.0), 1 mM EDTA", "rawText": "50 µl of TE (pH 8.0)", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "excerpt": "Add 50 µl of TE (pH 8.0)" }] },
+    { "id": "m8", "name": "RNase A (DNase-free)", "role": "enzyme", "workingConcentration": "20 µg/mL final in TE", "specification": "DNase-free pancreatic RNase", "storage": "-20 C", "rawText": "TE (pH 8.0) containing DNase-free pancreatic RNase (20 µl/ml)", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "excerpt": "TE (pH 8.0) containing DNase-free pancreatic RNase (20 µl/ml)" }] }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Refrigerated microcentrifuge", "settings": "4 C; top speed (Eppendorf centrifuge; g-force not specified in source)", "needsReview": true },
+    { "id": "e2", "name": "Vacuum desiccator", "settings": "Brief drying of the DNA pellet" },
+    { "id": "e3", "name": "Vortex mixer", "settings": "Mixing after Solution 3" },
+    { "id": "e4", "name": "Shaking incubator", "settings": "37 C (overnight culture growth)" }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "E. coli overnight culture", "role": "input", "organism": "Escherichia coli", "derivedFromMaterialId": "m1", "description": "Plasmid-bearing cells to be harvested." },
+    { "id": "sp2", "name": "Cleared lysate", "role": "intermediate", "description": "Neutralized lysate supernatant containing plasmid DNA, after pelleting SDS/protein/chromosomal DNA." },
+    { "id": "sp3", "name": "Aqueous phase (plasmid in solution)", "role": "intermediate", "description": "Top aqueous layer after phenol/chloroform extraction." },
+    { "id": "sp4", "name": "Purified plasmid DNA", "role": "output", "description": "Plasmid DNA dissolved in TE with RNase A." }
+  ],
+  "containers": [
+    { "id": "c1", "name": "1.5 mL microcentrifuge (Eppendorf) tube", "type": "tube" }
+  ],
+  "tables": [
+    { "id": "t1", "title": "Alkaline lysis solutions and per-prep volumes", "columns": ["Solution", "Composition", "Volume per prep"], "rows": [["Solution 1 (resuspension)", "50 mM glucose, 25 mM Tris-Cl pH 8.0, 10 mM EDTA pH 8.0", "100 µL"], ["Solution 2 (lysis)", "0.2 N NaOH, 1% SDS", "200 µL"], ["Solution 3 (neutralization)", "60 mL 5 M KOAc + 11.5 mL glacial acetic acid + 28.5 mL H2O", "150 µL"]], "note": "Solution 2 must be made fresh; keep Solutions 1 and 3 ice-cold." }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Culture & harvest", "action": "Grow a 5 mL culture overnight in the presence of the appropriate antibiotic.", "materialIds": ["m1"], "equipmentIds": ["e4"], "outputIds": ["sp1"], "parameters": [{ "type": "volume", "value": 5, "unit": "mL", "rawText": "5 ml culture overnight" }], "expectedResult": "Turbid overnight culture." },
+    { "id": "s2", "number": 2, "phase": "Culture & harvest", "action": "Harvest 1.5 mL of the culture by centrifugation in an Eppendorf tube; discard the supernatant.", "equipmentIds": ["e1"], "containerIds": ["c1"], "inputIds": ["sp1"], "parameters": [{ "type": "volume", "value": 1.5, "unit": "mL", "rawText": "Harvest 1.5 ml of culture by centrifugation" }], "expectedResult": "Cell pellet." },
+    { "id": "s3", "number": 3, "phase": "Lysis", "action": "Resuspend the pellet in 100 uL ice-cold Solution 1; store at room temperature.", "materialIds": ["m2"], "tableIds": ["t1"], "parameters": [{ "type": "volume", "value": 100, "unit": "uL", "rawText": "100 µl of ice-cold solution 1" }, { "type": "time", "value": 5, "unit": "min", "rawText": "Store for 5 minutes at room temperature" }], "criticalNotes": "Resuspend fully so no clumps remain.", "expectedResult": "Homogeneous cell suspension." },
+    { "id": "s4", "number": 4, "phase": "Lysis", "action": "Add 200 uL Solution 2, mix by inverting the tube rapidly two or three times, and store on ice.", "materialIds": ["m3"], "outputIds": ["sp2"], "parameters": [{ "type": "volume", "value": 200, "unit": "uL", "rawText": "200 µl of solution 2" }, { "type": "count", "value": 2, "valueMax": 3, "unit": "inversions", "rawText": "inverting the tube rapidly two or three times" }, { "type": "time", "value": 5, "unit": "min", "rawText": "Store for 5 minutes on ice" }], "criticalNotes": "Do not vortex; invert gently to avoid shearing chromosomal DNA. The suspension should clear.", "expectedResult": "Cleared, viscous lysate." },
+    { "id": "s5", "number": 5, "phase": "Neutralization", "action": "Add 150 uL ice-cold Solution 3 and mix by vortexing the tube in an inverted position; store on ice.", "materialIds": ["m4"], "equipmentIds": ["e3"], "parameters": [{ "type": "volume", "value": 150, "unit": "uL", "rawText": "150 ul of ice-cold solution 3" }, { "type": "time", "value": 5, "unit": "min", "rawText": "Store for 5 minutes on ice" }], "expectedResult": "White precipitate of SDS/protein/chromosomal DNA forms." },
+    { "id": "s6", "number": 6, "phase": "Neutralization", "action": "Centrifuge at 4 C to pellet the precipitate.", "equipmentIds": ["e1"], "parameters": [{ "type": "time", "value": 5, "unit": "min", "rawText": "Centrifuge for 5 minutes in a Eppendorf centrifuge at 4ºC" }, { "type": "temperature", "value": 4, "unit": "degC", "rawText": "at 4ºC" }], "expectedResult": "Clear supernatant over a white pellet." },
+    { "id": "s7", "number": 7, "phase": "Extraction", "action": "Transfer the supernatant to a fresh tube, add an equal volume of phenol/chloroform, mix, and centrifuge at room temperature.", "materialIds": ["m5"], "containerIds": ["c1"], "inputIds": ["sp2"], "outputIds": ["sp3"], "parameters": [{ "type": "time", "value": 2, "unit": "min", "rawText": "centrifuge for 2 minutes in an eppendorf centrifuge at room temperature" }], "safetyNotes": "Perform in a fume hood; phenol/chloroform is toxic and corrosive.", "expectedResult": "Two phases; plasmid DNA in the upper aqueous layer." },
+    { "id": "s8", "number": 8, "phase": "Precipitation", "action": "Transfer the top aqueous layer to a fresh tube, add two volumes of ethanol, and let stand at room temperature.", "materialIds": ["m6"], "parameters": [{ "type": "ratio", "value": 2, "unit": "volumes", "rawText": "two volumes of ethanol" }, { "type": "time", "value": 2, "unit": "min", "rawText": "let stand at room temperature for 2 minutes" }], "expectedResult": "DNA precipitating." },
+    { "id": "s9", "number": 9, "phase": "Precipitation", "action": "Centrifuge at 4 C to pellet the plasmid DNA.", "equipmentIds": ["e1"], "parameters": [{ "type": "time", "value": 5, "unit": "min", "rawText": "Centrifuge for 5 minutes in an Eppendorf centrifuge at 4ºC" }, { "type": "temperature", "value": 4, "unit": "degC", "rawText": "at 4ºC" }], "expectedResult": "DNA pellet." },
+    { "id": "s10", "number": 10, "phase": "Wash", "action": "Remove the supernatant, add 1 mL of 70% ethanol, and recentrifuge.", "materialIds": ["m6"], "parameters": [{ "type": "volume", "value": 1, "unit": "mL", "rawText": "1 ml of 70% ethanol" }], "expectedResult": "Washed pellet." },
+    { "id": "s11", "number": 11, "phase": "Wash", "action": "Remove the supernatant and dry the pellet briefly in a vacuum desiccator.", "equipmentIds": ["e2"], "pausePoint": true, "criticalNotes": "Do not over-dry; a dried pellet can be stored before resuspension.", "expectedResult": "Dry DNA pellet." },
+    { "id": "s12", "number": 12, "phase": "Resuspension", "action": "Dissolve the pellet in 50 uL TE (pH 8.0) containing DNase-free RNase A.", "materialIds": ["m7", "m8"], "inputIds": ["sp3"], "outputIds": ["sp4"], "parameters": [{ "type": "volume", "value": 50, "unit": "uL", "rawText": "50 µl of TE (pH 8.0)" }, { "type": "concentration", "value": null, "unit": "µg/mL", "rawText": "DNase-free pancreatic RNase (20 µl/ml)", "needsReview": true }], "criticalNotes": "Source states RNase '20 µl/ml' (likely a typo for 20 µg/mL).", "expectedResult": "Plasmid DNA in TE with RNA removed; store at -20 C." }
+  ],
+  "expectedOutputs": [
+    "Plasmid DNA dissolved in ~50 uL TE, suitable for restriction digest, PCR, or sequencing.",
+    "Yield and purity confirmed by agarose gel and/or A260/A280."
+  ],
+  "troubleshooting": [
+    { "problem": "Low or no plasmid yield", "cause": "Poor culture growth; incomplete lysis; DNA lost during transfers", "solution": "Use a fresh healthy overnight; ensure Solution 2 lysis is complete; avoid disturbing the pellet" },
+    { "problem": "Chromosomal-DNA contamination", "cause": "Over-vigorous mixing shearing chromosomal DNA", "solution": "Invert gently (never vortex) during lysis; neutralize promptly" },
+    { "problem": "RNA smear on gel", "cause": "RNase omitted or inactive", "solution": "Include active DNase-free RNase A in the TE resuspension" }
+  ],
+  "safety": [
+    "NaOH (Solution 2) is corrosive - wear gloves and eye protection.",
+    "Phenol/chloroform is toxic and corrosive - use in a fume hood and dispose of as halogenated organic waste.",
+    "Ethanol is flammable.",
+    "Treat live bacterial cultures as biohazardous waste per institutional rules."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "Classic phenol/chloroform + ethanol-precipitation miniprep yields crude plasmid that may need further cleanup for sensitive downstream uses. Centrifuge g-forces are not specified in the source (use top speed in a microcentrifuge). Solutions and volumes are given for a ~1.5 mL culture aliquot.",
+  "sources": [
+    { "id": "src1", "kind": "url", "title": "Hancock Laboratory (UBC) - Alkaline Lysis Plasmid Miniprep", "url": "https://cmdr.ubc.ca/bobh/method/alkaline-lysis-plasmid-miniprep/", "license": "Academic lab protocol page; reuse terms not verified", "licenseVerified": false },
+    { "id": "src2", "kind": "book", "title": "Sambrook & Russell, Molecular Cloning: A Laboratory Manual (2nd ed.), pp. 1.25-1.28 (alkaline lysis miniprep; Birnboim & Doly method)", "license": "Textbook; not reproduced", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

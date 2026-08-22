@@ -1,0 +1,353 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "molecular-dna-assembly",
+  "sessionTitle": "DNA digestion, ligation, and assembly",
+  "packetStatus": "complete",
+  "startedAt": "2026-08-01T19:24:52Z",
+  "writtenAt": "2026-08-01T22:42:41Z",
+  "worker": "codex-molecular-dna-assembly-2026-08-01",
+  "sourcesSearched": [
+    "https://www.protocols.io/view/restriction-digest-of-plasmid-dna-n261gedwv479/v3",
+    "https://www.addgene.org/protocols/restriction-digest/",
+    "https://nebcloner.neb.com/",
+    "https://www.neb.com/en-us/tools-and-resources/video-library/standard-protocol-for-restriction-enzyme-digests",
+    "https://www.protocols.io/view/ligation-protocol-with-t4-dna-ligase-81wgbpdk1vpk/v1",
+    "https://www.addgene.org/protocols/dna-ligation/",
+    "https://www.neb.com/en-us/protocols/0001/01/01/dna-ligase-reaction-protocol-m0202",
+    "https://www.neb.com/en-us/products/m0202-t4-dna-ligase",
+    "https://www.protocols.io/view/gibson-assembly-protocol-e5510-k3byl4jolo5d/v2",
+    "https://www.neb.com/protocols/2012/12/11/gibson-assembly-protocol-e5510",
+    "https://www.protocols.io/view/golden-gate-assembly-protocol-for-neb-golden-gate-q26g7bz6qlwz/v1",
+    "https://www.neb.com/en-us/protocols/golden-gate-assembly-protocol-using-paqci-neb-r0745-and-t4-dna-ligase-neb-m0202",
+    "https://www.neb.com/en-us/protocols/transformation-protocol-for-using-neb-golden-gate-assembly-mix-e1601"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "restriction-digest",
+      "categoryLabel": "Restriction enzyme digestion",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/view/restriction-digest-of-plasmid-dna-n261gedwv479/v3",
+        "https://www.addgene.org/protocols/restriction-digest/",
+        "https://nebcloner.neb.com/",
+        "https://www.neb.com/en-us/tools-and-resources/video-library/standard-protocol-for-restriction-enzyme-digests"
+      ],
+      "representative": {
+        "title": "Restriction Digest of Plasmid DNA",
+        "protocolType": "restriction enzyme digestion protocol",
+        "assay": "DNA cutting, restriction mapping, and cloning",
+        "operation": "Restriction enzyme cleavage of purified plasmid DNA",
+        "source": "Protocols.io / Addgene",
+        "sourceUrl": "https://www.protocols.io/view/restriction-digest-of-plasmid-dna-n261gedwv479/v3",
+        "sourceRecordId": "27474",
+        "doi": "10.17504/protocols.io.63shgne",
+        "authors": [
+          "Addgene The Nonprofit Plasmid Repository"
+        ],
+        "published": "2019-12-31",
+        "updated": "2019-12-31",
+        "licenseCode": "CC BY",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://www.protocols.io/view/restriction-digest-of-plasmid-dna-63shgne.pdf",
+        "licenseVerifiedAt": "2026-08-01T19:24:52Z",
+        "metadataVerifiedAt": "2026-08-01T19:24:52Z",
+        "specimen": "purified plasmid DNA",
+        "organism": null,
+        "platform": "standard molecular cloning bench workflow with optional agarose-gel readout",
+        "methodVariant": "enzyme- and buffer-system-specific digest; single or compatible double digest for mapping/cloning",
+        "safetyLevel": "not specified",
+        "confidence": 0.95,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.97,
+          "sourceAuthority": 0.94,
+          "metadataCompleteness": 0.96,
+          "freshness": 0.55,
+          "corroboration": 0.95,
+          "overall": 0.91
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as the core plasmid-DNA digest record because it is specific to restriction digestion, exposes an identifiable record and DOI, and is corroborated by Addgene and NEB resources. Enzyme, buffer, and substrate are retained as facets rather than mixed with ligation or Type IIS assembly."
+      },
+      "screened": [
+        {
+          "title": "Restriction Digest",
+          "source": "Addgene",
+          "sourceUrl": "https://www.addgene.org/protocols/restriction-digest/",
+          "sourceRecordId": null,
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Direct repository workflow and useful corroboration, but the protocols.io record provides stronger record-level DOI and license metadata for the representative."
+        },
+        {
+          "title": "Standard Protocol for Restriction Enzyme Digests",
+          "source": "New England Biolabs",
+          "sourceUrl": "https://www.neb.com/en-us/tools-and-resources/video-library/standard-protocol-for-restriction-enzyme-digests",
+          "sourceRecordId": null,
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Authoritative manufacturer resource, but video-oriented and less metadata-rich than the selected stable record."
+        }
+      ],
+      "coverageGaps": [
+        "Genomic-DNA digestion, methylation-sensitive mapping, and other substrate-specific workflows were not merged into the plasmid-DNA representative; consider child categories if those workflows are required."
+      ],
+      "nextSearchSuggestions": [
+        "genomic DNA restriction digest protocol",
+        "methylation-sensitive restriction mapping protocol",
+        "restriction digest PCR amplicon protocol"
+      ]
+    },
+    {
+      "categoryId": "dna-ligation",
+      "categoryLabel": "DNA ligation",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/view/ligation-protocol-with-t4-dna-ligase-81wgbpdk1vpk/v1",
+        "https://www.addgene.org/protocols/dna-ligation/",
+        "https://www.neb.com/en-us/protocols/0001/01/01/dna-ligase-reaction-protocol-m0202",
+        "https://www.neb.com/en-us/products/m0202-t4-dna-ligase"
+      ],
+      "representative": {
+        "title": "Ligation Protocol with T4 DNA Ligase",
+        "protocolType": "DNA ligation protocol",
+        "assay": "construct assembly and DNA joining",
+        "operation": "T4 DNA ligase joining of vector and insert DNA",
+        "source": "Protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/ligation-protocol-with-t4-dna-ligase-81wgbpdk1vpk/v1",
+        "sourceRecordId": "28009",
+        "doi": "10.17504/protocols.io.7khhkt6",
+        "authors": [
+          "Alba Balletb\u00f3"
+        ],
+        "published": "2019-09-23",
+        "updated": "2019-09-23",
+        "licenseCode": "CC BY",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://www.protocols.io/view/ligation-protocol-with-t4-dna-ligase-7khhkt6.pdf",
+        "licenseVerifiedAt": "2026-08-01T19:24:52Z",
+        "metadataVerifiedAt": "2026-08-01T19:24:52Z",
+        "specimen": "vector and insert DNA",
+        "organism": null,
+        "platform": "standard molecular cloning bench workflow",
+        "methodVariant": "T4 DNA ligase; cohesive-end, blunt-end, and single-base-overhang ligation variants",
+        "safetyLevel": "not specified",
+        "confidence": 0.94,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.97,
+          "sourceAuthority": 0.93,
+          "metadataCompleteness": 0.96,
+          "freshness": 0.55,
+          "corroboration": 0.94,
+          "overall": 0.90
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as the core vector/insert ligation record because it is explicitly T4 DNA ligase-based, has a stable record URL, DOI, and record-level license evidence, and keeps cohesive-end, blunt-end, and single-base-overhang variants visible without merging in Type IIS or isothermal assembly."
+      },
+      "screened": [
+        {
+          "title": "DNA Ligation",
+          "source": "Addgene",
+          "sourceUrl": "https://www.addgene.org/protocols/dna-ligation/",
+          "sourceRecordId": null,
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Direct repository companion for vector/insert ligation, retained for corroboration; the selected record has stronger DOI and license metadata."
+        },
+        {
+          "title": "DNA Ligase Reaction Protocol",
+          "source": "New England Biolabs",
+          "sourceUrl": "https://www.neb.com/en-us/protocols/0001/01/01/dna-ligase-reaction-protocol-m0202",
+          "sourceRecordId": "M0202",
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Authoritative manufacturer protocol for T4 DNA ligase, retained as a product-specific corroborating variant rather than the representative."
+        }
+      ],
+      "coverageGaps": [
+        "Adapter ligation remains a separate variant per packet instructions and is not represented by the selected vector/insert record; suggested child category: adapter ligation.",
+        "Exact molar-ratio and end-repair optimization are source- and substrate-specific and were not normalized across records."
+      ],
+      "nextSearchSuggestions": [
+        "DNA adapter ligation protocol",
+        "blunt-end DNA ligation protocol",
+        "sticky-end vector insert ligation protocol"
+      ]
+    },
+    {
+      "categoryId": "gibson-assembly",
+      "categoryLabel": "Gibson or isothermal assembly",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/view/gibson-assembly-protocol-e5510-k3byl4jolo5d/v2",
+        "https://www.neb.com/protocols/2012/12/11/gibson-assembly-protocol-e5510"
+      ],
+      "representative": {
+        "title": "Gibson Assembly Protocol (E5510)",
+        "protocolType": "isothermal DNA assembly protocol",
+        "assay": "DNA assembly and cloning",
+        "operation": "Isothermal assembly of overlapping DNA fragments into a linearized vector",
+        "source": "Protocols.io / New England Biolabs",
+        "sourceUrl": "https://www.protocols.io/view/gibson-assembly-protocol-e5510-k3byl4jolo5d/v2",
+        "sourceRecordId": "E5510",
+        "doi": "10.17504/protocols.io.bdddi226",
+        "authors": [
+          "New England Biolabs"
+        ],
+        "published": "2022-02-15",
+        "updated": "2022-02-15",
+        "licenseCode": "CC BY",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://www.protocols.io/view/gibson-assembly-protocol-e5510-k3byl4jolo5d/v2.pdf",
+        "licenseVerifiedAt": "2026-08-01T19:24:52Z",
+        "metadataVerifiedAt": "2026-08-01T19:24:52Z",
+        "specimen": "purified overlapping DNA fragments and linearized vector",
+        "organism": null,
+        "platform": "thermocycler-based isothermal assembly workflow",
+        "methodVariant": "classic Gibson assembly; 2-3 and 4-6 fragment designs with overlap-length and fragment-count facets",
+        "safetyLevel": "not specified",
+        "confidence": 0.96,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.99,
+          "sourceAuthority": 0.98,
+          "metadataCompleteness": 0.98,
+          "freshness": 0.70,
+          "corroboration": 0.97,
+          "overall": 0.95
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as the classic Gibson/isothermal representative because it is a manufacturer-authored protocol with a unique E5510 record, DOI, direct record PDF, explicit record-level license evidence, and clear overlap-design and fragment-count facets. NEBuilder HiFi is retained as a related but distinct isothermal variant."
+      },
+      "screened": [
+        {
+          "title": "Gibson Assembly Protocol (E5510)",
+          "source": "New England Biolabs",
+          "sourceUrl": "https://www.neb.com/protocols/2012/12/11/gibson-assembly-protocol-e5510",
+          "sourceRecordId": "E5510",
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Official manufacturer landing page corroborating the selected record; protocols.io was preferred for DOI and record-level license metadata."
+        }
+      ],
+      "coverageGaps": [
+        "NEBuilder HiFi and other commercial isothermal assembly chemistries are related variants and were not collapsed into the classic Gibson representative; split by kit chemistry if kit-level catalog coverage is needed.",
+        "PCR cleanup, transformation, and colony screening are downstream workflows and were not merged into this assembly category."
+      ],
+      "nextSearchSuggestions": [
+        "NEBuilder HiFi DNA Assembly protocol",
+        "isothermal DNA assembly 7-12 fragments protocol",
+        "DNA assembly overlap design protocol"
+      ]
+    },
+    {
+      "categoryId": "golden-gate",
+      "categoryLabel": "Golden Gate assembly",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://www.protocols.io/view/golden-gate-assembly-protocol-for-neb-golden-gate-q26g7bz6qlwz/v1",
+        "https://www.neb.com/en-us/protocols/golden-gate-assembly-protocol-using-paqci-neb-r0745-and-t4-dna-ligase-neb-m0202",
+        "https://www.neb.com/en-us/protocols/transformation-protocol-for-using-neb-golden-gate-assembly-mix-e1601"
+      ],
+      "representative": {
+        "title": "Golden Gate Assembly Protocol for NEB Golden Gate Assembly Mix",
+        "protocolType": "Type IIS DNA assembly protocol",
+        "assay": "DNA assembly and modular cloning",
+        "operation": "One-pot Type IIS restriction and ligation assembly of modular DNA parts",
+        "source": "Protocols.io / New England Biolabs",
+        "sourceUrl": "https://www.protocols.io/view/golden-gate-assembly-protocol-for-neb-golden-gate-q26g7bz6qlwz/v1",
+        "sourceRecordId": "28007",
+        "doi": "10.17504/protocols.io.7kfhktn",
+        "authors": [
+          "Alba Balletbó"
+        ],
+        "published": "2019-09-23",
+        "updated": "2019-09-23",
+        "licenseCode": "CC BY",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://www.protocols.io/view/golden-gate-assembly-protocol-for-neb-golden-gate-7kfhktn.pdf",
+        "licenseVerifiedAt": "2026-08-01T19:24:52Z",
+        "metadataVerifiedAt": "2026-08-01T19:24:52Z",
+        "specimen": "precloned DNA parts and destination plasmid",
+        "organism": null,
+        "platform": "thermocycler-based Type IIS cycling workflow",
+        "methodVariant": "BsaI-HFv2 and T4 DNA ligase Golden Gate mix; enzyme cycling and modular cloning part assembly",
+        "safetyLevel": "not specified",
+        "confidence": 0.95,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.99,
+          "sourceAuthority": 0.95,
+          "metadataCompleteness": 0.97,
+          "freshness": 0.60,
+          "corroboration": 0.96,
+          "overall": 0.93
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as the Golden Gate representative because it is a direct Type IIS modular-assembly record with identifiable record and DOI metadata, explicit record-level license evidence, and visible enzyme-cycling and part-assembly facets. It is kept separate from restriction-only digestion, T4 ligation, and Gibson/isothermal assembly."
+      },
+      "screened": [
+        {
+          "title": "Golden Gate Assembly Protocol Using PaqCI (NEB R0745) and T4 DNA Ligase (NEB M0202)",
+          "source": "New England Biolabs",
+          "sourceUrl": "https://www.neb.com/en-us/protocols/golden-gate-assembly-protocol-using-paqci-neb-r0745-and-t4-dna-ligase-neb-m0202",
+          "sourceRecordId": "R0745/M0202",
+          "doi": null,
+          "screenStatus": "wrong-variant",
+          "reason": "Valid Type IIS assembly variant, but PaqCI-specific cycling was retained separately from the selected BsaI-based Golden Gate record."
+        },
+        {
+          "title": "Transformation Protocol for Using NEB Golden Gate Assembly Mix",
+          "source": "New England Biolabs",
+          "sourceUrl": "https://www.neb.com/en-us/protocols/transformation-protocol-for-using-neb-golden-gate-assembly-mix-e1601",
+          "sourceRecordId": "E1601",
+          "doi": null,
+          "screenStatus": "wrong-variant",
+          "reason": "Downstream transformation protocol rather than the Golden Gate assembly reaction itself."
+        }
+      ],
+      "coverageGaps": [
+        "Part standards such as MoClo and other Type IIS domestication schemes were not merged; suggested child category: part-standard-specific Golden Gate.",
+        "Other Type IIS enzymes such as PaqCI and SapI were screened as variants rather than combined with the BsaI representative."
+      ],
+      "nextSearchSuggestions": [
+        "MoClo Golden Gate assembly protocol",
+        "SapI Type IIS assembly protocol",
+        "PaqCI Golden Gate assembly protocol"
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "restriction-digest",
+      "dna-ligation",
+      "gibson-assembly",
+      "golden-gate"
+    ],
+    "actualCategoryIds": [
+      "restriction-digest",
+      "dna-ligation",
+      "gibson-assembly",
+      "golden-gate"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": true,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-01T22:42:41Z",
+    "selfCheckNotes": [
+      "Category IDs match the packet exactly and remain in assignment order.",
+      "Each representative has a stable HTTPS source URL, source record ID or DOI, and record-level license evidence URL.",
+      "Restriction digestion, T4 ligation, Gibson/isothermal assembly, and Golden Gate/Type IIS assembly remain separate category records.",
+      "Metadata-only output: no protocol instructions, tables, figures, videos, PDFs, or long source passages were copied into the result."
+    ]
+  },
+  "runNotes": [
+    "Completed focused collection across the four assigned molecular-DNA-assembly categories.",
+    "Public source scope included direct protocols.io records plus corroborating Addgene and New England Biolabs resources.",
+    "Coverage gaps are explicit for adapter ligation, substrate-specific restriction workflows, commercial isothermal chemistries, and Type IIS part standards."
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Agarose Gel Electrophoresis of DNA",
+    "protocolId": "lr-test-agarose-gel-electrophoresis",
+    "version": "0.1",
+    "family": "Electrophoresis",
+    "category": "Molecular Biology",
+    "purpose": "Separate double-stranded DNA fragments by size in an agarose gel and visualize them under UV light using an intercalating stain, sized against a co-run DNA ladder.",
+    "scope": "Analytical horizontal agarose gel electrophoresis of dsDNA in 1x TAE or TBE with ethidium-bromide staining. Pulsed-field electrophoresis and preparative band recovery are out of scope.",
+    "estimatedTime": "~1.5-2 h",
+    "beforeYouBegin": [
+      "Choose the agarose percentage based on the size of the fragments to be separated.",
+      "Use the same running buffer in the gel and in the tank.",
+      "Handle ethidium bromide and UV light as hazards (gloves; UV eye/skin protection)."
+    ],
+    "tags": ["agarose gel", "electrophoresis", "DNA", "TAE", "TBE", "ethidium bromide"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Agarose", "role": "reagent", "casNumber": "9012-36-6", "workingConcentration": "0.7-2% (w/v), by fragment size", "specification": "Molecular-biology grade", "rawText": "0.7% to 2% depending on the size of bands needed to be separated", "sourceReferences": [{ "sourceId": "src1", "excerpt": "0.7% to 2% depending on the size of bands needed to be separated" }] },
+    { "id": "m2", "name": "Electrophoresis buffer (TAE or TBE)", "role": "buffer", "workingConcentration": "1x", "specification": "Tris-acetate-EDTA (TAE) or Tris-borate-EDTA (TBE); use the same buffer in the gel and the tank", "rawText": "TAE or TBE ... use the same buffer as the one in the gel box", "sourceReferences": [{ "sourceId": "src1", "excerpt": "Make sure to use the same buffer as the one in the gel box" }] },
+    { "id": "m3", "name": "Ethidium bromide", "role": "reagent", "casNumber": "1239-45-8", "workingConcentration": "0.2-0.5 µg/mL", "specification": "About 2-3 µL of lab stock per 100 mL gel", "storage": "4 C, dark", "hazard": "Mutagen - wear gloves; dispose as hazardous waste", "rawText": "approximately 0.2-0.5 μg/mL (usually about 2-3 μl of lab stock solution per 100 mL gel)", "sourceReferences": [{ "sourceId": "src1", "excerpt": "approximately 0.2-0.5 μg/mL (usually about 2-3 μl of lab stock solution per 100 mL gel)" }] },
+    { "id": "m4", "name": "DNA loading dye/buffer", "role": "reagent", "workingConcentration": "5 µL per 25 µL sample", "rawText": "Use 5 µl of loading buffer per 25 µl of sample", "sourceReferences": [{ "sourceId": "src1", "excerpt": "Use 5 µl of loading buffer per 25 µl of sample" }] },
+    { "id": "m5", "name": "DNA ladder (molecular-weight marker)", "role": "standard", "specification": "Size standard run in a dedicated lane", "needsReview": true }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Microwave", "settings": "Melt agarose 1-3 min until completely dissolved" },
+    { "id": "e2", "name": "Gel casting tray + comb", "settings": "Form wells" },
+    { "id": "e3", "name": "Horizontal electrophoresis tank + power supply", "settings": "80-150 V" },
+    { "id": "e4", "name": "UV transilluminator / gel imager", "settings": "Long-wavelength UV (to minimize DNA damage)" }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "DNA sample(s) to analyze", "role": "input", "description": "dsDNA (e.g. PCR product, digest, or plasmid) to be sized." },
+    { "id": "sp2", "name": "Size-separated DNA (gel bands)", "role": "output", "description": "DNA resolved into bands by size, visualized under UV." }
+  ],
+  "containers": [
+    { "id": "c1", "name": "Erlenmeyer flask (for melting agarose)", "type": "flask" },
+    { "id": "c2", "name": "Gel casting tray with comb", "type": "tray" }
+  ],
+  "tables": [
+    { "id": "t1", "title": "Run parameters (Addgene quick-reference)", "columns": ["Parameter", "Setting"], "rows": [["Agarose", "0.7-2% (by fragment size)"], ["Buffer", "1x TAE or TBE"], ["Stain (ethidium bromide)", "0.2-0.5 µg/mL"], ["Loading dye", "5 µL per 25 µL sample"], ["Voltage", "80-150 V"], ["Run time", "~1-1.5 h"]], "note": "All values from the Addgene Gel Electrophoresis protocol." }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Gel casting", "action": "Weigh agarose and mix with 1x TAE or TBE to the chosen percentage (0.7-2% by fragment size).", "materialIds": ["m1", "m2"], "containerIds": ["c1"], "tableIds": ["t1"], "parameters": [{ "type": "concentration", "value": 0.7, "valueMax": 2, "unit": "%", "rawText": "0.7% to 2% depending on the size of bands needed to be separated" }], "expectedResult": "Agarose slurry in buffer." },
+    { "id": "s2", "number": 2, "phase": "Gel casting", "action": "Melt the agarose in a microwave until completely dissolved.", "equipmentIds": ["e1"], "parameters": [{ "type": "time", "value": 1, "valueMax": 3, "unit": "min", "rawText": "Microwave for 1-3 min until the agarose is completely dissolved" }], "safetyNotes": "Molten agarose and the flask are very hot; swirl carefully to avoid superheating/boil-over.", "expectedResult": "Clear, fully dissolved agarose." },
+    { "id": "s3", "number": 3, "phase": "Gel casting", "action": "Cool the molten agarose to about 50 C, then add ethidium bromide to 0.2-0.5 µg/mL and swirl to mix.", "materialIds": ["m3"], "parameters": [{ "type": "temperature", "value": 50, "unit": "degC", "rawText": "about 50 °C (about when you can comfortably keep your hand on the flask)" }, { "type": "time", "value": 5, "unit": "min", "rawText": "about 5 mins" }, { "type": "concentration", "value": 0.2, "valueMax": 0.5, "unit": "µg/mL", "rawText": "approximately 0.2-0.5 μg/mL" }], "criticalNotes": "Wear gloves; ethidium bromide is a mutagen.", "expectedResult": "Stained molten agarose ready to pour." },
+    { "id": "s4", "number": 4, "phase": "Gel casting", "action": "Pour the agarose into the casting tray with a comb and let it solidify.", "equipmentIds": ["e2"], "containerIds": ["c2"], "expectedResult": "Set gel with wells." },
+    { "id": "s5", "number": 5, "phase": "Running", "action": "Remove the comb, place the gel in the tank, and add 1x buffer to cover the gel.", "equipmentIds": ["e3"], "materialIds": ["m2"], "criticalNotes": "Use the same buffer as in the gel.", "expectedResult": "Gel submerged and ready to load." },
+    { "id": "s6", "number": 6, "phase": "Running", "action": "Mix each DNA sample with loading dye (5 µL per 25 µL sample) and load samples and a DNA ladder into the wells.", "materialIds": ["m4", "m5"], "containerIds": ["c2"], "inputIds": ["sp1"], "parameters": [{ "type": "ratio", "value": 5, "unit": "µL per 25 µL sample", "rawText": "Use 5 µl of loading buffer per 25 µl of sample" }], "criticalNotes": "Load the ladder in a dedicated lane to size the sample bands.", "expectedResult": "Wells loaded." },
+    { "id": "s7", "number": 7, "phase": "Running", "action": "Run the gel at 80-150 V until the dye front has migrated an appropriate distance.", "equipmentIds": ["e3"], "inputIds": ["sp1"], "outputIds": ["sp2"], "parameters": [{ "type": "voltage", "value": 80, "valueMax": 150, "unit": "V", "rawText": "80-150 V" }, { "type": "time", "value": 1, "valueMax": 1.5, "unit": "h", "rawText": "about 1-1.5 hours" }], "criticalNotes": "Lower voltage / longer run improves resolution of similarly sized bands.", "expectedResult": "DNA migrated and separated by size." },
+    { "id": "s8", "number": 8, "phase": "Visualization", "action": "Visualize the DNA under long-wavelength UV and photograph the gel.", "equipmentIds": ["e4"], "materialIds": ["m3"], "outputIds": ["sp2"], "parameters": [{ "type": "other", "value": null, "unit": "UV", "rawText": "long-wavelength UV" }], "safetyNotes": "UV damages eyes and skin - use a face shield / UV-blocking screen.", "criticalNotes": "Long-wave UV is recommended to minimize DNA damage.", "expectedResult": "Fluorescent DNA bands, sized against the ladder." }
+  ],
+  "controls": [
+    { "name": "DNA size ladder", "description": "Molecular-weight marker run in a dedicated lane to size sample bands.", "needsReview": true }
+  ],
+  "expectedOutputs": [
+    "Discrete DNA bands resolved by size, sized against the co-run ladder.",
+    "A UV gel image documenting fragment sizes."
+  ],
+  "troubleshooting": [
+    { "problem": "Smeared or fuzzy bands", "cause": "Too much DNA loaded; run too fast/hot; degraded DNA", "solution": "Load less DNA; run at lower voltage; use fresh/intact DNA" },
+    { "problem": "No bands visible under UV", "cause": "Stain omitted; DNA ran off the gel; too little DNA", "solution": "Confirm stain was added; shorten run/monitor dye front; load more DNA" },
+    { "problem": "Poor separation of similar sizes", "cause": "Agarose % not matched to fragment size", "solution": "Use a higher % for small fragments, lower % for large fragments; run longer at lower voltage" }
+  ],
+  "safety": [
+    "Ethidium bromide is a mutagen - wear gloves and dispose of gels and buffer as hazardous waste.",
+    "UV light damages eyes and skin - use a face shield or UV-blocking screen.",
+    "Molten agarose and its container are hot - handle with heat protection."
+  ],
+  "biosafetyLevel": "not specified",
+  "limitations": "Analytical horizontal agarose electrophoresis; resolution and agarose percentage depend on the fragment size range. The UV wavelength is not numerically specified in the source (long-wave UV, typically ~365 nm). For fragments <100 bp or >20 kb, or for preparative recovery, use specialized methods.",
+  "sources": [
+    { "id": "src1", "kind": "url", "title": "Addgene: Gel Electrophoresis (Protocol)", "url": "https://www.addgene.org/protocols/gel-electrophoresis/", "license": "Addgene protocol page; reuse terms not verified", "licenseVerified": false },
+    { "id": "src2", "kind": "article", "title": "Green MR, Sambrook J. Agarose Gel Electrophoresis. Cold Spring Harb Protoc (2019)", "doi": "10.1101/pdb.prot100404", "url": "https://cshprotocols.cshlp.org/content/2019/1/pdb.prot100404", "license": "Subscription; not reproduced", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

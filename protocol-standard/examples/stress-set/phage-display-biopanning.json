@@ -1,0 +1,1052 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Phage Display Biopanning (M13 Ph.D. peptide library, surface panning by direct target coating)",
+    "protocolId": "lr-stress-phage-display-biopanning",
+    "version": "0.2",
+    "family": "Phage display",
+    "category": "Protein",
+    "purpose": "Enrich M13 filamentous-phage clones displaying target-binding peptides from a randomized library by iterative rounds of affinity selection (biopanning): bind the library to an immobilized target, wash away non-binders, elute and amplify the bound phage, and repeat the selection 3 (up to 4) times until a consensus binding sequence emerges.",
+    "scope": "Surface panning by direct adsorption of a purified target to polystyrene, using the NEB Ph.D. combinatorial peptide library (M13KE, peptide fused to pIII). Covers rounds 1-3 (optionally 4) with increasing wash stringency, amplification in E. coli ER2738, and titering. Not covered here: solution-phase panning with streptavidin/bead capture, phage ELISA and DNA sequencing of clones (post-panning characterization), or library cloning/construction.",
+    "estimatedTime": "~6 days (Day 1 coat; Day 2 round-1 bind/elute/amplify; Day 3 titer + recoat; Days 4-5 round 2; Day 6 round 3)",
+    "beforeYouBegin": [
+      "Streak E. coli ER2738 onto an LB+Tet plate the day before and start a fresh overnight/early-log culture for infection and titering; the host must carry the F factor (grow on Tet).",
+      "Decide the elution strategy: specific competitive elution with a known ligand (0.1-1 mM) or free target (~100 ug/ml) vs general low-pH Glycine-HCl elution; this protocol defaults to Glycine-HCl.",
+      "Plan the iteration: input phage per round is held constant at ~1e11 virions; wash Tween-20 rises from 0.1% (round 1) to 0.5% (rounds 2-3) to raise stringency.",
+      "Prepare all buffers (Blocking Buffer, TBS, TBST, Glycine Elution Buffer, neutralization Tris, PEG/NaCl) and pre-warm LB/IPTG/Xgal titering plates."
+    ],
+    "tags": [
+      "phage display",
+      "biopanning",
+      "M13",
+      "panning",
+      "peptide library",
+      "affinity selection",
+      "directed evolution"
+    ],
+    "license": "Derived from a manufacturer instruction manual; reuse terms not granted here"
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Target molecule (antigen/receptor for selection)",
+      "role": "reagent",
+      "workingConcentration": "10-100 ug/mL in coating buffer",
+      "specification": "Purified target immobilized by non-specific hydrophobic/electrostatic adsorption to polystyrene; input target identity is user-supplied",
+      "rawText": "Prepare a solution of 10-100 ug/ml of the target in 0.1 M NaHCO3, pH 8.6.",
+      "needsReview": true
+    },
+    {
+      "id": "m2",
+      "name": "Coating buffer (0.1 M sodium bicarbonate)",
+      "role": "buffer",
+      "specification": "0.1 M NaHCO3, pH 8.6 (high-ionic-strength alternatives such as TBS may be substituted if needed to stabilize the target)",
+      "rawText": "0.1 M NaHCO3, pH 8.6",
+      "casNumber": "144-55-8"
+    },
+    {
+      "id": "m3",
+      "name": "Ph.D. M13 phage display peptide library",
+      "role": "sample",
+      "workingConcentration": "~1e11 virions input per round (100-fold library representation)",
+      "specification": "Randomized peptide displayed as N-terminal fusion to minor coat protein pIII of M13KE; library complexity ~1e9 independent clones",
+      "vendor": "New England Biolabs",
+      "rawText": "the number of input phage should remain the same (1e11 virions). ... Dilute a 100-fold representation of the library (e.g., 2 x 10^11 phage for a library with 2 x 10^9 clones)",
+      "storage": "-20 C in 50% glycerol for long-term; do not reamplify the naive library",
+      "needsReview": true
+    },
+    {
+      "id": "m4",
+      "name": "Blocking Buffer",
+      "role": "buffer",
+      "specification": "0.1 M NaHCO3 (pH 8.6), 5 mg/mL BSA, 0.02% NaN3 (optional); filter sterilize, store at 4 C",
+      "rawText": "Blocking Buffer: 0.1 M NaHCO3 (pH 8.6), 5 mg/ml BSA, 0.02% NaN3 (optional)."
+    },
+    {
+      "id": "m5",
+      "name": "TBS",
+      "role": "buffer",
+      "specification": "50 mM Tris-HCl (pH 7.5), 150 mM NaCl; autoclave, store at RT",
+      "rawText": "50 mM Tris-HCl (pH 7.5), 150 mM NaCl."
+    },
+    {
+      "id": "m6",
+      "name": "TBST (wash buffer)",
+      "role": "buffer",
+      "workingConcentration": "0.1% (v/v) Tween-20 in round 1; 0.5% (v/v) in rounds 2-3",
+      "specification": "TBS + Tween-20; raise Tween concentration in later rounds to increase wash stringency",
+      "rawText": "TBST (TBS + 0.1% [v/v] Tween-20). ... raising the Tween concentration in the wash steps to 0.5% (v/v)"
+    },
+    {
+      "id": "m7",
+      "name": "Glycine Elution Buffer",
+      "role": "buffer",
+      "specification": "0.2 M Glycine-HCl (pH 2.2), 1 mg/mL BSA; general non-specific disruption of binding",
+      "rawText": "0.2 M Glycine-HCl (pH 2.2), 1 mg/ml BSA",
+      "hazard": "Low pH; corrosive/irritant"
+    },
+    {
+      "id": "m8",
+      "name": "Neutralization buffer (1 M Tris-HCl, pH 9.1)",
+      "role": "buffer",
+      "specification": "Used to immediately neutralize acidic Glycine eluate",
+      "rawText": "neutralize with 150 ul (15 ul for microtiter wells) of 1 M Tris-HCl, pH 9.1."
+    },
+    {
+      "id": "m9",
+      "name": "Competitive elution ligand (alternative to low-pH elution)",
+      "role": "reagent",
+      "workingConcentration": "0.1-1 mM known ligand, or ~100 ug/mL free target, in TBS",
+      "specification": "Elutes bound phage specifically by competition; use instead of Glycine Elution Buffer when a ligand is available",
+      "rawText": "a solution of a known ligand for the target (0.1-1 mM) in TBS, or a solution of the free target (~100 ug/ml in TBS)",
+      "needsReview": true
+    },
+    {
+      "id": "m10",
+      "name": "E. coli ER2738 host strain",
+      "role": "other",
+      "specification": "F' proA+B+ lacIq delta(lacZ)M15 zzf::Tn10(TetR); supE (glnV) for TAG suppression; well-suited to M13 propagation; grow on tetracycline to retain F factor",
+      "vendor": "New England Biolabs",
+      "rawText": "E. coli ER2738 host strain (F' ... zzf::Tn10(TetR) ...)"
+    },
+    {
+      "id": "m11",
+      "name": "LB / LB+Tet medium",
+      "role": "medium",
+      "specification": "LB for phage amplification; LB+Tet for host propagation and titering culture (tetracycline not required during phage amplification)",
+      "rawText": "Inoculate 10 ml of LB+Tet medium with ER2738 ... 20 ml of LB medium in a 250-ml Erlenmeyer flask"
+    },
+    {
+      "id": "m12",
+      "name": "PEG/NaCl",
+      "role": "reagent",
+      "specification": "20% (w/v) PEG-8000, 2.5 M NaCl; used at 1/6 volume to precipitate phage",
+      "rawText": "add ... 1/6 volume of 20% PEG/2.5 M NaCl",
+      "needsReview": true
+    },
+    {
+      "id": "m13",
+      "name": "LB/IPTG/Xgal titering plates",
+      "role": "medium",
+      "specification": "1 L LB + 15 g/L agar; after autoclaving add 1 mL IPTG/Xgal stock (1.25 g IPTG + 1 g Xgal in 25 mL DMF) per liter; recombinant M13KE plaques are blue",
+      "rawText": "LB/IPTG/Xgal Plates: 1 liter LB medium + 15 g/l agar ... add 1 ml IPTG/Xgal Stock per liter",
+      "hazard": "DMF (in IPTG/Xgal stock) is flammable/toxic"
+    },
+    {
+      "id": "m14",
+      "name": "Glycerol (sterile)",
+      "role": "reagent",
+      "specification": "Equal volume added to amplified eluate for -20 C long-term storage",
+      "rawText": "For long-term storage, add an equal volume of sterile glycerol and store at -20 C."
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Rocking platform / orbital rocker",
+      "settings": "Gentle rocking at room temperature during binding and elution"
+    },
+    {
+      "id": "e2",
+      "name": "Shaking incubator, 37 C",
+      "settings": "Vigorous shaking; amplification 4.5 h; early-log target OD600 0.01-0.05 for infection"
+    },
+    {
+      "id": "e3",
+      "name": "Refrigerated high-speed centrifuge",
+      "settings": "12,000 g, 4 C (10 min clarification; 15 min PEG precipitation)"
+    },
+    {
+      "id": "e4",
+      "name": "Microcentrifuge",
+      "settings": "14,000 rpm, 4 C (5 and 10 min spins)"
+    },
+    {
+      "id": "e5",
+      "name": "4 C incubator / cold room + humidified container",
+      "settings": "Overnight target coating and blocking at 4 C; overnight PEG precipitation at 4 C"
+    },
+    {
+      "id": "e6",
+      "name": "37 C plate incubator",
+      "settings": "Titering-plate incubation; keep < 18 h to avoid deletions"
+    }
+  ],
+  "samples": [
+    {
+      "id": "sp1",
+      "name": "Input phage pool (per round)",
+      "role": "input",
+      "derivedFromMaterialId": "m3",
+      "description": "Naive library in round 1 (~1e11 virions); in rounds 2+ this is the amplified eluate from the previous round, adjusted to the same input titer.",
+      "needsReview": true
+    },
+    {
+      "id": "sp2",
+      "name": "Unbound (non-binding) phage",
+      "role": "other",
+      "description": "Phage poured off after binding and removed during the wash steps; discarded."
+    },
+    {
+      "id": "sp3",
+      "name": "Eluted phage (unamplified eluate)",
+      "role": "intermediate",
+      "description": "Target-bound phage released by acid/competitive elution and neutralized; a small aliquot is titered."
+    },
+    {
+      "id": "sp4",
+      "name": "Amplified eluate",
+      "role": "intermediate",
+      "description": "Eluted phage propagated in ER2738 and PEG-purified (~1e13-1e14 pfu/mL); becomes the input for the next round.",
+      "needsReview": true
+    },
+    {
+      "id": "sp5",
+      "name": "Enriched round-3 phage pool",
+      "role": "output",
+      "description": "Final unamplified round-3 eluate; the selection output from which individual blue plaques are picked for sequencing/ELISA."
+    },
+    {
+      "id": "sp6",
+      "name": "Individual phage clones",
+      "role": "output",
+      "description": "Blue plaques picked from round-3 titering plates for characterization (out of scope here)."
+    }
+  ],
+  "containers": [
+    {
+      "id": "c1",
+      "name": "60 x 15 mm polystyrene petri dish (or 96-well microtiter well)",
+      "type": "plate",
+      "wells": "1 (dish) or 96 (microtiter)"
+    },
+    {
+      "id": "c2",
+      "name": "1.5 mL microcentrifuge tube",
+      "type": "tube"
+    },
+    {
+      "id": "c3",
+      "name": "250 mL Erlenmeyer flask",
+      "type": "flask"
+    },
+    {
+      "id": "c4",
+      "name": "LB/IPTG/Xgal agar plate",
+      "type": "plate"
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Per-round iteration matrix (repeat-until-enrichment loop; schema has no native loop construct)",
+      "columns": [
+        "Round",
+        "Input phage (pfu/virions)",
+        "TBST Tween-20 (v/v)",
+        "Pre-bind washes",
+        "Post-bind washes",
+        "Amplify eluate?",
+        "Steps executed",
+        "Titer on LB/IPTG/Xgal"
+      ],
+      "rows": [
+        [
+          "1",
+          "~1e11 virions (100-fold library representation)",
+          "0.1%",
+          "6x",
+          "10x",
+          "yes",
+          "s1-s14 (full cycle)",
+          "eluate + amplified eluate"
+        ],
+        [
+          "2",
+          "same input titer as round 1, from round-1 amplified eluate",
+          "0.5%",
+          "6x",
+          "10x",
+          "yes",
+          "repeat s4-s13 (coat->amplify)",
+          "amplified eluate"
+        ],
+        [
+          "3",
+          "same input titer as round 1, from round-2 amplified eluate",
+          "0.5%",
+          "6x",
+          "10x",
+          "no (not necessary)",
+          "repeat s4-s9 (coat->neutralize) + titer",
+          "unamplified eluate only"
+        ],
+        [
+          "4 (optional)",
+          "same input titer",
+          "0.5%",
+          "6x",
+          "10x",
+          "as needed",
+          "only if round 3 shows no consensus / negative ELISA",
+          "per round 3"
+        ]
+      ],
+      "note": "Each round feeds the next: round N amplified eluate = round N+1 input. Input phage number is held constant (~1e11) across rounds; stringency is raised by increasing Tween from 0.1% to 0.5% after round 1. Loop exit condition: stop after round 3 (or 4) once a clear consensus binding sequence / positive phage ELISA is obtained."
+    },
+    {
+      "id": "t2",
+      "title": "Elution options (choose one per interaction)",
+      "columns": [
+        "Method",
+        "Composition",
+        "Time / temp",
+        "Neutralization"
+      ],
+      "rows": [
+        [
+          "General low-pH (default)",
+          "0.2 M Glycine-HCl pH 2.2, 1 mg/mL BSA, 1 mL (100 uL microtiter)",
+          "10-20 min, RT, gentle rocking",
+          "150 uL (15 uL microtiter) 1 M Tris-HCl pH 9.1, immediately"
+        ],
+        [
+          "Specific competitive",
+          "Known ligand 0.1-1 mM, or free target ~100 ug/mL, in TBS, 1 mL",
+          "10-60 min, RT, gentle rocking",
+          "none required"
+        ]
+      ]
+    },
+    {
+      "id": "t3",
+      "title": "Titer / enrichment tracking (fill in during the run)",
+      "columns": [
+        "Round",
+        "Input titer (pfu)",
+        "Output eluate titer (pfu)",
+        "Recovery = output/input",
+        "Amplified eluate titer (pfu/mL)"
+      ],
+      "rows": [
+        [
+          "1",
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "2",
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "3",
+          null,
+          null,
+          null,
+          "n/a"
+        ]
+      ],
+      "note": "Amplified culture supernatants typically titer 1e8-1e11; unamplified panning eluates 1e1-1e4 pfu per 10 uL; amplified eluate ~1e13-1e14 pfu/mL. A rising recovery (output/input) across rounds indicates successful enrichment."
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Round 1 - Coating (Day 1)",
+      "action": "Prepare 10-100 ug/mL target in 0.1 M NaHCO3 (pH 8.6); add 1.5 mL (150 uL for microtiter wells) to the dish/well and swirl until the surface is completely wet.",
+      "materialIds": [
+        "m1",
+        "m2"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "parameters": [
+        {
+          "type": "concentration",
+          "value": 10,
+          "valueMax": 100,
+          "unit": "ug/mL",
+          "rawText": "10-100 ug/ml of the target"
+        },
+        {
+          "type": "volume",
+          "value": 1.5,
+          "unit": "mL",
+          "rawText": "Add 1.5 ml of this solution (150 ul if using microtiter wells)"
+        },
+        {
+          "type": "pH",
+          "value": 8.6,
+          "unit": "pH",
+          "rawText": "0.1 M NaHCO3, pH 8.6"
+        }
+      ],
+      "expectedResult": "Target-coating solution evenly covers the surface.",
+      "criticalNotes": "Solution may bead up on the hydrophobic polystyrene; swirl repeatedly. Do not add DTT if using the Ph.D.-C7C disulfide-constrained library.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Prepare a solution of 10-100 ug/ml of the target in 0.1 M NaHCO3, pH 8.6."
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Round 1 - Coating (Day 1)",
+      "action": "Incubate overnight at 4 C with gentle agitation in a humidified container to adsorb the target.",
+      "containerIds": [
+        "c1"
+      ],
+      "equipmentIds": [
+        "e5"
+      ],
+      "pausePoint": true,
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 4,
+          "unit": "degC",
+          "rawText": "incubate overnight at 4 C"
+        },
+        {
+          "type": "time",
+          "value": null,
+          "unit": "overnight",
+          "rawText": "overnight"
+        }
+      ],
+      "expectedResult": "Target immobilized on the surface. Coated plates may be stored at 4 C in a humidified container.",
+      "criticalNotes": "Discard if mold appears on the damp paper towels."
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Round 1 - Host culture (Day 2)",
+      "action": "Inoculate 10 mL LB+Tet with ER2738 for titering; if amplifying the same day, also inoculate 20 mL LB in a 250 mL flask and grow to early-log (OD600 0.01-0.05).",
+      "materialIds": [
+        "m10",
+        "m11"
+      ],
+      "containerIds": [
+        "c3"
+      ],
+      "equipmentIds": [
+        "e2"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 10,
+          "unit": "mL",
+          "rawText": "Inoculate 10 ml of LB+Tet medium"
+        },
+        {
+          "type": "volume",
+          "value": 20,
+          "unit": "mL",
+          "rawText": "20 ml of LB medium in a 250-ml Erlenmeyer flask"
+        },
+        {
+          "type": "other",
+          "value": 0.01,
+          "valueMax": 0.05,
+          "unit": "OD600",
+          "rawText": "early-log phase (OD600 0.01-0.05)"
+        }
+      ],
+      "expectedResult": "Host cultures growing; amplification culture must not exceed early-log.",
+      "criticalNotes": "Use a 250 mL Erlenmeyer flask, not a 50 mL conical tube, for the amplification culture (aeration)."
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Round 1 - Blocking & wash (Day 2)",
+      "action": "Pour off the coating solution, slap the plate face-down on a clean paper towel, fill completely with Blocking Buffer, and incubate at least 1 h at 4 C.",
+      "materialIds": [
+        "m4"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "equipmentIds": [
+        "e5"
+      ],
+      "parameters": [
+        {
+          "type": "time",
+          "value": 1,
+          "unit": "h",
+          "rawText": "Incubate for at least 1 hour at 4 C"
+        },
+        {
+          "type": "temperature",
+          "value": 4,
+          "unit": "degC",
+          "rawText": "at 4 C"
+        }
+      ],
+      "expectedResult": "Uncoated surface blocked against non-specific phage binding."
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Round 1 - Blocking & wash (Day 2)",
+      "action": "Discard blocking buffer; wash the plate rapidly 6 times with TBST (0.1% Tween-20 in round 1), swirling to coat bottom and sides, pouring off, and slapping face-down on a fresh paper-towel section each time. Work quickly so the plate never dries.",
+      "materialIds": [
+        "m6"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "parameters": [
+        {
+          "type": "count",
+          "value": 6,
+          "unit": "washes",
+          "rawText": "Wash each plate rapidly 6 times with TBST"
+        },
+        {
+          "type": "concentration",
+          "value": 0.1,
+          "unit": "% (v/v) Tween-20",
+          "rawText": "TBST (TBS + 0.1% [v/v] Tween-20)"
+        }
+      ],
+      "expectedResult": "Excess/loosely bound material removed; surface ready for the library.",
+      "criticalNotes": "Do not add DTT with the Ph.D.-C7C library. In rounds 2-3 use 0.5% Tween-20 (see table t1)."
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Round 1 - Binding (Day 2)",
+      "action": "Dilute a 100-fold library representation (~1e11 virions; e.g. 2e11 phage for a 2e9-clone library) in 1 mL TBST (100 uL for microtiter), pipette onto the coated plate, and rock gently 10-60 min at room temperature.",
+      "materialIds": [
+        "m3",
+        "m6"
+      ],
+      "inputIds": [
+        "sp1"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "equipmentIds": [
+        "e1"
+      ],
+      "parameters": [
+        {
+          "type": "count",
+          "value": 100000000000,
+          "unit": "virions",
+          "rawText": "the number of input phage should remain the same (1e11 virions)"
+        },
+        {
+          "type": "volume",
+          "value": 1,
+          "unit": "mL",
+          "rawText": "with 1 ml of TBST (100 ul if using microtiter wells)"
+        },
+        {
+          "type": "time",
+          "value": 10,
+          "valueMax": 60,
+          "unit": "min",
+          "rawText": "rock gently for 10-60 minutes at room temperature"
+        }
+      ],
+      "expectedResult": "Target-binding phage captured on the surface.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Dilute a 100-fold representation of the library (e.g., 2 x 10^11 phage for a library with 2 x 10^9 clones) with 1 ml of TBST"
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Round 1 - Washing (Day 2)",
+      "action": "Discard non-binding phage by pouring off and slapping face-down on a clean paper towel, then wash the plate 10 times with TBST, using a clean paper-towel section each time.",
+      "materialIds": [
+        "m6"
+      ],
+      "outputIds": [
+        "sp2"
+      ],
+      "containerIds": [
+        "c1"
+      ],
+      "parameters": [
+        {
+          "type": "count",
+          "value": 10,
+          "unit": "washes",
+          "rawText": "Wash plates 10 times with TBST"
+        }
+      ],
+      "expectedResult": "Weak/non-specific binders removed; only tight binders retained.",
+      "criticalNotes": "Increasing wash number/Tween in later rounds raises stringency and drives enrichment."
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Round 1 - Elution (Day 2)",
+      "action": "Elute bound phage with 1 mL (100 uL microtiter) Glycine Elution Buffer (0.2 M Glycine-HCl pH 2.2, 1 mg/mL BSA), rocking gently 10-20 min at RT; alternatively elute specifically with 0.1-1 mM ligand or ~100 ug/mL free target in TBS (see table t2).",
+      "materialIds": [
+        "m7",
+        "m9"
+      ],
+      "inputIds": [
+        "sp1"
+      ],
+      "outputIds": [
+        "sp3"
+      ],
+      "containerIds": [
+        "c1",
+        "c2"
+      ],
+      "equipmentIds": [
+        "e1"
+      ],
+      "tableIds": [
+        "t2"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 1,
+          "unit": "mL",
+          "rawText": "Elute bound phage with 1 ml (100 ul if using microtiter wells)"
+        },
+        {
+          "type": "pH",
+          "value": 2.2,
+          "unit": "pH",
+          "rawText": "0.2 M Glycine-HCl (pH 2.2), 1 mg/ml BSA"
+        },
+        {
+          "type": "time",
+          "value": 10,
+          "valueMax": 20,
+          "unit": "min",
+          "rawText": "rock gently for no more than 10-20 minutes"
+        }
+      ],
+      "expectedResult": "Bound phage released into the eluate.",
+      "safetyNotes": "Glycine-HCl elution buffer is strongly acidic (pH 2.2)."
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "Round 1 - Elution (Day 2)",
+      "action": "Pipette the eluate into a microcentrifuge tube and, if using Glycine Elution Buffer, immediately neutralize with 150 uL (15 uL microtiter) of 1 M Tris-HCl pH 9.1.",
+      "materialIds": [
+        "m8"
+      ],
+      "inputIds": [
+        "sp3"
+      ],
+      "outputIds": [
+        "sp3"
+      ],
+      "containerIds": [
+        "c2"
+      ],
+      "pausePoint": true,
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 150,
+          "unit": "uL",
+          "rawText": "neutralize with 150 ul (15 ul for microtiter wells) of 1 M Tris-HCl, pH 9.1"
+        },
+        {
+          "type": "pH",
+          "value": 9.1,
+          "unit": "pH",
+          "rawText": "1 M Tris-HCl, pH 9.1"
+        }
+      ],
+      "expectedResult": "Neutralized eluate; phage remain viable.",
+      "criticalNotes": "Neutralized eluate may be stored at 4 C for up to ~1 week (pause point)."
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "phase": "Round 1 - Titer & amplify (Day 2)",
+      "action": "Titer ~1 uL of the eluate on LB/IPTG/Xgal plates (count blue plaques), then amplify the rest by adding it to the 20 mL early-log ER2738 culture and shaking vigorously 4.5 h at 37 C.",
+      "materialIds": [
+        "m10",
+        "m11",
+        "m13"
+      ],
+      "inputIds": [
+        "sp3"
+      ],
+      "outputIds": [
+        "sp4"
+      ],
+      "containerIds": [
+        "c3",
+        "c4"
+      ],
+      "equipmentIds": [
+        "e2",
+        "e6"
+      ],
+      "tableIds": [
+        "t3"
+      ],
+      "parameters": [
+        {
+          "type": "volume",
+          "value": 1,
+          "unit": "uL",
+          "rawText": "Titer a small amount (~1 ul) of the eluate"
+        },
+        {
+          "type": "time",
+          "value": 4.5,
+          "unit": "h",
+          "rawText": "incubating with vigorous shaking for 4.5 hours at 37 C"
+        },
+        {
+          "type": "temperature",
+          "value": 37,
+          "unit": "degC",
+          "rawText": "at 37 C"
+        }
+      ],
+      "expectedResult": "Eluate titer recorded (unamplified eluates ~1e1-1e4 pfu per 10 uL); amplification culture propagating phage.",
+      "criticalNotes": "Optionally store neutralized eluate overnight at 4 C and amplify next day using a 1:100-diluted overnight ER2738 culture."
+    },
+    {
+      "id": "s11",
+      "number": 11,
+      "phase": "Round 1 - Amplify & purify (Day 2-3)",
+      "action": "Clarify the amplification culture by centrifuging 10 min at 12,000 g, 4 C; re-spin the supernatant; transfer the upper 80% and precipitate phage with 1/6 volume 20% PEG/2.5 M NaCl at 4 C for at least 2 h (preferably overnight).",
+      "materialIds": [
+        "m12"
+      ],
+      "inputIds": [
+        "sp4"
+      ],
+      "outputIds": [
+        "sp4"
+      ],
+      "containerIds": [
+        "c2"
+      ],
+      "equipmentIds": [
+        "e3",
+        "e5"
+      ],
+      "pausePoint": true,
+      "parameters": [
+        {
+          "type": "force",
+          "value": 12000,
+          "unit": "xg",
+          "rawText": "spin for 10 minutes at 12,000 g at 4 C"
+        },
+        {
+          "type": "time",
+          "value": 10,
+          "unit": "min",
+          "rawText": "spin for 10 minutes"
+        },
+        {
+          "type": "ratio",
+          "value": null,
+          "unit": "1/6 volume",
+          "rawText": "add to it 1/6 volume of 20% PEG/2.5 M NaCl"
+        },
+        {
+          "type": "time",
+          "value": 2,
+          "unit": "h",
+          "rawText": "precipitate at 4 C for at least 2 hours, preferably overnight"
+        }
+      ],
+      "expectedResult": "Phage precipitated (visible white smear after spinning)."
+    },
+    {
+      "id": "s12",
+      "number": 12,
+      "phase": "Round 1 - Amplify & purify (Day 3)",
+      "action": "Spin the PEG precipitate 15 min at 12,000 g, 4 C; resuspend the pellet in 1 mL TBS; microcentrifuge 5 min at 14,000 rpm, 4 C to pellet residual cells; transfer supernatant and reprecipitate with 1/6 volume PEG/NaCl on ice 15-60 min.",
+      "materialIds": [
+        "m12",
+        "m5"
+      ],
+      "inputIds": [
+        "sp4"
+      ],
+      "outputIds": [
+        "sp4"
+      ],
+      "containerIds": [
+        "c2"
+      ],
+      "equipmentIds": [
+        "e3",
+        "e4"
+      ],
+      "parameters": [
+        {
+          "type": "force",
+          "value": 12000,
+          "unit": "xg",
+          "rawText": "Spin the PEG precipitation at 12,000 g for 15 minutes at 4 C"
+        },
+        {
+          "type": "volume",
+          "value": 1,
+          "unit": "mL",
+          "rawText": "Suspend the pellet in 1 ml of TBS"
+        },
+        {
+          "type": "speed",
+          "value": 14000,
+          "unit": "rpm",
+          "rawText": "spin at maximum (14,000 rpm) for 5 minutes at 4 C"
+        },
+        {
+          "type": "time",
+          "value": 15,
+          "valueMax": 60,
+          "unit": "min",
+          "rawText": "Incubate on ice for 15-60 minutes"
+        }
+      ],
+      "expectedResult": "Cell-cleared, reprecipitated phage."
+    },
+    {
+      "id": "s13",
+      "number": 13,
+      "phase": "Round 1 - Amplify & purify (Day 3)",
+      "action": "Microcentrifuge 10 min at 14,000 rpm, 4 C; discard supernatant, re-spin briefly, remove residual liquid; resuspend the pellet in 200 uL TBS and clarify 1 min. This supernatant is the amplified eluate. Titer it on LB/IPTG/Xgal (expect ~1e13-1e14 pfu/mL).",
+      "materialIds": [
+        "m5",
+        "m13"
+      ],
+      "inputIds": [
+        "sp4"
+      ],
+      "outputIds": [
+        "sp4"
+      ],
+      "containerIds": [
+        "c2",
+        "c4"
+      ],
+      "equipmentIds": [
+        "e4",
+        "e6"
+      ],
+      "tableIds": [
+        "t3"
+      ],
+      "pausePoint": true,
+      "parameters": [
+        {
+          "type": "speed",
+          "value": 14000,
+          "unit": "rpm",
+          "rawText": "Microcentrifuge at 14,000 rpm for 10 minutes at 4 C"
+        },
+        {
+          "type": "volume",
+          "value": 200,
+          "unit": "uL",
+          "rawText": "Suspend the pellet in 200 ul of TBS"
+        },
+        {
+          "type": "count",
+          "value": null,
+          "unit": "pfu/mL",
+          "rawText": "phage titer, which should be on the order of 10^13-14 pfu/ml"
+        }
+      ],
+      "expectedResult": "Amplified eluate (~1e13-1e14 pfu/mL) ready to seed the next round; storable up to 3 weeks at 4 C, or add equal volume glycerol for -20 C.",
+      "criticalNotes": "Use this titer to compute the input volume giving the same input as round 1 (step s6)."
+    },
+    {
+      "id": "s14",
+      "number": 14,
+      "phase": "Iteration (repeat-until-enrichment loop)",
+      "action": "ITERATE the selection. Round 2: recoat a plate (repeat s1-s2) and repeat the round using the round-1 amplified eluate as input at the same input titer, but raise TBST Tween-20 to 0.5% (repeat s4-s13). Round 3: recoat and repeat s4-s9 with 0.5% Tween using the round-2 amplified eluate; titer the round-3 eluate but do NOT amplify it. See table t1 for the full per-round matrix.",
+      "inputIds": [
+        "sp4"
+      ],
+      "outputIds": [
+        "sp5"
+      ],
+      "tableIds": [
+        "t1",
+        "t3"
+      ],
+      "dependsOn": [
+        "s13"
+      ],
+      "branches": [
+        {
+          "condition": "Clear consensus sequence obtained or phage ELISA positive after round 3",
+          "action": "Exit the loop; pick blue plaques for characterization (do not amplify the round-3 eluate for a further round)."
+        },
+        {
+          "condition": "No clear consensus / phage ELISA negative after round 3",
+          "targetStepId": "s4",
+          "action": "Amplify the round-3 eluate and carry out a 4th round of panning (repeat from the coating/blocking cycle), keeping 0.5% Tween."
+        }
+      ],
+      "parameters": [
+        {
+          "type": "count",
+          "value": 3,
+          "valueMax": 4,
+          "unit": "rounds",
+          "rawText": "After 3 rounds ... Do not amplify the third round eluate and carry out a fourth round of panning unless the characterization shows no clear consensus sequence or phage ELISA results are negative."
+        },
+        {
+          "type": "concentration",
+          "value": 0.5,
+          "unit": "% (v/v) Tween-20",
+          "rawText": "raising the Tween concentration in the wash steps to 0.5% (v/v)"
+        },
+        {
+          "type": "count",
+          "value": 100000000000,
+          "unit": "virions",
+          "rawText": "at an input titer equivalent to what was used in the first round"
+        }
+      ],
+      "expectedResult": "Progressive enrichment of target-binding clones; rising output/input recovery across rounds; an enriched round-3 (or round-4) phage pool.",
+      "criticalNotes": "The schema has no native loop/iteration construct: this single step encodes the repeat-until-enrichment cycle via a per-round table (t1), a back-edge branch (targetStepId s4), and a decisionPoint. Each round's amplified eluate is the next round's input (sp4 -> sp1). Round 3 is not amplified unless a 4th round is required.",
+      "sourceReferences": [
+        {
+          "sourceId": "src1",
+          "excerpt": "Carry out a second round of panning: repeat Steps 4-18 ... raising the Tween concentration in the wash steps to 0.5% ... Carry out a third round of panning: repeat steps 4-10 ... It is not necessary to amplify the third round eluate."
+        }
+      ]
+    },
+    {
+      "id": "s15",
+      "number": 15,
+      "phase": "Post-panning",
+      "action": "Titer the unamplified final-round eluate on LB/IPTG/Xgal and pick blue plaques for individual-clone characterization (DNA sequencing and phage ELISA); keep titering-plate incubation under 18 h at 37 C to avoid insert deletions.",
+      "materialIds": [
+        "m13",
+        "m10"
+      ],
+      "inputIds": [
+        "sp5"
+      ],
+      "outputIds": [
+        "sp6"
+      ],
+      "containerIds": [
+        "c4"
+      ],
+      "equipmentIds": [
+        "e6"
+      ],
+      "optional": true,
+      "parameters": [
+        {
+          "type": "time",
+          "value": 18,
+          "unit": "h",
+          "rawText": "incubated at 37 C for no longer than 18 hours, as deletions may occur if the plates are incubated longer"
+        }
+      ],
+      "expectedResult": "Individual clones ready for sequencing/ELISA (characterization itself is out of scope of this protocol).",
+      "criticalNotes": "Pick plaques within 1-3 days of plating; set up clone overnights from a colony, not by diluting a titering culture."
+    }
+  ],
+  "controls": [
+    {
+      "name": "Streptavidin control panning (positive-control selection)",
+      "description": "Run a parallel selection against streptavidin; after 3 rounds the consensus should contain the His-Pro-Gln (HPQ) motif, confirming the library and panning workflow are functional."
+    },
+    {
+      "name": "Titer both input and output each round",
+      "description": "Record input titer and unamplified-eluate output titer per round; a rising output/input recovery ratio is the readout that enrichment is occurring (table t3)."
+    },
+    {
+      "name": "Blue/white plaque screen",
+      "description": "Plate all titers on LB/IPTG/Xgal; recombinant M13KE plaques are blue, while contaminating wild-type/environmental phage give white plaques.",
+      "needsReview": true
+    },
+    {
+      "name": "No-target adsorption control",
+      "description": "Manufacturer notes a separate no-target panning is not productive; instead monitor enrichment and use a known positive target as the workflow control.",
+      "needsReview": true
+    }
+  ],
+  "expectedOutputs": [
+    "An enriched phage pool after 3 (optionally 4) rounds of panning, with rising output/input recovery across rounds.",
+    "A consensus target-binding peptide sequence among sequenced clones (the primary success criterion).",
+    "Amplified eluate stocks (~1e13-1e14 pfu/mL) for each round, and individual blue plaques for downstream sequencing/ELISA.",
+    "A per-round titer/enrichment record (table t3)."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "No consensus sequence after 3 rounds",
+      "cause": "Insufficient enrichment or weak binders",
+      "solution": "Amplify the round-3 eluate and perform a 4th round; consider switching to a solution-phase panning method."
+    },
+    {
+      "problem": "Many white plaques (contamination)",
+      "cause": "Wild-type/environmental filamentous phage",
+      "solution": "Always plate on LB/IPTG/Xgal; severe white-plaque contamination can spoil subsequent rounds - use fresh cultures and clean technique."
+    },
+    {
+      "problem": "High non-specific background / no enrichment",
+      "cause": "Wash stringency too low; blocking insufficient",
+      "solution": "Increase wash number and raise Tween-20 to 0.5% in later rounds; ensure >=1 h blocking; keep plates from drying."
+    },
+    {
+      "problem": "Amplified eluate titer too low to seed next round",
+      "cause": "Poor amplification/precipitation",
+      "solution": "Succeeding rounds can be run with as little as 1e9 pfu input phage; verify ER2738 was early-log at infection."
+    },
+    {
+      "problem": "Loss of insert / deletions in clones",
+      "cause": "Titering plates incubated too long",
+      "solution": "Keep titering-plate incubation under 18 h at 37 C and pick plaques within 1-3 days."
+    }
+  ],
+  "safety": [
+    "Sodium azide (in Blocking Buffer) is toxic and forms explosive metal azides in plumbing - dispose per institutional rules.",
+    "DMF in the IPTG/Xgal stock is flammable and toxic - handle in a fume hood.",
+    "Glycine-HCl elution buffer is strongly acidic (pH 2.2); 1 M Tris pH 9.1 is basic - handle with care.",
+    "Work with E. coli and bacteriophage using standard microbiological (BSL-1) aseptic technique."
+  ],
+  "biosafetyLevel": "BSL-1",
+  "limitations": "The canonical schema has no loop/iteration primitive, so the 3-5 identical selection rounds are represented as one full explicit round (steps s1-s13) plus a single iteration step (s14) that carries a per-round parameter table (t1), a back-edge branch, and a decisionPoint. Target identity, exact target concentration within 10-100 ug/mL, PEG/NaCl exact formulation, and library complexity are user/kit-specific and flagged needsReview. Downstream clone characterization (sequencing, phage ELISA) is out of scope. Numbers are for 60x15 mm petri dishes (microtiter volumes in parentheses).",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "kit-insert",
+      "title": "Ph.D. Phage Display Libraries - Instruction Manual (NEB #E8100/E8101/E8110/E8111/E8120)",
+      "url": "https://www.neb.com/en-us/-/media/nebus/files/manuals/manuale8100_e8101_e8110_e8111_e8120.pdf",
+      "license": "Manufacturer instruction manual; reuse terms not specified",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

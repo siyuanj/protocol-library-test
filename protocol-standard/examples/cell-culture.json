@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "0.1",
+  "metadata": {
+    "title": "Mammalian Cell Culture - Subculture (Passaging) of Adherent Cells",
+    "protocolId": "lr-example-cell-culture",
+    "version": "0.1",
+    "family": "Cell culture",
+    "category": "Cell Biology",
+    "purpose": "Maintain an adherent mammalian cell line in exponential growth by detaching cells at sub-confluence with trypsin-EDTA and reseeding at a defined split ratio or seeding density.",
+    "scope": "Routine subculture of adherent, trypsin-sensitive mammalian cell lines in a humidified 37 degC / 5% CO2 incubator using aseptic technique in a Class II biosafety cabinet. Suspension cells and enzyme-sensitive lines are out of scope.",
+    "estimatedTime": "~30-45 min per passage (excluding growth)",
+    "beforeYouBegin": [
+      "Confirm the cell line identity, passage number, and expected doubling time (line-specific).",
+      "Warm medium, PBS, and trypsin-EDTA to 37 degC before use.",
+      "Work only in a certified, cleaned biosafety cabinet; decontaminate all surfaces and reagents entering the cabinet."
+    ],
+    "tags": ["cell culture", "subculture", "passaging", "trypsinization", "adherent cells"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Complete growth medium", "specification": "Basal medium + serum (e.g. 10% FBS) + supplements +/- antibiotics; pre-warmed to 37 degC", "needsReview": true },
+    { "id": "m2", "name": "PBS (Ca2+/Mg2+-free)", "specification": "Sterile, cell-culture grade", "needsReview": true },
+    { "id": "m3", "name": "Trypsin-EDTA", "workingConcentration": "0.05-0.25% trypsin / 0.02% EDTA", "specification": "Sterile", "needsReview": true },
+    { "id": "m4", "name": "Trypan blue", "workingConcentration": "0.4%, 1:1 with cell suspension", "needsReview": true },
+    { "id": "m5", "name": "Cell line (adherent)", "specification": "At ~80-90% confluence; mycoplasma-negative; identity confirmed", "needsReview": true }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Class II biosafety cabinet", "settings": "Certified airflow; aseptic technique", "needsReview": true },
+    { "id": "e2", "name": "Humidified CO2 incubator", "settings": "37 degC, 5% CO2, humidified", "needsReview": true },
+    { "id": "e3", "name": "Inverted phase-contrast microscope", "settings": "Assess confluence/morphology", "needsReview": true },
+    { "id": "e4", "name": "Benchtop centrifuge", "settings": "200-300 xg, 3-5 min", "needsReview": true },
+    { "id": "e5", "name": "Cell counter / hemocytometer", "settings": "Viable-cell count with trypan blue", "needsReview": true },
+    { "id": "e6", "name": "Water bath", "settings": "37 degC for reagent warming", "needsReview": true }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Detach", "action": "Examine cells for confluence and health.", "equipmentIds": ["e3"], "materialIds": ["m5"], "parameters": [{ "type": "other", "value": 80, "valueMax": 90, "unit": "% confluence", "rawText": "target ~80-90% confluence" }], "expectedResult": "Healthy morphology, no contamination.", "criticalNotes": "Do not passage over-confluent cultures." },
+    { "id": "s2", "number": 2, "phase": "Detach", "action": "Aspirate spent medium.", "expectedResult": "Vessel emptied.", "criticalNotes": "Do not let the monolayer dry." },
+    { "id": "s3", "number": 3, "phase": "Detach", "action": "Wash the monolayer with PBS; swirl and aspirate.", "materialIds": ["m2"], "expectedResult": "Serum (trypsin inhibitor) removed.", "criticalNotes": "Residual serum blocks trypsin." },
+    { "id": "s4", "number": 4, "phase": "Detach", "action": "Add trypsin-EDTA and incubate.", "materialIds": ["m3"], "equipmentIds": ["e2"], "parameters": [{ "type": "temperature", "value": 37, "unit": "degC", "rawText": "37 degC" }, { "type": "time", "value": 3, "valueMax": 5, "unit": "min", "rawText": "~3-5 min (line-specific)", "needsReview": true }], "expectedResult": "Cells round up and detach.", "criticalNotes": "Tap the flask; avoid over-trypsinization." },
+    { "id": "s5", "number": 5, "phase": "Neutralize & Count", "action": "Add complete medium to neutralize trypsin.", "materialIds": ["m1"], "parameters": [{ "type": "ratio", "value": 2, "unit": "x trypsin vol", "rawText": ">=2x the trypsin volume" }], "expectedResult": "Trypsin inhibited.", "criticalNotes": "Serum inactivates trypsin." },
+    { "id": "s6", "number": 6, "phase": "Neutralize & Count", "action": "Pipette to a single-cell suspension.", "expectedResult": "Dispersed single cells.", "criticalNotes": "Avoid bubbles/shear." },
+    { "id": "s7", "number": 7, "phase": "Neutralize & Count", "action": "(Optional) Centrifuge and resuspend in fresh medium.", "equipmentIds": ["e4"], "materialIds": ["m1"], "optional": true, "parameters": [{ "type": "speed", "value": 200, "valueMax": 300, "unit": "xg", "rawText": "200-300 xg" }, { "type": "time", "value": 3, "valueMax": 5, "unit": "min", "rawText": "3-5 min" }], "expectedResult": "Cell pellet; resuspended.", "criticalNotes": "Needed to remove trypsin fully." },
+    { "id": "s8", "number": 8, "phase": "Neutralize & Count", "action": "Count viable cells with trypan blue.", "equipmentIds": ["e5"], "materialIds": ["m4"], "parameters": [{ "type": "ratio", "value": 1, "valueMax": 1, "unit": "v/v", "rawText": "trypan blue 1:1" }], "expectedResult": "Viable cells/mL and % viability.", "criticalNotes": "Record count for defined seeding." },
+    { "id": "s9", "number": 9, "phase": "Reseed", "action": "Seed a new vessel by split ratio or defined density.", "materialIds": ["m5"], "parameters": [{ "type": "ratio", "value": 5, "valueMax": 10, "unit": "split (1:n)", "rawText": "e.g. 1:5 - 1:10, or defined cells/cm2", "needsReview": true }], "expectedResult": "Even cell distribution.", "criticalNotes": "Distribute by gentle rocking, not swirling." },
+    { "id": "s10", "number": 10, "phase": "Reseed", "action": "Add complete medium; return to the incubator.", "materialIds": ["m1"], "equipmentIds": ["e2"], "parameters": [{ "type": "temperature", "value": 37, "unit": "degC", "rawText": "37 degC, 5% CO2" }], "expectedResult": "Cells attach and grow.", "criticalNotes": "Label vessel: line, passage #, date." }
+  ],
+  "controls": [
+    { "name": "Sterility / contamination check", "description": "Inspect medium (turbidity, pH color) and cells by microscopy each passage; run a cell-free medium vessel if contamination is suspected." },
+    { "name": "Mycoplasma testing", "description": "Perform periodically (line health control)." },
+    { "name": "Passage-number tracking", "description": "Record cumulative passage number (identity/senescence control)." }
+  ],
+  "expectedOutputs": [
+    "A reseeded culture at the target density that reattaches and resumes exponential growth.",
+    "Recorded viable-cell count, % viability, split ratio/seeding density, and passage number."
+  ],
+  "troubleshooting": [
+    { "problem": "Cells won't detach", "cause": "Insufficient trypsin/time; residual serum", "solution": "Wash with PBS first; extend trypsin time; warm reagents" },
+    { "problem": "Low viability after passage", "cause": "Over-trypsinization; harsh pipetting", "solution": "Shorten trypsin exposure; neutralize promptly; pipette gently" },
+    { "problem": "Contamination (turbid / color change)", "cause": "Broken aseptic technique", "solution": "Discard culture; decontaminate cabinet; review technique" },
+    { "problem": "Slow growth", "cause": "Seeded too sparsely; medium/supplement issue", "solution": "Increase seeding density; use fresh complete medium" }
+  ],
+  "safety": [
+    "Human/primate cell lines are typically handled at BSL-2; follow institutional biosafety approval.",
+    "Use aseptic technique throughout; decontaminate waste and surfaces."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "Line-specific values (medium, serum %, trypsin strength/time, seeding density, BSL) must be set for the actual cell line. This is generic adherent-cell subculture and does not cover specialised dissociation or cryopreservation.",
+  "sources": [
+    { "id": "src1", "kind": "book", "title": "Standard adherent mammalian-cell subculture (ATCC animal-cell-culture guidelines; Freshney, Culture of Animal Cells)", "license": "General method; no proprietary protocol text reproduced", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

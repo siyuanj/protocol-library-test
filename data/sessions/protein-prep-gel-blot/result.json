@@ -1,0 +1,393 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "protein-prep-gel-blot",
+  "sessionTitle": "Protein preparation, gels, and Western blot",
+  "packetStatus": "complete",
+  "startedAt": "2026-08-01T19:10:00Z",
+  "writtenAt": "2026-08-01T19:26:40Z",
+  "worker": "codex-protocol-atlas-protein-prep-gel-blot-2026-08-01",
+  "sourcesSearched": [
+    "https://api.crossref.org/works?query.bibliographic=cell%20lysis%20protein%20extraction&filter=prefix%3A10.17504&rows=20",
+    "https://api.crossref.org/works?query.bibliographic=BCA%20protein%20assay&filter=prefix%3A10.17504&rows=20",
+    "https://api.crossref.org/works?query.bibliographic=SDS-PAGE%20protein%20electrophoresis&filter=prefix%3A10.17504&rows=20",
+    "https://api.crossref.org/works?query.bibliographic=Western%20blot%20immunoblot&filter=prefix%3A10.17504&rows=20",
+    "https://www.protocols.io/view/cell-lysis-and-extraction-of-total-protein-from-sy-e6nvwrmdgmkj/v1",
+    "https://www.protocols.io/view/bca-assay-for-protein-quantification-ewov1yrepvr2/v1",
+    "https://www.protocols.io/view/sds-page-gel-electrophoresis-36wgq5rm3gk5/v1",
+    "https://www.protocols.io/view/western-blot-tank-blot-8epv516o4l1b/v1",
+    "https://documents.thermofisher.com/TFS-Assets/LSG/manuals/MAN0011430_Pierce_BCA_Protein_Asy_UG.pdf",
+    "https://qb3.berkeley.edu/education/lab-fundamentals-bootcamp/manual/proteins/bca-assay/"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "protein-extraction",
+      "categoryLabel": "Soluble protein extraction",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works/10.17504/protocols.io.ps6dnhe",
+        "https://www.protocols.io/view/cell-lysis-and-extraction-of-total-protein-from-sy-e6nvwrmdgmkj/v1",
+        "https://api.crossref.org/works?query.bibliographic=cell%20lysis%20protein%20extraction&filter=prefix%3A10.17504&rows=20"
+      ],
+      "representative": {
+        "title": "Cell lysis and extraction of total protein from Synechocystis sp. PCC 6803 v1",
+        "protocolType": "Public experimental protocol",
+        "assay": "Protein preparation / cell lysis",
+        "operation": "Total protein extraction with separable soluble and insoluble fractions",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/cell-lysis-and-extraction-of-total-protein-from-sy-e6nvwrmdgmkj/v1",
+        "sourceRecordId": "ps6dnhe",
+        "doi": "10.17504/protocols.io.ps6dnhe",
+        "authors": [
+          "Anna Behle"
+        ],
+        "published": "2018-04-27",
+        "updated": "2019-07-12",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.ps6dnhe",
+        "licenseVerifiedAt": "2026-08-01T19:22:00Z",
+        "metadataVerifiedAt": "2026-08-01T19:22:00Z",
+        "specimen": "Synechocystis sp. PCC 6803 cells",
+        "organism": "Synechocystis sp. PCC 6803",
+        "platform": "Not specified on record metadata",
+        "methodVariant": "Total protein extraction; soluble and insoluble fractions may be separated",
+        "safetyLevel": "not specified",
+        "confidence": 0.91,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.95,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.92,
+          "freshness": 0.7,
+          "corroboration": 0.9,
+          "overall": 0.91
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as the strongest direct extraction record because its title, abstract, DOI, author, dates, organism, and downstream protein-use context are explicit. This is a cyanobacterial variant, so mammalian, plant, tissue, membrane, and organelle extraction chemistries remain separate child variants rather than being silently mixed."
+      },
+      "screened": [
+        {
+          "title": "Whole cell protein extraction and Western blotting v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.rm7vzje8rlx1/v1",
+          "sourceRecordId": "rm7vzje8rlx1",
+          "doi": "10.17504/protocols.io.rm7vzje8rlx1/v1",
+          "screenStatus": "alternative",
+          "reason": "Relevant whole-cell extraction and blotting workflow, but it couples extraction to Western blotting and is less cleanly scoped to extraction alone."
+        },
+        {
+          "title": "Cell lysis for preparation of protein extracts for quantitative proteomics - Kryptoperidinium foliaceum, Nitzschia laevis and Symbiodinium sp. v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.6qpvry7o2gmk/v1",
+          "sourceRecordId": "6qpvry7o2gmk",
+          "doi": "10.17504/protocols.io.6qpvry7o2gmk/v1",
+          "screenStatus": "wrong-variant",
+          "reason": "Protein extraction is in scope, but the record is a multi-organism quantitative-proteomics preparation variant rather than a general soluble lysate protocol."
+        },
+        {
+          "title": "Cell lysis and gel electrophoresis for protein analysis of HeLa cells v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.j8nlkk1w1l5r/v1",
+          "sourceRecordId": "j8nlkk1w1l5r",
+          "doi": "10.17504/protocols.io.j8nlkk1w1l5r/v1",
+          "screenStatus": "wrong-variant",
+          "reason": "Relevant lysis context, but the record combines extraction with gel electrophoresis and is specifically tied to HeLa cells."
+        }
+      ],
+      "coverageGaps": [
+        "Soluble extraction chemistry varies materially by organism, tissue, membrane association, and organelle; a universal extraction representative would be misleading.",
+        "The selected record does not expose a platform facet or detailed inhibitor panel in the metadata-only view."
+      ],
+      "nextSearchSuggestions": [
+        "Add mammalian cultured-cell RIPA or detergent-compatible soluble lysate child category.",
+        "Add plant/tissue and membrane-protein extraction child categories if those materials are in scope."
+      ]
+    },
+    {
+      "categoryId": "protein-quantification",
+      "categoryLabel": "Protein concentration assay",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works/10.17504/protocols.io.6n5hdg6",
+        "https://www.protocols.io/view/bca-assay-for-protein-quantification-ewov1yrepvr2/v1",
+        "https://documents.thermofisher.com/TFS-Assets/LSG/manuals/MAN0011430_Pierce_BCA_Protein_Asy_UG.pdf",
+        "https://qb3.berkeley.edu/education/lab-fundamentals-bootcamp/manual/proteins/bca-assay/"
+      ],
+      "representative": {
+        "title": "BCA Assay for protein quantification v1",
+        "protocolType": "Public experimental protocol",
+        "assay": "Bicinchoninic acid (BCA) total-protein assay",
+        "operation": "Protein concentration determination using a BCA assay and protein standard curve",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/bca-assay-for-protein-quantification-ewov1yrepvr2/v1",
+        "sourceRecordId": "6n5hdg6",
+        "doi": "10.17504/protocols.io.6n5hdg6",
+        "authors": [
+          "Karina L Conkrite"
+        ],
+        "published": "2019-08-20",
+        "updated": "2019-10-08",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.6n5hdg6",
+        "licenseVerifiedAt": "2026-08-01T19:22:30Z",
+        "metadataVerifiedAt": "2026-08-01T19:22:30Z",
+        "specimen": "Protein sample; exact specimen not specified in record metadata",
+        "organism": null,
+        "platform": "BCA colorimetric assay; kit/platform not specified in record metadata",
+        "methodVariant": "BCA assay; standard protein identity and sample compatibility should be confirmed from the full record before execution",
+        "safetyLevel": "not specified",
+        "confidence": 0.9,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.82,
+          "freshness": 0.7,
+          "corroboration": 0.92,
+          "overall": 0.9
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because it is directly titled for protein quantification, has a stable DOI-backed protocols.io record, and is corroborated by Thermo Fisher's BCA user guide and the UC Berkeley QB3 BCA teaching protocol as the relevant assay family. BSA/HSA standard choice and detergent/reducing-agent compatibility are not inferred beyond the available metadata."
+      },
+      "screened": [
+        {
+          "title": "Bradford Protein Assay v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.sf3ebqn",
+          "sourceRecordId": "sf3ebqn",
+          "doi": "10.17504/protocols.io.sf3ebqn",
+          "screenStatus": "alternative",
+          "reason": "In-scope protein concentration assay, but Bradford chemistry is a distinct assay variant from the selected BCA representative."
+        },
+        {
+          "title": "Pierce BCA Protein Assay Protocol v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.hrzb576",
+          "sourceRecordId": "hrzb576",
+          "doi": "10.17504/protocols.io.hrzb576",
+          "screenStatus": "alternative",
+          "reason": "Direct BCA alternative with a named commercial kit; retained as a screened record because the selected title is more generic and cleaner for the category label."
+        },
+        {
+          "title": "Total crude protein in plankton:Pierce BCA protein assay (including the enhanced assay for low biomass) v2",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.5qpvoy5e7g4o/v3",
+          "sourceRecordId": "5qpvoy5e7g4o/v3",
+          "doi": "10.17504/protocols.io.5qpvoy5e7g4o/v3",
+          "screenStatus": "wrong-variant",
+          "reason": "BCA chemistry is relevant, but the workflow is specifically optimized for plankton and low biomass."
+        }
+      ],
+      "coverageGaps": [
+        "BCA, Bradford, detergent-compatible, reducing-agent-compatible, low-biomass, and microplate/cuvette variants have different interference and calibration facets.",
+        "The selected record metadata does not identify the standard protein or readout platform; those fields require checking the full protocol record."
+      ],
+      "nextSearchSuggestions": [
+        "Split BCA and Bradford into child categories if assay chemistry is to be operationally reproducible.",
+        "Add low-biomass and detergent/reducing-agent compatibility facets to the assay schema."
+      ]
+    },
+    {
+      "categoryId": "sds-page",
+      "categoryLabel": "SDS-PAGE",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works/10.17504/protocols.io.7hnhj5e",
+        "https://www.protocols.io/view/sds-page-gel-electrophoresis-36wgq5rm3gk5/v1",
+        "https://api.crossref.org/works?query.bibliographic=SDS-PAGE%20protein%20electrophoresis&filter=prefix%3A10.17504&rows=20"
+      ],
+      "representative": {
+        "title": "SDS-PAGE Gel Electrophoresis v1",
+        "protocolType": "Public experimental protocol",
+        "assay": "Sodium dodecyl sulfate polyacrylamide gel electrophoresis",
+        "operation": "Denaturing protein separation by SDS-PAGE",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/sds-page-gel-electrophoresis-36wgq5rm3gk5/v1",
+        "sourceRecordId": "7hnhj5e",
+        "doi": "10.17504/protocols.io.7hnhj5e",
+        "authors": [
+          "Alba Balletbó"
+        ],
+        "published": "2019-09-19",
+        "updated": "2019-09-19",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.7hnhj5e",
+        "licenseVerifiedAt": "2026-08-01T19:23:00Z",
+        "metadataVerifiedAt": "2026-08-01T19:23:00Z",
+        "specimen": "Protein sample; exact specimen not specified in record metadata",
+        "organism": null,
+        "platform": "Polyacrylamide gel electrophoresis; apparatus not specified in record metadata",
+        "methodVariant": "Denaturing SDS-PAGE; record notes resolution limits for proteins below approximately 10 kDa and possible gradient/Tricine alternatives",
+        "safetyLevel": "not specified",
+        "confidence": 0.92,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.97,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.88,
+          "freshness": 0.68,
+          "corroboration": 0.9,
+          "overall": 0.92
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because the record is explicitly titled for SDS-PAGE gel electrophoresis, identifies the denaturing separation context, and notes the small-protein resolution boundary and gradient/Tricine alternatives. Gel percentage, reducing-agent condition, and sample type are not assumed from the title."
+      },
+      "screened": [
+        {
+          "title": "Polyacrylamide Gel Electrophoresis (SDS-PAGE) v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.9b7h2rn",
+          "sourceRecordId": "9b7h2rn",
+          "doi": "10.17504/protocols.io.9b7h2rn",
+          "screenStatus": "alternative",
+          "reason": "Directly in-scope SDS-PAGE record, retained as an alternative because the selected record has a more explicit assay title and small-protein variant note."
+        },
+        {
+          "title": "SDS-PAGE gel electrophoresis v4",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.by6zpzf6",
+          "sourceRecordId": "by6zpzf6",
+          "doi": "10.17504/protocols.io.by6zpzf6",
+          "screenStatus": "alternative",
+          "reason": "Versioned SDS-PAGE alternative, but the available metadata does not establish a stronger match to the requested generic category than the selected representative."
+        },
+        {
+          "title": "SDS and Clear Native Gel Electrophoresis v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.j8nlkyqydg5r/v1",
+          "sourceRecordId": "j8nlkyqydg5r",
+          "doi": "10.17504/protocols.io.j8nlkyqydg5r/v1",
+          "screenStatus": "wrong-variant",
+          "reason": "Combines denaturing SDS and clear-native electrophoresis, so it is broader than the requested SDS-PAGE-only category."
+        }
+      ],
+      "coverageGaps": [
+        "Gel percentage, gradient versus fixed-percentage gel, reducing versus non-reducing sample preparation, and apparatus vary by target size and sample type.",
+        "The record metadata supports the denaturing and small-protein-resolution facets but not a complete gel percentage or reducing-condition facet."
+      ],
+      "nextSearchSuggestions": [
+        "Split fixed-percentage, gradient, Tricine, and native/clear-native gel workflows into child variants.",
+        "Add explicit gel percentage, reducing-agent, sample type, and electrophoresis platform fields."
+      ]
+    },
+    {
+      "categoryId": "western-blot",
+      "categoryLabel": "Western blot",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works/10.17504/protocols.io.765hrg6",
+        "https://www.protocols.io/view/western-blot-tank-blot-8epv516o4l1b/v1",
+        "https://api.crossref.org/works?query.bibliographic=Western%20blot%20immunoblot&filter=prefix%3A10.17504&rows=20"
+      ],
+      "representative": {
+        "title": "Western Blot (Tank-Blot) v1",
+        "protocolType": "Public experimental protocol",
+        "assay": "Western blot / immunoblot",
+        "operation": "Electrotransfer of SDS-PAGE proteins to a membrane for antibody-based detection",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/western-blot-tank-blot-8epv516o4l1b/v1",
+        "sourceRecordId": "765hrg6",
+        "doi": "10.17504/protocols.io.765hrg6",
+        "authors": [
+          "Igem Dusseldorf"
+        ],
+        "published": "2019-10-14",
+        "updated": "2019-10-14",
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.765hrg6",
+        "licenseVerifiedAt": "2026-08-01T19:23:30Z",
+        "metadataVerifiedAt": "2026-08-01T19:23:30Z",
+        "specimen": "SDS-PAGE gel protein sample; exact biological specimen not specified in record metadata",
+        "organism": null,
+        "platform": "Tank-blot electrotransfer; membrane described as PVDF in record metadata",
+        "methodVariant": "Tank transfer with PVDF membrane followed by antibody staining; transfer buffer and electrical conditions are visible in the source abstract",
+        "safetyLevel": "not specified",
+        "confidence": 0.93,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.98,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.91,
+          "freshness": 0.68,
+          "corroboration": 0.9,
+          "overall": 0.93
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because it is a dedicated tank-blot record with stable DOI, explicit author/date metadata, and direct metadata describing electrotransfer and PVDF membrane handling. It is a transfer and antibody-staining variant; detection chemistry and antibody targets remain assay-specific facets."
+      },
+      "screened": [
+        {
+          "title": "Western Blot (tank-blot) + Antibody staining v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.8gdhts6",
+          "sourceRecordId": "8gdhts6",
+          "doi": "10.17504/protocols.io.8gdhts6",
+          "screenStatus": "alternative",
+          "reason": "Directly in-scope tank-blot and antibody-staining record, retained as an alternative because the selected record is the cleaner dedicated transfer representative."
+        },
+        {
+          "title": "Western blot protocol v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.bea4jagw",
+          "sourceRecordId": "bea4jagw",
+          "doi": "10.17504/protocols.io.bea4jagw",
+          "screenStatus": "alternative",
+          "reason": "Generic Western blot protocol with stable DOI, but its available metadata is less specific about transfer system than the selected tank-blot record."
+        },
+        {
+          "title": "12% SDS-PAGE Western Blot v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.rwrd7d6",
+          "sourceRecordId": "rwrd7d6",
+          "doi": "10.17504/protocols.io.rwrd7d6",
+          "screenStatus": "wrong-variant",
+          "reason": "Combines gel composition and immunoblotting, so it is not a clean Western-blot-only record for this packet."
+        }
+      ],
+      "coverageGaps": [
+        "Tank transfer and semi-dry transfer are distinct platform variants; membrane choice, transfer buffer, antibody host/conjugate, and chemiluminescent versus fluorescent detection are not interchangeable.",
+        "The selected record does not identify target protein, antibody clone, blocking reagent, or detection chemistry in the metadata fields."
+      ],
+      "nextSearchSuggestions": [
+        "Split tank-blot and semi-dry transfer into child categories.",
+        "Add membrane, blocking chemistry, antibody/detection chemistry, and imaging platform facets."
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "protein-extraction",
+      "protein-quantification",
+      "sds-page",
+      "western-blot"
+    ],
+    "actualCategoryIds": [
+      "protein-extraction",
+      "protein-quantification",
+      "sds-page",
+      "western-blot"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": true,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-01T19:26:40Z",
+    "selfCheckNotes": [
+      "Exactly four categoryResults are present and remain in the assigned packet order.",
+      "Every representative has an HTTP(S) sourceUrl, stable protocols.io source record ID, DOI, metadata verification timestamp, and Crossref license evidence URL.",
+      "All four representatives are direct protocols.io records; Crossref metadata confirmed title, author, publication date, DOI, and CC BY 4.0 license URLs.",
+      "Coverage is complete at the assigned category level; organism, assay chemistry, gel, transfer, membrane, and detection variants are documented as explicit gaps rather than mixed silently.",
+      "Result was re-read and parsed as JSON after writing."
+    ]
+  },
+  "runNotes": [
+    "Research was metadata-first; no protocol steps, tables, figures, videos, PDFs, or long source passages were copied into the result.",
+    "Search-result pages were treated as discovery only; representatives use direct protocols.io pages and Crossref record metadata.",
+    "The packet is complete for the four assigned categories while remaining explicit about material and platform-specific child variants."
+  ]
+}

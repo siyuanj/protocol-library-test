@@ -1,0 +1,383 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "immuno-cell-functions",
+  "sessionTitle": "Immune-cell isolation and function",
+  "packetStatus": "complete",
+  "startedAt": "2026-08-01T22:57:23Z",
+  "writtenAt": "2026-08-01T22:57:23Z",
+  "worker": "codex-protocol-atlas-immuno-cell-functions-2026-08-01",
+  "sourcesSearched": [
+    "https://www.protocols.io/",
+    "https://api.crossref.org/works/10.17504/protocols.io.b539q8r6",
+    "https://www.protocols.io/view/pbmc-isolation-b539q8r6",
+    "https://www.protocols.io/view/pbmc-isolation-kdycs7w",
+    "https://www.ncbi.nlm.nih.gov/books/NBK589659/",
+    "https://bio-protocol.org/",
+    "https://api.crossref.org/works/10.17504/protocols.io.byvapw2e",
+    "https://www.protocols.io/view/pbmc-07-stimulation-of-human-peripheral-blood-mono-byvapw2e",
+    "https://www.protocols.io/view/t-cell-activation-with-anti-cd3-antibodies-protocol-human-9w5fg4n",
+    "https://www.protocols.io/view/generation-of-long-term-genetically-modified-human-cn55vg86",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC11533540/",
+    "https://api.crossref.org/works/10.17504/protocols.io.56wg9fe",
+    "https://www.protocols.io/view/uc-davis-luminex-multiplex-56wg9fe",
+    "https://www.protocols.io/view/cell-culture-and-estimation-of-cytokines-by-elisa-p2hdqb6",
+    "https://www.protocols.io/view/elisa-for-quantification-of-il-6-in-human-serum-or-14egn85ypg5d/v1",
+    "https://mmpc.org/shared/document.aspx?id=116&docType=Protocol",
+    "https://api.crossref.org/works/10.17504/protocols.io.b2ufqetn",
+    "https://www.protocols.io/view/a-three-dimensional-immune-oncology-model-for-stud-b2ufqetn",
+    "https://www.protocols.io/view/bite-bystander-t-cell-dependent-cellular-cytotoxic-hwfb7bn",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC8936498/"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "pbmc-isolation",
+      "categoryLabel": "PBMC isolation",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works/10.17504/protocols.io.b539q8r6",
+        "https://www.protocols.io/view/pbmc-isolation-b539q8r6",
+        "https://www.protocols.io/view/pbmc-isolation-kdycs7w",
+        "https://www.ncbi.nlm.nih.gov/books/NBK589659/",
+        "https://bio-protocol.org/"
+      ],
+      "representative": {
+        "title": "PBMC isolation v1",
+        "protocolType": "Public experimental protocol",
+        "assay": "Peripheral blood mononuclear cell isolation",
+        "operation": "Density-gradient isolation of PBMCs from fresh whole human blood",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/pbmc-isolation-b539q8r6",
+        "sourceRecordId": "b539q8r6",
+        "doi": "10.17504/protocols.io.b539q8r6",
+        "authors": [
+          "Michael Morgan"
+        ],
+        "published": "2022-03-08",
+        "updated": null,
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.b539q8r6",
+        "licenseVerifiedAt": "2026-08-01T22:57:23Z",
+        "metadataVerifiedAt": "2026-08-01T22:57:23Z",
+        "specimen": "Fresh whole human blood collected in lithium-heparin blood tubes",
+        "organism": "Homo sapiens",
+        "platform": "Ficoll density-gradient centrifugation",
+        "methodVariant": "Fresh whole-blood PBMC isolation with lithium-heparin anticoagulation; processing-delay and cryopreserved-input variants are separate",
+        "safetyLevel": "not specified",
+        "confidence": 0.91,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.97,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.96,
+          "freshness": 0.72,
+          "corroboration": 0.9,
+          "overall": 0.91
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because the DOI-backed record explicitly identifies fresh whole human blood, lithium-heparin tubes, and PBMC isolation. It is a clean representative for the assigned category while preserving anticoagulant, blood-source, cryopreservation, and processing-delay differences as separate variants."
+      },
+      "screened": [
+        {
+          "title": "PBMC isolation (Ficoll-Paque)",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/pbmc-isolation-kdycs7w",
+          "sourceRecordId": "kdycs7w",
+          "doi": "10.17504/protocols.io.kdycs7w",
+          "screenStatus": "alternative",
+          "reason": "Direct Ficoll-Paque PBMC alternative retained for coverage, but the selected record exposes the requested fresh-blood and lithium-heparin scope more clearly in its indexed metadata."
+        },
+        {
+          "title": "Peripheral Blood Mononuclear Cell Isolation by Density Gradient Centrifugation",
+          "source": "NCBI Bookshelf",
+          "sourceUrl": "https://www.ncbi.nlm.nih.gov/books/NBK589659/",
+          "sourceRecordId": null,
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Authoritative public method reference for density-gradient PBMC isolation, retained as corroboration rather than the representative because it is a chapter-level method reference rather than a DOI-backed standalone protocol record."
+        }
+      ],
+      "coverageGaps": [
+        "The representative is restricted to fresh human whole blood in lithium-heparin tubes; EDTA, citrate, buffy-coat, leukapheresis, and cryopreserved PBMC inputs are materially different variants.",
+        "Processing delay, temperature history, donor state, Ficoll formulation, and centrifugation profile are not fully represented by the metadata-only record."
+      ],
+      "nextSearchSuggestions": [
+        "Add child categories for fresh whole blood versus buffy coat or leukapheresis input.",
+        "Add separate anticoagulant and cryopreserved-PBMC variants when those workflows are required."
+      ]
+    },
+    {
+      "categoryId": "t-cell-activation",
+      "categoryLabel": "T-cell activation and stimulation",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works/10.17504/protocols.io.byvapw2e",
+        "https://www.protocols.io/view/pbmc-07-stimulation-of-human-peripheral-blood-mono-byvapw2e",
+        "https://www.protocols.io/view/t-cell-activation-with-anti-cd3-antibodies-protocol-human-9w5fg4n",
+        "https://www.protocols.io/view/generation-of-long-term-genetically-modified-human-cn55vg86",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC11533540/"
+      ],
+      "representative": {
+        "title": "PBMC-07-Stimulation of human peripheral blood mononuclear cells with immobilized anti-CD3 and soluble anti-CD28 antibodies. v1",
+        "protocolType": "Public experimental protocol",
+        "assay": "Primary human T-cell activation and stimulation",
+        "operation": "PBMC stimulation with immobilized anti-CD3 and soluble anti-CD28 co-stimulation for proliferation and cytokine-response assessment",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/pbmc-07-stimulation-of-human-peripheral-blood-mono-byvapw2e",
+        "sourceRecordId": "byvapw2e",
+        "doi": "10.17504/protocols.io.byvapw2e",
+        "authors": [
+          "Alessia Furgiuele",
+          "Massimilano Legnaro",
+          "Alessandra Luini",
+          "Marco Ferrari",
+          "Emanuela Rasini",
+          "Maria Giulia Albizzati",
+          "Franca Marino",
+          "Marco Cosentino"
+        ],
+        "published": "2021-10-07",
+        "updated": null,
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.byvapw2e",
+        "licenseVerifiedAt": "2026-08-01T22:57:23Z",
+        "metadataVerifiedAt": "2026-08-01T22:57:23Z",
+        "specimen": "Human peripheral blood mononuclear cells",
+        "organism": "Homo sapiens",
+        "platform": "Immobilized anti-CD3 plus soluble anti-CD28 antibody stimulation",
+        "methodVariant": "PBMC-based primary T-cell stimulation with anti-CD3/anti-CD28; bead-based activation and purified CD4/CD8 formats are separate",
+        "safetyLevel": "not specified",
+        "confidence": 0.92,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.99,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.96,
+          "freshness": 0.72,
+          "corroboration": 0.9,
+          "overall": 0.92
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as the strongest direct CD3/CD28 record because it explicitly names human PBMC stimulation, immobilized anti-CD3, soluble anti-CD28, and proliferation/cytokine functional responses. Purified T-cell, bead-based, activation-duration, and downstream readout variants are kept distinct."
+      },
+      "screened": [
+        {
+          "title": "T Cell Activation with anti-CD3 Antibodies Protocol - Human v4",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/t-cell-activation-with-anti-cd3-antibodies-protocol-human-9w5fg4n",
+          "sourceRecordId": "9w5fg4n",
+          "doi": "10.17504/protocols.io.9w5fg4n",
+          "screenStatus": "alternative",
+          "reason": "Direct human T-cell activation record, but anti-CD3-only stimulation does not capture the selected CD3/CD28 co-stimulation format."
+        },
+        {
+          "title": "Generation of long-term genetically modified human T cells using Sleeping Beauty v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/generation-of-long-term-genetically-modified-human-cn55vg86",
+          "sourceRecordId": "cn55vg86",
+          "doi": "10.17504/protocols.io.cn55vg86",
+          "screenStatus": "wrong-variant",
+          "reason": "Contains T-cell activation in a genetic-engineering workflow, but activation is coupled to transfection/expansion rather than represented as a standalone stimulation protocol."
+        }
+      ],
+      "coverageGaps": [
+        "The representative uses PBMCs rather than purified CD4 or CD8 T cells; cell-purification and subset-specific activation are separate variants.",
+        "Immobilized antibody, soluble antibody, anti-CD3/CD28 beads, plate-bound formats, stimulation duration, cytokine supplementation, and activation readouts are not interchangeable.",
+        "The record is optimized for proliferation and cytokine-response assessment; phospho-signaling, flow-activation-marker, and single-cell readouts require separate child categories."
+      ],
+      "nextSearchSuggestions": [
+        "Add purified CD4 and CD8 T-cell activation child categories.",
+        "Add antibody-coated plate versus bead-based CD3/CD28 stimulation as separate method variants."
+      ]
+    },
+    {
+      "categoryId": "cytokine-assay",
+      "categoryLabel": "Cytokine measurement",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works/10.17504/protocols.io.56wg9fe",
+        "https://www.protocols.io/view/uc-davis-luminex-multiplex-56wg9fe",
+        "https://www.protocols.io/view/cell-culture-and-estimation-of-cytokines-by-elisa-p2hdqb6",
+        "https://www.protocols.io/view/elisa-for-quantification-of-il-6-in-human-serum-or-14egn85ypg5d/v1",
+        "https://mmpc.org/shared/document.aspx?id=116&docType=Protocol"
+      ],
+      "representative": {
+        "title": "UC Davis - Luminex/Multiplex v2",
+        "protocolType": "Public experimental protocol",
+        "assay": "Multiplex cytokine and chemokine quantification",
+        "operation": "Luminex bead-based measurement of cytokines/chemokines in tissue or cell lysates, culture supernatants, plasma, or serum",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/uc-davis-luminex-multiplex-56wg9fe",
+        "sourceRecordId": "56wg9fe",
+        "doi": "10.17504/protocols.io.56wg9fe",
+        "authors": [
+          "Lori Haapanen"
+        ],
+        "published": "2019-08-05",
+        "updated": null,
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.56wg9fe",
+        "licenseVerifiedAt": "2026-08-01T22:57:23Z",
+        "metadataVerifiedAt": "2026-08-01T22:57:23Z",
+        "specimen": "Tissue or cell lysate, tissue-culture supernatant, plasma, or serum",
+        "organism": null,
+        "platform": "Luminex bead-based multiplex assay",
+        "methodVariant": "Multiplex cytokine/chemokine measurement; single-analyte ELISA, CBA, electrochemiluminescence, and platform-specific panels are separate",
+        "safetyLevel": "not specified",
+        "confidence": 0.9,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.98,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.94,
+          "freshness": 0.7,
+          "corroboration": 0.9,
+          "overall": 0.9
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected as the strongest multiplex representative because the record explicitly identifies Luminex/Multiplex measurement and covers cytokines/chemokines across lysate, culture-supernatant, plasma, and serum matrices. Panel composition, standard curve, matrix effects, and single-analyte methods remain explicit variants."
+      },
+      "screened": [
+        {
+          "title": "Cell Culture and estimation of cytokines by ELISA",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/cell-culture-and-estimation-of-cytokines-by-elisa-p2hdqb6",
+          "sourceRecordId": "p2hdqb6",
+          "doi": "10.17504/protocols.io.p2hdqb6",
+          "screenStatus": "alternative",
+          "reason": "Direct single-analyte cytokine ELISA alternative retained because the category explicitly requires separation of single-analyte and multiplex platforms."
+        },
+        {
+          "title": "ELISA for quantification of IL-6 in human serum or plasma",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/elisa-for-quantification-of-il-6-in-human-serum-or-14egn85ypg5d/v1",
+          "sourceRecordId": "14egn85ypg5d",
+          "doi": "10.17504/protocols.io.14egn85ypg5d",
+          "screenStatus": "wrong-variant",
+          "reason": "Specific IL-6 serum/plasma ELISA variant; it is narrower than the selected multi-analyte matrix-flexible Luminex record."
+        }
+      ],
+      "coverageGaps": [
+        "The representative is a multiplex Luminex workflow; single-analyte ELISA, CBA, electrochemiluminescence, and other bead platforms require separate method variants.",
+        "Analyte panel, sample matrix, dilution behavior, standard curve, lower limit of quantification, cross-reactivity, and batch normalization are not fully encoded in the record metadata."
+      ],
+      "nextSearchSuggestions": [
+        "Add separate single-analyte cytokine ELISA and flow-cytometric bead-array child categories.",
+        "Add platform, analyte-panel, matrix, and quantification-range fields to support cross-assay comparison."
+      ]
+    },
+    {
+      "categoryId": "cytotoxicity-assay",
+      "categoryLabel": "Immune-cell cytotoxicity assay",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works/10.17504/protocols.io.b2ufqetn",
+        "https://www.protocols.io/view/a-three-dimensional-immune-oncology-model-for-stud-b2ufqetn",
+        "https://www.protocols.io/view/bite-bystander-t-cell-dependent-cellular-cytotoxic-hwfb7bn",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC8936498/"
+      ],
+      "representative": {
+        "title": "A three-dimensional immune-oncology model for studying in vitro human NK cell cytotoxic activity v1",
+        "protocolType": "Public experimental protocol",
+        "assay": "Primary human NK-cell cytotoxicity against tumor spheroids",
+        "operation": "Co-culture of primary human NK cells with labeled 3D tumor spheroids and confocal evaluation of cytotoxic activity",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/a-three-dimensional-immune-oncology-model-for-stud-b2ufqetn",
+        "sourceRecordId": "b2ufqetn",
+        "doi": "10.17504/protocols.io.b2ufqetn",
+        "authors": [
+          "Nontaphat Thongsin",
+          "Methichit Wattanapanitch"
+        ],
+        "published": "2021-12-14",
+        "updated": null,
+        "licenseCode": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "licenseEvidenceUrl": "https://api.crossref.org/works/10.17504/protocols.io.b2ufqetn",
+        "licenseVerifiedAt": "2026-08-01T22:57:23Z",
+        "metadataVerifiedAt": "2026-08-01T22:57:23Z",
+        "specimen": "Primary human NK cells and 3D tumor spheroids",
+        "organism": "Homo sapiens",
+        "platform": "3D tumor-spheroid co-culture with confocal microscopy",
+        "methodVariant": "NK-cell killing of 3D tumor spheroids with imaging-based cytotoxicity readout; 2D target-cell lysis and flow, chromium-release, LDH, or luminescent readouts are separate",
+        "safetyLevel": "not specified",
+        "confidence": 0.91,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.99,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.95,
+          "freshness": 0.78,
+          "corroboration": 0.88,
+          "overall": 0.91
+        },
+        "evidenceStatus": "metadata-and-license-verified",
+        "selectionNote": "Selected because it is a dedicated primary human NK-cell cytotoxicity protocol with explicit target-cell context, co-culture operation, and imaging readout. The 3D spheroid format is retained as the method variant rather than generalized to 2D K562 or other target-cell killing assays."
+      },
+      "screened": [
+        {
+          "title": "BiTE bystander T cell-dependent cellular cytotoxicity (TDCC) assay v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://www.protocols.io/view/bite-bystander-t-cell-dependent-cellular-cytotoxic-hwfb7bn",
+          "sourceRecordId": "hwfb7bn",
+          "doi": "10.17504/protocols.io.hwfb7bn",
+          "screenStatus": "wrong-variant",
+          "reason": "Direct cellular-cytotoxicity assay with target-positive and target-negative cells, but it is a BiTE/T-cell-dependent pharmacology format rather than the selected primary NK-cell target-killing workflow."
+        },
+        {
+          "title": "A tractable microscopy- and flow cytometry-based method to measure natural killer cell-mediated killing and infiltration of tumor spheroids",
+          "source": "Nature Protocols",
+          "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8936498/",
+          "sourceRecordId": null,
+          "doi": null,
+          "screenStatus": "alternative",
+          "reason": "Strong corroborating NK-cell/tumor-spheroid imaging and flow method, retained as an alternative record because the accessible source is a publication page rather than a standalone protocols.io record."
+        }
+      ],
+      "coverageGaps": [
+        "The representative uses 3D tumor spheroids and confocal imaging; 2D target-cell assays, K562-specific NK assays, T-cell killing, and label-free or biochemical readouts are distinct variants.",
+        "Effector-to-target ratio, target-cell identity, target labeling, incubation time, and the definition of percent killing vary materially across cytotoxicity platforms.",
+        "The metadata does not encode all readout normalization and gating details needed for direct comparison across imaging, flow, chromium-release, LDH, and luminescent assays."
+      ],
+      "nextSearchSuggestions": [
+        "Add a 2D NK-versus-K562 cytotoxicity child category.",
+        "Add separate flow-based, chromium-release, LDH, and luminescent target-lysis child categories."
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "pbmc-isolation",
+      "t-cell-activation",
+      "cytokine-assay",
+      "cytotoxicity-assay"
+    ],
+    "actualCategoryIds": [
+      "pbmc-isolation",
+      "t-cell-activation",
+      "cytokine-assay",
+      "cytotoxicity-assay"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": true,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-01T22:57:23Z",
+    "selfCheckNotes": [
+      "Exactly four categoryResults are present in the assigned packet order.",
+      "All category IDs match the packet exactly; no category is missing, duplicated, or unexpected.",
+      "Every representative has an HTTP(S) source URL, stable protocols.io record ID, DOI, metadata verification timestamp, and record-level Crossref license evidence URL.",
+      "Each category has a direct representative and screened alternatives or corroborating public records; material specimen, stimulation, platform, target-cell, and readout variants are documented in coverageGaps.",
+      "The output stores metadata and short evidence notes only; no protocol steps, tables, figures, videos, PDFs, or long source passages were copied.",
+      "Result was re-read and parsed as JSON after writing."
+    ]
+  },
+  "runNotes": [
+    "Research was metadata-first and covered protocols.io, Crossref record metadata, NCBI/PMC method references, and public protocol-family pages.",
+    "The packet is complete at the four assigned category level while preserving blood source, anticoagulant, stimulation format, cytokine platform, target-cell, effector-ratio, and cytotoxicity-readout variants as explicit gaps."
+  ]
+}

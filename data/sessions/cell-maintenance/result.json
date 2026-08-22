@@ -1,0 +1,410 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "cell-maintenance",
+  "sessionTitle": "Mammalian cell maintenance and banking",
+  "packetStatus": "complete",
+  "writtenAt": "2026-08-01T23:03:33Z",
+  "worker": "independent-protocol-atlas-crawler",
+  "sourcesSearched": [
+    "https://www.protocols.io/",
+    "https://www.protocols.io/terms",
+    "https://api.crossref.org/works",
+    "https://en.bio-protocol.org/exchange/protocoldetail?id=207&type=1",
+    "https://www.nature.com/protocols/"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "cell-culture-maintenance",
+      "categoryLabel": "Mammalian cell culture maintenance",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works",
+        "https://doi.org/10.17504/protocols.io.8epv5rrq4g1b/v1",
+        "https://www.protocols.io/view/protocol-for-the-growth-and-maintenance-of-mammali-8epv5rrq4g1b/v1",
+        "https://www.protocols.io/terms",
+        "https://doi.org/10.17504/protocols.io.nszdef6",
+        "https://doi.org/10.1038/nprot.2012.130"
+      ],
+      "representative": {
+        "title": "Protocol for the growth and maintenance of mammalian cell lines",
+        "protocolType": "public protocol",
+        "assay": "routine mammalian cell growth and maintenance",
+        "operation": "maintenance and passaging of standard mammalian cell lines",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/protocol-for-the-growth-and-maintenance-of-mammali-8epv5rrq4g1b/v1",
+        "sourceRecordId": "8epv5rrq4g1b/v1",
+        "doi": "10.17504/protocols.io.8epv5rrq4g1b/v1",
+        "authors": [
+          "Agnes Roczniak-Ferguson",
+          "Shawn M. Ferguson"
+        ],
+        "published": "2024-06-05",
+        "updated": "2024-06-05",
+        "licenseCode": "CC BY (version unspecified)",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://www.protocols.io/terms",
+        "licenseVerifiedAt": "2026-08-01T23:03:33Z",
+        "metadataVerifiedAt": "2026-08-01T23:03:33Z",
+        "specimen": "HeLa cells; adaptable to standard mammalian cell lines",
+        "organism": "mammalian cell lines",
+        "platform": "adherent cell culture flask, incubator, and biosafety cabinet",
+        "methodVariant": "adherent-cell routine culture and passaging",
+        "safetyLevel": "not specified",
+        "confidence": 0.94,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.95,
+          "sourceAuthority": 0.86,
+          "metadataCompleteness": 0.96,
+          "freshness": 0.82,
+          "corroboration": 0.8,
+          "overall": 0.9
+        },
+        "evidenceStatus": "public-record-metadata-and-license-verified",
+        "selectionNote": "Selected for its recent, general mammalian maintenance scope, stable DOI, named authors and affiliations, public abstract, and explicit CC-BY basis for publicly published user protocols. Cell-line-specific medium, coating, and incubator adaptations remain necessary."
+      },
+      "screened": [
+        {
+          "title": "Basic Cell Culture Maintenance: Splitting Cells v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.nszdef6",
+          "sourceRecordId": "nszdef6",
+          "doi": "10.17504/protocols.io.nszdef6",
+          "screenStatus": "alternative",
+          "reason": "Directly relevant to routine splitting, but narrower in operation and older than the selected general maintenance record."
+        },
+        {
+          "title": "Passaging and colony expansion of human pluripotent stem cells by enzyme-free dissociation in chemically defined culture conditions",
+          "source": "Nature Protocols",
+          "sourceUrl": "https://doi.org/10.1038/nprot.2012.130",
+          "sourceRecordId": "nprot.2012.130",
+          "doi": "10.1038/nprot.2012.130",
+          "screenStatus": "wrong-variant",
+          "reason": "Specific to human pluripotent stem cells and defined enzyme-free conditions, so it should not stand in for broad mammalian routine maintenance."
+        },
+        {
+          "title": "Mouse Embryonic Stem Cell Maintenance for Differentiation",
+          "source": "Bio-protocol",
+          "sourceUrl": "https://doi.org/10.21769/bioprotoc.145",
+          "sourceRecordId": "145",
+          "doi": "10.21769/bioprotoc.145",
+          "screenStatus": "wrong-variant",
+          "reason": "A useful stem-cell maintenance record, but its mouse embryonic stem-cell scope is narrower than the assigned general mammalian category."
+        }
+      ],
+      "coverageGaps": [
+        "Routine maintenance spans adherent, suspension, primary, and stem-cell variants; these were not merged into one universal record.",
+        "The selected record is HeLa-oriented and does not provide a universal medium, coating, or incubator specification for every mammalian line."
+      ],
+      "nextSearchSuggestions": [
+        "Search separately for suspension-cell maintenance protocols.",
+        "Search primary mammalian cell maintenance by tissue and coating requirement.",
+        "Search for cell-line-specific medium and confluency records when a line is selected."
+      ]
+    },
+    {
+      "categoryId": "cell-thawing",
+      "categoryLabel": "Cell thawing and recovery",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works",
+        "https://doi.org/10.17504/protocols.io.bvpyn5pw",
+        "https://www.protocols.io/view/cell-storage-01-freezing-and-thawing-protocol-for-bp2l6byjdgqe/v1",
+        "https://www.protocols.io/terms",
+        "https://doi.org/10.17504/protocols.io.bvwxn7fn",
+        "https://doi.org/10.17504/protocols.io.bm9ck92w",
+        "https://doi.org/10.3390/cells11050799"
+      ],
+      "representative": {
+        "title": "CELL STORAGE-01-Freezing and Thawing Protocol for Adherent Cell Lines",
+        "protocolType": "public protocol",
+        "assay": "post-cryopreservation cell recovery",
+        "operation": "thawing and recovery of adherent mammalian cell lines",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/cell-storage-01-freezing-and-thawing-protocol-for-bp2l6byjdgqe/v1",
+        "sourceRecordId": "bp2l6byjdgqe/v1",
+        "doi": "10.17504/protocols.io.bvpyn5pw",
+        "authors": [
+          "Marco Cosentino",
+          "Massimiliano Legnaro",
+          "Emanuela Rasini",
+          "Mariagiulia Albizzati",
+          "Marco Ferrari",
+          "Franca Marino",
+          "Alessandra Luini"
+        ],
+        "published": "2021-07-28",
+        "updated": "2021-07-28",
+        "licenseCode": "CC BY (version unspecified)",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://www.protocols.io/terms",
+        "licenseVerifiedAt": "2026-08-01T23:03:33Z",
+        "metadataVerifiedAt": "2026-08-01T23:03:33Z",
+        "specimen": "adherent cell lines including MCF7, HUVEC, A549, and synovial fibroblasts",
+        "organism": "human-derived cell lines",
+        "platform": "water-bath thawing, culture flask, optical microscopy, and confluence recovery QC",
+        "methodVariant": "adherent-cell thawing with rapid cryoprotectant removal",
+        "safetyLevel": "not specified",
+        "confidence": 0.92,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.97,
+          "sourceAuthority": 0.86,
+          "metadataCompleteness": 0.98,
+          "freshness": 0.68,
+          "corroboration": 0.86,
+          "overall": 0.88
+        },
+        "evidenceStatus": "public-record-metadata-and-license-verified",
+        "selectionNote": "Selected because the public record is explicitly focused on thawing and post-thaw quality for adherent cell lines, names the validated cell-line scope, provides authors, affiliation, DOI, date, and public status, and has an explicit CC-BY basis under the site terms."
+      },
+      "screened": [
+        {
+          "title": "CELL STORAGE-02-Freezing and Thawing Protocol for Suspension Cell Lines v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.bvwxn7fn",
+          "sourceRecordId": "bvwxn7fn",
+          "doi": "10.17504/protocols.io.bvwxn7fn",
+          "screenStatus": "wrong-variant",
+          "reason": "Directly relevant but specific to suspension cell lines, whereas the selected representative covers adherent lines."
+        },
+        {
+          "title": "PBMC Thawing Protocol v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.bm9ck92w",
+          "sourceRecordId": "bm9ck92w",
+          "doi": "10.17504/protocols.io.bm9ck92w",
+          "screenStatus": "wrong-variant",
+          "reason": "Primary immune-cell recovery is a meaningful variant, but it is not a general adherent mammalian cell-line thawing record."
+        },
+        {
+          "title": "Improving Cell Recovery: Freezing and Thawing Optimization of Induced Pluripotent Stem Cells",
+          "source": "Cells",
+          "sourceUrl": "https://doi.org/10.3390/cells11050799",
+          "sourceRecordId": "cells11050799",
+          "doi": "10.3390/cells11050799",
+          "screenStatus": "alternative",
+          "reason": "Open-access recovery optimization provides useful corroboration, but the experimental system is induced pluripotent stem cells rather than routine adherent cell lines."
+        }
+      ],
+      "coverageGaps": [
+        "The selected record is for adherent human-derived lines; suspension, primary-cell, and pluripotent-stem-cell recovery remain separate variants.",
+        "No single universal thawing record was identified that covers all mammalian cell types and recovery media."
+      ],
+      "nextSearchSuggestions": [
+        "Search suspension-cell thawing and recovery as a separate child category.",
+        "Search primary-cell and PBMC recovery protocols separately.",
+        "Search stem-cell thawing protocols with post-thaw survival or attachment readouts."
+      ]
+    },
+    {
+      "categoryId": "cell-cryopreservation",
+      "categoryLabel": "Cell cryopreservation and banking",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works",
+        "https://doi.org/10.17504/protocols.io.8gmhtu6",
+        "https://www.protocols.io/view/freezing-cell-banking-81wgbpp6qvpk/v1",
+        "https://www.protocols.io/terms",
+        "https://doi.org/10.1038/nprot.2008.190",
+        "https://doi.org/10.1038/protex.2011.224",
+        "https://doi.org/10.17504/protocols.io.3szgnf6"
+      ],
+      "representative": {
+        "title": "Freezing/Cell Banking",
+        "protocolType": "public protocol",
+        "assay": "cell cryopreservation and cell-bank generation",
+        "operation": "cryopreservation and long-term banking of dural cells",
+        "source": "protocols.io",
+        "sourceUrl": "https://www.protocols.io/view/freezing-cell-banking-81wgbpp6qvpk/v1",
+        "sourceRecordId": "81wgbpp6qvpk/v1",
+        "doi": "10.17504/protocols.io.8gmhtu6",
+        "authors": [
+          "Andrea Argouarch"
+        ],
+        "published": "2020-09-10",
+        "updated": "2020-09-10",
+        "licenseCode": "CC BY (version unspecified)",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://www.protocols.io/terms",
+        "licenseVerifiedAt": "2026-08-01T23:03:33Z",
+        "metadataVerifiedAt": "2026-08-01T23:03:33Z",
+        "specimen": "dural cells",
+        "organism": null,
+        "platform": "cryovials and liquid-nitrogen storage",
+        "methodVariant": "cell-bank freezing from confluent cultures",
+        "safetyLevel": "not specified",
+        "confidence": 0.9,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.96,
+          "sourceAuthority": 0.84,
+          "metadataCompleteness": 0.94,
+          "freshness": 0.62,
+          "corroboration": 0.78,
+          "overall": 0.85
+        },
+        "evidenceStatus": "public-record-metadata-and-license-verified",
+        "selectionNote": "Selected because the public record explicitly identifies banking into cryovials for long-term liquid-nitrogen storage and exposes a stable DOI, author, affiliation, date, public status, and CC-BY site-term evidence. The workflow is dural-cell specific, so generalization across cell lines is recorded as a gap."
+      },
+      "screened": [
+        {
+          "title": "Cryopreservation and banking of mammalian cell lines",
+          "source": "Nature Protocols",
+          "sourceUrl": "https://doi.org/10.1038/nprot.2008.190",
+          "sourceRecordId": "nprot.2008.190",
+          "doi": "10.1038/nprot.2008.190",
+          "screenStatus": "alternative",
+          "reason": "Canonical general cell-line banking protocol, but the publisher landing page was challenge-gated during this run and record-level reuse licensing was not verified."
+        },
+        {
+          "title": "Mammalian Cell Culture: Freezing v1",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.3szgnf6",
+          "sourceRecordId": "3szgnf6",
+          "doi": "10.17504/protocols.io.3szgnf6",
+          "screenStatus": "alternative",
+          "reason": "Relevant general freezing record, but its title and available metadata do not establish a banking workflow as clearly as the selected record."
+        },
+        {
+          "title": "Rate-controlled Cryopreservation and Thawing of Mammalian Cells",
+          "source": "Nature Protocol Exchange via protocols.io",
+          "sourceUrl": "https://doi.org/10.1038/protex.2011.224",
+          "sourceRecordId": "protex.2011.224",
+          "doi": "10.1038/protex.2011.224",
+          "screenStatus": "alternative",
+          "reason": "Strong controlled-cooling mammalian-cell variant, but it combines freezing and thawing and has less explicit cell-bank scope."
+        }
+      ],
+      "coverageGaps": [
+        "The selected banking record is dural-cell specific; master/working bank release criteria and cell-line-independent validation were not established.",
+        "Cryoprotectant, cooling-rate, and post-thaw QC choices may differ substantially for suspension, primary, and stem-cell systems."
+      ],
+      "nextSearchSuggestions": [
+        "Search master-cell-bank and working-cell-bank release criteria separately.",
+        "Search suspension and primary-cell cryopreservation by cell type.",
+        "Compare controlled-rate cooling with passive freezing for the intended cell line."
+      ]
+    },
+    {
+      "categoryId": "mycoplasma-testing",
+      "categoryLabel": "Mycoplasma testing",
+      "status": "complete",
+      "searchedAt": "2026-08-01",
+      "sourcesSearched": [
+        "https://api.crossref.org/works",
+        "https://en.bio-protocol.org/exchange/protocoldetail?id=207&type=1",
+        "https://doi.org/10.21769/BioProtoc.207",
+        "https://doi.org/10.1038/nprot.2010.43",
+        "https://doi.org/10.21769/l629",
+        "https://doi.org/10.1385/1-59259-406-9:319"
+      ],
+      "representative": {
+        "title": "Cell Culture Mycoplasma Detection by PCR",
+        "protocolType": "peer-reviewed protocol",
+        "assay": "mycoplasma contamination detection",
+        "operation": "PCR screening of cell-culture samples with gel-electrophoresis readout",
+        "source": "Bio-protocol",
+        "sourceUrl": "https://en.bio-protocol.org/exchange/protocoldetail?id=207&type=1",
+        "sourceRecordId": "207",
+        "doi": "10.21769/BioProtoc.207",
+        "authors": [
+          "Huan Pang"
+        ],
+        "published": "2012-04-20",
+        "updated": null,
+        "licenseCode": null,
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://en.bio-protocol.org/exchange/protocoldetail?id=207&type=1",
+        "licenseVerifiedAt": "2026-08-01T23:03:33Z",
+        "metadataVerifiedAt": "2026-08-01T23:03:33Z",
+        "specimen": "cell-culture supernatant",
+        "organism": "Mycoplasma spp.",
+        "platform": "conventional PCR and agarose gel electrophoresis",
+        "methodVariant": "consensus-sequence PCR for broad mycoplasma detection",
+        "safetyLevel": "not specified",
+        "confidence": 0.9,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.98,
+          "sourceAuthority": 0.86,
+          "metadataCompleteness": 0.98,
+          "freshness": 0.48,
+          "corroboration": 0.84,
+          "overall": 0.85
+        },
+        "evidenceStatus": "public-metadata-and-copyright-statement-verified; full procedure text is login-gated",
+        "selectionNote": "Selected for its direct cell-culture mycoplasma PCR focus, peer-reviewed label, public DOI/author/date metadata, and explicit page-level copyright statement. The page states that Bio-protocol LLC is the exclusive licensee; no reuse permission is assumed from public access, and full procedure text requires login."
+      },
+      "screened": [
+        {
+          "title": "Detection of Mycoplasma in cell cultures",
+          "source": "Nature Protocols",
+          "sourceUrl": "https://doi.org/10.1038/nprot.2010.43",
+          "sourceRecordId": "nprot.2010.43",
+          "doi": "10.1038/nprot.2010.43",
+          "screenStatus": "alternative",
+          "reason": "Canonical protocol-level alternative, but the publisher landing page was challenge-gated during this run and record-level license evidence was not verified."
+        },
+        {
+          "title": "Testing for mycoplasma in cell culture by PCR",
+          "source": "Bio-protocol",
+          "sourceUrl": "https://doi.org/10.21769/l629",
+          "sourceRecordId": "l629",
+          "doi": "10.21769/l629",
+          "screenStatus": "alternative",
+          "reason": "A newer PCR-focused alternative, retained for follow-up comparison because its public metadata was less complete in this run."
+        },
+        {
+          "title": "Detecting Mycoplasma Contamination in Cell Cultures by Polymerase Chain Reaction",
+          "source": "Methods in Molecular Biology",
+          "sourceUrl": "https://doi.org/10.1385/1-59259-406-9:319",
+          "sourceRecordId": "1-59259-406-9:319",
+          "doi": "10.1385/1-59259-406-9:319",
+          "screenStatus": "inaccessible",
+          "reason": "Relevant book-chapter protocol record, but the full publisher content and record-level reuse terms were not publicly verified."
+        }
+      ],
+      "coverageGaps": [
+        "The representative is a PCR workflow; luminescence, enzymatic, staining, and culture-based tests remain separate assay variants.",
+        "The public page exposes metadata and an abstract/materials view, but the full procedure text is login-gated."
+      ],
+      "nextSearchSuggestions": [
+        "Search luminescence and enzymatic mycoplasma detection as separate variants.",
+        "Search direct institutional QC SOPs with record-level licenses.",
+        "Verify primer coverage and analytical sensitivity against a current validation source before implementation."
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "cell-culture-maintenance",
+      "cell-thawing",
+      "cell-cryopreservation",
+      "mycoplasma-testing"
+    ],
+    "actualCategoryIds": [
+      "cell-culture-maintenance",
+      "cell-thawing",
+      "cell-cryopreservation",
+      "mycoplasma-testing"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": true,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-01T23:03:33Z",
+    "selfCheckNotes": [
+      "Category IDs are exactly the assigned four IDs and remain in packet order.",
+      "Every representative has a stable HTTP(S) source URL, source record ID, and DOI or an explicit null.",
+      "License evidence URLs were recorded from explicit source or platform statements; no reuse permission was inferred from access alone.",
+      "Only metadata, citations, source URLs, license evidence, and short evidence notes were stored; protocol steps and long passages were omitted.",
+      "The output was written, re-read, parsed as JSON, and checked against the packet contract."
+    ]
+  },
+  "runNotes": [
+    "Protocols.io public records were selected for the first three categories because the page status, DOI metadata, and platform terms were directly verifiable.",
+    "The mycoplasma representative is a public Bio-protocol record with explicit copyright/licensing language but login-gated full text; this limitation is preserved in the record and coverage gaps."
+  ]
+}

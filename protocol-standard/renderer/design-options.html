@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LabRecord — Protocol Front-End Design Options</title>
+<style>
+/* LabRecord protocol renderer + demo shell styles */
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --ink: #1c2530;
+  --muted: #5b6b7b;
+  --line: #e3e8ee;
+  --accent: #2f6f8f;
+  --accent-soft: #e7f1f6;
+  --review-bg: #fff4e5;
+  --review-ink: #a15c00;
+  --review-line: #f0c98a;
+  --chip-bg: #eef2f6;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); }
+
+/* shell */
+.app { display: flex; min-height: 100vh; }
+.side { width: 280px; flex: 0 0 280px; background: var(--panel); border-right: 1px solid var(--line); padding: 18px 14px; position: sticky; top: 0; height: 100vh; overflow: auto; }
+.brand { font-weight: 700; font-size: 18px; color: var(--accent); margin-bottom: 4px; }
+.brand small { font-weight: 500; color: var(--muted); font-size: 12px; }
+.side h4 { margin: 18px 6px 6px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.nav-item { display: block; width: 100%; text-align: left; background: none; border: 0; border-radius: 8px; padding: 9px 10px; font: inherit; color: var(--ink); cursor: pointer; }
+.nav-item:hover { background: var(--accent-soft); }
+.nav-item.active { background: var(--accent); color: #fff; }
+.nav-item small { display: block; color: var(--muted); font-size: 11px; }
+.nav-item.active small { color: #d7e7ef; }
+.side-foot { margin-top: 18px; padding: 10px; font-size: 11px; color: var(--muted); border-top: 1px solid var(--line); }
+.main { flex: 1; padding: 28px 34px; max-width: 1000px; }
+
+/* protocol document */
+.protocol { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 26px 30px; }
+.protocol h1 { font-size: 24px; margin: 0 0 10px; }
+.protocol h2 { font-size: 16px; margin: 26px 0 8px; padding-bottom: 5px; border-bottom: 2px solid var(--accent-soft); color: var(--accent); }
+.protocol h3.phase { font-size: 13px; margin: 18px 0 6px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.protocol p { margin: 6px 0; }
+.protocol ul { margin: 6px 0; padding-left: 20px; }
+.protocol li { margin: 3px 0; }
+.protocol code { background: var(--chip-bg); padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+.protocol a { color: var(--accent); }
+
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
+.badge { background: var(--chip-bg); color: var(--muted); border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
+.badge-time { background: #eef6ee; color: #3a6b3a; }
+.badge-review { background: var(--review-bg); color: var(--review-ink); }
+.badge-status { background: #eae7fb; color: #4b3fa0; text-transform: capitalize; }
+.badge-bsl { background: #fde8e8; color: #a23b3b; }
+
+.tbl { width: 100%; border-collapse: collapse; margin: 8px 0 4px; font-size: 14px; }
+.tbl th { text-align: left; background: #f2f5f8; border: 1px solid var(--line); padding: 7px 9px; font-size: 12px; color: var(--muted); }
+.tbl td { border: 1px solid var(--line); padding: 7px 9px; vertical-align: top; }
+.tbl.proc td:first-child { width: 42px; text-align: center; color: var(--muted); }
+.row-review { background: var(--review-bg); }
+
+.param { display: inline-block; background: var(--accent-soft); color: var(--accent); border-radius: 6px; padding: 1px 7px; margin: 2px 3px 2px 0; font-size: 12.5px; white-space: nowrap; }
+.param-type { display: inline-block; font-size: 9.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-right: 4px; vertical-align: 1px; }
+.param-review { background: var(--review-bg); color: var(--review-ink); }
+.chip { display: inline-block; background: var(--chip-bg); border-radius: 6px; padding: 1px 7px; margin: 2px 3px 0 0; font-size: 12px; }
+.chip-review { background: var(--review-bg); color: var(--review-ink); }
+.refs { margin-top: 5px; }
+.opt { color: var(--muted); font-size: 12px; font-weight: 600; }
+.decision { margin-top: 4px; font-size: 12.5px; color: #6a4bb0; }
+.safety-inline { color: #a23b3b; font-size: 12.5px; }
+.review { background: var(--review-bg); color: var(--review-ink); border: 1px solid var(--review-line); border-radius: 4px; font-size: 10px; padding: 0 4px; text-transform: uppercase; letter-spacing: .03em; }
+.lic { color: var(--muted); font-size: 12px; }
+.error { color: #a23b3b; }
+
+.jsonbox { margin: 16px 0 0; }
+.jsonbox summary { cursor: pointer; color: var(--accent); font-size: 13px; font-weight: 600; }
+.jsonbox pre { background: #0f1720; color: #d7e2ec; padding: 14px; border-radius: 10px; overflow: auto; font-size: 12px; line-height: 1.45; max-height: 520px; }
+.doc-note { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 6px; margin: 0 0 16px; font-size: 13.5px; color: #24506a; }
+.schema-pre { background: #0f1720; color: #d7e2ec; padding: 16px; border-radius: 10px; overflow: auto; font-size: 12px; line-height: 1.45; }
+
+/* Styles for the alternative protocol presentations (variants.js). Document view uses styles.css. */
+.v-head { margin-bottom: 14px; }
+.v-head h1 { font-size: 22px; margin: 0 0 8px; }
+.v-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.v-badge { background: #eef2f6; color: #5b6b7b; border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
+.v-badge-time { background: #eef6ee; color: #3a6b3a; }
+.v-purpose { color: #33414f; margin: 0; }
+.v-pill { display: inline-block; background: #e7f1f6; color: #2f6f8f; border-radius: 6px; padding: 1px 8px; margin: 2px 4px 2px 0; font-size: 12.5px; white-space: nowrap; }
+.v-pill i { font-style: normal; font-size: 9.5px; text-transform: uppercase; color: #86a2b1; margin-right: 4px; }
+.v-pill-review { background: #fff4e5; color: #a15c00; }
+.v-chip { display: inline-block; background: #eef2f6; border-radius: 6px; padding: 1px 8px; margin: 2px 4px 0 0; font-size: 12px; color: #33414f; }
+.v-chip-eq { background: #f0ecfb; color: #5b4b9f; }
+.v-chip-sw { background: #e6f4f0; color: #2b7a5f; }
+.v-chip-in { background: #e8f0fe; color: #3367d6; }
+.v-chip-out { background: #e6f9e8; color: #2e7d32; }
+.v-chip-tbl { background: #fef3e0; color: #8a6d3b; }
+.v-chip-review { background: #fff4e5; color: #a15c00; }
+.v-row { margin-top: 5px; }
+.v-row-dim { opacity: .9; }
+.v-opt { color: #86a2b1; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.v-flag { background: #fff4e5; color: #a15c00; font-size: 10px; padding: 0 4px; border-radius: 3px; }
+.v-expect { color: #3a6b3a; font-size: 13px; margin-top: 5px; }
+.v-note { color: #8a5a1a; font-size: 12.5px; margin-top: 3px; }
+
+/* --- checklist / bench run-mode --- */
+.v-checklist .v-phase-bar { background: #2f6f8f; color: #fff; padding: 6px 12px; border-radius: 8px; font-weight: 600; font-size: 13px; margin: 18px 0 8px; }
+.v-card { display: flex; gap: 12px; align-items: flex-start; background: #fff; border: 1px solid #e3e8ee; border-radius: 10px; padding: 12px 14px; margin: 8px 0; cursor: pointer; transition: box-shadow .15s; }
+.v-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+.v-card-review { border-left: 3px solid #f0c98a; }
+.v-check { margin-top: 4px; width: 18px; height: 18px; flex: 0 0 auto; }
+.v-card:has(.v-check:checked) { opacity: .55; background: #f6f8fa; }
+.v-card:has(.v-check:checked) .v-card-top { text-decoration: line-through; }
+.v-card-body { flex: 1; }
+.v-card-top { font-size: 15px; }
+.v-num { display: inline-block; min-width: 22px; height: 22px; line-height: 22px; text-align: center; background: #e7f1f6; color: #2f6f8f; border-radius: 6px; font-size: 12px; font-weight: 700; margin-right: 8px; }
+
+/* --- timeline / vertical stepper --- */
+.v-tl { position: relative; margin-left: 12px; padding-left: 26px; border-left: 2px solid #dbe3ea; }
+.v-tl-phase { margin: 16px 0 10px -40px; }
+.v-tl-phase span { background: #eef2f6; color: #33414f; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; padding: 4px 12px; border-radius: 999px; }
+.v-tl-item { position: relative; margin: 0 0 16px; }
+.v-tl-dot { position: absolute; left: -37px; top: 0; width: 24px; height: 24px; line-height: 24px; text-align: center; background: #2f6f8f; color: #fff; border-radius: 50%; font-size: 12px; font-weight: 700; box-shadow: 0 0 0 4px #fff; }
+.v-tl-review .v-tl-dot { background: #d98a2b; }
+.v-tl-content { background: #fff; border: 1px solid #e3e8ee; border-radius: 10px; padding: 10px 14px; }
+.v-tl-action { font-size: 14.5px; }
+
+/* --- compact / two-column reference --- */
+.v-compact .v-cols { display: flex; gap: 22px; align-items: flex-start; }
+.v-side { flex: 0 0 240px; background: #f6f8fa; border: 1px solid #e3e8ee; border-radius: 10px; padding: 12px 14px; font-size: 13px; }
+.v-side h4 { margin: 10px 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: #5b6b7b; }
+.v-side h4:first-child { margin-top: 0; }
+.v-mini { margin: 0; padding-left: 16px; }
+.v-mini li { margin: 2px 0; }
+.v-main { flex: 1; }
+.v-cphase { margin: 12px 0 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: #2f6f8f; }
+.v-steps { margin: 0 0 8px; padding-left: 26px; }
+.v-steps li { margin: 5px 0; font-size: 13.5px; }
+.v-li-review { background: #fff8ef; }
+.v-expect-inline { color: #3a6b3a; }
+
+/* --- v0.3 elements shared across variants --- */
+.v-badge-disc { background: #e6f4f0; color: #2b7a5f; }
+.v-repeat { display: inline-block; background: #f0ecfb; color: #5b4b9f; border-radius: 6px; padding: 1px 7px; margin-left: 6px; font-size: 11px; font-weight: 600; }
+.v-cmd { margin-top: 5px; }
+.v-cmd code { display: inline-block; background: #0f1720; color: #d7e2ec; padding: 3px 8px; border-radius: 5px; font-size: 12px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; max-width: 100%; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+.v-cmd-inline { background: #0f1720; color: #d7e2ec; padding: 1px 6px; border-radius: 4px; font-size: 11px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+.v-accept { color: #2f6f8f; font-size: 12.5px; margin-top: 3px; }
+.v-accept-inline { color: #2f6f8f; font-size: 12px; }
+.v-flow { margin-top: 5px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.v-flow-inline { display: inline; }
+.v-arrow { color: #5b6b7b; font-weight: 700; font-size: 14px; }
+.v-branch { margin-top: 4px; font-size: 12.5px; color: #6a4bb0; }
+.v-section { margin: 12px 0 14px; padding: 10px 14px; background: #f6f8fa; border: 1px solid #e3e8ee; border-radius: 10px; }
+.v-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #5b6b7b; margin-bottom: 6px; }
+.v-tbl { width: 100%; border-collapse: collapse; margin: 4px 0; font-size: 12.5px; }
+.v-tbl th { text-align: left; background: #eef2f6; border: 1px solid #e3e8ee; padding: 4px 8px; font-size: 11px; color: #5b6b7b; }
+.v-tbl td { border: 1px solid #e3e8ee; padding: 4px 8px; }
+.v-detail { font-size: 12.5px; color: #33414f; margin: 3px 0; }
+.v-side .v-detail { font-size: 11.5px; color: #5b6b7b; margin: 2px 0 4px; }
+
+/* toolbar for the comparison page */
+.vtoolbar { position: sticky; top: 0; z-index: 5; background: #fff; border-bottom: 1px solid #e3e8ee; padding: 12px 20px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.vtoolbar .grp { display: flex; gap: 6px; align-items: center; }
+.vtoolbar label { font-size: 12px; color: #5b6b7b; font-weight: 600; }
+.vtoolbar select { font: inherit; padding: 5px 8px; border: 1px solid #cdd6df; border-radius: 8px; background: #fff; }
+.vseg { display: inline-flex; border: 1px solid #cdd6df; border-radius: 8px; overflow: hidden; }
+.vseg button { border: 0; background: #fff; padding: 6px 12px; font: inherit; font-size: 13px; cursor: pointer; color: #33414f; }
+.vseg button.active { background: #2f6f8f; color: #fff; }
+.vseg button + button { border-left: 1px solid #cdd6df; }
+.vwrap { padding: 22px 26px; max-width: 940px; margin: 0 auto; }
+.vhint { color: #5b6b7b; font-size: 12.5px; margin: 0 0 14px; }
+@media print { .vtoolbar { display: none; } }
+
+body { background: #f6f7f9; }
+</style>
+</head>
+<body>
+<div class="vtoolbar">
+  <div class="grp"><strong style="color:#2f6f8f">LabRecord</strong><span style="color:#5b6b7b;font-size:13px">Front-end design options</span></div>
+  <div class="grp"><label for="psel">Protocol</label>
+    <select id="psel"><option value="0">Western Blot</option><option value="1">RT-qPCR (MIQE)</option><option value="2">Cell Culture</option><option value="3">Gel Filtration</option><option value="4">Protein Concentration</option></select>
+  </div>
+  <div class="grp"><label>Design</label>
+    <span class="vseg" id="seg"><button data-key="document" class="active">Document</button><button data-key="checklist">Checklist / Run</button><button data-key="timeline">Timeline</button><button data-key="compact">Compact / Print</button></span>
+  </div>
+</div>
+<div class="vwrap">
+  <p class="vhint" id="hint"></p>
+  <div id="view"></div>
+</div>
+
+<script>
+/*
+ * LabRecord canonical-protocol renderer (framework-agnostic).
+ * renderProtocolHTML(protocol) -> HTML string in the LabRecord Protocol Format v0.1 layout.
+ * Works in the browser (sets window.renderProtocolHTML) and in Node (module.exports).
+ * Pure function: no DOM, no network. Input must conform to canonical-schema.json.
+ */
+(function (global) {
+  function esc(s) {
+    if (s === null || s === undefined) return "";
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function reviewMark(needs) {
+    return needs ? ' <span class="review" title="Needs human review">needs review</span>' : "";
+  }
+
+  // Format one structured parameter into a readable chip.
+  function fmtParam(p) {
+    var text = p.rawText;
+    if (!text) {
+      if (p.value !== null && p.value !== undefined) {
+        text = String(p.value);
+        if (p.valueMax !== null && p.valueMax !== undefined && p.valueMax !== p.value) {
+          text += "–" + p.valueMax; // en dash
+        }
+        if (p.unit) text += " " + p.unit;
+      } else if (p.unit) {
+        text = p.unit;
+      } else {
+        text = p.type || "";
+      }
+    }
+    var cls = "param" + (p.needsReview ? " param-review" : "");
+    return '<span class="' + cls + '"><span class="param-type">' + esc(p.type) + "</span>" + esc(text) + "</span>";
+  }
+
+  function refChip(name, needs) {
+    return '<span class="chip' + (needs ? " chip-review" : "") + '">' + esc(name) + "</span>";
+  }
+
+  function renderProtocolHTML(protocol) {
+    if (!protocol || !protocol.metadata) {
+      return '<article class="protocol"><p class="error">Invalid protocol object.</p></article>';
+    }
+    var m = protocol.metadata;
+    var matById = {};
+    (protocol.materials || []).forEach(function (x) { matById[x.id] = x; });
+    var eqById = {};
+    (protocol.equipment || []).forEach(function (x) { eqById[x.id] = x; });
+
+    // count needsReview items for the summary badge
+    var reviewCount = 0;
+    (protocol.materials || []).forEach(function (x) { if (x.needsReview) reviewCount++; });
+    (protocol.equipment || []).forEach(function (x) { if (x.needsReview) reviewCount++; });
+    (protocol.steps || []).forEach(function (x) {
+      if (x.needsReview) reviewCount++;
+      (x.parameters || []).forEach(function (p) { if (p.needsReview) reviewCount++; });
+    });
+
+    var h = [];
+    h.push('<article class="protocol">');
+
+    // ---- Header ----
+    h.push('<header class="p-head">');
+    h.push("<h1>" + esc(m.title) + "</h1>");
+    h.push('<div class="badges">');
+    if (m.family) h.push('<span class="badge">' + esc(m.family) + "</span>");
+    if (m.category) h.push('<span class="badge">' + esc(m.category) + "</span>");
+    if (m.version) h.push('<span class="badge">v' + esc(m.version) + "</span>");
+    if (m.estimatedTime) h.push('<span class="badge badge-time">⏱ ' + esc(m.estimatedTime) + "</span>");
+    if (reviewCount > 0) h.push('<span class="badge badge-review">' + reviewCount + " need review</span>");
+    if (protocol.provenance && protocol.provenance.status) {
+      h.push('<span class="badge badge-status">' + esc(protocol.provenance.status) + "</span>");
+    }
+    h.push("</div>");
+    if (m.purpose) h.push("<p><strong>Purpose:</strong> " + esc(m.purpose) + "</p>");
+    if (m.scope) h.push("<p><strong>Scope / Applicability:</strong> " + esc(m.scope) + "</p>");
+    if (m.beforeYouBegin && m.beforeYouBegin.length) {
+      h.push("<p><strong>Before You Begin:</strong></p><ul>");
+      m.beforeYouBegin.forEach(function (b) { h.push("<li>" + esc(b) + "</li>"); });
+      h.push("</ul>");
+    }
+    h.push("</header>");
+
+    // ---- Materials ----
+    if (protocol.materials && protocol.materials.length) {
+      h.push("<h2>Materials and Reagents</h2>");
+      h.push('<table class="tbl"><thead><tr><th>Name</th><th>Amount / Working conc.</th><th>Specification / Grade</th><th>Vendor / Cat#</th></tr></thead><tbody>');
+      protocol.materials.forEach(function (x) {
+        var amt = "";
+        if (x.amount !== null && x.amount !== undefined) {
+          amt = String(x.amount);
+          if (x.amountMax !== null && x.amountMax !== undefined && x.amountMax !== x.amount) amt += "–" + x.amountMax;
+          if (x.unit) amt += " " + x.unit;
+        } else if (x.workingConcentration) {
+          amt = x.workingConcentration;
+        }
+        var vendor = x.vendor || "";
+        if (x.catalogNumber) vendor += (vendor ? " " : "") + x.catalogNumber;
+        h.push("<tr" + (x.needsReview ? ' class="row-review"' : "") + "><td>" + esc(x.name) + reviewMark(x.needsReview) +
+          "</td><td>" + esc(amt) + "</td><td>" + esc(x.specification || "") + "</td><td>" + esc(vendor) + "</td></tr>");
+      });
+      h.push("</tbody></table>");
+    }
+
+    // ---- Equipment ----
+    if (protocol.equipment && protocol.equipment.length) {
+      h.push("<h2>Equipment and Settings</h2>");
+      h.push('<table class="tbl"><thead><tr><th>Name</th><th>Model</th><th>Settings</th></tr></thead><tbody>');
+      protocol.equipment.forEach(function (x) {
+        h.push("<tr" + (x.needsReview ? ' class="row-review"' : "") + "><td>" + esc(x.name) + reviewMark(x.needsReview) +
+          "</td><td>" + esc(x.model || "") + "</td><td>" + esc(x.settings || "") + "</td></tr>");
+      });
+      h.push("</tbody></table>");
+    }
+
+    // ---- Procedure (grouped by phase, in first-appearance order) ----
+    if (protocol.steps && protocol.steps.length) {
+      h.push("<h2>Procedure</h2>");
+      var order = [];
+      var groups = {};
+      protocol.steps.forEach(function (s) {
+        var key = s.phase || "";
+        if (!(key in groups)) { groups[key] = []; order.push(key); }
+        groups[key].push(s);
+      });
+      order.forEach(function (key) {
+        if (key) h.push('<h3 class="phase">' + esc(key) + "</h3>");
+        h.push('<table class="tbl proc"><thead><tr><th>Step</th><th>Action</th><th>Parameters</th><th>Expected Result / QC</th><th>Critical Notes</th></tr></thead><tbody>');
+        groups[key].forEach(function (s) {
+          var refs = [];
+          (s.materialIds || []).forEach(function (id) { if (matById[id]) refs.push(refChip(matById[id].name, matById[id].needsReview)); });
+          (s.equipmentIds || []).forEach(function (id) { if (eqById[id]) refs.push(refChip(eqById[id].name, eqById[id].needsReview)); });
+          var params = (s.parameters || []).map(fmtParam).join(" ");
+          var action = esc(s.action);
+          if (s.optional) action = '<span class="opt">[optional]</span> ' + action;
+          if (s.decisionPoint) action += '<div class="decision">⎇ ' + esc(s.decisionPoint) + "</div>";
+          if (refs.length) action += '<div class="refs">' + refs.join(" ") + "</div>";
+          var notes = esc(s.criticalNotes || "");
+          if (s.safetyNotes) notes += (notes ? "<br>" : "") + '<span class="safety-inline">⚠ ' + esc(s.safetyNotes) + "</span>";
+          h.push("<tr" + (s.needsReview ? ' class="row-review"' : "") + "><td>" + esc(s.number !== undefined && s.number !== null ? s.number : "") + reviewMark(s.needsReview) +
+            "</td><td>" + action + "</td><td>" + params + "</td><td>" + esc(s.expectedResult || "") + "</td><td>" + notes + "</td></tr>");
+        });
+        h.push("</tbody></table>");
+      });
+    }
+
+    // ---- Controls ----
+    if (protocol.controls && protocol.controls.length) {
+      h.push("<h2>Controls</h2><ul>");
+      protocol.controls.forEach(function (c) {
+        h.push("<li><strong>" + esc(c.name) + "</strong>" + (c.description ? ": " + esc(c.description) : "") + reviewMark(c.needsReview) + "</li>");
+      });
+      h.push("</ul>");
+    }
+
+    // ---- Expected Outputs ----
+    if (protocol.expectedOutputs && protocol.expectedOutputs.length) {
+      h.push("<h2>Expected Outputs</h2><ul>");
+      protocol.expectedOutputs.forEach(function (o) { h.push("<li>" + esc(o) + "</li>"); });
+      h.push("</ul>");
+    }
+
+    // ---- Troubleshooting ----
+    if (protocol.troubleshooting && protocol.troubleshooting.length) {
+      h.push("<h2>Troubleshooting</h2>");
+      h.push('<table class="tbl"><thead><tr><th>Problem</th><th>Likely cause</th><th>Solution</th></tr></thead><tbody>');
+      protocol.troubleshooting.forEach(function (t) {
+        h.push("<tr><td>" + esc(t.problem) + "</td><td>" + esc(t.cause || "") + "</td><td>" + esc(t.solution || "") + "</td></tr>");
+      });
+      h.push("</tbody></table>");
+    }
+
+    // ---- Safety ----
+    if ((protocol.safety && protocol.safety.length) || (protocol.biosafetyLevel && protocol.biosafetyLevel !== "not specified")) {
+      h.push("<h2>Safety</h2>");
+      if (protocol.biosafetyLevel && protocol.biosafetyLevel !== "not specified") {
+        h.push('<p><span class="badge badge-bsl">' + esc(protocol.biosafetyLevel) + "</span></p>");
+      }
+      if (protocol.safety && protocol.safety.length) {
+        h.push("<ul>");
+        protocol.safety.forEach(function (s) { h.push("<li>" + esc(s) + "</li>"); });
+        h.push("</ul>");
+      }
+    }
+
+    // ---- Limitations ----
+    if (protocol.limitations) {
+      h.push("<h2>Limitations</h2><p>" + esc(protocol.limitations) + "</p>");
+    }
+
+    // ---- Sources and License ----
+    if (protocol.sources && protocol.sources.length) {
+      h.push("<h2>Sources and License</h2><ul>");
+      protocol.sources.forEach(function (s) {
+        var label = s.title || s.file || s.url || s.doi || s.id;
+        var line = "<strong>" + esc(s.kind) + ":</strong> " + esc(label);
+        if (s.file) line += ' <code>' + esc(s.file) + "</code>";
+        if (s.doi) line += ' — DOI: <a href="https://doi.org/' + esc(s.doi) + '" target="_blank" rel="noopener">' + esc(s.doi) + "</a>";
+        else if (s.url) line += ' — <a href="' + esc(s.url) + '" target="_blank" rel="noopener">link</a>';
+        if (s.license) line += '<br><span class="lic">License: ' + esc(s.license) + (s.licenseVerified ? " (verified)" : " (unverified)") + "</span>";
+        h.push("<li>" + line + "</li>");
+      });
+      h.push("</ul>");
+    }
+
+    h.push("</article>");
+    return h.join("\n");
+  }
+
+  global.renderProtocolHTML = renderProtocolHTML;
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = { renderProtocolHTML: renderProtocolHTML };
+  }
+})(typeof window !== "undefined" ? window : globalThis);
+
+</script>
+<script>
+/*
+ * Alternative front-end presentations of the SAME canonical protocol JSON.
+ * window.renderVariant(protocol, style) -> HTML string. Styles:
+ *   "document" (journal layout, via renderer.js), "checklist" (bench run-mode cards),
+ *   "timeline" (vertical stepper), "compact" (two-column print/reference).
+ * Same data, different presentation — for design review.
+ * Supports v0.1/v0.2/v0.3 fields.
+ */
+(function (global) {
+  function esc(s) {
+    if (s === null || s === undefined) return "";
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+  function fmtParam(p) {
+    var t = p.rawText;
+    if (!t) {
+      if (p.valueText) t = p.valueText;
+      else if (p.value !== null && p.value !== undefined) {
+        var pre = p.comparator === "min" ? "≥ " : p.comparator === "max" ? "≤ " : p.comparator === "approx" ? "~ " : "";
+        t = pre + p.value;
+        if (p.valueMax !== null && p.valueMax !== undefined && p.valueMax !== p.value) t += "–" + p.valueMax;
+        if (p.unit) t += " " + p.unit;
+        if (p.perUnit) t += " /" + p.perUnit;
+      } else t = p.unit || p.type || "";
+    }
+    return '<span class="v-pill' + (p.needsReview ? " v-pill-review" : "") + '"><i>' + esc(p.type) + "</i>" + esc(t) + "</span>";
+  }
+  function lookups(p) {
+    var m = {}, e = {}, sw = {}, sp = {}, tbl = {};
+    (p.materials || []).forEach(function (x) { m[x.id] = x; });
+    (p.equipment || []).forEach(function (x) { e[x.id] = x; });
+    (p.software || []).forEach(function (x) { sw[x.id] = x; });
+    (p.samples || []).forEach(function (x) { sp[x.id] = x; });
+    (p.tables || []).forEach(function (x) { tbl[x.id] = x; });
+    return { m: m, e: e, sw: sw, sp: sp, tbl: tbl };
+  }
+  function nmeOf(id, L) {
+    return (L.m[id] && L.m[id].name) || (L.sp[id] && L.sp[id].name) || id;
+  }
+  function refChips(s, L) {
+    var out = [];
+    if (s.materialUses && s.materialUses.length) {
+      s.materialUses.forEach(function (u) {
+        var lbl = (L.m[u.materialId] ? L.m[u.materialId].name : u.materialId);
+        var q = (u.amount !== null && u.amount !== undefined) ? (u.amount + (u.unit ? " " + u.unit : "")) : "";
+        if (u.equivalents) q += (q ? ", " : "") + u.equivalents + " equiv";
+        if (u.limitingReagent) q += (q ? ", " : "") + "limiting";
+        out.push('<span class="v-chip' + (u.needsReview ? " v-chip-review" : "") + '">' + esc(lbl + (q ? " (" + q + ")" : "")) + "</span>");
+      });
+    } else {
+      (s.materialIds || []).forEach(function (id) { if (L.m[id]) out.push('<span class="v-chip' + (L.m[id].needsReview ? " v-chip-review" : "") + '">' + esc(L.m[id].name) + "</span>"); });
+    }
+    (s.equipmentIds || []).forEach(function (id) { if (L.e[id]) out.push('<span class="v-chip v-chip-eq">' + esc(L.e[id].name) + "</span>"); });
+    (s.softwareIds || []).forEach(function (id) { if (L.sw[id]) out.push('<span class="v-chip v-chip-sw">' + esc(L.sw[id].name) + "</span>"); });
+    (s.containerIds || []).forEach(function (id) { out.push('<span class="v-chip v-chip-eq">' + esc(id) + "</span>"); });
+    (s.tableIds || []).forEach(function (id) { out.push('<span class="v-chip v-chip-tbl">' + esc((L.tbl[id] && L.tbl[id].title) || id) + "</span>"); });
+    return out.join(" ");
+  }
+  function byPhase(p) {
+    var order = [], g = {};
+    (p.steps || []).forEach(function (s) { var k = s.phase || ""; if (!(k in g)) { g[k] = []; order.push(k); } g[k].push(s); });
+    return { order: order, g: g };
+  }
+  function head(p, sub) {
+    var m = p.metadata;
+    var badges = [];
+    if (m.discipline) badges.push('<span class="v-badge v-badge-disc">' + esc(m.discipline) + "</span>");
+    if (m.family) badges.push('<span class="v-badge">' + esc(m.family) + "</span>");
+    if (m.estimatedTime) badges.push('<span class="v-badge v-badge-time">⏱ ' + esc(m.estimatedTime) + "</span>");
+    return '<div class="v-head"><h1>' + esc(m.title) + '</h1><div class="v-badges">' + badges.join("") +
+      '</div><p class="v-purpose">' + esc(m.purpose) + "</p>" + (sub || "") + "</div>";
+  }
+  function flowLine(s, L) {
+    if ((!s.inputIds || !s.inputIds.length) && (!s.outputIds || !s.outputIds.length)) return "";
+    var fl = '<div class="v-flow">';
+    if (s.inputIds && s.inputIds.length) fl += s.inputIds.map(function (id) { return '<span class="v-chip v-chip-in">' + esc(nmeOf(id, L)) + "</span>"; }).join(" ");
+    fl += ' <span class="v-arrow">→</span> ';
+    if (s.outputIds && s.outputIds.length) fl += s.outputIds.map(function (id) { return '<span class="v-chip v-chip-out">' + esc(nmeOf(id, L)) + "</span>"; }).join(" ");
+    return fl + "</div>";
+  }
+  function repeatBadge(s) {
+    if (!s.repeat) return "";
+    var r = s.repeat.count ? "↺×" + s.repeat.count : (s.repeat.untilCondition ? "↺ until " + s.repeat.untilCondition : "↺ repeat");
+    if (s.repeat.over) r += " (" + s.repeat.over + ")";
+    return '<span class="v-repeat">' + esc(r) + "</span>";
+  }
+  function cmdBlock(s) {
+    if (!s.command) return "";
+    return '<div class="v-cmd"><code>' + esc(s.command) + "</code></div>";
+  }
+  function acceptBlock(s) {
+    if (!s.acceptanceCriteria || !s.acceptanceCriteria.length) return "";
+    var out = [];
+    s.acceptanceCriteria.forEach(function (a) {
+      var line = "✓ " + esc(a.parameter || a.description || "acceptance");
+      if (a.value !== undefined && a.value !== null) {
+        var pre = a.comparator === "min" ? "≥ " : a.comparator === "max" ? "≤ " : "";
+        line += ": " + pre + a.value + (a.unit ? " " + a.unit : "");
+      }
+      if (a.classification) line += " (" + esc(a.classification) + ")";
+      out.push('<div class="v-accept">' + line + "</div>");
+    });
+    return out.join("");
+  }
+  function branchLines(s) {
+    if (!s.branches || !s.branches.length) return "";
+    var out = [];
+    s.branches.forEach(function (b) {
+      out.push('<div class="v-branch">⎋ ' + esc(b.condition) + (b.targetStepId ? " → " + esc(b.targetStepId) : "") + (b.action ? ": " + esc(b.action) : "") + "</div>");
+    });
+    return out.join("");
+  }
+  function studyDesignSection(p) {
+    var sd = p.studyDesign;
+    if (!sd || (!sd.groups && !sd.randomization && !sd.blinding && !sd.statisticalPlan && !(sd.timepoints && sd.timepoints.length))) return "";
+    var h = [];
+    h.push('<div class="v-section"><div class="v-section-title">Study Design</div>');
+    if (sd.groups && sd.groups.length) {
+      h.push('<table class="v-tbl"><thead><tr><th>Group</th><th>N</th><th>Treatment</th></tr></thead><tbody>');
+      sd.groups.forEach(function (g) { h.push("<tr><td>" + esc(g.name) + "</td><td>" + esc(g.n !== undefined && g.n !== null ? g.n : "") + "</td><td>" + esc(g.treatment || g.description || "") + "</td></tr>"); });
+      h.push("</tbody></table>");
+    }
+    if (sd.randomization) h.push('<div class="v-detail"><b>Randomization:</b> ' + esc(sd.randomization) + "</div>");
+    if (sd.blinding) h.push('<div class="v-detail"><b>Blinding:</b> ' + esc(sd.blinding) + "</div>");
+    if (sd.timepoints && sd.timepoints.length) h.push('<div class="v-detail"><b>Timepoints:</b> ' + esc(sd.timepoints.join(", ")) + "</div>");
+    if (sd.statisticalPlan) h.push('<div class="v-detail"><b>Statistical plan:</b> ' + esc(sd.statisticalPlan) + "</div>");
+    h.push("</div>");
+    return h.join("");
+  }
+  function complianceSection(p) {
+    var cp = p.compliance;
+    if (!cp || (!cp.iacuc && !cp.irb && !cp.approvalId && !cp.consent && !cp.wasteDisposal)) return "";
+    var h = [];
+    h.push('<div class="v-section"><div class="v-section-title">Compliance & Ethics</div>');
+    if (cp.iacuc) h.push('<div class="v-detail"><b>IACUC:</b> ' + esc(cp.iacuc) + "</div>");
+    if (cp.irb) h.push('<div class="v-detail"><b>IRB:</b> ' + esc(cp.irb) + "</div>");
+    if (cp.approvalId) h.push('<div class="v-detail"><b>Approval:</b> ' + esc(cp.approvalId) + "</div>");
+    if (cp.consent) h.push('<div class="v-detail"><b>Consent:</b> ' + esc(cp.consent) + "</div>");
+    if (cp.wasteDisposal) h.push('<div class="v-detail"><b>Waste disposal:</b> ' + esc(cp.wasteDisposal) + "</div>");
+    h.push("</div>");
+    return h.join("");
+  }
+
+  // ---- checklist / bench run-mode ----
+  function renderChecklist(p) {
+    var L = lookups(p), ph = byPhase(p), h = [];
+    h.push('<div class="v-checklist">');
+    h.push(head(p));
+    h.push(studyDesignSection(p));
+    h.push(complianceSection(p));
+    ph.order.forEach(function (key) {
+      if (key) h.push('<div class="v-phase-bar">' + esc(key) + "</div>");
+      ph.g[key].forEach(function (s) {
+        var params = (s.parameters || []).map(fmtParam).join(" ");
+        var refs = refChips(s, L);
+        h.push('<label class="v-card' + (s.needsReview ? " v-card-review" : "") + '">');
+        h.push('<input type="checkbox" class="v-check">');
+        h.push('<div class="v-card-body">');
+        h.push('<div class="v-card-top"><span class="v-num">' + esc(s.number || "") + "</span>" +
+          (s.optional ? '<span class="v-opt">optional</span> ' : "") + esc(s.action) +
+          repeatBadge(s) + "</div>");
+        if (params) h.push('<div class="v-row">' + params + "</div>");
+        if (refs) h.push('<div class="v-row">' + refs + "</div>");
+        h.push(flowLine(s, L));
+        h.push(cmdBlock(s));
+        h.push(branchLines(s));
+        if (s.expectedResult) h.push('<div class="v-expect">✓ ' + esc(s.expectedResult) + "</div>");
+        h.push(acceptBlock(s));
+        if (s.criticalNotes) h.push('<div class="v-note">! ' + esc(s.criticalNotes) + "</div>");
+        h.push("</div></label>");
+      });
+    });
+    h.push("</div>");
+    return h.join("");
+  }
+
+  // ---- timeline / vertical stepper ----
+  function renderTimeline(p) {
+    var L = lookups(p), ph = byPhase(p), h = [];
+    h.push('<div class="v-timeline">');
+    h.push(head(p));
+    h.push(studyDesignSection(p));
+    h.push(complianceSection(p));
+    h.push('<div class="v-tl">');
+    ph.order.forEach(function (key) {
+      if (key) h.push('<div class="v-tl-phase"><span>' + esc(key) + "</span></div>");
+      ph.g[key].forEach(function (s) {
+        var params = (s.parameters || []).map(fmtParam).join(" ");
+        var refs = refChips(s, L);
+        h.push('<div class="v-tl-item' + (s.needsReview ? " v-tl-review" : "") + '">');
+        h.push('<div class="v-tl-dot">' + esc(s.number || "") + "</div>");
+        h.push('<div class="v-tl-content"><div class="v-tl-action">' +
+          (s.optional ? '<span class="v-opt">optional</span> ' : "") + esc(s.action) +
+          repeatBadge(s) + "</div>");
+        if (params) h.push('<div class="v-row">' + params + "</div>");
+        if (refs) h.push('<div class="v-row v-row-dim">' + refs + "</div>");
+        h.push(flowLine(s, L));
+        h.push(cmdBlock(s));
+        h.push(branchLines(s));
+        if (s.expectedResult) h.push('<div class="v-expect">✓ ' + esc(s.expectedResult) + "</div>");
+        h.push(acceptBlock(s));
+        if (s.criticalNotes) h.push('<div class="v-note">! ' + esc(s.criticalNotes) + "</div>");
+        h.push("</div></div>");
+      });
+    });
+    h.push("</div></div>");
+    return h.join("");
+  }
+
+  // ---- compact / two-column print reference ----
+  function renderCompact(p) {
+    var L = lookups(p), ph = byPhase(p), h = [];
+    h.push('<div class="v-compact">');
+    h.push(head(p));
+    h.push('<div class="v-cols">');
+    // sidebar
+    h.push('<aside class="v-side">');
+    var sd = p.studyDesign;
+    if (sd && (sd.groups || sd.randomization || sd.blinding || sd.statisticalPlan)) {
+      h.push("<h4>Study Design</h4>");
+      if (sd.groups && sd.groups.length) {
+        h.push('<ul class="v-mini">');
+        sd.groups.forEach(function (g) {
+          h.push("<li><b>" + esc(g.name) + "</b>" + (g.n !== undefined && g.n !== null ? " (n=" + esc(g.n) + ")" : "") + (g.treatment ? ": " + esc(g.treatment) : "") + "</li>");
+        });
+        h.push("</ul>");
+      }
+      if (sd.randomization) h.push('<div class="v-detail">' + esc(sd.randomization) + "</div>");
+      if (sd.statisticalPlan) h.push('<div class="v-detail">' + esc(sd.statisticalPlan) + "</div>");
+    }
+    if (p.materials && p.materials.length) {
+      h.push("<h4>Materials</h4><ul class=\"v-mini\">");
+      p.materials.forEach(function (x) {
+        var amt = (x.amount != null ? x.amount + (x.unit ? " " + x.unit : "") : (x.workingConcentration || ""));
+        h.push("<li>" + esc(x.name) + (amt ? ' <b>' + esc(amt) + "</b>" : "") + (x.needsReview ? ' <span class="v-flag">review</span>' : "") + "</li>");
+      });
+      h.push("</ul>");
+    }
+    if (p.equipment && p.equipment.length) {
+      h.push("<h4>Equipment</h4><ul class=\"v-mini\">");
+      p.equipment.forEach(function (x) { h.push("<li>" + esc(x.name) + (x.model ? " (" + esc(x.model) + ")" : "") + "</li>"); });
+      h.push("</ul>");
+    }
+    if (p.software && p.software.length) {
+      h.push("<h4>Software</h4><ul class=\"v-mini\">");
+      p.software.forEach(function (x) { h.push("<li>" + esc(x.name) + (x.version ? " v" + esc(x.version) : "") + "</li>"); });
+      h.push("</ul>");
+    }
+    if (p.samples && p.samples.length) {
+      h.push("<h4>Samples</h4><ul class=\"v-mini\">");
+      p.samples.forEach(function (x) { h.push("<li>" + esc(x.name) + ' <span class="v-flag">' + esc(x.role) + "</span>" + (x.kind ? " " + esc(x.kind) : "") + "</li>"); });
+      h.push("</ul>");
+    }
+    if (p.controls && p.controls.length) {
+      h.push("<h4>Controls</h4><ul class=\"v-mini\">");
+      p.controls.forEach(function (c) { h.push("<li>" + esc(c.name) + "</li>"); });
+      h.push("</ul>");
+    }
+    var cp = p.compliance;
+    if (cp && (cp.iacuc || cp.irb || cp.approvalId || cp.consent || cp.wasteDisposal)) {
+      h.push("<h4>Compliance</h4><ul class=\"v-mini\">");
+      if (cp.iacuc) h.push("<li><b>IACUC:</b> " + esc(cp.iacuc) + "</li>");
+      if (cp.irb) h.push("<li><b>IRB:</b> " + esc(cp.irb) + "</li>");
+      if (cp.approvalId) h.push("<li><b>Approval:</b> " + esc(cp.approvalId) + "</li>");
+      if (cp.consent) h.push("<li><b>Consent:</b> " + esc(cp.consent) + "</li>");
+      if (cp.wasteDisposal) h.push("<li><b>Waste:</b> " + esc(cp.wasteDisposal) + "</li>");
+      h.push("</ul>");
+    }
+    h.push("</aside>");
+    // main steps
+    h.push('<main class="v-main">');
+    ph.order.forEach(function (key) {
+      if (key) h.push('<h4 class="v-cphase">' + esc(key) + "</h4>");
+      h.push('<ol class="v-steps">');
+      ph.g[key].forEach(function (s) {
+        var params = (s.parameters || []).map(function (pr) { return fmtParam(pr); }).join(" ");
+        var extra = "";
+        extra += repeatBadge(s);
+        if (s.command) extra += ' <code class="v-cmd-inline">' + esc(s.command) + "</code>";
+        if ((s.inputIds && s.inputIds.length) || (s.outputIds && s.outputIds.length)) {
+          var fl = ' <span class="v-flow-inline">';
+          if (s.inputIds && s.inputIds.length) fl += s.inputIds.map(function (id) { return '<span class="v-chip v-chip-in">' + esc(nmeOf(id, L)) + "</span>"; }).join(" ");
+          fl += ' → ';
+          if (s.outputIds && s.outputIds.length) fl += s.outputIds.map(function (id) { return '<span class="v-chip v-chip-out">' + esc(nmeOf(id, L)) + "</span>"; }).join(" ");
+          extra += fl + "</span>";
+        }
+        var acc = "";
+        (s.acceptanceCriteria || []).forEach(function (a) {
+          var pre = a.comparator === "min" ? "≥ " : a.comparator === "max" ? "≤ " : "";
+          acc += ' <span class="v-accept-inline">✓ ' + esc(a.parameter || a.description || "") +
+            (a.value !== undefined && a.value !== null ? ": " + pre + a.value + (a.unit ? " " + a.unit : "") : "") + "</span>";
+        });
+        h.push('<li value="' + esc(s.number || "") + '"' + (s.needsReview ? ' class="v-li-review"' : "") + ">" +
+          (s.optional ? '<span class="v-opt">optional</span> ' : "") + esc(s.action) + extra +
+          (params ? ' ' + params : "") +
+          (s.expectedResult ? ' <span class="v-expect-inline">→ ' + esc(s.expectedResult) + "</span>" : "") +
+          acc +
+          "</li>");
+      });
+      h.push("</ol>");
+    });
+    h.push("</main></div></div>");
+    return h.join("");
+  }
+
+  function renderVariant(protocol, style) {
+    if (!protocol || !protocol.metadata) return '<p class="error">Invalid protocol.</p>';
+    if (style === "checklist") return renderChecklist(protocol);
+    if (style === "timeline") return renderTimeline(protocol);
+    if (style === "compact") return renderCompact(protocol);
+    // default: reuse the document renderer
+    if (typeof global.renderProtocolHTML === "function") return global.renderProtocolHTML(protocol);
+    return '<p class="error">document renderer not loaded.</p>';
+  }
+
+  global.renderVariant = renderVariant;
+  if (typeof module !== "undefined" && module.exports) module.exports = { renderVariant: renderVariant };
+})(typeof window !== "undefined" ? window : globalThis);
+
+</script>
+<script>
+const PROTOCOLS = [{"id":"western-blot","label":"Western Blot","data":{"schemaVersion":"0.1","metadata":{"title":"Western Blot (SDS-PAGE → Transfer → Immunoblotting)","protocolId":"lr-example-western-blot","version":"0.1","family":"Western blot","category":"Protein","purpose":"Separate proteins by SDS-PAGE, transfer them onto a membrane, and detect a target protein with a specific primary antibody and an enzyme-conjugated secondary antibody.","scope":"Denaturing (SDS) western blot of soluble protein samples on a nitrocellulose membrane, developed by AP or HRP chromogenic/ECL detection. Not validated here for native PAGE, PVDF membranes, or quantitative fluorescent western blot.","estimatedTime":"~2 days (Day 1: gel + transfer + overnight block; Day 2: antibody incubations, washes, development)","beforeYouBegin":["Design the blot first: which lanes report each tag, which lane is the input control, how the interaction is read out, and what controls are loaded.","Mix every sample with 2× SDS sample buffer at 1:1 (v/v) and denature before loading.","Prepare all buffers listed in Materials and Reagents."],"tags":["western blot","SDS-PAGE","immunoblot","protein","pull-down"]},"materials":[{"id":"m1","name":"2× SDS sample (loading) buffer","workingConcentration":"1:1 (v/v) with sample","specification":"Reducing, SDS-PAGE grade","needsReview":true},{"id":"m2","name":"SDS-polyacrylamide resolving gel","amount":12,"unit":"%","specification":"Cast in-house"},{"id":"m3","name":"Nitrocellulose (NC) membrane","amount":1,"unit":"× gel size","specification":"Blotting grade","needsReview":true},{"id":"m4","name":"Filter paper","amount":8,"unit":"sheets","specification":"Cut to gel size, blotting grade"},{"id":"m5","name":"Transfer buffer","specification":"25 mM Tris, 200 mM glycine, 20% methanol, 0.1% SDS, pH 8.5","rawText":"Transfer Buffer: 25mmol/L Tris, 200mmol/L Glycine, 20% Methanol, 0.1%SDS, pH 8.5"},{"id":"m6","name":"TBS","specification":"20 mM Tris-HCl, 150 mM NaCl, pH 7.5","rawText":"TBS (20mmol/L Tris-HCl, 150 mmol/L NaCl, pH7.5)"},{"id":"m7","name":"TBST","specification":"TBS + 0.05% (v/v) Tween-20","rawText":"TBST (... 0.05%-v/v Tween 20)"},{"id":"m8","name":"Block solution","workingConcentration":"2-3% (w/v)","specification":"Non-fat dry milk in TBST"},{"id":"m9","name":"Primary antibody — mouse α-Strep","workingConcentration":"1:5000 (range 1:8000-1:5000)","specification":"Monoclonal","needsReview":true},{"id":"m10","name":"Primary antibody — mouse α-T7","workingConcentration":"1:5000","specification":"Monoclonal","needsReview":true},{"id":"m11","name":"Secondary antibody — Goat-anti-mouse IgG(H/L)-AP or -HRP","workingConcentration":"1:5000","specification":"Enzyme-conjugated","needsReview":true},{"id":"m12","name":"AP substrate (BCIP-T + NBT)","specification":"35 uL BCIP-T (50 mg/mL in DMF) + 45 uL NBT (50 mg/mL in DMF) per 10 mL AP buffer (100 mM Tris-HCl, 100 mM NaCl, 5 mM MgCl2, pH 9.5)"},{"id":"m13","name":"HRP substrate (CN/DAB, chromogenic)","specification":"30 mg CN + 10 mg DAB, PBS to 50 mL; add 10 uL 30% H2O2 per 10 mL just before use","vendor":"Sigma"},{"id":"m14","name":"HRP substrate (ECL)","specification":"Chemiluminescent detection kit","needsReview":true},{"id":"m15","name":"Coomassie Brilliant Blue R-250","specification":"For optional total-protein gel staining/destaining"},{"id":"m16","name":"ddH2O","specification":"Stop / rinse"}],"equipment":[{"id":"e1","name":"Vertical SDS-PAGE electrophoresis cell + power supply","settings":"Run until target range resolved","needsReview":true},{"id":"e2","name":"Wet (tank) transfer apparatus","settings":"Constant current I (mA) = gel area (cm^2) × 0.8 mA/cm^2; 40-60 min","needsReview":true},{"id":"e3","name":"Orbital shaker / rocking platform","settings":"Room temperature, gentle","needsReview":true},{"id":"e4","name":"4 degC incubator / cold room","settings":"Overnight blocking (optional)"}],"steps":[{"id":"s1","number":1,"phase":"SDS-PAGE","action":"Treat all samples with 2× SDS sample buffer and denature.","materialIds":["m1"],"parameters":[{"type":"ratio","value":1,"valueMax":1,"unit":"v/v","rawText":"1:1 (v/v)"}],"expectedResult":"Samples ready to load.","criticalNotes":"Confirm the pull-down samples (tubes AB, CB) and the input sample."},{"id":"s2","number":2,"phase":"SDS-PAGE","action":"Cast a 12% SDS-polyacrylamide gel.","materialIds":["m2"],"parameters":[{"type":"concentration","value":12,"unit":"%","rawText":"12%"}],"expectedResult":"Even, bubble-free gel."},{"id":"s3","number":3,"phase":"SDS-PAGE","action":"Load samples per the blot design.","equipmentIds":["e1"],"expectedResult":"Ladder + all lanes loaded.","criticalNotes":"Reserve a lane for MW ladder and for controls."},{"id":"s4","number":4,"phase":"SDS-PAGE","action":"Run the gel to separate proteins.","equipmentIds":["e1"],"expectedResult":"Dye front migrates; bands resolved."},{"id":"s5","number":5,"phase":"SDS-PAGE","action":"Remove the gel from the cassette; cut per design if needed.","expectedResult":"Intact gel.","criticalNotes":"Handle gently to avoid tearing."},{"id":"s6","number":6,"phase":"SDS-PAGE","action":"(Optional) Stain a portion/duplicate gel with Coomassie R-250; destain later.","materialIds":["m15"],"optional":true,"parameters":[{"type":"time","value":null,"unit":"overnight","rawText":"stain overnight"}],"expectedResult":"Total-protein pattern visible.","criticalNotes":"Use a second gel or cut the gel if both Coomassie and transfer are required."},{"id":"s7","number":7,"phase":"Transfer","action":"Soak 8 filter papers in transfer buffer; rinse the NC membrane.","materialIds":["m4","m3","m5"],"parameters":[{"type":"time","value":5,"valueMax":10,"unit":"min","rawText":"at least 5-10 min"}],"expectedResult":"Papers/membrane wetted, no trapped air.","criticalNotes":"Drive off all bubbles between layers."},{"id":"s8","number":8,"phase":"Transfer","action":"Assemble the stack in the tank: cathode(−) → filter paper → gel → NC membrane → filter paper → anode(+).","materialIds":["m3","m4"],"equipmentIds":["e2"],"expectedResult":"Stack in correct polarity order.","criticalNotes":"Protein migrates from gel toward the membrane on the anode side."},{"id":"s9","number":9,"phase":"Transfer","action":"Run constant-current transfer; then rinse membrane with TBS.","equipmentIds":["e2"],"materialIds":["m6"],"parameters":[{"type":"current","value":null,"unit":"mA","rawText":"I (mA) = gel area (cm^2) × 0.8"},{"type":"time","value":40,"valueMax":60,"unit":"min","rawText":"40-60 min"},{"type":"time","value":3,"valueMax":5,"unit":"s","rawText":"rinse by TBS for 3-5 s"}],"expectedResult":"Proteins transferred to membrane."},{"id":"s10","number":10,"phase":"Transfer","action":"Block the membrane in block solution.","materialIds":["m8"],"equipmentIds":["e4","e3"],"parameters":[{"type":"temperature","value":4,"unit":"degC","rawText":"4 degC overnight"},{"type":"time","value":1,"valueMax":2,"unit":"h","rawText":"or RT 1-2 h"}],"expectedResult":"Non-specific sites blocked.","criticalNotes":"Choose overnight (4 degC) vs RT 1-2 h per optimized protocol."},{"id":"s11","number":11,"phase":"Immunoblotting","action":"Wash membrane with fresh TBST; keep wet.","materialIds":["m7"],"expectedResult":"Membrane never dries.","criticalNotes":"Drying causes high background."},{"id":"s12","number":12,"phase":"Immunoblotting","action":"Incubate with primary antibody.","materialIds":["m9","m10","m7"],"equipmentIds":["e3"],"parameters":[{"type":"volume","value":5,"unit":"mL","rawText":"about 5 mL"},{"type":"concentration","value":null,"unit":"dilution","rawText":"1:8000-1:5000 in TBST"},{"type":"time","value":1.5,"unit":"h","rawText":"RT for 1.5 h"}],"expectedResult":"Antibody bound to target.","criticalNotes":"Match antibody to the tag being probed."},{"id":"s13","number":13,"phase":"Immunoblotting","action":"Wash with fresh TBST.","materialIds":["m7"],"parameters":[{"type":"count","value":3,"unit":"×","rawText":"3×"},{"type":"time","value":5,"unit":"min","rawText":"5 min"}],"expectedResult":"Unbound primary removed."},{"id":"s14","number":14,"phase":"Immunoblotting","action":"Incubate with secondary antibody.","materialIds":["m11","m7"],"equipmentIds":["e3"],"parameters":[{"type":"volume","value":5,"unit":"mL","rawText":"about 5 mL"},{"type":"concentration","value":null,"unit":"dilution","rawText":"1:5000 in TBST"},{"type":"time","value":30,"unit":"min","rawText":"RT for 30 min"}],"expectedResult":"Enzyme-conjugate bound.","criticalNotes":"Use AP- or HRP-conjugate matching your substrate."},{"id":"s15","number":15,"phase":"Immunoblotting","action":"Wash with TBST.","materialIds":["m7"],"parameters":[{"type":"count","value":3,"unit":"×","rawText":"3×"},{"type":"time","value":5,"unit":"min","rawText":"5 min"}],"expectedResult":"Unbound secondary removed."},{"id":"s16","number":16,"phase":"Immunoblotting","action":"Wash with TBS to remove Tween-20.","materialIds":["m6"],"parameters":[{"type":"time","value":5,"unit":"s","rawText":"5 s"}],"expectedResult":"Tween-20 removed.","criticalNotes":"Required before AP/chromogenic development."},{"id":"s17","number":17,"phase":"Immunoblotting","action":"Develop in substrate solution.","materialIds":["m12","m13","m14"],"parameters":[{"type":"volume","value":10,"unit":"mL","rawText":"10 mL substrate"}],"expectedResult":"Specific bands appear.","criticalNotes":"For HRP/DAB add H2O2 immediately before use."},{"id":"s18","number":18,"phase":"Immunoblotting","action":"Stop development in ddH2O; dry membrane on filter paper.","materialIds":["m16"],"expectedResult":"Reaction stopped; membrane dried.","criticalNotes":"Chromogenic band color fades over a few days — image promptly."}],"controls":[{"name":"Input control","description":"Load the input (T7-tag-B) sample to confirm expression/loading."},{"name":"Tag-specificity controls","description":"Probe Strep-tag lanes (A, C) with α-Strep and the input with α-T7."},{"name":"Interaction readout","description":"Compare pull-down lanes (AB vs CB) to test protein-protein interaction."},{"name":"Secondary-only control","description":"No-primary-antibody lane to detect non-specific secondary binding.","needsReview":true}],"expectedOutputs":["Discrete immunoreactive band(s) at the expected molecular weight for each tag.","Optional Coomassie gel showing total-protein loading.","A recorded image of the developed membrane (bands fade, so capture promptly)."],"troubleshooting":[{"problem":"High background","cause":"Membrane dried; insufficient blocking; antibody too concentrated","solution":"Keep membrane wet; extend blocking; dilute antibody / add washes"},{"problem":"No / weak signal","cause":"Poor transfer; antibody too dilute; substrate exhausted","solution":"Verify transfer (Ponceau/Coomassie); increase antibody; use fresh substrate"},{"problem":"Bands at wrong size","cause":"Degradation; incomplete denaturation; wrong antibody","solution":"Add protease inhibitors; ensure full denaturation; confirm antibody specificity"},{"problem":"Uneven / patchy bands","cause":"Air bubbles in transfer stack","solution":"Re-roll the stack to remove bubbles before transfer"}],"safety":["Unpolymerized acrylamide is a neurotoxin — wear gloves; handle gels and stocks with care.","Methanol (transfer buffer) and DMF (substrate stocks) are flammable/toxic — use in a fume hood.","DAB is a suspected carcinogen; NBT/BCIP and H2O2 are irritants — follow institutional disposal rules."],"biosafetyLevel":"needsReview","limitations":"Chromogenic detection is non-quantitative and fades; transfer efficiency for high-MW proteins is not addressed. Sample biosafety level depends on the source material.","sources":[{"id":"src1","kind":"file","title":"The protocol of Western blotting (2026 teaching protocol)","file":"test_protocol/9-Westernblotting-2026.pdf","license":"Institutional teaching material; reuse terms not specified","licenseVerified":false}],"provenance":{"library":"public","owner":"LabRecord","status":"draft"}}},{"id":"qpcr","label":"RT-qPCR (MIQE)","data":{"schemaVersion":"0.1","metadata":{"title":"RT-qPCR — Relative Gene Expression (MIQE-aligned)","protocolId":"lr-example-qpcr","version":"0.1","family":"qPCR","category":"Molecular Biology","purpose":"Measure the relative expression of a target gene by reverse transcription of RNA to cDNA followed by real-time quantitative PCR, quantified against validated reference gene(s).","scope":"SYBR-Green or hydrolysis-probe RT-qPCR on purified total RNA, using the ddCq relative-quantification method. Reporting follows the MIQE guidelines. Absolute quantification and one-step RT-qPCR are out of scope.","estimatedTime":"~4-6 h","beforeYouBegin":["Work RNase-free: dedicated pipettes/tips, gloves, nuclease-free tubes and water.","Validate primer amplification efficiency (90-110%, standard-curve slope about -3.1 to -3.6) and single-product specificity before running experimental samples.","Choose and validate reference gene(s) stable under your conditions (MIQE requires justification of the normaliser)."],"tags":["qPCR","RT-qPCR","gene expression","MIQE","relative quantification"]},"materials":[{"id":"m1","name":"Total RNA sample","workingConcentration":"10 ng - 1 ug per RT reaction","specification":"DNase-treated; RIN/quality recorded","needsReview":true},{"id":"m2","name":"DNase I (+ buffer)","specification":"RNase-free","needsReview":true},{"id":"m3","name":"Reverse transcription kit","specification":"Reverse transcriptase, RT buffer, dNTPs, RNase inhibitor, primers (oligo-dT / random hexamers)","needsReview":true},{"id":"m4","name":"cDNA (RT product)","workingConcentration":"typically 1-2 uL per qPCR well","specification":"Diluted per optimization"},{"id":"m5","name":"qPCR master mix","workingConcentration":"1x final","specification":"SYBR-Green or probe master mix (polymerase, dNTPs, MgCl2, dye/ROX)","needsReview":true},{"id":"m6","name":"Target primers (fwd + rev)","workingConcentration":"200-500 nM each (final)","specification":"Validated efficiency 90-110%","needsReview":true},{"id":"m7","name":"Reference-gene primers (fwd + rev)","workingConcentration":"200-500 nM each (final)","specification":"Validated, stable normaliser","needsReview":true},{"id":"m8","name":"Hydrolysis probe (if probe-based)","workingConcentration":"100-250 nM (final)","specification":"e.g. FAM/TAMRA","needsReview":true},{"id":"m9","name":"Nuclease-free water","specification":"Molecular-biology grade"}],"equipment":[{"id":"e1","name":"Spectrophotometer / fluorometer","settings":"RNA concentration + purity (A260/A280, A260/A230)","needsReview":true},{"id":"e2","name":"Capillary electrophoresis (optional)","settings":"RNA integrity (RIN)","needsReview":true},{"id":"e3","name":"Thermal cycler (for RT)","settings":"Per RT-kit program","needsReview":true},{"id":"e4","name":"Real-time PCR instrument","settings":"See cycling parameters in Procedure","needsReview":true}],"steps":[{"id":"s1","number":1,"phase":"RNA QC","action":"Quantify RNA and check purity.","equipmentIds":["e1"],"materialIds":["m1"],"parameters":[{"type":"ratio","value":2,"unit":"A260/A280","rawText":"A260/A280 about 2.0"}],"expectedResult":"RNA pure and sufficient.","criticalNotes":"Record values as MIQE metadata."},{"id":"s2","number":2,"phase":"RNA QC","action":"Assess RNA integrity (if available).","equipmentIds":["e2"],"expectedResult":"Intact RNA (RIN reported).","criticalNotes":"Degraded RNA biases Cq."},{"id":"s3","number":3,"phase":"RNA QC","action":"DNase-treat RNA if not already done.","materialIds":["m2"],"expectedResult":"Genomic-DNA carryover removed.","criticalNotes":"Confirm with a no-RT control."},{"id":"s4","number":4,"phase":"Reverse Transcription","action":"Assemble the RT reaction with a fixed RNA input across samples.","materialIds":["m1","m3"],"expectedResult":"Homogeneous mix.","criticalNotes":"Keep reagents on ice; use the same input mass per sample."},{"id":"s5","number":5,"phase":"Reverse Transcription","action":"Run reverse transcription.","equipmentIds":["e3"],"parameters":[{"type":"temperature","value":null,"unit":"degC","rawText":"per kit, e.g. 25 degC prime, 42-50 degC extend, 85 degC inactivate","needsReview":true}],"expectedResult":"cDNA synthesized.","criticalNotes":"Record exact temps/times used.","needsReview":true},{"id":"s6","number":6,"phase":"Reverse Transcription","action":"Dilute cDNA as optimized.","materialIds":["m4","m9"],"parameters":[{"type":"ratio","value":null,"unit":"dilution","rawText":"e.g. 1:5 - 1:20"}],"expectedResult":"Working cDNA stock.","criticalNotes":"Use identical dilution for all samples."},{"id":"s7","number":7,"phase":"qPCR Setup & Cycling","action":"Prepare the qPCR reaction mix.","materialIds":["m5","m6","m7","m8","m9"],"parameters":[{"type":"volume","value":10,"valueMax":20,"unit":"uL","rawText":"10-20 uL total per well"}],"expectedResult":"Homogeneous mix.","criticalNotes":"Prepare a master mix; pipette on a cold block."},{"id":"s8","number":8,"phase":"qPCR Setup & Cycling","action":"Add template and load the plate.","materialIds":["m4"],"parameters":[{"type":"count","value":2,"valueMax":3,"unit":"replicates","rawText":">=2-3 technical replicates per sample"}],"expectedResult":"Plate loaded and sealed.","criticalNotes":"Include NTC and no-RT wells."},{"id":"s9","number":9,"phase":"qPCR Setup & Cycling","action":"Run qPCR, then a melt curve (dye-based).","equipmentIds":["e4"],"parameters":[{"type":"temperature","value":95,"unit":"degC","rawText":"denaturation 95 degC"},{"type":"count","value":40,"unit":"cycles","rawText":"40 cycles"}],"expectedResult":"Amplification curves + single melt peak.","criticalNotes":"Report the exact cycling program.","needsReview":true},{"id":"s10","number":10,"phase":"Analysis","action":"Inspect controls.","expectedResult":"NTC and no-RT negative.","criticalNotes":"Positive controls indicate contamination / gDNA carryover."},{"id":"s11","number":11,"phase":"Analysis","action":"Set threshold and extract Cq.","parameters":[{"type":"other","value":null,"unit":"Cq","rawText":"consistent threshold across runs"}],"expectedResult":"Cq per well.","criticalNotes":"Report the baseline/threshold method."},{"id":"s12","number":12,"phase":"Analysis","action":"Normalise and compute relative expression.","parameters":[{"type":"other","value":null,"unit":"ddCq","rawText":"ddCq vs reference gene(s) + calibrator"}],"expectedResult":"Fold-change per target.","criticalNotes":"State the quantification model and efficiency correction."}],"controls":[{"name":"NTC (no-template control)","description":"Master mix + water instead of cDNA; detects contamination."},{"name":"No-RT control (minus reverse transcriptase)","description":"Detects genomic-DNA amplification."},{"name":"Reference gene(s)","description":"Validated stable normaliser(s) on the same plate."},{"name":"Inter-run calibrator","description":"Common sample across plates for run-to-run comparison."},{"name":"Technical + biological replicates","description":"Report both (MIQE)."}],"expectedOutputs":["Cq values per well; a single specific product (single melt peak or single band).","Negative NTC and no-RT controls.","Normalised relative expression (fold-change) with amplification efficiency and quantification method reported."],"troubleshooting":[{"problem":"Amplification in NTC","cause":"Contamination or primer-dimer","solution":"Fresh reagents; redesign/optimize primers; clean workspace"},{"problem":"Amplification in no-RT control","cause":"Genomic-DNA carryover","solution":"Repeat DNase treatment; design intron-spanning primers"},{"problem":"Multiple melt peaks","cause":"Non-specific product / primer-dimer","solution":"Optimize annealing temp / primer concentration; validate primers"},{"problem":"Late / absent Cq","cause":"Low input; degraded RNA; inhibitors","solution":"Increase input; check RIN; clean up RNA; dilute to reduce inhibitors"},{"problem":"High replicate variability","cause":"Pipetting error; low copy number","solution":"Use a master mix; increase replicates/input"}],"safety":["Standard molecular-biology hygiene; some intercalating dyes are mutagenic - handle and dispose per institutional rules."],"biosafetyLevel":"needsReview","limitations":"Relative quantification depends on a validated stable reference gene and on primer efficiency; kit-, primer-, and instrument-specific values must be set from the actual reagents used. Biosafety level depends on the RNA source.","sources":[{"id":"src1","kind":"standard","title":"MIQE Guidelines: Minimum Information for Publication of Quantitative Real-Time PCR Experiments (Bustin et al., Clin Chem 2009)","doi":"10.1373/clinchem.2008.112797","url":"https://doi.org/10.1373/clinchem.2008.112797","license":"Guideline cited, not reproduced","licenseVerified":true}],"provenance":{"library":"public","owner":"LabRecord","status":"draft"}}},{"id":"cell-culture","label":"Cell Culture","data":{"schemaVersion":"0.1","metadata":{"title":"Mammalian Cell Culture - Subculture (Passaging) of Adherent Cells","protocolId":"lr-example-cell-culture","version":"0.1","family":"Cell culture","category":"Cell Biology","purpose":"Maintain an adherent mammalian cell line in exponential growth by detaching cells at sub-confluence with trypsin-EDTA and reseeding at a defined split ratio or seeding density.","scope":"Routine subculture of adherent, trypsin-sensitive mammalian cell lines in a humidified 37 degC / 5% CO2 incubator using aseptic technique in a Class II biosafety cabinet. Suspension cells and enzyme-sensitive lines are out of scope.","estimatedTime":"~30-45 min per passage (excluding growth)","beforeYouBegin":["Confirm the cell line identity, passage number, and expected doubling time (line-specific).","Warm medium, PBS, and trypsin-EDTA to 37 degC before use.","Work only in a certified, cleaned biosafety cabinet; decontaminate all surfaces and reagents entering the cabinet."],"tags":["cell culture","subculture","passaging","trypsinization","adherent cells"]},"materials":[{"id":"m1","name":"Complete growth medium","specification":"Basal medium + serum (e.g. 10% FBS) + supplements +/- antibiotics; pre-warmed to 37 degC","needsReview":true},{"id":"m2","name":"PBS (Ca2+/Mg2+-free)","specification":"Sterile, cell-culture grade","needsReview":true},{"id":"m3","name":"Trypsin-EDTA","workingConcentration":"0.05-0.25% trypsin / 0.02% EDTA","specification":"Sterile","needsReview":true},{"id":"m4","name":"Trypan blue","workingConcentration":"0.4%, 1:1 with cell suspension","needsReview":true},{"id":"m5","name":"Cell line (adherent)","specification":"At ~80-90% confluence; mycoplasma-negative; identity confirmed","needsReview":true}],"equipment":[{"id":"e1","name":"Class II biosafety cabinet","settings":"Certified airflow; aseptic technique","needsReview":true},{"id":"e2","name":"Humidified CO2 incubator","settings":"37 degC, 5% CO2, humidified","needsReview":true},{"id":"e3","name":"Inverted phase-contrast microscope","settings":"Assess confluence/morphology","needsReview":true},{"id":"e4","name":"Benchtop centrifuge","settings":"200-300 xg, 3-5 min","needsReview":true},{"id":"e5","name":"Cell counter / hemocytometer","settings":"Viable-cell count with trypan blue","needsReview":true},{"id":"e6","name":"Water bath","settings":"37 degC for reagent warming","needsReview":true}],"steps":[{"id":"s1","number":1,"phase":"Detach","action":"Examine cells for confluence and health.","equipmentIds":["e3"],"materialIds":["m5"],"parameters":[{"type":"other","value":80,"valueMax":90,"unit":"% confluence","rawText":"target ~80-90% confluence"}],"expectedResult":"Healthy morphology, no contamination.","criticalNotes":"Do not passage over-confluent cultures."},{"id":"s2","number":2,"phase":"Detach","action":"Aspirate spent medium.","expectedResult":"Vessel emptied.","criticalNotes":"Do not let the monolayer dry."},{"id":"s3","number":3,"phase":"Detach","action":"Wash the monolayer with PBS; swirl and aspirate.","materialIds":["m2"],"expectedResult":"Serum (trypsin inhibitor) removed.","criticalNotes":"Residual serum blocks trypsin."},{"id":"s4","number":4,"phase":"Detach","action":"Add trypsin-EDTA and incubate.","materialIds":["m3"],"equipmentIds":["e2"],"parameters":[{"type":"temperature","value":37,"unit":"degC","rawText":"37 degC"},{"type":"time","value":3,"valueMax":5,"unit":"min","rawText":"~3-5 min (line-specific)","needsReview":true}],"expectedResult":"Cells round up and detach.","criticalNotes":"Tap the flask; avoid over-trypsinization."},{"id":"s5","number":5,"phase":"Neutralize & Count","action":"Add complete medium to neutralize trypsin.","materialIds":["m1"],"parameters":[{"type":"ratio","value":2,"unit":"x trypsin vol","rawText":">=2x the trypsin volume"}],"expectedResult":"Trypsin inhibited.","criticalNotes":"Serum inactivates trypsin."},{"id":"s6","number":6,"phase":"Neutralize & Count","action":"Pipette to a single-cell suspension.","expectedResult":"Dispersed single cells.","criticalNotes":"Avoid bubbles/shear."},{"id":"s7","number":7,"phase":"Neutralize & Count","action":"(Optional) Centrifuge and resuspend in fresh medium.","equipmentIds":["e4"],"materialIds":["m1"],"optional":true,"parameters":[{"type":"speed","value":200,"valueMax":300,"unit":"xg","rawText":"200-300 xg"},{"type":"time","value":3,"valueMax":5,"unit":"min","rawText":"3-5 min"}],"expectedResult":"Cell pellet; resuspended.","criticalNotes":"Needed to remove trypsin fully."},{"id":"s8","number":8,"phase":"Neutralize & Count","action":"Count viable cells with trypan blue.","equipmentIds":["e5"],"materialIds":["m4"],"parameters":[{"type":"ratio","value":1,"valueMax":1,"unit":"v/v","rawText":"trypan blue 1:1"}],"expectedResult":"Viable cells/mL and % viability.","criticalNotes":"Record count for defined seeding."},{"id":"s9","number":9,"phase":"Reseed","action":"Seed a new vessel by split ratio or defined density.","materialIds":["m5"],"parameters":[{"type":"ratio","value":5,"valueMax":10,"unit":"split (1:n)","rawText":"e.g. 1:5 - 1:10, or defined cells/cm2","needsReview":true}],"expectedResult":"Even cell distribution.","criticalNotes":"Distribute by gentle rocking, not swirling."},{"id":"s10","number":10,"phase":"Reseed","action":"Add complete medium; return to the incubator.","materialIds":["m1"],"equipmentIds":["e2"],"parameters":[{"type":"temperature","value":37,"unit":"degC","rawText":"37 degC, 5% CO2"}],"expectedResult":"Cells attach and grow.","criticalNotes":"Label vessel: line, passage #, date."}],"controls":[{"name":"Sterility / contamination check","description":"Inspect medium (turbidity, pH color) and cells by microscopy each passage; run a cell-free medium vessel if contamination is suspected."},{"name":"Mycoplasma testing","description":"Perform periodically (line health control)."},{"name":"Passage-number tracking","description":"Record cumulative passage number (identity/senescence control)."}],"expectedOutputs":["A reseeded culture at the target density that reattaches and resumes exponential growth.","Recorded viable-cell count, % viability, split ratio/seeding density, and passage number."],"troubleshooting":[{"problem":"Cells won't detach","cause":"Insufficient trypsin/time; residual serum","solution":"Wash with PBS first; extend trypsin time; warm reagents"},{"problem":"Low viability after passage","cause":"Over-trypsinization; harsh pipetting","solution":"Shorten trypsin exposure; neutralize promptly; pipette gently"},{"problem":"Contamination (turbid / color change)","cause":"Broken aseptic technique","solution":"Discard culture; decontaminate cabinet; review technique"},{"problem":"Slow growth","cause":"Seeded too sparsely; medium/supplement issue","solution":"Increase seeding density; use fresh complete medium"}],"safety":["Human/primate cell lines are typically handled at BSL-2; follow institutional biosafety approval.","Use aseptic technique throughout; decontaminate waste and surfaces."],"biosafetyLevel":"needsReview","limitations":"Line-specific values (medium, serum %, trypsin strength/time, seeding density, BSL) must be set for the actual cell line. This is generic adherent-cell subculture and does not cover specialised dissociation or cryopreservation.","sources":[{"id":"src1","kind":"book","title":"Standard adherent mammalian-cell subculture (ATCC animal-cell-culture guidelines; Freshney, Culture of Animal Cells)","license":"General method; no proprietary protocol text reproduced","licenseVerified":false}],"provenance":{"library":"public","owner":"LabRecord","status":"draft"}}},{"id":"gel-filtration","label":"Gel Filtration","data":{"schemaVersion":"0.1","metadata":{"title":"Gel Filtration (Size-Exclusion Chromatography) on AKTA start","protocolId":"lr-test-gel-filtration","version":"0.1","family":"Chromatography","category":"Protein","purpose":"Separate proteins by molecular weight on a cross-linked porous gel (Sephacryl S-100) and estimate the MW of an unknown protein from a Kav-vs-log(MW) standard curve.","scope":"Isocratic size-exclusion chromatography on an AKTA start with a Sephacryl S-100 column, single buffer (PBS, buffer A). Teaching setup; eluted proteins are not collected. Preparative fractionation and other resins are out of scope.","estimatedTime":"One session for the run; column cleaning/regeneration/storage in a later session.","beforeYouBegin":["Watch the instrument video and walk through the procedure before starting.","Filter buffer A (0.45 um) and the sample (0.45 um) before use.","Always know the state of each valve and the tubing contents during a programmed run; avoid air bubbles entering the fractionation tubing."],"tags":["gel filtration","size-exclusion chromatography","SEC","AKTA","protein MW"]},"materials":[{"id":"m1","name":"Buffer A (50 mM PBS)","amount":400,"unit":"mL","specification":"0.14 M NaCl, 36 mM Na2HPO4, 14 mM NaH2PO4, pH 7.2; 0.45 um filtered","rawText":"Buffer A: 50 mM PBS (0.14 M NaCl, 36 mM Na2HPO4, 14 mM NaH2PO4), pH 7.2"},{"id":"m2","name":"Sephacryl S-100 column","amount":1,"unit":"column","specification":"Size-exclusion resin","needsReview":true},{"id":"m3","name":"0.45 um filter","specification":"For buffer and sample"},{"id":"m4","name":"Blue dextran 2000","workingConcentration":"5 mg/mL","specification":"MW 2000 kDa - void-volume (V0) marker","rawText":"Blue dextran 2000 5 mg/mL MW: 2000 kDa"},{"id":"m5","name":"BSA (bovine albumin)","workingConcentration":"6 mg/mL","specification":"MW 67 kDa - standard protein 1"},{"id":"m6","name":"Ovalbumin (chicken)","workingConcentration":"9 mg/mL","specification":"MW 45 kDa - standard protein 2"},{"id":"m7","name":"Ribonuclease A (bovine)","workingConcentration":"9 mg/mL","specification":"MW 13.7 kDa - standard protein 3"},{"id":"m8","name":"Unknown protein","workingConcentration":"8 mg/mL","specification":"MW to be determined"},{"id":"m9","name":"NaCl (cleaning)","workingConcentration":"0.2 M","specification":"Column cleaning"},{"id":"m10","name":"NaCl (regeneration)","workingConcentration":"0.5 M","specification":"Column regeneration"},{"id":"m11","name":"Acetic acid (HOAc)","workingConcentration":"0.1 M","specification":"Regeneration (or 0.2 M NaOH)"},{"id":"m12","name":"Ethanol","workingConcentration":"20%","specification":"Column storage"},{"id":"m13","name":"Water (ddH2O)","specification":"Cleaning / storage"}],"equipment":[{"id":"e1","name":"Chromatography system + pump + computer","model":"AKTA start","settings":"Manual run via system control; flow rates set per step"}],"steps":[{"id":"s1","number":1,"phase":"Setup & Equilibration","action":"Prepare buffer A; add 400 mL to bottle A; immerse buffer A and buffer B inlet tubing in bottle A.","materialIds":["m1"],"parameters":[{"type":"volume","value":400,"unit":"mL","rawText":"add 400 mL Buffer A"}],"expectedResult":"Clean, degassed buffer ready.","criticalNotes":"Only buffer A is used in this experiment."},{"id":"s2","number":2,"phase":"Setup & Equilibration","action":"Switch on AKTA start, install pump tubing, connect the computer.","equipmentIds":["e1"],"expectedResult":"Instrument ready."},{"id":"s3","number":3,"phase":"Setup & Equilibration","action":"Manual run: wash buffer A tubing, buffer B tubing, and fractionation tubing; extrude air bubbles.","equipmentIds":["e1"],"parameters":[{"type":"volume","value":20,"unit":"mL","rawText":"wash buffer A tubing (20 mL); buffer B tubing (20 mL)"},{"type":"volume","value":10,"unit":"mL","rawText":"wash fractionation tubing (10 mL)"},{"type":"speed","value":5,"unit":"mL/min","rawText":"Flow rate: 5 mL/min"}],"expectedResult":"Tubing primed, no air.","criticalNotes":"May be done by TA/volunteer."},{"id":"s4","number":4,"phase":"Setup & Equilibration","action":"Connect the Sephacryl S-100 column.","materialIds":["m2"],"equipmentIds":["e1"],"parameters":[{"type":"speed","value":1,"unit":"mL/min","rawText":"Flow rate: 1 mL/min"}],"expectedResult":"Column online."},{"id":"s5","number":5,"phase":"Setup & Equilibration","action":"Equilibrate the column.","equipmentIds":["e1"],"parameters":[{"type":"volume","value":0.5,"valueMax":1,"unit":"CV","rawText":"Equilibration: 0.5-1 CV"},{"type":"speed","value":1,"unit":"mL/min","rawText":"Flow rate: 1 mL/min"}],"expectedResult":"Stable baseline."},{"id":"s6","number":6,"phase":"Sample Application & Elution","action":"Prepare the sample (standards + unknown) and filter.","materialIds":["m4","m5","m6","m7","m8","m3"],"parameters":[{"type":"other","value":0.45,"unit":"um","rawText":"filter sample using 0.45 um filter"}],"expectedResult":"Particle-free sample.","criticalNotes":"Sample mix contains blue dextran + 3 standards + unknown."},{"id":"s7","number":7,"phase":"Sample Application & Elution","action":"Wash inlet tubing and sample valve; apply the sample.","equipmentIds":["e1"],"parameters":[{"type":"volume","value":0.2,"valueMax":0.5,"unit":"mL","rawText":"sample valve-0.2-0.5 mL"},{"type":"speed","value":0.8,"unit":"mL/min","rawText":"flow rate: 0.8 mL/min"}],"expectedResult":"Sample loaded without air.","criticalNotes":"Switch the sample valve to buffer quickly after loading to prevent air entering the column."},{"id":"s8","number":8,"phase":"Sample Application & Elution","action":"Elute with buffer A; send outlet to waste; continue after the last peak.","materialIds":["m1"],"equipmentIds":["e1"],"parameters":[{"type":"speed","value":0.8,"unit":"mL/min","rawText":"flow rate: 0.8 mL/min"},{"type":"time","value":15,"unit":"min","rawText":"stop the program after additional 15 min-elution"}],"expectedResult":"All proteins eluted.","criticalNotes":"Eluted proteins are not collected in this run."},{"id":"s9","number":9,"phase":"Analysis","action":"Export CSV; plot the elution curve; find V0 and Ve per protein; compute Kav; plot log(MW) vs Kav; estimate the unknown MW.","expectedResult":"Standard curve + estimated MW of the unknown.","criticalNotes":"Upload via NOWLab; calculation done in Assignment 1."},{"id":"s10","number":10,"phase":"Column Cleaning & Storage","action":"Column cleaning.","materialIds":["m9","m13"],"equipmentIds":["e1"],"parameters":[{"type":"volume","value":0.5,"unit":"CV","rawText":"0.2 M NaCl, 0.5 CV"},{"type":"volume","value":1,"unit":"CV","rawText":"water, 1 CV"},{"type":"speed","value":1,"unit":"mL/min","rawText":"Flow rate: 1 mL/min"}],"expectedResult":"Column cleaned.","optional":true},{"id":"s11","number":11,"phase":"Column Cleaning & Storage","action":"Column regeneration.","materialIds":["m10","m11"],"equipmentIds":["e1"],"parameters":[{"type":"volume","value":1,"unit":"CV","rawText":"0.5 M NaCl, 1 CV; 0.1 M HOAc, 1 CV (or 0.2 M NaOH)"},{"type":"speed","value":1,"unit":"mL/min","rawText":"Flow rate: 1 mL/min"}],"expectedResult":"Column regenerated.","optional":true},{"id":"s12","number":12,"phase":"Column Cleaning & Storage","action":"Column cleaning and storage.","materialIds":["m13","m12"],"equipmentIds":["e1"],"parameters":[{"type":"volume","value":1,"unit":"CV","rawText":"water, 1 CV; 20% alcohol, 1 CV for storing"},{"type":"speed","value":1,"unit":"mL/min","rawText":"Flow rate: 1 mL/min"}],"expectedResult":"Column stored in 20% ethanol.","optional":true}],"controls":[{"name":"Void-volume marker","description":"Blue dextran 2000 defines V0."},{"name":"Calibration standards","description":"BSA (67 kDa), Ovalbumin (45 kDa), Ribonuclease A (13.7 kDa) build the Kav-vs-log(MW) standard curve."},{"name":"Unknown","description":"Sample whose MW is estimated from the standard curve."}],"expectedOutputs":["An elution curve (CSV) with resolved peaks.","V0 and elution volume (Ve) per protein; Kav per protein.","A log(MW)-vs-Kav standard curve and an estimated MW for the unknown protein."],"troubleshooting":[{"problem":"Air bubble entering fractionation tubing/column","cause":"Valve/tubing state during manual run","solution":"Pause the program or switch the wash valve to waste; switch the sample valve to buffer quickly after loading"},{"problem":"Poorly resolved peaks","cause":"Overloaded sample volume; flow too high","solution":"Reduce sample volume; keep flow at the specified rate"}],"safety":["0.1 M acetic acid and 0.2 M NaOH are corrosive - handle with care.","Standard laboratory PPE; follow the ÄKTA start instrument SOP."],"biosafetyLevel":"not specified","limitations":"Teaching run; eluted proteins are not collected. MW estimation assumes globular standards and a valid Kav calibration. Resin lot/column dimensions not specified.","sources":[{"id":"src1","kind":"file","title":"Gel Filtration Procedures (2024 teaching protocol)","file":"test_protocol/1-Gel Filtration Procedures.pdf","license":"Institutional teaching material; reuse terms not specified","licenseVerified":false}],"provenance":{"library":"public","owner":"LabRecord","status":"draft"}}},{"id":"protein-concentration","label":"Protein Concentration","data":{"schemaVersion":"0.1","metadata":{"title":"Measurement of Protein Concentration (A280 / BCA / Bradford)","protocolId":"lr-test-protein-concentration","version":"0.1","family":"Protein quantitation","category":"Protein","purpose":"Determine the concentration of an unknown protein solution by three independent methods - UV absorbance at 280 nm, the BCA assay, and the Bradford assay - each calibrated against a standard protein, and compare the results.","scope":"Colorimetric/UV protein quantitation of soluble samples against a BSA standard curve, in test tubes/cuvettes (A280, Bradford) and a 96-well plate (BCA). No single assay suits all proteins. Bradford is included for reference (also used in the CK activity assay).","estimatedTime":"~2-3 h (BCA incubation 15-20 min; Bradford color stable ~1 h)","beforeYouBegin":["Run standard samples in duplicate (or triplicate).","Use the 0 mg/mL tube (sample 1) as the blank for spectrophotometer zeroing.","Because the same volume is examined in each assay, plot absorbance directly against standard concentration.","When computing the unknown concentration, multiply by the dilution factor."],"tags":["protein concentration","A280","BCA assay","Bradford assay","standard curve"]},"materials":[{"id":"m1","name":"Standard protein (BSA)","workingConcentration":"1.0 mg/mL stock","specification":"Known-concentration standard","needsReview":true},{"id":"m2","name":"Unknown protein solution","specification":"Sample to quantify"},{"id":"m3","name":"Deionized water"},{"id":"m4","name":"PBS","specification":"Diluent for BCA","needsReview":true},{"id":"m5","name":"BCA Reagent A (BCA solution)","amount":4,"unit":"mL","specification":"per working-solution batch","needsReview":true},{"id":"m6","name":"BCA Reagent B (Cu2+)","amount":80,"unit":"uL","specification":"per working-solution batch","needsReview":true},{"id":"m7","name":"Bradford working buffer","amount":3,"unit":"mL","specification":"Acidic Coomassie Brilliant Blue G-250, per tube","needsReview":true}],"equipment":[{"id":"e1","name":"Vortex mixer","settings":"Mix each sample","needsReview":true},{"id":"e2","name":"UV/Vis spectrophotometer + 1 mL plastic cuvette","settings":"Read A280","needsReview":true},{"id":"e3","name":"Microplate reader + 96-well plate","settings":"Read A562","needsReview":true},{"id":"e4","name":"37 degC incubator","settings":"BCA color development","needsReview":true},{"id":"e5","name":"Vis spectrophotometer + 3 mL plastic cuvette","settings":"Read A595 (380-780 nm)","needsReview":true},{"id":"e6","name":"Test tubes (10 mL / 5 mL / 1.5 mL)","settings":"Sample preparation"}],"steps":[{"id":"s1","number":1,"phase":"A280 (UV) assay","action":"Prepare 14 test tubes with standards, unknown, and deionized water per Table 1; mix on vortex.","materialIds":["m1","m2","m3"],"equipmentIds":["e1","e6"],"parameters":[{"type":"volume","value":2,"unit":"mL","rawText":"total volume 2.0 mL per tube"}],"expectedResult":"Standard series (0-1.0 mg/mL) + unknown ready.","criticalNotes":"Table 1: standard 1.0 mg/mL 0/0.4/0.8/1.2/1.6/2.0 mL; water 2.0->0 mL; -> 0/0.2/0.4/0.6/0.8/1.0 mg/mL; tube 7 = 2.0 mL unknown."},{"id":"s2","number":2,"phase":"A280 (UV) assay","action":"Read A280 in a 1 mL cuvette; zero with sample 1 (0 mg/mL).","equipmentIds":["e2"],"parameters":[{"type":"other","value":280,"unit":"nm","rawText":"read A280"}],"expectedResult":"A280 per tube.","criticalNotes":"Sample 1 is the blank."},{"id":"s3","number":3,"phase":"A280 (UV) assay","action":"Plot A280 vs mg/mL standard; estimate the unknown; calculate A(1%,1cm) at 280 nm.","expectedResult":"Calibration curve + unknown concentration."},{"id":"s4","number":4,"phase":"BCA assay (96-well)","action":"Prepare BCA working solution: 4 mL Reagent A + 80 uL Reagent B in a 5-mL tube.","materialIds":["m5","m6"],"equipmentIds":["e6"],"parameters":[{"type":"volume","value":4,"unit":"mL","rawText":"4 mL of Reagent A"},{"type":"volume","value":80,"unit":"uL","rawText":"80 uL Reagent B"}],"expectedResult":"Working solution ready.","criticalNotes":"Cu2+ + BCA -> colored complex."},{"id":"s5","number":5,"phase":"BCA assay (96-well)","action":"Dilute standard BSA to 0.5 mg/mL (500 uL + 500 uL PBS); serial-dilute per Table 2 in duplicate.","materialIds":["m1","m4"],"equipmentIds":["e6"],"parameters":[{"type":"concentration","value":0.5,"unit":"mg/mL","rawText":"dilute standard protein (BSA) to 0.5 mg/mL"}],"expectedResult":"Standard series 0-0.25 mg/mL ready.","criticalNotes":"Table 2: standard 0.5 mg/mL 0/50/100/150/200/250 uL; PBS 500/450/400/350/300/250 uL; -> 0/0.05/0.10/0.15/0.20/0.25 mg/mL. Repeat for duplicate."},{"id":"s6","number":6,"phase":"BCA assay (96-well)","action":"Load standards to wells B-G (two columns); load experimental sample: 20 uL, 10 uL+10 uL PBS (1/2), 5 uL+15 uL PBS (1/4).","materialIds":["m2","m4"],"equipmentIds":["e3"],"parameters":[{"type":"volume","value":20,"unit":"uL","rawText":"20 uL experimental sample; 10 uL+10 uL PBS (1/2); 5 uL+15 uL PBS (1/4)"}],"expectedResult":"Plate loaded per Figure 1 layout.","criticalNotes":"Dilutions may be pre-made in 1.5-mL tubes."},{"id":"s7","number":7,"phase":"BCA assay (96-well)","action":"Add 200 uL BCA working solution to each well; incubate; read A562.","materialIds":["m5","m6"],"equipmentIds":["e3","e4"],"parameters":[{"type":"volume","value":200,"unit":"uL","rawText":"200 uL BCA-working solution"},{"type":"temperature","value":37,"unit":"degC","rawText":"37 degC"},{"type":"time","value":15,"valueMax":20,"unit":"min","rawText":"15-20 min"},{"type":"other","value":562,"unit":"nm","rawText":"read at 562 nm"}],"expectedResult":"A562 per well."},{"id":"s8","number":8,"phase":"BCA assay (96-well)","action":"Plot the standard curve (A562 vs mg/mL); calculate the unknown.","expectedResult":"Unknown concentration.","criticalNotes":"Multiply by the dilution factor."},{"id":"s9","number":9,"phase":"Bradford microassay","action":"Dilute standard protein to 0.1 mg/mL (~10 mL).","materialIds":["m1"],"optional":true,"parameters":[{"type":"concentration","value":0.1,"unit":"mg/mL","rawText":"dilute standard protein solution to 0.1 mg/mL for about 10 mL"}],"expectedResult":"Working standard.","criticalNotes":"Bradford is included for reference (used in CK activity assay)."},{"id":"s10","number":10,"phase":"Bradford microassay","action":"Prepare 17 test tubes per Table 3 (standards/unknown/water) + 3 mL Bradford buffer each; mix on vortex.","materialIds":["m1","m2","m3","m7"],"equipmentIds":["e1","e6"],"optional":true,"parameters":[{"type":"volume","value":3,"unit":"mL","rawText":"3 mL Bradford working buffer per tube"}],"expectedResult":"Color develops.","criticalNotes":"Table 3: standard 0.1 mg/mL 0/0.1/0.2/0.4/0.6/0.8/1.0 mL -> 0/10/20/40/60/80/100 ug; unknown 0.05/0.1/0.2 mL; water to 1.0 mL. Dye shift 465 -> 595 nm."},{"id":"s11","number":11,"phase":"Bradford microassay","action":"Read A595 in a 3 mL cuvette; read low->high protein.","equipmentIds":["e5"],"optional":true,"parameters":[{"type":"other","value":595,"unit":"nm","rawText":"measure A595"},{"type":"time","value":2,"unit":"min","rawText":"color development complete in 2 min, stable up to 1 hour"}],"expectedResult":"A595 per tube.","criticalNotes":"Read sequentially to limit dye carryover."},{"id":"s12","number":12,"phase":"Bradford microassay","action":"Plot ug standard vs A595; estimate the unknown.","optional":true,"expectedResult":"Calibration curve + unknown concentration."}],"controls":[{"name":"Blank / zero","description":"0 mg/mL tube (sample 1) for spectrophotometer zeroing in each assay."},{"name":"Standard curve","description":"BSA dilution series in each assay (run in duplicate/triplicate)."},{"name":"Dilution-factor correction","description":"Apply to diluted unknown wells (BCA 1/2, 1/4)."},{"name":"Method comparison","description":"Compare A280 vs BCA vs Bradford results and discuss discrepancies."}],"expectedOutputs":["Three standard curves (A280, A562, A595) and the estimated unknown concentration from each.","A(1%,1cm) at 280 nm for the unknown.","A comparison/discussion of the three methods."],"troubleshooting":[{"problem":"Nonlinear standard curve","cause":"Out-of-range concentrations; pipetting error","solution":"Keep within the series range; re-pipette; use duplicates"},{"problem":"Bradford dye carryover between reads","cause":"Incomplete cuvette rinsing","solution":"Read low->high protein content; rinse cuvette"},{"problem":"Method results disagree","cause":"Amino-acid-composition dependence of each assay","solution":"Choose a suitable standard; report the method; discuss"},{"problem":"BCA under/over-reads","cause":"Wrong dilution factor applied","solution":"Multiply diluted wells by the correct dilution factor"}],"safety":["BCA Reagent B (Cu2+) and acidic Coomassie dye are irritants - wear gloves; follow disposal rules.","Standard laboratory PPE."],"biosafetyLevel":"not specified","limitations":"Each assay depends on amino-acid composition and the chosen standard; only ranges/volumes from the teaching handout are captured. The source's dilution tables are represented compactly in step notes (the schema has no first-class table object - a known limitation).","sources":[{"id":"src1","kind":"file","title":"Measurement of Protein Concentration (2025 teaching protocol)","file":"test_protocol/2-Measurement of Protein Concentration2025.pdf","license":"Institutional teaching material; reuse terms not specified","licenseVerified":false}],"provenance":{"library":"public","owner":"LabRecord","status":"draft"}}}];
+const DESIGNS = [{"key":"document","label":"Document","hint":"Journal-article layout with tables — closest to Nature Protocols / Bio-protocol. Best for reading & publishing."},{"key":"checklist","label":"Checklist / Run","hint":"Tickable step cards for use at the bench — like protocols.io run mode. Best for executing a protocol."},{"key":"timeline","label":"Timeline","hint":"Vertical stepper grouped by phase. Best for grasping flow & structure at a glance."},{"key":"compact","label":"Compact / Print","hint":"Two-column reference: materials sidebar + dense numbered steps. Best for printing / quick reference."}];
+let curP = 0, curD = "document";
+const view = document.getElementById('view');
+const hint = document.getElementById('hint');
+function draw(){
+  const p = PROTOCOLS[curP].data;
+  view.innerHTML = window.renderVariant(p, curD);
+  const d = DESIGNS.find(x=>x.key===curD);
+  hint.textContent = d ? d.hint : "";
+}
+document.getElementById('psel').addEventListener('change', e=>{ curP=+e.target.value; draw(); });
+document.getElementById('seg').addEventListener('click', e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  Array.prototype.forEach.call(document.querySelectorAll('#seg button'),x=>x.classList.remove('active'));
+  b.classList.add('active'); curD=b.dataset.key; draw();
+});
+draw();
+</script>
+</body>
+</html>

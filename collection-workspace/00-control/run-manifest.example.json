@@ -1,0 +1,16 @@
+{
+  "sessionId": "replace-with-assigned-session-id",
+  "sessionTitle": "Replace with assigned session title",
+  "categoryIds": ["replace-with-every-assigned-category-id"],
+  "promptVersion": "phase1-v4-coverage-license-normalization",
+  "startedAt": "YYYY-MM-DD",
+  "completedAt": "YYYY-MM-DD",
+  "collector": "session identifier or human name",
+  "writeScope": "data/sessions/<session-id>/result.json",
+  "sourceCount": 0,
+  "candidateCount": 0,
+  "representativeCount": 0,
+  "screenedCount": 0,
+  "resultFile": "data/sessions/<session-id>/result.json",
+  "notes": "Independent crawler handoff. Metadata only; no copied protocol content."
+}

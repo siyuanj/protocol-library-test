@@ -1,0 +1,215 @@
+{
+  "schemaVersion": "0.2",
+  "metadata": {
+    "title": "Rodent Pharmacokinetics Study (single-dose IV vs PO, serial blood sampling)",
+    "protocolId": "lr-stress-pk-animal-study",
+    "version": "0.1",
+    "family": "Pharmacokinetics",
+    "category": "In vivo / DMPK",
+    "purpose": "Determine the plasma pharmacokinetic profile and oral bioavailability of a test compound in rodents after a single intravenous and a single oral dose, using serial blood sampling and LC-MS/MS bioanalysis.",
+    "scope": "Small-molecule plasma PK in mouse (or rat) following one IV and one PO administration at matched dose. Covers randomization to route/time cohorts, dosing, serial blood collection, plasma preparation, bioanalysis, and non-compartmental PK/statistics. Out of scope: tissue distribution, metabolite ID, multi-dose/steady-state, and large-molecule PK.",
+    "estimatedTime": "1 dosing day (~6 h sampling window) + bioanalysis and PK modeling (2-3 days)",
+    "beforeYouBegin": [
+      "OBTAIN AND RECORD IACUC (or equivalent ethics committee, e.g. BACUC) approval number BEFORE any animal work; this protocol must not be run without it.",
+      "Assign animals to route x time-point cohorts by a documented randomization method (e.g. random number list); record the scheme.",
+      "Blinding: bioanalyst and PK analyst should be blinded to group allocation where feasible; the source does not specify a blinding SOP (needsReview).",
+      "Compute the maximum permissible blood withdrawal per animal from body weight and circulating volume (see criticalNotes on the sampling steps and table t3) before drawing blood.",
+      "Prepare dosing formulations for both routes at the target concentration so the dose volume is within route limits.",
+      "Acclimate animals and confirm health status; decide fasting status for the PO arm and record it (fasting not specified by source; needsReview)."
+    ],
+    "tags": ["pharmacokinetics", "PK", "in vivo", "rodent", "serial blood sampling", "bioavailability", "LC-MS/MS", "IACUC", "DMPK"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Test compound", "role": "reagent", "specification": "Small-molecule test article; identity, purity and lot to be recorded per study", "needsReview": true },
+    { "id": "m2", "name": "IV dosing formulation", "role": "solvent", "workingConcentration": "concentration set so dose = 10 mg/kg within IV volume limit", "specification": "Solubilized/suspension vehicle suitable for IV bolus (e.g. saline/co-solvent); exact vehicle per study", "rawText": "10 mg/kg ... IV", "needsReview": true },
+    { "id": "m3", "name": "PO dosing formulation", "role": "solvent", "workingConcentration": "concentration set so dose = 10 mg/kg within PO gavage volume", "specification": "Oral vehicle/suspension; exact vehicle per study", "rawText": "10 mg/kg ... PO", "needsReview": true },
+    { "id": "m4", "name": "Anticoagulant (K2/K3-EDTA or heparin)", "role": "reagent", "specification": "Coating of blood collection tubes for plasma; exact anticoagulant per bioanalytical method", "needsReview": true },
+    { "id": "m5", "name": "Vehicle-control (blank) plasma", "role": "standard", "specification": "Blank matrix for LC-MS/MS calibration standards and QCs", "rawText": "plus vehicle control plasma" },
+    { "id": "m6", "name": "LC-MS/MS internal standard", "role": "standard", "specification": "Stable-isotope-labeled or structural analog IS; identity per method", "needsReview": true },
+    { "id": "m7", "name": "Protein-precipitation solvent (acetonitrile/methanol)", "role": "solvent", "specification": "For plasma extraction prior to LC-MS/MS; exact solvent per method", "needsReview": true }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Analytical balance / animal scale", "settings": "Weigh each animal to compute per-animal dose and max blood volume" },
+    { "id": "e2", "name": "IV bolus dosing setup (tail vein)", "settings": "Single IV bolus", "needsReview": true },
+    { "id": "e3", "name": "Oral gavage setup (feeding needle)", "settings": "Single PO gavage", "needsReview": true },
+    { "id": "e4", "name": "Refrigerated microcentrifuge", "settings": "Spin blood to plasma; speed/time per lab SOP (needsReview)", "needsReview": true },
+    { "id": "e5", "name": "-80 C freezer", "settings": "Store plasma until analysis", "needsReview": true },
+    { "id": "e6", "name": "LC-MS/MS system", "model": "AB Sciex API4000/API3000 MS with Shimadzu (Prominence/VP) HPLC", "settings": "Quantify compound in plasma against matrix-matched calibration curve. Source: 'LC-MS/MS using AB Sciex API4000/3000 mass spectrometers and Shimadzu (Prominence, VP) HPLC systems'." },
+    { "id": "e7", "name": "Non-compartmental PK analysis software", "settings": "Compute NCA parameters; specific package not stated by source", "needsReview": true }
+  ],
+  "samples": [
+    { "id": "sp1", "name": "Rodent cohort - IV route", "role": "input", "organism": "Mouse (C57BL/6, BALB/c, CD1, or NMRI) or rat (Wistar or Sprague Dawley)", "description": "Animals randomized to the IV arm; N=4 per time point (see table t1). Source strains: 'mouse inbred (C57BL/6, BALB/c), outbred (CD1, NMRI) strains, and Wistar, or Sprague Dawley rats'." },
+    { "id": "sp2", "name": "Rodent cohort - PO route", "role": "input", "organism": "Same species/strain as IV arm", "description": "Animals randomized to the PO arm; N=4 per time point (see table t1)." },
+    { "id": "sp3", "name": "Whole blood samples (serial)", "role": "intermediate", "description": "Serial whole-blood draws at each scheduled time point into anticoagulant tubes." },
+    { "id": "sp4", "name": "Plasma samples", "role": "output", "derivedFromMaterialId": "m4", "description": "Plasma separated from each blood draw; analyte quantified by LC-MS/MS." },
+    { "id": "sp5", "name": "Concentration-time dataset", "role": "output", "description": "Per-time-point plasma concentrations used to derive NCA PK parameters (table t2)." }
+  ],
+  "containers": [
+    { "id": "c1", "name": "EDTA/heparin microtainer blood tubes", "type": "tube", "wells": null },
+    { "id": "c2", "name": "Plasma storage cryovials", "type": "tube", "wells": null },
+    { "id": "c3", "name": "LC-MS/MS autosampler vials/plate", "type": "plate", "wells": 96, "needsReview": true }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Study design: route x time-point cohorts (serial sampling)",
+      "columns": ["Group", "Route", "Dose (mg/kg)", "Sampling time points (min post-dose)", "N per time point"],
+      "rows": [
+        ["G1", "IV bolus", 10, "5, 15, 30, 60, 120, 240", 4],
+        ["G2", "PO gavage", 10, "15, 30, 60, 120, 240, 360", 4],
+        ["Predose", "both", 0, "0 (baseline, predose)", 4]
+      ],
+      "note": "IV and PO time points and N=4/time point and 10 mg/kg from source src1; a typical mouse study uses ~50 animals total. t=0 predose baseline added per standard practice (not explicitly listed by src1; verify). Serial sampling = repeated draws from the same animal within an arm."
+    },
+    {
+      "id": "t2",
+      "title": "Non-compartmental PK parameters to derive (per route)",
+      "columns": ["Parameter", "Definition", "Applies to"],
+      "rows": [
+        ["Cmax", "Maximum observed plasma concentration", "IV, PO"],
+        ["Tmax", "Time of Cmax", "PO"],
+        ["AUC(0-t)", "Area under concentration-time curve to last measurable point (linear/log-trapezoidal)", "IV, PO"],
+        ["AUC(0-inf)", "AUC extrapolated to infinity", "IV, PO"],
+        ["t1/2", "Terminal elimination half-life = ln(2)/lambda_z", "IV, PO"],
+        ["CL", "Systemic clearance = Dose_IV / AUC(0-inf)_IV", "IV"],
+        ["Vz / Vss", "Volume of distribution", "IV"],
+        ["F (%)", "Absolute oral bioavailability = (AUC_PO x Dose_IV) / (AUC_IV x Dose_PO) x 100", "PO vs IV"]
+      ],
+      "note": "Derived/computed outputs. The schema has no computed-result construct; formulas are recorded here and referenced by the analysis steps. Specific NCA software not stated by source (needsReview)."
+    },
+    {
+      "id": "t3",
+      "title": "Maximum safe blood withdrawal reference (welfare constraint)",
+      "columns": ["Species", "Mean circulating blood volume", "Max single-draw guideline"],
+      "rows": [
+        ["Mouse", "~72 mL/kg (range 63-80)", "~10% of total blood volume per collection, no more often than every 2-4 weeks"],
+        ["Rat", "~64 mL/kg (range 58-70)", "~10% of total blood volume per collection, no more often than every 2-4 weeks"]
+      ],
+      "note": "From src2 (institutional blood-collection guidelines). Serial sampling must keep cumulative withdrawal within welfare limits; compute per-animal cap from body weight before drawing."
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1", "number": 1, "phase": "Setup & ethics",
+      "action": "Confirm IACUC/BACUC approval, randomize animals to route x time-point cohorts, weigh each animal, and record allocation.",
+      "equipmentIds": ["e1"], "inputIds": ["sp1", "sp2"], "tableIds": ["t1", "t3"],
+      "expectedResult": "Documented, approved study design with per-animal weights and dose/blood-volume caps computed.",
+      "criticalNotes": "Do not proceed without a recorded ethics approval number. Compute each animal's maximum permissible blood withdrawal (~10% circulating volume; table t3) before dosing.",
+      "safetyNotes": "All in vivo work under approved animal-ethics protocol.",
+      "sourceReferences": [{ "sourceId": "src1", "excerpt": "All study protocols are reviewed by Bienta's Institutional Animal Care and Use Committee (BACUC)" }]
+    },
+    {
+      "id": "s2", "number": 2, "phase": "Setup & ethics",
+      "action": "Prepare IV and PO dosing formulations of the test compound at concentrations giving 10 mg/kg within each route's volume limit.",
+      "materialIds": ["m1", "m2", "m3"], "inputIds": ["m1"],
+      "parameters": [{ "type": "mass", "value": 10, "unit": "mg/kg", "rawText": "10 mg/kg" }],
+      "expectedResult": "Two dose formulations ready and characterized.",
+      "criticalNotes": "Exact vehicles, dose volumes, and fasting status are not specified by the source and must be set and recorded per study.",
+      "needsReview": true
+    },
+    {
+      "id": "s3", "number": 3, "phase": "Dosing",
+      "action": "Administer a single IV bolus (10 mg/kg) to the IV cohort; record exact dosing time as t=0.",
+      "materialIds": ["m2"], "equipmentIds": ["e2"], "inputIds": ["sp1"], "tableIds": ["t1"],
+      "parameters": [{ "type": "mass", "value": 10, "unit": "mg/kg", "rawText": "10 mg/kg" }],
+      "expectedResult": "IV cohort dosed; t=0 timestamp logged per animal.",
+      "needsReview": true
+    },
+    {
+      "id": "s4", "number": 4, "phase": "Dosing",
+      "action": "Administer a single PO gavage dose (10 mg/kg) to the PO cohort; record exact dosing time as t=0.",
+      "materialIds": ["m3"], "equipmentIds": ["e3"], "inputIds": ["sp2"], "tableIds": ["t1"],
+      "parameters": [{ "type": "mass", "value": 10, "unit": "mg/kg", "rawText": "10 mg/kg" }],
+      "expectedResult": "PO cohort dosed; t=0 timestamp logged per animal.",
+      "needsReview": true
+    },
+    {
+      "id": "s5", "number": 5, "phase": "Serial sampling",
+      "action": "Collect serial whole-blood samples at each scheduled post-dose time point per arm, into anticoagulant tubes. IV: 5, 15, 30, 60, 120, 240 min. PO: 15, 30, 60, 120, 240, 360 min. Include a t=0 predose baseline.",
+      "materialIds": ["m4"], "containerIds": ["c1"], "inputIds": ["sp1", "sp2"], "outputIds": ["sp3"], "tableIds": ["t1", "t3"],
+      "parameters": [
+        { "type": "time", "value": 0, "unit": "min", "rawText": "0 (predose baseline)", "needsReview": true },
+        { "type": "time", "value": 5, "unit": "min", "rawText": "5 ... min for IV" },
+        { "type": "time", "value": 15, "unit": "min", "rawText": "15 ... min" },
+        { "type": "time", "value": 30, "unit": "min", "rawText": "30 ... min" },
+        { "type": "time", "value": 60, "unit": "min", "rawText": "60 ... min" },
+        { "type": "time", "value": 120, "unit": "min", "rawText": "120 ... min" },
+        { "type": "time", "value": 240, "unit": "min", "rawText": "240 min for IV" },
+        { "type": "time", "value": 360, "unit": "min", "rawText": "360 min for PO" },
+        { "type": "other", "value": 30, "unit": "uL", "rawText": "~30 uL per serial draw (literature serial-sampling volume)", "needsReview": true }
+      ],
+      "expectedResult": "A timed series of whole-blood samples per animal covering the full sampling window.",
+      "criticalNotes": "The schema has no time-series/loop construct: the full schedule lives in table t1 and is enumerated here as repeated time parameters. Keep cumulative serial withdrawal within the ~10% circulating-volume welfare cap (table t3). Per-draw volume (~30 uL) is from serial-sampling literature (src3), not from src1.",
+      "safetyNotes": "Use approved restraint/sampling sites; minimize distress.",
+      "sourceReferences": [{ "sourceId": "src1", "excerpt": "5, 15, 30, 60, 120, 240 min for IV and 15, 30, 60, 120, 240 and 360 min for PO ... 4 animals per each time point group/route" }]
+    },
+    {
+      "id": "s6", "number": 6, "phase": "Sample processing",
+      "action": "Centrifuge blood to separate plasma; transfer plasma to labeled cryovials and store frozen until analysis.",
+      "equipmentIds": ["e4", "e5"], "containerIds": ["c2"], "inputIds": ["sp3"], "outputIds": ["sp4"],
+      "pausePoint": true,
+      "parameters": [
+        { "type": "other", "value": null, "unit": "xg", "rawText": "centrifuge to plasma (speed/time per SOP)", "needsReview": true },
+        { "type": "temperature", "value": -80, "unit": "degC", "rawText": "store at -80 C (per SOP)", "needsReview": true }
+      ],
+      "expectedResult": "Plasma aliquots stored, ready for bioanalysis.",
+      "criticalNotes": "Centrifugation speed/time and storage temperature are lab SOP values, not stated by source.",
+      "needsReview": true
+    },
+    {
+      "id": "s7", "number": 7, "phase": "Bioanalysis",
+      "action": "Quantify test compound in plasma by LC-MS/MS against a matrix-matched calibration curve with internal standard, using blank plasma for standards/QCs.",
+      "materialIds": ["m5", "m6", "m7"], "equipmentIds": ["e6"], "containerIds": ["c3"], "inputIds": ["sp4"], "outputIds": ["sp5"],
+      "expectedResult": "Validated plasma concentration for every sample; concentration-time dataset assembled.",
+      "criticalNotes": "Internal standard, extraction solvent, and chromatographic method are method-specific (needsReview).",
+      "sourceReferences": [{ "sourceId": "src1", "excerpt": "LC-MS/MS using AB Sciex API4000/3000 mass spectrometers and Shimadzu (Prominence, VP) HPLC systems" }]
+    },
+    {
+      "id": "s8", "number": 8, "phase": "PK / statistical analysis",
+      "action": "Perform non-compartmental analysis (NCA) on the concentration-time data to derive Cmax, Tmax, AUC(0-t), AUC(0-inf), t1/2, CL, Vz/Vss, and absolute oral bioavailability F.",
+      "equipmentIds": ["e7"], "inputIds": ["sp5"], "tableIds": ["t2"],
+      "parameters": [
+        { "type": "other", "value": null, "unit": "formula", "rawText": "F(%) = (AUC_PO x Dose_IV) / (AUC_IV x Dose_PO) x 100" },
+        { "type": "other", "value": null, "unit": "formula", "rawText": "CL = Dose_IV / AUC(0-inf)_IV; t1/2 = ln(2)/lambda_z" }
+      ],
+      "expectedResult": "Full NCA PK parameter set per route plus oral bioavailability, with summary statistics (mean +/- SD across N=4).",
+      "criticalNotes": "Derived/computed results have no native schema construct: parameter definitions and formulas are captured in table t2 and as 'other' free-text formula parameters here.",
+      "needsReview": true
+    }
+  ],
+  "controls": [
+    { "name": "Vehicle-control (blank) plasma", "description": "Provides drug-free matrix for LC-MS/MS calibration standards and QC samples.", "needsReview": false },
+    { "name": "Predose (t=0) baseline sample", "description": "Confirms absence of analyte before dosing and provides per-animal baseline.", "needsReview": true },
+    { "name": "IV reference arm", "description": "IV data give 100% bioavailability reference for computing absolute F of the PO arm." },
+    { "name": "Bioanalytical QC samples", "description": "Low/mid/high QCs bracket runs to confirm assay accuracy/precision.", "needsReview": true }
+  ],
+  "expectedOutputs": [
+    "Plasma concentration-time profiles for the IV and PO arms (mean +/- SD, N=4 per time point).",
+    "Non-compartmental PK parameters per route: Cmax, Tmax, AUC(0-t), AUC(0-inf), t1/2, CL, Vz/Vss.",
+    "Absolute oral bioavailability F (%).",
+    "Documented ethics approval, randomization scheme, and per-animal dosing/blood-volume records."
+  ],
+  "troubleshooting": [
+    { "problem": "Erratic terminal phase / poor lambda_z fit", "cause": "Too few late time points or concentrations near LLOQ", "solution": "Extend sampling window or improve assay sensitivity; report AUC(0-t) if extrapolation >20%" },
+    { "problem": "Hemolysis / low plasma yield", "cause": "Rough draw or delayed/insufficient centrifugation", "solution": "Gentle collection, prompt processing, verify spin conditions" },
+    { "problem": "Animal welfare limit reached during serial sampling", "cause": "Cumulative blood withdrawal exceeds ~10% circulating volume", "solution": "Reduce per-draw volume or switch to sparse/composite sampling design (table t3)" },
+    { "problem": "Implausibly high or low F", "cause": "Dosing error, formulation instability, or first-pass metabolism", "solution": "Verify dose/route records, formulation concentration, and assay recovery" }
+  ],
+  "safety": [
+    "Conduct all animal procedures only under an approved IACUC/BACUC (or equivalent) protocol; record the approval number.",
+    "Respect species-specific circulating blood volume limits (~10% per collection) to avoid hypovolemia during serial sampling.",
+    "Handle test compound and organic extraction solvents (acetonitrile/methanol) per SDS in appropriate containment."
+  ],
+  "biosafetyLevel": "needsReview",
+  "limitations": "Plasma PK only; no tissue distribution, metabolite identification, or protein-binding correction. Vehicle, fasting status, exact per-draw blood volume, centrifugation, storage, internal standard, and NCA software are not specified by the primary source and are marked needsReview. t=0 predose point and ~30 uL draw volume are standard-practice/literature additions, not from the primary CRO source.",
+  "sources": [
+    { "id": "src1", "kind": "url", "title": "Pharmacokinetics Studies in Mice or Rats - Bienta/Enamine (CRO protocol description)", "url": "https://bienta.net/pk-studies/", "license": "Vendor web page; reuse terms not specified", "licenseVerified": false },
+    { "id": "src2", "kind": "url", "title": "Guidelines for Blood Collection in Mice and Rats (circulating volume and 10% withdrawal limit)", "url": "https://tss.research.olemiss.edu/sites/default/files/Blood%20Collection%20in%20Mice%20and%20Rats%202022.pdf", "license": "Institutional guideline; reuse terms not specified", "licenseVerified": false },
+    { "id": "src3", "kind": "article", "title": "Improved Pharmacokinetic and Bioavailability Support of Drug Discovery Using Serial Blood Sampling in Mice", "url": "https://www.sciencedirect.com/science/article/abs/pii/S0022354916329653", "license": "Publisher copyright", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

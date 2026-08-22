@@ -1,0 +1,389 @@
+{
+  "schemaVersion": "1.0",
+  "sessionId": "molecular-pcr-variants",
+  "sessionTitle": "PCR variants and genotyping",
+  "packetStatus": "partial",
+  "startedAt": "2026-08-03T22:13:56Z",
+  "writtenAt": "2026-08-03T22:16:41Z",
+  "worker": "crawler-molecular-pcr-variants-2026-08-03",
+  "sourcesSearched": [
+    "protocols.io",
+    "Bio-protocol",
+    "Nature Protocols",
+    "Thermo Fisher Scientific",
+    "Addgene",
+    "New England Biolabs"
+  ],
+  "categoryResults": [
+    {
+      "categoryId": "pcr-digital",
+      "categoryLabel": "Digital PCR",
+      "status": "partial",
+      "searchedAt": "2026-08-03",
+      "sourcesSearched": [
+        "protocols.io",
+        "Bio-protocol",
+        "Nature Protocols",
+        "Thermo Fisher Scientific"
+      ],
+      "representative": {
+        "title": "ddPCR for Probes to Target eDNA Samples from Sampled Ecosystems",
+        "protocolType": "Digital PCR protocol",
+        "assay": "Absolute quantification and rare-target detection",
+        "operation": "Probe-based droplet partitioning, endpoint PCR, and droplet fluorescence readout",
+        "source": "protocols.io",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.n92ldm479l5b/v1",
+        "sourceRecordId": "95883",
+        "doi": "10.17504/protocols.io.n92ldm479l5b/v1",
+        "authors": [
+          "John Christy",
+          "Leesa Haynes",
+          "Alex Allen",
+          "Sara Keen",
+          "Jeff Gill"
+        ],
+        "published": "2024-02-28",
+        "updated": "2024-02-28",
+        "licenseCode": "CC BY",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://www.protocols.io/view/ddpcr-for-probes-to-target-edna-samples-from-sampl-c9vjz64n.pdf",
+        "licenseVerifiedAt": "2026-08-03T22:16:41Z",
+        "metadataVerifiedAt": "2026-08-03T22:16:41Z",
+        "specimen": "Environmental DNA from sampled ecosystems, including water, sediment, biofilm, or soil matrices",
+        "organism": null,
+        "platform": "Droplet digital PCR; Bio-Rad QX200 or QX600-compatible workflow",
+        "methodVariant": "Probe-based ddPCR with water-oil emulsion droplet partitioning; supports absolute target quantification and rare-target detection",
+        "safetyLevel": "not specified",
+        "confidence": 0.86,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.9,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.95,
+          "freshness": 0.82,
+          "corroboration": 0.75,
+          "coverageCompleteness": 0.72,
+          "evidenceStrength": 0.93,
+          "licenseClarity": 0.95,
+          "clusterAgreement": 0.75,
+          "overall": 0.86
+        },
+        "evidenceStatus": "record-metadata-and-license-verified; representative is specific to probe-based droplet dPCR and environmental DNA",
+        "selectionNote": "Strong, reproducible-looking protocols.io record with stable DOI metadata and a record PDF stating a Creative Commons Attribution License. Selected for its direct fit to absolute quantification and rare-target detection; platform and specimen facets remain explicit because it is not a universal dPCR workflow."
+      },
+      "screened": [
+        {
+          "title": "Copy Number Variation Analysis by ddPCR",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.q26g7pkd8gwz/v1",
+          "sourceRecordId": "94179",
+          "doi": "10.17504/protocols.io.q26g7pkd8gwz/v1",
+          "published": "2024-01-25",
+          "updated": "2024-01-25",
+          "confidence": 0.82,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://www.protocols.io/view/copy-number-variation-analysis-by-ddpcr-3byl4n2g.pdf",
+          "licenseVerifiedAt": "2026-08-03T22:16:41Z",
+          "metadataVerifiedAt": "2026-08-03T22:16:41Z",
+          "evidenceStatus": "record-metadata-and-license-verified",
+          "screenStatus": "alternative",
+          "reason": "Strong absolute-quantification alternative on a Bio-Rad QX200 droplet platform, but narrower than the selected environmental-DNA rare-target workflow and focused on human copy-number analysis."
+        },
+        {
+          "title": "Digital PCR on the Biomark System",
+          "source": "Bio-protocol",
+          "sourceUrl": "https://bio-protocol.org/exchange/minidetail?id=16785284&type=30",
+          "sourceRecordId": "16785284",
+          "doi": null,
+          "published": null,
+          "updated": null,
+          "confidence": 0.77,
+          "licenseCode": null,
+          "licenseUrl": null,
+          "licenseEvidenceUrl": null,
+          "licenseVerifiedAt": null,
+          "metadataVerifiedAt": "2026-08-03T22:16:41Z",
+          "evidenceStatus": "metadata-only",
+          "screenStatus": "alternative",
+          "reason": "Important microfluidic/IFC partitioning facet on the Biomark platform, but the public record did not provide directly verified reuse-rights evidence for this crawler."
+        },
+        {
+          "title": "Absolute Q Digital PCR System User Guide",
+          "source": "Thermo Fisher Scientific",
+          "sourceUrl": "https://documents.thermofisher.com/TFS-Assets/LSG/manuals/MAN0025653_AbsoluteQ_dPCR_UG.pdf",
+          "sourceRecordId": "MAN0025653",
+          "doi": null,
+          "published": null,
+          "updated": null,
+          "confidence": 0.74,
+          "licenseCode": null,
+          "licenseUrl": null,
+          "licenseEvidenceUrl": null,
+          "licenseVerifiedAt": null,
+          "metadataVerifiedAt": "2026-08-03T22:16:41Z",
+          "evidenceStatus": "metadata-only",
+          "screenStatus": "license-unclear",
+          "reason": "Manufacturer microfluidic array-partition workflow is relevant to platform coverage, but the public guide did not expose record-level reuse terms suitable for a reusable representative."
+        }
+      ],
+      "coverageGaps": [
+        "Non-droplet digital PCR, including microfluidic or array-based partitioning, has no rights-verified representative in this packet.",
+        "Clinical blood, tissue, and other non-environmental specimen variants were screened but are not represented by the selected environmental-DNA protocol.",
+        "The selected record is probe-based ddPCR; dye-based, multiplex, and platform-specific workflows remain facet-level rather than independently represented."
+      ],
+      "nextSearchSuggestions": [
+        "Search protocols.io and Bio-protocol for QuantStudio Absolute Q or Biomark microfluidic digital PCR records with explicit record-level license fields.",
+        "Search protocols.io for digital PCR rare-variant detection in blood or clinical tissue with a stable protocol DOI and direct license evidence.",
+        "Search Nature Protocols for multiplex dye-based dPCR workflows and compare partitioning method, platform, and specimen facets."
+      ]
+    },
+    {
+      "categoryId": "pcr-long-range",
+      "categoryLabel": "Long-range PCR",
+      "status": "partial",
+      "searchedAt": "2026-08-03",
+      "sourcesSearched": [
+        "protocols.io",
+        "Bio-protocol",
+        "Nature Protocols",
+        "New England Biolabs"
+      ],
+      "representative": {
+        "title": "PCR Using Q5 Hot Start High-Fidelity DNA Polymerase",
+        "protocolType": "High-fidelity PCR protocol",
+        "assay": "Large amplicon amplification",
+        "operation": "High-fidelity thermocycling with Q5 Hot Start polymerase and length-adjusted extension",
+        "source": "New England Biolabs",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.cjtunm",
+        "sourceRecordId": "339",
+        "doi": "10.17504/protocols.io.cjtunm",
+        "authors": [
+          "New England Biolabs"
+        ],
+        "published": "2015-01-30",
+        "updated": "2021-03-27",
+        "licenseCode": "CC BY",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://www.protocols.io/view/PCR-Using-Q5-Hot-Start-High-Fidelity-DNA-Polymeras-imsunm.pdf",
+        "licenseVerifiedAt": "2026-08-03T22:16:41Z",
+        "metadataVerifiedAt": "2026-08-03T22:16:41Z",
+        "specimen": "Purified DNA template",
+        "organism": null,
+        "platform": "Conventional thermocycler",
+        "methodVariant": "Q5 Hot Start High-Fidelity DNA Polymerase; long-product extension guidance for amplicons above routine PCR scale",
+        "safetyLevel": "not specified",
+        "confidence": 0.84,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.9,
+          "sourceAuthority": 0.97,
+          "metadataCompleteness": 0.95,
+          "freshness": 0.73,
+          "corroboration": 0.82,
+          "coverageCompleteness": 0.68,
+          "evidenceStrength": 0.94,
+          "licenseClarity": 0.95,
+          "clusterAgreement": 0.82,
+          "overall": 0.84
+        },
+        "evidenceStatus": "record-metadata-and-license-verified; representative is polymerase-specific and does not cover every long-amplicon length family",
+        "selectionNote": "Authoritative New England Biolabs record with stable DOI metadata, explicit Q5 polymerase identity, and a record PDF stating a Creative Commons Attribution License. Selected as the general high-fidelity long-PCR anchor; length and polymerase-family variants are retained as screened records and coverage gaps."
+      },
+      "screened": [
+        {
+          "title": "A guide to long-range PCR for Nanopore sequencing",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.n2bvjqdvplk5/v1",
+          "sourceRecordId": "219044",
+          "doi": "10.17504/protocols.io.n2bvjqdvplk5/v1",
+          "published": "2025-05-28",
+          "updated": "2025-05-30",
+          "confidence": 0.82,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://www.protocols.io/view/a-guide-to-long-range-pcr-for-nanopore-sequencin-n2bvjqdvplk5/v1.pdf",
+          "licenseVerifiedAt": "2026-08-03T22:16:41Z",
+          "metadataVerifiedAt": "2026-08-03T22:16:41Z",
+          "evidenceStatus": "record-metadata-and-license-verified",
+          "screenStatus": "alternative",
+          "reason": "Useful 1-11 kb length and polymerase comparison, but specialized for cDNA/long-read Nanopore library preparation rather than general genomic long-range PCR."
+        },
+        {
+          "title": "Long-range PCR",
+          "source": "Bio-protocol",
+          "sourceUrl": "https://bio-protocol.org/en/bpdetail?id=8467645&type=0",
+          "sourceRecordId": "8467645",
+          "doi": "10.1186/s13059-020-02138-5",
+          "published": null,
+          "updated": null,
+          "confidence": 0.8,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://bio-protocol.org/en/bpdetail?id=8467645&type=0",
+          "licenseVerifiedAt": "2026-08-03T22:16:41Z",
+          "metadataVerifiedAt": "2026-08-03T22:16:41Z",
+          "evidenceStatus": "record-metadata-and-license-verified",
+          "screenStatus": "alternative",
+          "reason": "Specific Phusion-based 16.5 kb human mitochondrial amplification workflow with record-level Creative Commons evidence; narrower in organism, target, and polymerase than the selected general Q5 record."
+        }
+      ],
+      "coverageGaps": [
+        "Polymerase-family variants beyond Q5, including Phusion and PrimeSTAR GXL, lack an independently qualified representative.",
+        "Amplicon-length bands such as approximately 5-10 kb, 10-30 kb, and ultra-long products are not separately represented.",
+        "Sequencing-library and cDNA-specific long-range workflows are screened, but a general genomic-DNA representative for those length families is still missing."
+      ],
+      "nextSearchSuggestions": [
+        "Search protocols.io and Bio-protocol for long-range PCR records explicitly using Phusion, PrimeSTAR GXL, or equivalent long-amplicon polymerases.",
+        "Search New England Biolabs for Q5 or LongAmp protocols with explicit 10-30 kb and ultra-long amplicon ranges.",
+        "Search Nature Protocols for genomic-DNA long-range PCR workflows separated by amplicon length rather than sequencing-library preparation."
+      ]
+    },
+    {
+      "categoryId": "genotyping-pcr",
+      "categoryLabel": "PCR-based genotyping",
+      "status": "partial",
+      "searchedAt": "2026-08-03",
+      "sourcesSearched": [
+        "protocols.io",
+        "Bio-protocol",
+        "Nature Protocols",
+        "Addgene"
+      ],
+      "representative": {
+        "title": "Bacterial and Yeast Colony PCR: how to get good results with a minimum of effort",
+        "protocolType": "PCR-based genotyping protocol",
+        "assay": "Colony screening and genotype confirmation",
+        "operation": "Direct colony template PCR followed by agarose-gel amplicon sizing",
+        "source": "protocols.io",
+        "sourceUrl": "https://doi.org/10.17504/protocols.io.84hvz3pe/v1",
+        "sourceRecordId": "78495",
+        "doi": "10.17504/protocols.io.84hvz3pe/v1",
+        "authors": [
+          "Dariusz Abramczyk"
+        ],
+        "published": "2023-10-17",
+        "updated": "2023-10-17",
+        "licenseCode": "CC BY",
+        "licenseUrl": null,
+        "licenseEvidenceUrl": "https://www.protocols.io/view/bacterial-and-yeast-colony-pcr-how-to-get-good-res-84hvz3pe.pdf",
+        "licenseVerifiedAt": "2026-08-03T22:16:41Z",
+        "metadataVerifiedAt": "2026-08-03T22:16:41Z",
+        "specimen": "Bacterial or yeast colony material",
+        "organism": "Bacteria; Saccharomyces cerevisiae, Pichia, and Candida examples",
+        "platform": "Conventional thermocycler and agarose gel electrophoresis",
+        "methodVariant": "Colony PCR using premixed Taq systems with separate bacterial and yeast sample-preparation workflows; approximately 0.2-3 kb target range",
+        "safetyLevel": "not specified",
+        "confidence": 0.85,
+        "scoreBreakdown": {
+          "recordSpecificity": 0.93,
+          "sourceAuthority": 0.9,
+          "metadataCompleteness": 0.95,
+          "freshness": 0.79,
+          "corroboration": 0.78,
+          "coverageCompleteness": 0.67,
+          "evidenceStrength": 0.94,
+          "licenseClarity": 0.95,
+          "clusterAgreement": 0.78,
+          "overall": 0.85
+        },
+        "evidenceStatus": "record-metadata-and-license-verified; representative covers colony screening but not tissue genotyping or allele-specific PCR",
+        "selectionNote": "Strong protocols.io record with stable DOI metadata, explicit bacterial and yeast colony sample variants, and a record PDF stating a Creative Commons Attribution License. Selected for the colony-screening branch because it directly separates sample preparation by organism while remaining reproducible-looking."
+      },
+      "screened": [
+        {
+          "title": "E. coli Colony PCR",
+          "source": "protocols.io",
+          "sourceUrl": "https://doi.org/10.17504/protocols.io.76ihrce",
+          "sourceRecordId": "28586",
+          "doi": "10.17504/protocols.io.76ihrce",
+          "published": "2019-10-14",
+          "updated": "2019-10-14",
+          "confidence": 0.8,
+          "licenseCode": "CC BY",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://www.protocols.io/view/e-coli-colony-pcr-76ihrce.pdf",
+          "licenseVerifiedAt": "2026-08-03T22:16:41Z",
+          "metadataVerifiedAt": "2026-08-03T22:16:41Z",
+          "evidenceStatus": "record-metadata-and-license-verified",
+          "screenStatus": "alternative",
+          "reason": "Narrow bacterial colony-PCR alternative for insert/orientation checks; useful corroboration but less representative than the selected bacterial-and-yeast record."
+        },
+        {
+          "title": "A Quick, No Frills Approach to Mouse Genotyping",
+          "source": "Bio-protocol",
+          "sourceUrl": "https://bio-protocol.org/en/bpdetail?id=244&type=0",
+          "sourceRecordId": "244",
+          "doi": "10.21769/BioProtoc.244",
+          "published": "2012-08-05",
+          "updated": null,
+          "confidence": 0.79,
+          "licenseCode": "exclusive license to Bio-protocol LLC",
+          "licenseUrl": null,
+          "licenseEvidenceUrl": "https://bio-protocol.org/en/bpdetail?id=244&type=0",
+          "licenseVerifiedAt": "2026-08-03T22:16:41Z",
+          "metadataVerifiedAt": "2026-08-03T22:16:41Z",
+          "evidenceStatus": "rights-unclear",
+          "screenStatus": "license-unclear",
+          "reason": "Important organism/tissue-genotyping child variant using mouse tissue, but the record states an exclusive license to Bio-protocol LLC; retained as discovery-only metadata rather than a reusable representative."
+        },
+        {
+          "title": "Colony PCR",
+          "source": "Addgene",
+          "sourceUrl": "https://www.addgene.org/protocols/colony-pcr/",
+          "sourceRecordId": null,
+          "doi": null,
+          "published": null,
+          "updated": null,
+          "confidence": 0.74,
+          "licenseCode": null,
+          "licenseUrl": null,
+          "licenseEvidenceUrl": null,
+          "licenseVerifiedAt": null,
+          "metadataVerifiedAt": "2026-08-03T22:16:41Z",
+          "evidenceStatus": "metadata-only",
+          "screenStatus": "alternative",
+          "reason": "Authoritative public colony-PCR guidance and useful corroboration, but no record-level license evidence or unique protocol identifier was established for this packet."
+        }
+      ],
+      "coverageGaps": [
+        "Organism/tissue genotyping from tail, ear, blood, or lysed tissue lacks a rights-verified representative separate from colony sample preparation.",
+        "Allele-specific, ARMS, KASP, and SNP-genotyping PCR workflows lack a qualified representative with stable record-level rights evidence.",
+        "The selected representative covers bacterial and yeast colony screening; mammalian and other organism-specific genotyping should remain separate child categories."
+      ],
+      "nextSearchSuggestions": [
+        "Search protocols.io and Bio-protocol for mouse, zebrafish, and plant tissue PCR genotyping records with explicit sample-preparation metadata and record-level license fields.",
+        "Search protocols.io for allele-specific PCR, ARMS-PCR, and KASP genotyping records with stable DOI URLs and direct license evidence.",
+        "Search Addgene and Nature Protocols for colony PCR versus organism genotyping workflows and retain them as separate child categories."
+      ]
+    }
+  ],
+  "verification": {
+    "expectedCategoryIds": [
+      "pcr-digital",
+      "pcr-long-range",
+      "genotyping-pcr"
+    ],
+    "actualCategoryIds": [
+      "pcr-digital",
+      "pcr-long-range",
+      "genotyping-pcr"
+    ],
+    "missingCategoryIds": [],
+    "duplicateCategoryIds": [],
+    "unexpectedCategoryIds": [],
+    "coveragePass": false,
+    "sourceUrlPass": true,
+    "licenseEvidencePass": true,
+    "selfVerifiedAt": "2026-08-03T22:16:41Z",
+    "selfCheckNotes": [
+      "All three assigned category IDs are present exactly once and in packet order.",
+      "Every representative has an HTTP(S) DOI landing page and a direct record-level license evidence URL.",
+      "Packet is partial because each category retains explicit platform, specimen, length, polymerase, or sample-preparation gaps rather than silently mixing variants.",
+      "No forbidden placeholder values, mixed source labels, or confidence values at or above 0.90 occur on partial categories.",
+      "Screened records retain source URLs, identifiers where available, metadata verification timestamps, and rights uncertainty."
+    ]
+  },
+  "runNotes": [
+    "Research was metadata-only; no protocol steps, tables, figures, videos, PDFs, or long source passages were copied into the result.",
+    "The selected representatives are rights-verified discovery records, not a claim that their procedures are universally applicable across all PCR variants."
+  ]
+}

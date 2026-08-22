@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LabRecord · Protocol MCP Demo</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand"><span class="flask">⚗</span><span>LabRecord</span></div>
+      <nav aria-label="LabRecord navigation">
+        <a href="#" class="nav-item"><span>◉</span>Recording Now</a>
+        <a href="#" class="nav-item"><span>▱</span>Projects</a>
+        <a href="#" class="nav-item"><span>▤</span>Reports</a>
+        <a href="#library" class="nav-item active"><span>▣</span>Protocols</a>
+      </nav>
+      <div class="profile"><span class="profile-icon">◌</span><div><strong>Siyuan Jiang</strong><small>jiangsy@stanford.edu</small></div></div>
+    </aside>
+    <main>
+      <header>
+        <div>
+          <p class="eyebrow">WANG LAB · PRIVATE LIBRARY</p>
+          <h1>Protocols <span class="badge">MCP demo</span></h1>
+          <p class="subhead">Turn source documents or lab notes into reviewable, structured protocols.</p>
+        </div>
+        <div class="endpoint"><span></span><code>POST /mcp</code><small>Streamable HTTP</small></div>
+      </header>
+
+      <section class="import-card" aria-labelledby="import-title">
+        <div class="card-heading">
+          <div>
+            <p class="eyebrow">AGENT-ASSISTED IMPORT</p>
+            <h2 id="import-title">Create a protocol review draft</h2>
+          </div>
+          <button id="sampleButton" class="button subtle">Load demo source</button>
+        </div>
+
+        <div class="callout"><strong>How this works:</strong> an AI Agent reads the source, converts it to LabRecord’s required protocol structure, then calls the MCP tool. This local demo sends the final draft through a real MCP <code>tools/call</code> request; its sample source parser is intentionally deterministic.</div>
+
+        <div class="import-grid">
+          <div class="source-pane">
+            <label class="label" for="sourceFiles">Source material</label>
+            <label class="dropzone" for="sourceFiles">
+              <input id="sourceFiles" type="file" accept="application/pdf,image/*" multiple />
+              <span class="upload-icon">⇧</span>
+              <strong>Attach PDF or photo</strong>
+              <small>Files stay in this browser demo; the MCP call contains only controlled file references.</small>
+            </label>
+            <div id="fileList" class="file-list" aria-live="polite"></div>
+            <label class="label" for="instruction">Tell the Agent what you want</label>
+            <textarea id="instruction" rows="4" placeholder="Example: Create a review draft for Wang Lab. Keep all uncertain values marked for review."></textarea>
+          </div>
+
+          <div class="draft-pane">
+            <div class="draft-fields">
+              <label><span>Protocol name</span><input id="title" placeholder="e.g. Chemical transformation of DH5α" /></label>
+              <label><span>Category</span><input id="category" placeholder="e.g. Molecular biology" /></label>
+              <label class="wide"><span>Protocol text for this demo</span><textarea id="sourceText" rows="7" placeholder="One unindented line per step. Indent a material with '-' and separate fields with |, e.g.\nThaw cells on ice\n  - DH5α competent cells | 50 | µL | lot to confirm"></textarea></label>
+            </div>
+            <div class="schema-note"><span>✓</span> Target structure: <strong>steps → materials → amount / unit / grade-lot</strong>. Missing facts are preserved as review flags.</div>
+            <button id="importButton" class="button primary">Create review draft via MCP <span>→</span></button>
+            <p id="importStatus" class="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="library" class="library-section" aria-labelledby="library-title">
+        <div class="library-heading">
+          <div><p class="eyebrow">LAB PROTOCOL LIBRARY</p><h2 id="library-title">Saved drafts</h2></div>
+          <button id="refreshButton" class="button subtle">Refresh</button>
+        </div>
+        <div id="emptyState" class="empty-state">No draft yet. Use the import panel above or run <code>npm run demo:agent</code>.</div>
+        <div id="draftList" class="draft-list"></div>
+      </section>
+    </main>
+    <template id="draftTemplate">
+      <article class="protocol-card">
+        <div class="card-top"><div><span class="state"></span><span class="category"></span></div><time></time></div>
+        <h3></h3>
+        <p class="summary"></p>
+        <div class="protocol-stats"></div>
+        <details><summary>Review structured steps</summary><ol class="steps"></ol></details>
+      </article>
+    </template>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
