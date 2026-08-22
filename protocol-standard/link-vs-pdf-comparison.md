@@ -3,8 +3,8 @@
 ## 对照方法
 
 - `codex-pdf/`：2026-08-22 由附件 PDF 生成的 7 份基线 JSON。
-- `codex-link/`：2026-08-22 从 PDF 提取的官方 URL、以及这些页面直接链接的厂商/机构说明书独立生成的 JSON。生成这组时没有读取附件正文或基线 JSON。
-- link JSON 的每个 `steps[]` 都通过 `sourceReferences[].excerpt` 记录其官方来源步骤或小节。它是源步骤到 JSON 步骤的可检索映射，不依赖文档外的编号表。
+- `claude-link/`：2026-08-22 从 PDF 提取的官方 URL、以及这些页面直接链接的厂商/机构说明书独立生成的 JSON。生成这组时没有读取附件正文或基线 JSON。文件名后缀为 `*-claude-link.json`。
+- claude-link JSON 的每个 `steps[]` 都通过 `sourceReferences[].excerpt` 记录其官方来源步骤或小节。它是源步骤到 JSON 步骤的可检索映射，不依赖文档外的编号表。
 - 以下统计以 JSON 的当前内容为准。`needsReview` 使用仓库 `renderer/validate.mjs` 的统计口径。
 
 ## 结构字段覆盖
