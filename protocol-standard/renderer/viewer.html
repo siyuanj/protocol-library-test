@@ -200,7 +200,7 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
       } else t = p.unit || p.type || "";
     }
     var f = p.formula ? ' <span class="pill-formula" title="' + esc(p.formula) + '">ƒ</span>' : "";
-    return '<span class="pill' + (p.needsReview ? " pill-review" : "") + '"><i>' + esc(p.type) + '</i>' + esc(t) + f + '</span>';
+    return '<span class="pill' + (p.needsReview ? " pill-review" : "") + '">' + (p.type ? '<i>' + esc(p.type) + '</i> ' : '') + esc(t) + f + '</span>';
   }
 
   function lookups(p) {
@@ -415,13 +415,22 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
         }
         /* -- parameters -- */
         if(s.parameters&&s.parameters.length){
+          var hasRepeat=!!(s.repeat&&(s.repeat.count||s.repeat.untilCondition));
+          if(!hasRepeat&&s.parameters){s.parameters.forEach(function(pr){if(pr.type==="count")hasRepeat=true})}
           h.push('<div class="step-section"><div class="step-label">Parameters</div>');
           if(s.parameters.length>=3){
             h.push('<table class="step-tbl"><thead><tr><th>Type</th><th>Value</th></tr></thead><tbody>');
-            s.parameters.forEach(function(pr){h.push('<tr'+(pr.needsReview?' class="row-review"':'')+'><td>'+esc(pr.type||"")+'</td><td>'+esc(paramVal(pr))+(pr.formula?' <span class="pill-formula" title="'+esc(pr.formula)+'">ƒ</span>':'')+(pr.needsReview?' <span class="review">review</span>':'')+'</td></tr>')});
+            s.parameters.forEach(function(pr){
+              var val=paramVal(pr);
+              var ea=hasRepeat&&(pr.type==="time"||pr.type==="duration")?" <span style=\"color:#86a2b1;font-size:11px\">(each)</span>":"";
+              h.push('<tr'+(pr.needsReview?' class="row-review"':'')+'><td>'+esc(pr.type||"")+'</td><td>'+esc(val)+ea+(pr.formula?' <span class="pill-formula" title="'+esc(pr.formula)+'">ƒ</span>':'')+(pr.needsReview?' <span class="review">review</span>':'')+'</td></tr>');
+            });
             h.push('</tbody></table>');
           }else{
-            s.parameters.forEach(function(pr){h.push('<div style="margin:2px 0">'+fmtParam(pr)+'</div>')});
+            s.parameters.forEach(function(pr){
+              var ea=hasRepeat&&(pr.type==="time"||pr.type==="duration")?' <span style="color:#86a2b1;font-size:11px">(each)</span>':"";
+              h.push('<div style="margin:2px 0">'+fmtParam(pr)+ea+'</div>');
+            });
           }
           h.push('</div>');
         }
