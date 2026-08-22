@@ -1,46 +1,453 @@
 {
   "schemaVersion": "0.3",
   "metadata": {
-    "title": "PCR Using Q5 High-Fidelity DNA Polymerase",
-    "protocolId": "pcr-001-link",
+    "title": "PCR Using Q5® High-Fidelity DNA Polymerase (NEB #M0491)",
+    "protocolId": "PCR-001-claude-link",
     "version": "0.1",
     "family": "PCR",
-    "category": "DNA amplification",
-    "discipline": "molecular biology",
-    "purpose": "Amplify DNA with Q5 High-Fidelity DNA Polymerase using the linked NEB protocol.",
-    "scope": "25 µL or 50 µL routine Q5 PCR; template, primers, annealing temperature, and cycle count remain assay-specific.",
-    "createdAt": "2026-08-22",
-    "modifiedAt": "2026-08-22",
-    "tags": ["PCR", "Q5", "link-derived", "source-step-mapped"]
+    "category": "PCR & Amplification",
+    "discipline": "Biology",
+    "purpose": "This protocol describes methods for PCR using Q5® High-Fidelity DNA Polymerase, which offers high fidelity (~280X higher than Taq), resulting in ultra-low error rates. Please note that protocols with Q5 High-Fidelity DNA Polymerase may differ from protocols with other polymerases. The conditions recommended below should be used for optimal performance.",
+    "scope": "25 µl or 50 µl routine PCR using Q5 High-Fidelity DNA Polymerase (NEB #M0491) with 5X Q5 Reaction Buffer, dNTPs, primers, template DNA, and optional Q5 High GC Enhancer. Primer sequences, template identity, annealing temperature, and cycle count are assay-specific. Confirm the current manufacturer protocol and local laboratory policy before bench use.",
+    "beforeYouBegin": [
+      "Use of high quality, purified DNA templates greatly enhances the success of PCR. Recommended amounts of DNA template for a 50 µl reaction are as follows: Genomic DNA 1 ng–1 µg; Plasmid or Viral 1 pg–10 ng.",
+      "Oligonucleotide primers are generally 20–40 nucleotides in length and ideally have a GC content of 40–60%. Computer programs such as Primer3 can be used to design or analyze primers. The best results are typically seen when using each primer at a final concentration of 0.5 µM in the reaction.",
+      "Use of the NEBTm Calculator is highly recommended to determine the annealing temperature when using this enzyme. Optimal annealing temperatures for Q5 High-Fidelity DNA Polymerase tend to be higher than for other PCR polymerases.",
+      "Mg++ concentration of 2.0 mM is optimal for most PCR products generated with Q5 High-Fidelity DNA Polymerase. When used at a final concentration of 1X, the Q5 Reaction Buffer provides the optimal Mg++ concentration.",
+      "The final concentration of dNTPs is typically 200 μM of each deoxynucleotide. Q5 High-Fidelity DNA Polymerase cannot incorporate dUTP and is not recommended for use with uracil-containing primers or templates. Should uracil-containing primers or templates be used, we recommend Q5U® Hot Start High-Fidelity DNA Polymerase (NEB #M0515).",
+      "The 5X Q5 Reaction Buffer provided with the enzyme is recommended as the first-choice buffer for robust, high-fidelity amplification. The 5X Q5 Reaction Buffer is detergent-free and contains 2.0 mM Mg++ at the final (1X) concentration.",
+      "We generally recommend using Q5 High-Fidelity DNA Polymerase at a final concentration of 20 units/ml (1.0 unit/50 μl reaction). However, the optimal concentration of Q5 Hot Start High-Fidelity DNA Polymerase may vary from 10–60 units/ml (0.5–3 units/50 μl reaction) depending on amplicon length and difficulty.",
+      "Amplification of some difficult targets, like GC-rich sequences, may be improved by the addition of 1X Q5 High GC Enhancer. The Q5 High GC Enhancer is not a buffer and should not be used alone. It should be added only to reactions with the Q5 Reaction Buffer when other conditions have failed."
+    ],
+    "tags": ["PCR", "Q5", "high-fidelity PCR", "NEB", "M0491", "DNA amplification", "blunt-end"]
   },
   "materials": [
-    {"id":"m1","name":"DNA template","role":"sample","specification":"<1,000 ng per reaction","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m2","name":"5X Q5 Reaction Buffer","role":"buffer","specification":"5X stock","workingConcentration":"1X final","sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m3","name":"dNTP mix","role":"reagent","specification":"10 mM each stock","workingConcentration":"200 µM each final","sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m4","name":"Forward and reverse primers","role":"reagent","specification":"10 µM each stock","workingConcentration":"0.5 µM each final","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m5","name":"Q5 High-Fidelity DNA Polymerase","role":"enzyme","workingConcentration":"0.02 U/µL final","sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m6","name":"5X Q5 High GC Enhancer","role":"reagent","workingConcentration":"1X final when used","sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m7","name":"Nuclease-free water","role":"solvent","sourceReferences":[{"sourceId":"src1"}]}
+    {
+      "id": "m1",
+      "name": "Q5 High-Fidelity DNA Polymerase",
+      "role": "enzyme",
+      "specification": "NEB #M0491",
+      "workingConcentration": "0.02 U/µl",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Reaction Setup Table" }]
+    },
+    {
+      "id": "m2",
+      "name": "5X Q5 Reaction Buffer",
+      "role": "buffer",
+      "specification": "Supplied with enzyme; detergent-free, contains 2.0 mM Mg++ at final (1X) concentration",
+      "workingConcentration": "1X final",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Reaction Setup Table; Buffers section" }]
+    },
+    {
+      "id": "m3",
+      "name": "Deoxynucleotide (dNTP) Solution Mix",
+      "role": "reagent",
+      "specification": "NEB #N0447; 10 mM each stock",
+      "workingConcentration": "200 µM each final",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Materials Required but not Supplied; Reaction Setup Table" }]
+    },
+    {
+      "id": "m4",
+      "name": "10 µM Forward Primer",
+      "role": "reagent",
+      "specification": "10 µM stock",
+      "workingConcentration": "0.5 µM final",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Reaction Setup Table" }]
+    },
+    {
+      "id": "m5",
+      "name": "10 µM Reverse Primer",
+      "role": "reagent",
+      "specification": "10 µM stock",
+      "workingConcentration": "0.5 µM final",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Reaction Setup Table" }]
+    },
+    {
+      "id": "m6",
+      "name": "Template DNA",
+      "role": "sample",
+      "specification": "< 1,000 ng per reaction; Genomic DNA 1 ng–1 µg, Plasmid or Viral 1 pg–10 ng for a 50 µl reaction",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Reaction Setup Table; Template section" }]
+    },
+    {
+      "id": "m7",
+      "name": "Nuclease-Free Water",
+      "role": "solvent",
+      "specification": "NEB #B1500",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Materials Required but not Supplied" }]
+    },
+    {
+      "id": "m8",
+      "name": "5X Q5 High GC Enhancer",
+      "role": "reagent",
+      "specification": "Optional; for difficult GC-rich sequences. Should not be used alone; add only to reactions with the Q5 Reaction Buffer when other conditions have failed.",
+      "workingConcentration": "1X final when used",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Reaction Setup Table; Mg++ and additives section" }]
+    },
+    {
+      "id": "m9",
+      "name": "Sterile thin-walled PCR tube",
+      "role": "consumable",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Protocol section" }]
+    },
+    {
+      "id": "m10",
+      "name": "Mineral oil",
+      "role": "consumable",
+      "specification": "Required only if using a PCR machine without a heated lid",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Protocol section" }]
+    }
   ],
   "equipment": [
-    {"id":"e1","name":"Sterile thin-walled PCR tube","sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"e2","name":"Thermal cycler with heated lid","sourceReferences":[{"sourceId":"src1"}]}
+    {
+      "id": "e1",
+      "name": "Thermocycler with heated lid",
+      "settings": "Preheat to the denaturation temperature (98°C)",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Protocol section" }]
+    },
+    {
+      "id": "e2",
+      "name": "Microcentrifuge",
+      "settings": "Quick spin to collect all liquid to the bottom of the tube",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Protocol section" }]
+    },
+    {
+      "id": "e3",
+      "name": "Agarose gel electrophoresis equipment",
+      "settings": "For PCR product analysis",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "location": "PCR product section (implied)" }]
+    }
   ],
-  "software": [], "samples": [], "containers": [],
   "tables": [
-    {"id":"t1","title":"NEB Q5 reaction setup","kind":"recipe","columns":["Component","25 µL reaction","50 µL reaction","Final concentration"],"rows":[["5X Q5 Reaction Buffer","5 µL","10 µL","1X"],["10 mM dNTPs","0.5 µL","1 µL","200 µM each"],["10 µM forward primer","1.25 µL","2.5 µL","0.5 µM"],["10 µM reverse primer","1.25 µL","2.5 µL","0.5 µM"],["Template DNA","variable","variable","<1,000 ng"],["Q5 polymerase","0.25 µL","0.5 µL","0.02 U/µL"],["5X High GC Enhancer (optional)","5 µL","10 µL","1X"],["Nuclease-free water","to 25 µL","to 50 µL","—"]]},
-    {"id":"t2","title":"Routine Q5 thermocycling conditions","kind":"program","columns":["Source table stage","Temperature","Time","Cycles"],"rows":[["Initial denaturation","98 °C","30 s","1"],["Denaturation","98 °C","5–10 s","25–35"],["Annealing","50–72 °C","10–30 s","25–35"],["Extension","72 °C","20–30 s/kb","25–35"],["Final extension","72 °C","2 min","1"],["Hold","4–10 °C","hold","1"]],"needsReview":true}
+    {
+      "id": "t1",
+      "title": "Reaction Setup",
+      "kind": "recipe",
+      "columns": ["Component", "25 µl Reaction", "50 µl Reaction", "Final Concentration"],
+      "rows": [
+        ["5X Q5 Reaction Buffer", "5 µl", "10 µl", "1X"],
+        ["10 mM dNTPs", "0.5 µl", "1 µl", "200 µM"],
+        ["10 µM Forward Primer", "1.25 µl", "2.5 µl", "0.5 µM"],
+        ["10 µM Reverse Primer", "1.25 µl", "2.5 µl", "0.5 µM"],
+        ["Template DNA", "variable", "variable", "< 1,000 ng"],
+        ["Q5 High-Fidelity DNA Polymerase", "0.25 µl", "0.5 µl", "0.02 U/µl"],
+        ["5X Q5 High GC Enhancer (optional)", "(5 µl)", "(10 µl)", "(1X)"],
+        ["Nuclease-Free Water", "to 25 µl", "to 50 µl", ""]
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Protocol section, Reaction Setup table" }]
+    },
+    {
+      "id": "t2",
+      "title": "Thermocycling Conditions for a Routine PCR",
+      "kind": "program",
+      "columns": ["Step", "Temp", "Time"],
+      "rows": [
+        ["Initial Denaturation", "98°C", "30 seconds"],
+        ["25–35 Cycles: Denaturation", "98°C", "5–10 seconds"],
+        ["25–35 Cycles: Annealing", "50–72°C*", "10–30 seconds"],
+        ["25–35 Cycles: Extension", "72°C", "20–30 seconds/kb"],
+        ["Final Extension", "72°C", "2 minutes"],
+        ["Hold", "4–10°C", ""]
+      ],
+      "note": "*Use of the NEBTm Calculator is highly recommended.",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Thermocycling Conditions table" }]
+    },
+    {
+      "id": "t3",
+      "title": "Recommended DNA Template Amounts for a 50 µl Reaction",
+      "kind": "recipe",
+      "columns": ["DNA", "Amount"],
+      "rows": [
+        ["Genomic", "1 ng–1 µg"],
+        ["Plasmid or Viral", "1 pg–10 ng"]
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Template section" }]
+    },
+    {
+      "id": "t4",
+      "title": "Extension Times by DNA Type and Amplicon Size",
+      "kind": "program",
+      "columns": ["DNA Type", "Amplicon Size ≤ 6 kb", "Amplicon Size ≥ 6 kb"],
+      "rows": [
+        ["gDNA", "20-30s/kb", "30-50 s/kb"],
+        ["cDNA", "30-40 s/kb", "40-50 s/kb"],
+        ["pDNA", "10-15 s/kb", "20-30 s/kb"]
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Extension section" }]
+    }
   ],
   "steps": [
-    {"id":"s1","number":1,"phase":"Reaction setup","action":"Assemble all reaction components on ice in a sterile thin-walled PCR tube according to table t1.","materialIds":["m1","m2","m3","m4","m5","m6","m7"],"equipmentIds":["e1"],"tableIds":["t1"],"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source protocol step 1: assemble components on ice."}]},
-    {"id":"s2","number":2,"phase":"Reaction setup","action":"Gently mix the completed reaction and collect liquid at the bottom of the tube with a quick centrifuge spin if needed.","sourceReferences":[{"sourceId":"src1","excerpt":"Source protocol step 1: mix and quick-spin guidance."}]},
-    {"id":"s3","number":3,"phase":"Thermocycler transfer","action":"Quickly transfer reactions to a thermal cycler preheated to 98 °C.","equipmentIds":["e2"],"parameters":[{"type":"temperature","value":98,"unit":"°C","rawText":"Thermocycler preheated to 98°C","sourceReferences":[{"sourceId":"src1","excerpt":"Source protocol step 2."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source protocol step 2: transfer to preheated thermocycler."}]},
-    {"id":"s4","number":4,"phase":"Thermocycling","action":"Perform the initial denaturation stage in table t2.","equipmentIds":["e2"],"tableIds":["t2"],"sourceReferences":[{"sourceId":"src1","excerpt":"Source thermocycling table: Initial Denaturation."}]},
-    {"id":"s5","number":5,"phase":"Thermocycling","action":"Perform the denaturation, annealing, and extension stages in table t2 as one PCR cycle.","equipmentIds":["e2"],"tableIds":["t2"],"repeat":{"count":null,"over":"the denaturation, annealing, and extension rows of table t2","notes":"The source specifies 25–35 cycles; select the assay-specific count."},"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source thermocycling table: 25–35 cycle block."}]},
-    {"id":"s6","number":6,"phase":"Thermocycling","action":"Perform the final extension stage in table t2.","equipmentIds":["e2"],"tableIds":["t2"],"sourceReferences":[{"sourceId":"src1","excerpt":"Source thermocycling table: Final Extension."}]},
-    {"id":"s7","number":7,"phase":"Hold","action":"Hold the reactions at 4–10 °C.","equipmentIds":["e2"],"tableIds":["t2"],"sourceReferences":[{"sourceId":"src1","excerpt":"Source thermocycling table: Hold."}]}
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Reaction Setup",
+      "action": "Assemble all reaction components on ice. Each component should be gently mixed before adding to the reaction in a sterile thin-walled PCR tube.",
+      "materialIds": ["m2", "m3", "m4", "m5", "m6", "m7", "m8"],
+      "equipmentIds": [],
+      "tableIds": ["t1", "t3"],
+      "criticalNotes": "Amplification of certain long, complex DNA targets (≥ 5 kb) may benefit from using a lower primer concentration (~ 0.2 to 0.3 µM).",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Protocol section, sentence 1–2" }]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Reaction Setup",
+      "action": "The Q5 High-Fidelity DNA Polymerase may be diluted in 1X Q5 Reaction Buffer just prior to use to reduce pipetting errors.",
+      "materialIds": ["m1", "m2"],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Protocol section, sentence 3" }]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Reaction Setup",
+      "action": "The entire reaction should be mixed again to ensure homogeneous, consistent mixture. Collect all liquid to the bottom of the tube with a quick centrifuge spin if necessary.",
+      "equipmentIds": ["e2"],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Protocol section, sentences 4–5" }]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Reaction Setup",
+      "action": "Overlay the sample with mineral oil if using a PCR machine without a heated lid.",
+      "materialIds": ["m10"],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Protocol section, sentence 6" }]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Thermal Cycling",
+      "action": "Quickly transfer the reactions to a thermocycler preheated to the denaturation temperature (98°C) and begin thermocycling.",
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 98,
+          "unit": "°C",
+          "rawText": "thermocycler preheated to the denaturation temperature (98°C)"
+        }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Protocol section, paragraph 2" }]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Thermal Cycling",
+      "action": "Perform thermocycling according to the Thermocycling Conditions for a Routine PCR (table t2). An initial denaturation of 30 seconds at 98°C is sufficient for most amplicons from pure DNA templates. Longer denaturation times can be used (up to 3 minutes) for templates that require it. During thermocycling, the denaturation step should be kept to a minimum. Typically, a 5–10 second denaturation at 98°C is recommended for most templates.",
+      "equipmentIds": ["e1"],
+      "tableIds": ["t2"],
+      "repeat": {
+        "count": null,
+        "over": "denaturation, annealing, and extension",
+        "notes": "25–35 cycles. Generally, 25–35 cycles yield sufficient product. For genomic amplicons, 30-35 cycles are recommended."
+      },
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 98,
+          "unit": "°C",
+          "rawText": "Initial Denaturation 98°C 30 seconds"
+        },
+        {
+          "type": "temperature",
+          "comparator": "range",
+          "value": 50,
+          "valueMax": 72,
+          "unit": "°C",
+          "rawText": "Annealing 50–72°C 10–30 seconds. Use of the NEBTm Calculator is highly recommended.",
+          "needsReview": true
+        },
+        {
+          "type": "temperature",
+          "value": 72,
+          "unit": "°C",
+          "rawText": "Extension 72°C 20–30 seconds/kb"
+        }
+      ],
+      "criticalNotes": "Optimal annealing temperatures for Q5 High-Fidelity DNA Polymerase tend to be higher than for other PCR polymerases. The NEB Tm Calculator should be used to determine the annealing temperature when using this enzyme. A temperature gradient can also be used to optimize the annealing temperature for each primer pair. For high Tm primer pairs, two-step cycling without a separate annealing step can be used.",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "location": "Thermocycling Conditions table; Denaturation, Annealing, Cycle number sections" }]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Thermal Cycling",
+      "action": "Set extension time based on amplicon size and template type according to table t4. Extension times are generally 20–30 seconds per kb for complex, genomic samples, but can be reduced to 10 seconds per kb for simple templates (plasmid, E. coli, etc.) or complex templates < 1 kb. Extension time can be increased to 40 seconds per kb for cDNA or long, complex templates, if necessary. When amplifying products > 6 kb, it is often helpful to increase the extension time to 40–50 seconds/kb.",
+      "equipmentIds": ["e1"],
+      "tableIds": ["t4"],
+      "parameters": [
+        {
+          "type": "time",
+          "valueText": "20–30 seconds per kb for complex, genomic samples; 10 seconds per kb for simple templates; 40 seconds per kb for cDNA or long, complex templates",
+          "rawText": "Extension times are generally 20–30 seconds per kb for complex, genomic samples, but can be reduced to 10 seconds per kb for simple templates (plasmid, E. coli, etc.) or complex templates < 1 kb. Extension time can be increased to 40 seconds per kb for cDNA or long, complex templates, if necessary.",
+          "needsReview": true
+        }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Extension section; Extension Times table" }]
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Thermal Cycling",
+      "action": "A final extension of 2 minutes at 72°C is recommended.",
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": 72,
+          "unit": "°C",
+          "rawText": "Final Extension 72°C 2 minutes"
+        },
+        {
+          "type": "time",
+          "value": 2,
+          "unit": "minutes",
+          "rawText": "Final Extension 72°C 2 minutes"
+        }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Thermocycling Conditions table; Extension section" }]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "Thermal Cycling",
+      "action": "Hold at 4–10°C.",
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "temperature",
+          "comparator": "range",
+          "value": 4,
+          "valueMax": 10,
+          "unit": "°C",
+          "rawText": "Hold 4–10°C"
+        }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Thermocycling Conditions table, Hold row" }]
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "phase": "Product Analysis",
+      "action": "The PCR products generated using Q5 High-Fidelity DNA Polymerase have blunt ends. If cloning is the next step, then blunt-end cloning is recommended. If T/A-cloning is preferred, the DNA should be purified prior to A-addition, as Q5 High-Fidelity DNA Polymerase will degrade any overhangs generated. The Monarch® Spin PCR & DNA Cleanup Kit (5 μg) (NEB #T1130) is recommended as an efficient method for purification and concentration up to 5 μg of high-quality, double-stranded and single-stranded DNA.",
+      "equipmentIds": ["e3"],
+      "criticalNotes": "If T/A-cloning is preferred, the DNA should be purified prior to A-addition, as Q5 High-Fidelity DNA Polymerase will degrade any overhangs generated. Addition of an untemplated -dA can be done with Taq DNA Polymerase (NEB #M0267) or Klenow exo– (NEB #M0212).",
+      "acceptanceCriteria": [
+        {
+          "parameter": "PCR product",
+          "description": "Expected single band at correct amplicon size on agarose gel.",
+          "comparator": "visual"
+        }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "PCR product section" }]
+    },
+    {
+      "id": "s11",
+      "number": 11,
+      "phase": "Product Analysis",
+      "action": "When primers with annealing temperatures ≥ 72°C are used, a 2-step thermocycling protocol (combining annealing and extension into one step) is possible.",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "location": "2-step PCR section" }]
+    }
   ],
-  "controls": [], "expectedOutputs": [], "troubleshooting": [], "safety": [], "biosafetyLevel": null,
-  "limitations":"The linked protocol does not select primer sequences, template identity, annealing temperature, or a fixed cycle count.",
-  "sources":[{"id":"src1","kind":"url","title":"PCR Using Q5 High-Fidelity DNA Polymerase (NEB #M0491)","url":"https://www.neb.com/en/protocols/pcr-using-q5-high-fidelity-dna-polymerase-m0491","license":"Not stated","licenseVerified":false}]
+  "controls": [
+    {
+      "name": "No-template control (NTC)",
+      "description": "Substitute nuclease-free water for template DNA. No amplification product should be visible.",
+      "needsReview": true,
+      "notes": "The source protocol does not explicitly specify controls. A no-template control is standard practice for PCR and should be included to monitor for contamination."
+    },
+    {
+      "name": "Positive-control template/primer pair",
+      "description": "Include a known template/primer pair that reliably amplifies under Q5 conditions to confirm reagent activity.",
+      "needsReview": true,
+      "notes": "The source protocol does not explicitly specify a positive control. A positive control is recommended to verify that reagents and cycling conditions are functional."
+    }
+  ],
+  "expectedOutputs": [
+    "Single band at the correct amplicon size on an agarose gel.",
+    "The PCR products generated using Q5 High-Fidelity DNA Polymerase have blunt ends.",
+    "No visible product in the no-template control.",
+    "Ultra-low error rate amplification due to Q5 High-Fidelity DNA Polymerase fidelity (~280X higher than Taq)."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "No PCR product or very low yield",
+      "cause": "Annealing temperature too high, insufficient template, primer design issues, or inhibitor carryover.",
+      "solution": "Use the NEB Tm Calculator to determine the correct annealing temperature. Increase template amount within recommended range (Genomic 1 ng–1 µg; Plasmid or Viral 1 pg–10 ng). A temperature gradient can also be used to optimize the annealing temperature for each primer pair.",
+      "needsReview": true,
+      "notes": "Derived from General Guidelines; the source protocol does not include an explicit troubleshooting section."
+    },
+    {
+      "problem": "Multiple nonspecific bands",
+      "cause": "Annealing temperature too low, excessive cycle number, or nonspecific primers.",
+      "solution": "Increase annealing temperature using the NEB Tm Calculator. Reduce cycle number (generally 25–35 cycles yield sufficient product). Redesign primers to be 20–40 nucleotides in length with a GC content of 40–60%.",
+      "needsReview": true,
+      "notes": "Derived from General Guidelines; the source protocol does not include an explicit troubleshooting section."
+    },
+    {
+      "problem": "Poor amplification of GC-rich or difficult templates",
+      "cause": "Secondary structure or high GC content in the template.",
+      "solution": "Amplification of some difficult targets, like GC-rich sequences, may be improved by the addition of 1X Q5 High GC Enhancer. The Q5 High GC Enhancer is not a buffer and should not be used alone. It should be added only to reactions with the Q5 Reaction Buffer when other conditions have failed.",
+      "needsReview": true,
+      "notes": "Solution text is verbatim from the Mg++ and additives section of the source protocol."
+    },
+    {
+      "problem": "Weak amplification of long or complex templates (> 6 kb)",
+      "cause": "Insufficient extension time for amplicon length.",
+      "solution": "When amplifying products > 6 kb, it is often helpful to increase the extension time to 40–50 seconds/kb. Extension time can be increased to 40 seconds per kb for cDNA or long, complex templates, if necessary.",
+      "needsReview": true,
+      "notes": "Solution text is verbatim from the Extension and Amplification of long products sections of the source protocol."
+    },
+    {
+      "problem": "Failed T/A cloning of Q5 PCR products",
+      "cause": "Q5 High-Fidelity DNA Polymerase generates blunt-end products and will degrade any overhangs generated.",
+      "solution": "If T/A-cloning is preferred, the DNA should be purified prior to A-addition, as Q5 High-Fidelity DNA Polymerase will degrade any overhangs generated. Addition of an untemplated -dA can be done with Taq DNA Polymerase (NEB #M0267) or Klenow exo– (NEB #M0212). If cloning is the next step, then blunt-end cloning is recommended.",
+      "needsReview": true,
+      "notes": "Solution text is verbatim from the PCR product section of the source protocol."
+    }
+  ],
+  "safety": [
+    {
+      "description": "Wear appropriate personal protective equipment (lab coat, gloves, and eye protection) during all steps of the protocol. Use nuclease-free tubes and filtered tips for reaction setup.",
+      "needsReview": true,
+      "notes": "The source protocol does not include an explicit safety section. Standard molecular biology laboratory safety practices apply."
+    },
+    {
+      "description": "Ethidium bromide or other nucleic acid stains used for agarose gel analysis may be mutagenic or hazardous. Follow institutional safety guidelines for handling and disposal of gel staining reagents.",
+      "needsReview": true,
+      "notes": "The source protocol does not include an explicit safety section. This note applies if agarose gel analysis is performed as a downstream QC step."
+    },
+    {
+      "description": "UV transillumination used for gel visualization can cause skin and eye damage. Use appropriate UV shielding and eye protection.",
+      "needsReview": true,
+      "notes": "The source protocol does not include an explicit safety section. This note applies if UV visualization is used for gel analysis."
+    }
+  ],
+  "limitations": "The linked protocol does not select primer sequences, template identity, annealing temperature, or a fixed cycle count. These parameters are assay-specific and must be determined by the user. Amplification of certain long, complex DNA targets (≥ 5 kb) may benefit from using a lower primer concentration (~ 0.2 to 0.3 µM).",
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "url",
+      "title": "PCR Using Q5® High-Fidelity DNA Polymerase (NEB #M0491)",
+      "url": "https://www.neb.com/en-us/protocols/pcr-using-q5-high-fidelity-dna-polymerase-m0491",
+      "license": "NEB website; not explicitly stated",
+      "licenseVerified": false
+    },
+    {
+      "id": "src2",
+      "kind": "url",
+      "title": "NEB Tm Calculator",
+      "url": "https://tmcalculator.neb.com/",
+      "license": "NEB website; not explicitly stated",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft",
+    "convertedBy": "Claude (from NEB web page)",
+    "conversionDate": "2026-08-22"
+  }
 }

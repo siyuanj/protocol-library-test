@@ -1,44 +1,512 @@
 {
   "schemaVersion": "0.3",
   "metadata": {
-    "title": "QIAprep Spin Miniprep Kit High-Yield Protocol",
-    "protocolId": "nap-001-link",
+    "title": "NAP-001: QIAprep Spin Miniprep Kit High-Yield Protocol",
+    "protocolId": "NAP-001-claude-link",
     "version": "0.1",
-    "family": "Nucleic acid purification",
-    "category": "plasmid DNA miniprep",
-    "discipline": "molecular biology",
-    "purpose": "Purify up to 30 µg plasmid DNA using all eleven numbered steps in QIAGEN's linked high-yield protocol.",
-    "scope": "High-copy plasmid DNA from 5 mL 2x YT culture grown to high density; QIAprep Spin Miniprep Kit catalog numbers 27104 and 27106.",
-    "createdAt": "2026-08-22",
-    "modifiedAt": "2026-08-22",
-    "tags": ["plasmid", "miniprep", "QIAGEN", "link-derived", "source-step-mapped"]
+    "family": "Nucleic Acid Extraction",
+    "category": "Nucleic Acid Extraction & Purification",
+    "discipline": "Biology",
+    "purpose": "High-yield purification of up to 30 μg high-copy plasmid DNA from bacterial cultures grown to a high cell density (e.g., culture grown in 5 ml 2x YT medium) using the QIAprep Spin Miniprep Kit (cat. nos. 27104 and 27106).",
+    "scope": "This protocol is specially optimized for high-yield purification of high-copy plasmid DNA from bacterial cultures grown to a high cell density. For purification of low-copy plasmids and cosmids, large plasmids (>10 kb), and DNA prepared using other methods, refer to the recommendations in the QIAprep Miniprep Handbook. For further details, including safety information, refer to the QIAprep Miniprep Handbook.",
+    "beforeYouBegin": [
+      "Add LyseBlue reagent to Buffer P1 at a ratio of 1 to 1000.",
+      "Add the provided RNase A solution to Buffer P1, mix, and store at 2–8°C.",
+      "Add ethanol (96–100%) to Buffer PE before use (see bottle label for volume).",
+      "All centrifugation steps, unless stated otherwise, are carried out at 13,000 rpm (~17,900 x g) in a conventional table-top microcentrifuge.",
+      "Certain insert–plasmid constructs may reduce the copy number of the plasmid, resulting in lower yields after preparation. In addition, not all E. coli strains are suitable for high-yield plasmid purification. This protocol was verified using E. coli DH5α carrying pCMVβ plasmid."
+    ],
+    "tags": ["plasmid DNA", "miniprep", "QIAprep", "QIAGEN", "spin column", "high-yield", "2x YT"]
   },
   "materials": [
-    {"id":"m1","name":"Bacterial culture carrying plasmid","role":"sample","amount":5,"unit":"mL","specification":"2x YT culture","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m2","name":"Buffer P1 with RNase A","role":"buffer","storage":"2–8 °C after RNase A addition","sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m3","name":"Buffer P2","role":"buffer","sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m4","name":"Buffer N3","role":"buffer","sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m5","name":"QIAprep spin column","role":"consumable","sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m6","name":"Buffer PB","role":"buffer","sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m7","name":"Buffer PE","role":"buffer","specification":"Ethanol (96–100%) added before use","sourceReferences":[{"sourceId":"src1"}]},
-    {"id":"m8","name":"Buffer EB","role":"buffer","specification":"10 mM Tris·Cl, pH 8.5","sourceReferences":[{"sourceId":"src1"}]}
+    {
+      "id": "m1",
+      "name": "2x YT medium",
+      "role": "reagent",
+      "specification": "5 ml per preparation",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 1" }]
+    },
+    {
+      "id": "m2",
+      "name": "Bacterial strain carrying plasmid of interest",
+      "role": "sample",
+      "specification": "Protocol verified using E. coli DH5α carrying pCMVβ plasmid. Not all E. coli strains are suitable for high-yield plasmid purification.",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Introduction and Note" }]
+    },
+    {
+      "id": "m3",
+      "name": "QIAGEN Buffer P1",
+      "role": "buffer",
+      "specification": "Add RNase A solution and LyseBlue reagent (1:1000 ratio) before use; store at 2–8°C after addition of RNase A",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Notes before starting" }]
+    },
+    {
+      "id": "m4",
+      "name": "QIAGEN Buffer P2",
+      "role": "buffer",
+      "specification": "Contains sodium hydroxide: irritant",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 4" }, { "sourceId": "src2", "location": "Safety Information, p. 9" }]
+    },
+    {
+      "id": "m5",
+      "name": "QIAGEN Buffer N3",
+      "role": "buffer",
+      "specification": "Contains guanidine hydrochloride, acetic acid: harmful, irritant",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 5" }, { "sourceId": "src2", "location": "Safety Information, p. 9" }]
+    },
+    {
+      "id": "m6",
+      "name": "QIAGEN Buffer PB",
+      "role": "buffer",
+      "specification": "Contains guanidine hydrochloride, isopropanol: harmful, flammable, irritant",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 8" }, { "sourceId": "src2", "location": "Safety Information, p. 9" }]
+    },
+    {
+      "id": "m7",
+      "name": "QIAGEN Buffer PE",
+      "role": "buffer",
+      "specification": "Add ethanol (96–100%) before use (see bottle label for volume)",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Notes before starting; Step 9" }]
+    },
+    {
+      "id": "m8",
+      "name": "QIAGEN Buffer EB",
+      "role": "buffer",
+      "specification": "10 mM Tris·Cl, pH 8.5",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 11" }]
+    },
+    {
+      "id": "m9",
+      "name": "LyseBlue reagent",
+      "role": "reagent",
+      "specification": "Add to Buffer P1 at a ratio of 1 to 1000",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Notes before starting" }]
+    },
+    {
+      "id": "m10",
+      "name": "RNase A solution",
+      "role": "reagent",
+      "specification": "Provided as a 10 mg/ml solution; add to Buffer P1 before use",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Notes before starting" }, { "sourceId": "src2", "location": "Kit Contents, p. 4" }]
+    },
+    {
+      "id": "m11",
+      "name": "Ethanol (96–100%)",
+      "role": "reagent",
+      "specification": "User-supplied; add to Buffer PE before use",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Notes before starting" }]
+    },
+    {
+      "id": "m12",
+      "name": "QIAprep spin column",
+      "role": "kit",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 7" }]
+    },
+    {
+      "id": "m13",
+      "name": "Collection tube (2 ml)",
+      "role": "consumable",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Kit Contents, p. 4" }]
+    },
+    {
+      "id": "m14",
+      "name": "1.5 ml microcentrifuge tube",
+      "role": "consumable",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 11" }]
+    }
   ],
-  "equipment": [{"id":"e1","name":"Table-top microcentrifuge","settings":"13,000 rpm (~17,900 × g) unless otherwise stated","sourceReferences":[{"sourceId":"src1"}]}],
-  "software": [], "samples": [], "containers": [], "tables": [],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Conventional table-top microcentrifuge",
+      "settings": "Capable of 13,000 rpm (~17,900 x g); also capable of >8000 rpm (6800 x g) for pelleting",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Notes before starting; Step 2" }]
+    },
+    {
+      "id": "e2",
+      "name": "Vacuum manifold with luer connectors",
+      "settings": "Optional alternative to centrifuge processing for column binding and wash steps (steps 7–9)",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 7" }]
+    }
+  ],
+  "samples": [
+    {
+      "id": "sp1",
+      "name": "Bacterial pellet from 5 ml overnight culture in 2x YT medium",
+      "role": "intermediate",
+      "kind": "physical",
+      "derivedFromMaterialId": "m2"
+    },
+    {
+      "id": "sp2",
+      "name": "Cleared lysate",
+      "role": "intermediate",
+      "kind": "physical"
+    },
+    {
+      "id": "sp3",
+      "name": "Eluted plasmid DNA",
+      "role": "output",
+      "kind": "physical"
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Yield Comparison: Standard Protocol vs. High-Yield Protocol",
+      "kind": "results",
+      "columns": ["Condition", "Culture Volume", "Approximate Yield (μg)"],
+      "rows": [
+        ["LB medium + standard protocol", "1.25 ml", "~8"],
+        ["LB medium + standard protocol", "5 ml", "~15"],
+        ["2x YT medium + high-yield protocol", "1.25 ml", "~12"],
+        ["2x YT medium + high-yield protocol", "5 ml", "~30"]
+      ],
+      "note": "Values estimated from Figure 1 in the QIAprep Spin Miniprep Kit High-Yield Protocol document. Plasmid DNA was isolated from E. coli DH5α (carrying plasmid pCMVβ) cultured in LB medium or 2x YT medium, using the QIAprep Spin Miniprep standard protocol and the high-yield protocol, respectively.",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "location": "Figure 1" }]
+    }
+  ],
   "steps": [
-    {"id":"s1","number":1,"phase":"Culture","action":"Inoculate 5 mL 2x YT with the bacterial strain and incubate the culture.","materialIds":["m1"],"parameters":[{"type":"temperature","value":37,"unit":"°C","rawText":"37°C","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 1."}]},{"type":"time","value":12,"valueMax":16,"unit":"h","rawText":"12–16 h","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 1."}]}],"criticalNotes":"Avoid overgrowth, which may reduce plasmid yields.","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 1."}]},
-    {"id":"s2","number":2,"phase":"Harvest","action":"Pellet the 5 mL bacterial culture by centrifugation at room temperature.","materialIds":["m1"],"equipmentIds":["e1"],"parameters":[{"type":"speed","value":6800,"comparator":"min","unit":"×g","rawText":">8000 rpm (6800 × g)","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 2."}]},{"type":"time","value":3,"unit":"min","rawText":"3 min","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 2."}]},{"type":"temperature","value":15,"valueMax":25,"unit":"°C","rawText":"room temperature (15–25°C)","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 2."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 2."}]},
-    {"id":"s3","number":3,"phase":"Resuspension","action":"Completely resuspend the cell pellet in Buffer P1 and transfer it to a microcentrifuge tube.","materialIds":["m2"],"parameters":[{"type":"volume","value":250,"unit":"µL","rawText":"250 µL Buffer P1","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 3."}]}],"criticalNotes":"Ensure that no cell clumps remain.","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 3."}]},
-    {"id":"s4","number":4,"phase":"Lysis","action":"Add Buffer P2 and mix by inverting the tube 10–12 times until the solution turns completely blue, then incubate.","materialIds":["m3"],"parameters":[{"type":"volume","value":250,"unit":"µL","rawText":"250 µL Buffer P2","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 4."}]},{"type":"count","valueText":"10–12","unit":"inversions","rawText":"Invert 10–12 times","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 4."}]},{"type":"time","value":5,"unit":"min","rawText":"Do not allow lysis to proceed for more than 5 min.","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 4."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 4."}]},
-    {"id":"s5","number":5,"phase":"Neutralization","action":"Add Buffer N3 immediately and mix thoroughly by inverting 10–12 times until the solution turns colorless.","materialIds":["m4"],"parameters":[{"type":"volume","value":350,"unit":"µL","rawText":"350 µL Buffer N3","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 5."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 5."}]},
-    {"id":"s6","number":6,"phase":"Clarification","action":"Centrifuge the neutralized lysate.","equipmentIds":["e1"],"parameters":[{"type":"time","value":10,"unit":"min","rawText":"Centrifuge for 10 min.","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 6."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 6."}]},
-    {"id":"s7","number":7,"phase":"Binding","action":"Apply the supernatant from step 6 to the QIAprep spin column, centrifuge, and discard the flow-through.","materialIds":["m5"],"equipmentIds":["e1"],"parameters":[{"type":"time","value":30,"valueMax":60,"unit":"s","rawText":"Centrifuge for 30–60 s.","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 7."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 7."}]},
-    {"id":"s8","number":8,"phase":"Wash","action":"Wash the QIAprep spin column with Buffer PB and centrifuge as in step 7.","materialIds":["m5","m6"],"equipmentIds":["e1"],"parameters":[{"type":"volume","value":500,"unit":"µL","rawText":"500 µL Buffer PB","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 8."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 8."}]},
-    {"id":"s9","number":9,"phase":"Wash","action":"Wash the QIAprep spin column with Buffer PE, centrifuge as in step 7, and transfer the column to its collection tube.","materialIds":["m5","m7"],"equipmentIds":["e1"],"parameters":[{"type":"volume","value":750,"unit":"µL","rawText":"750 µL Buffer PE","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 9."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 9."}]},
-    {"id":"s10","number":10,"phase":"Dry spin","action":"Centrifuge the column to remove residual wash buffer.","equipmentIds":["e1"],"parameters":[{"type":"time","value":1,"unit":"min","rawText":"1 min","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 10."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 10."}]},
-    {"id":"s11","number":11,"phase":"Elution","action":"Place the QIAprep spin column in a clean microcentrifuge tube, add Buffer EB to the center of the membrane, let it stand, and centrifuge.","materialIds":["m5","m8"],"equipmentIds":["e1"],"parameters":[{"type":"volume","value":60,"unit":"µL","rawText":"60 µL Buffer EB","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 11."}]},{"type":"time","value":1,"unit":"min","rawText":"Let stand for 1 min, then centrifuge for 1 min.","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 11."}]}],"expectedResult":"Eluted plasmid DNA.","sourceReferences":[{"sourceId":"src1","excerpt":"Source procedure step 11."}]}
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Culture Growth",
+      "action": "Inoculate 5 ml 2x YT medium with the bacterial strain and incubate the culture for 12–16 h at 37°C. Avoid overgrowth, which may lead to reduced plasmid yields.",
+      "materialIds": ["m1", "m2"],
+      "parameters": [
+        { "type": "volume", "value": 5, "unit": "mL", "rawText": "5 ml 2x YT medium" },
+        { "type": "time", "comparator": "range", "value": 12, "valueMax": 16, "unit": "h", "rawText": "12–16 h" },
+        { "type": "temperature", "value": 37, "unit": "C", "rawText": "37°C" }
+      ],
+      "criticalNotes": "Avoid overgrowth, which may lead to reduced plasmid yields.",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 1" }]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Cell Harvest",
+      "action": "Pellet 5 ml bacterial overnight culture by centrifugation at >8000 rpm (6800 x g) for 3 min at room temperature (15–25°C).",
+      "equipmentIds": ["e1"],
+      "outputIds": ["sp1"],
+      "parameters": [
+        { "type": "volume", "value": 5, "unit": "mL", "rawText": "5 ml bacterial overnight culture" },
+        { "type": "speed", "comparator": "gt", "value": 8000, "unit": "rpm", "rawText": ">8000 rpm (6800 x g)" },
+        { "type": "speed", "value": 6800, "unit": "x g", "rawText": "6800 x g" },
+        { "type": "time", "value": 3, "unit": "min", "rawText": "3 min" },
+        { "type": "temperature", "comparator": "range", "value": 15, "valueMax": 25, "unit": "C", "rawText": "room temperature (15–25°C)" }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 2" }]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Resuspension",
+      "action": "Completely resuspend pelleted bacterial cells in 250 μl Buffer P1 and transfer to a microcentrifuge tube. Ensure that no clumps of cells remain.",
+      "materialUses": [{ "materialId": "m3", "amount": 250, "unit": "uL", "rawText": "250 μl Buffer P1" }],
+      "inputIds": ["sp1"],
+      "criticalNotes": "Ensure that no clumps of cells remain.",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 3" }]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Alkaline Lysis",
+      "action": "Add 250 μl Buffer P2 and mix by inverting the tube 10–12 times until the solution turns completely blue. Incubate for 5 min. Do not allow lysis to proceed for more than 5 min.",
+      "materialUses": [{ "materialId": "m4", "amount": 250, "unit": "uL", "rawText": "250 μl Buffer P2" }],
+      "parameters": [
+        { "type": "time", "value": 5, "unit": "min", "rawText": "Incubate for 5 min" }
+      ],
+      "repeat": { "count": null, "over": "tube inversions", "notes": "Invert 10–12 times." },
+      "criticalNotes": "Do not allow lysis to proceed for more than 5 min.",
+      "expectedResult": "The solution turns completely blue (LyseBlue indicator).",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 4" }]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Neutralization",
+      "action": "Add 350 μl Buffer N3 and mix immediately and thoroughly by inverting the tube 10–12 times until the solution turns colorless.",
+      "materialUses": [{ "materialId": "m5", "amount": 350, "unit": "uL", "rawText": "350 μl Buffer N3" }],
+      "repeat": { "count": null, "over": "tube inversions", "notes": "Invert 10–12 times." },
+      "expectedResult": "The solution turns colorless (LyseBlue indicator confirms effective SDS precipitation).",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 5" }]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Clarification",
+      "action": "Centrifuge for 10 min.",
+      "equipmentIds": ["e1"],
+      "outputIds": ["sp2"],
+      "parameters": [
+        { "type": "time", "value": 10, "unit": "min", "rawText": "Centrifuge for 10 min." },
+        { "type": "speed", "value": 13000, "unit": "rpm", "rawText": "13,000 rpm (~17,900 x g) per Notes before starting" },
+        { "type": "speed", "comparator": "approx", "value": 17900, "unit": "x g", "rawText": "~17,900 x g per Notes before starting" }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 6" }]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Column Binding",
+      "action": "Apply the supernatant from step 6 to the QIAprep spin column by decanting or pipetting. Centrifuge for 30–60 s and discard the flow-through, or apply vacuum to the manifold to draw the solution through the QIAprep spin column and switch off the vacuum at source.",
+      "materialIds": ["m12", "m13"],
+      "inputIds": ["sp2"],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        { "type": "time", "comparator": "range", "value": 30, "valueMax": 60, "unit": "sec", "rawText": "30–60 s" }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 7" }]
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Column Wash (PB)",
+      "action": "Wash the QIAprep spin column by adding 500 μl Buffer PB. Centrifuge as in step 7, or apply vacuum to draw the solution through the QIAprep spin column as in step 7.",
+      "materialUses": [{ "materialId": "m6", "amount": 500, "unit": "uL", "rawText": "500 μl Buffer PB" }],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        { "type": "time", "comparator": "range", "value": 30, "valueMax": 60, "unit": "sec", "rawText": "Centrifuge as in step 7 (30–60 s)" }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 8" }]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "Column Wash (PE)",
+      "action": "Wash the QIAprep spin column by adding 750 μl Buffer PE. Centrifuge as in step 7, or apply vacuum to draw the solution through the QIAprep spin column as in step 7. Transfer the QIAprep spin column to the collection tube.",
+      "materialUses": [{ "materialId": "m7", "amount": 750, "unit": "uL", "rawText": "750 μl Buffer PE" }],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        { "type": "time", "comparator": "range", "value": 30, "valueMax": 60, "unit": "sec", "rawText": "Centrifuge as in step 7 (30–60 s)" }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 9" }]
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "phase": "Column Drying",
+      "action": "Centrifuge for 1 min to remove residual wash buffer.",
+      "equipmentIds": ["e1"],
+      "parameters": [
+        { "type": "time", "value": 1, "unit": "min", "rawText": "1 min" }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 10" }]
+    },
+    {
+      "id": "s11",
+      "number": 11,
+      "phase": "Elution",
+      "action": "Place the QIAprep spin column in a clean 1.5 ml microcentrifuge tube. To elute DNA, add 60 μl Buffer EB (10 mM Tris·Cl, pH 8.5) to the center of the QIAprep spin column, let it stand for 1 min, and centrifuge for 1 min.",
+      "materialUses": [{ "materialId": "m8", "amount": 60, "unit": "uL", "rawText": "60 μl Buffer EB (10 mM Tris·Cl, pH 8.5)" }],
+      "materialIds": ["m12", "m14"],
+      "equipmentIds": ["e1"],
+      "outputIds": ["sp3"],
+      "parameters": [
+        { "type": "volume", "value": 60, "unit": "uL", "rawText": "60 μl Buffer EB (10 mM Tris·Cl, pH 8.5)" },
+        { "type": "time", "value": 1, "unit": "min", "rawText": "let it stand for 1 min" },
+        { "type": "time", "value": 1, "unit": "min", "rawText": "centrifuge for 1 min" }
+      ],
+      "expectedResult": "Eluted plasmid DNA in 60 μl Buffer EB.",
+      "sourceReferences": [{ "sourceId": "src1", "location": "Step 11" }]
+    },
+    {
+      "id": "s12",
+      "number": 12,
+      "phase": "QC and Storage",
+      "action": "Measure concentration and purity ratios (A260/A280, A260/A230). Store DNA at –20°C when eluted with water, as DNA may degrade in the absence of a buffering agent.",
+      "inputIds": ["sp3"],
+      "tableIds": ["t1"],
+      "acceptanceCriteria": [
+        { "parameter": "A260/A280", "comparator": "approx", "value": 1.8, "description": "Expected plasmid A260/A280 is often near 1.8." },
+        { "parameter": "Yield", "comparator": "lte", "value": 30, "unit": "ug", "description": "Up to 30 μg plasmid DNA from 5 ml 2x YT culture of high-copy plasmid." }
+      ],
+      "criticalNotes": "Store DNA at –20°C when eluted with water, as DNA may degrade in the absence of a buffering agent. Elution efficiency is dependent on pH. The maximum elution efficiency is achieved between pH 7.0 and 8.5.",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src2", "location": "Elution notes, p. 17; DNA yield, p. 12" }]
+    }
   ],
-  "controls": [], "expectedOutputs": [], "troubleshooting": [], "safety": [], "biosafetyLevel": null,
-  "limitations":"The linked kit protocol does not identify the bacterial strain, plasmid, or antibiotic for a specific run.",
-  "sources":[{"id":"src1","kind":"kit-insert","title":"QIAprep Spin Miniprep Kit High-Yield Protocol","url":"https://www.qiagen.com/en-US/resources/download/Protocols/qiaprep-spin-miniprep-high-yield-protocol","license":"Not stated","licenseVerified":false}]
+  "controls": [
+    {
+      "name": "Agarose gel analysis of eluted plasmid DNA",
+      "description": "The QIAprep Miniprep procedure can be analyzed using agarose gel electrophoresis. The eluted pure plasmid DNA should show no contamination with other nucleic acids. Samples can also be taken from the cleared lysate and its flow-through for comparison.",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src2", "location": "Appendix B, p. 43" }],
+      "notes": "Source high-yield protocol document does not include explicit control requirements. Agarose gel analysis is described in the QIAprep Miniprep Handbook Appendix B."
+    },
+    {
+      "name": "Diagnostic restriction digest or sequencing for new clones",
+      "description": "Run a diagnostic restriction digest or Sanger sequencing across insert/junctions for new clones to verify plasmid identity and integrity.",
+      "needsReview": true,
+      "notes": "Source high-yield protocol document does not include explicit control requirements. This is standard practice for plasmid miniprep quality control."
+    }
+  ],
+  "expectedOutputs": [
+    "Up to 30 μg purified high-copy plasmid DNA from 5 ml 2x YT overnight culture.",
+    "Higher plasmid DNA yields from cultures grown in 2x YT medium and isolated using the high-yield protocol compared to LB medium with the standard protocol.",
+    "Plasmid DNA suitable for restriction enzyme digestion, sequencing, ligation and transformation, library screening, in vitro translation, and transfection of robust cells."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "Low or no yield (general)",
+      "cause": "Low yields may be caused by a number of factors.",
+      "solution": "To find the source of the problem, analyze fractions saved from each step in the procedure on an agarose gel. A small amount of the cleared lysate and the entire flow-through can be precipitated by adding 0.7 volumes isopropanol and centrifuging at maximum speed (13,000 rpm or ~17,000 x g) for 30 minutes. The entire wash flow-through can be precipitated by adding 0.1 volumes of 3 M sodium acetate, pH 5.0, and 0.7 volumes of isopropanol.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 36" }]
+    },
+    {
+      "problem": "No DNA in the cleared lysate before loading — plasmid did not propagate",
+      "cause": "Plasmid did not propagate.",
+      "solution": "Read 'Growth of bacterial cultures' (pages 39–41) and check that the conditions for optimal growth were met.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 36" }]
+    },
+    {
+      "problem": "No DNA in the cleared lysate before loading — lysate prepared incorrectly",
+      "cause": "Lysate prepared incorrectly.",
+      "solution": "Check storage conditions and age of buffers.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 36" }]
+    },
+    {
+      "problem": "No DNA in the cleared lysate before loading — Buffer P2 precipitated",
+      "cause": "Buffer P2 precipitated.",
+      "solution": "Redissolve by warming to 37°C.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 36" }]
+    },
+    {
+      "problem": "No DNA in the cleared lysate before loading — cell resuspension incomplete",
+      "cause": "Cell resuspension incomplete.",
+      "solution": "Pelleted cells should be completely resuspended in Buffer P1. Do not add Buffer P2 until an even suspension is obtained.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 36" }]
+    },
+    {
+      "problem": "DNA is found in the flow-through of cleared lysate",
+      "cause": "QIAprep membrane overloaded.",
+      "solution": "If rich culture media, such as TB or 2x YT are used, culture volumes must be reduced. It may be necessary to adjust LB culture volume if the plasmid and host strain show extremely high copy number or growth rates. See 'Culture media' on page 41.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 36" }]
+    },
+    {
+      "problem": "Low or no yield — RNase A digestion omitted",
+      "cause": "RNase A digestion omitted.",
+      "solution": "Ensure that RNase A is added to Buffer P1 before use.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 37" }]
+    },
+    {
+      "problem": "Low or no yield — RNase A digestion insufficient",
+      "cause": "RNase A digestion insufficient.",
+      "solution": "Reduce culture volume if necessary. If Buffer P1 containing RNase A is more than 6 months old, add additional RNase A.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 37" }]
+    },
+    {
+      "problem": "DNA is found in the wash flow-through",
+      "cause": "Ethanol omitted from wash buffer (Buffer PE).",
+      "solution": "Repeat procedure with correctly prepared wash buffer (Buffer PE).",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 37" }]
+    },
+    {
+      "problem": "Little or no DNA in eluate — elution buffer incorrect",
+      "cause": "Elution buffer incorrect.",
+      "solution": "DNA is eluted only in the presence of low-salt buffer (e.g., Buffer EB [10 mM Tris·Cl, pH 8.5] or water). Elution efficiency is dependent on pH. The maximum elution efficiency is achieved between pH 7.0 and 8.5. When using water for elution, make sure that the pH value is within this range.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 37" }]
+    },
+    {
+      "problem": "Little or no DNA in eluate — elution buffer incorrectly dispensed onto membrane",
+      "cause": "Elution buffer incorrectly dispensed onto membrane.",
+      "solution": "Add elution buffer to the center of the QIAprep membrane to ensure that the buffer completely covers the surface of the membrane for maximum elution efficiency.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 37" }]
+    },
+    {
+      "problem": "Low DNA quality — eluate salt concentration too high",
+      "cause": "Eluate salt concentration too high.",
+      "solution": "For the QIAprep spin column, modify the wash step by incubating the column for 5 minutes at room temperature after adding 0.75 ml of Buffer PE and then centrifuging. For QIAprep 8 preparations and QIAprep 8 and 96 Turbo preparations, ensure that two wash steps are carried out prior to elution.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 37" }]
+    },
+    {
+      "problem": "Low DNA quality — nuclease contamination",
+      "cause": "Nuclease contamination.",
+      "solution": "When using endA+ host strains such as HB101 and its derivatives, the JM series, or any wild-type strain, ensure that the wash step with Buffer PB is performed.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 37" }]
+    },
+    {
+      "problem": "Low DNA quality — eluate contains residual ethanol",
+      "cause": "Eluate contains residual ethanol.",
+      "solution": "Ensure that the additional centrifugation step to remove residual wash buffer (step 10 in the high-yield protocol) is performed.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 37" }]
+    },
+    {
+      "problem": "RNA in the eluate — RNase A digestion omitted",
+      "cause": "RNase A digestion omitted.",
+      "solution": "Ensure that RNase A is added to Buffer P1 before use.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 38" }]
+    },
+    {
+      "problem": "RNA in the eluate — RNase A digestion insufficient",
+      "cause": "RNase A digestion insufficient.",
+      "solution": "Reduce culture volume if necessary. If Buffer P1 containing RNase A is more than 6 months old, add additional RNase A.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 38" }]
+    },
+    {
+      "problem": "Genomic DNA in the eluate — Buffer P2 added incorrectly",
+      "cause": "Buffer P2 added incorrectly.",
+      "solution": "The lysate must be handled gently after addition of Buffer P2 to prevent shearing. Reduce culture volume if lysate is too viscous for gentle mixing.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 38" }]
+    },
+    {
+      "problem": "Genomic DNA in the eluate — Buffer N3 added incorrectly",
+      "cause": "Buffer N3 added incorrectly.",
+      "solution": "Upon addition of Buffer N3 in step 5, mix immediately but gently.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 38" }]
+    },
+    {
+      "problem": "Genomic DNA in the eluate — lysis too long",
+      "cause": "Lysis too long.",
+      "solution": "Lysis in step 4 must not exceed 5 minutes.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 38" }]
+    },
+    {
+      "problem": "Genomic DNA in the eluate — culture overgrown",
+      "cause": "Culture overgrown.",
+      "solution": "Overgrown cultures contain lysed cells and degraded DNA. Do not grow cultures for longer than 12–16 hours.",
+      "sourceReferences": [{ "sourceId": "src2", "location": "Troubleshooting Guide, p. 38" }]
+    }
+  ],
+  "safety": [
+    "When working with chemicals, always wear a suitable lab coat, disposable gloves, and protective goggles. For more information, please consult the appropriate material safety data sheets (MSDSs).",
+    "CAUTION: DO NOT add bleach or acidic solutions directly to the sample-preparation waste.",
+    "Buffers N3 and PB contain guanidine hydrochloride, which can form highly reactive compounds when combined with bleach.",
+    "If liquid containing these buffers is spilt, clean with suitable laboratory detergent and water. If the spilt liquid contains potentially infectious agents, clean the affected area first with laboratory detergent and water, and then with 1% (v/v) sodium hypochlorite.",
+    "Buffer N3: Contains guanidine hydrochloride, acetic acid: harmful, irritant. Risk and safety phrases: R22-36/38, S13-23-26-36/37/39-46.",
+    "Buffer P2: Contains sodium hydroxide: irritant. Risk and safety phrases: R36/38, S13-26-36-46.",
+    "Buffer PB: Contains guanidine hydrochloride, isopropanol: harmful, flammable, irritant. Risk and safety phrases: R10-22-36/38, S13-23-26-36/37/39-46.",
+    "RNase A: Contains ribonuclease: sensitizer. Risk and safety phrases: R42/43, S23-24-26-36/37.",
+    "24-hour emergency information: Poison Information Center Mainz, Germany. Tel: +49-6131-19240."
+  ],
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "url",
+      "title": "QIAprep Spin Miniprep Kit High-Yield Protocol",
+      "url": "https://www.qiagen.com/us/resources/protocols/qiaprep-spin-miniprep-high-yield-protocol",
+      "description": "QIAGEN QIAprep Spin Miniprep Kit High-Yield Protocol document (2 pages, 1070088 09/2011). Primary source for procedure steps.",
+      "license": "© 2011 QIAGEN, all rights reserved",
+      "licenseVerified": false
+    },
+    {
+      "id": "src2",
+      "kind": "url",
+      "title": "QIAprep Miniprep Handbook, Second Edition, December 2006",
+      "url": "https://kirschner.med.harvard.edu/files/protocols/QIAGEN_QIAprepMiniprepKit_EN.pdf",
+      "description": "QIAprep Miniprep Handbook (Second Edition, 12/2006). Referenced for safety information, troubleshooting guide, kit contents, important notes, and background information.",
+      "license": "© 2002–2006 QIAGEN, all rights reserved",
+      "licenseVerified": false
+    },
+    {
+      "id": "src3",
+      "kind": "url",
+      "title": "QIAGEN QIAprep Spin Miniprep Kit product page",
+      "url": "https://www.qiagen.com/us/products/discovery-and-translational-research/dna-rna-purification/dna-purification/plasmid-dna/qiaprep-spin-miniprep-kit",
+      "license": "Not specified",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": { "library": "public", "owner": "LabRecord", "status": "draft" }
 }
