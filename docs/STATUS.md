@@ -1,6 +1,37 @@
 # 当前交接状态
 
-## PDF 与官方链接的独立转化对照（2026-08-22 / 本地）
+## Link 组原子步骤重做与字段级对照（2026-08-22 / 本地）
+
+> 本节取代下一节中 link 组的初版 **38 steps** 统计；PDF 基线本身未改动。
+
+### 这次做了什么
+
+- **用户决定**：重做 `codex-link/` 对照组；保持原网页/手册的原子编号步骤，不按实验阶段合并；概览页须继续追踪其直接链接的具体 kit/user guide；每份 link JSON 要保留「源文件步骤 → JSON 步骤」映射；比较改为字段覆盖、数值一致性和 `needsReview`，而非只比总步数。
+- **助手执行**：仅以官方网页、kit insert 或 user guide 重建 7 份 `*-link.json`；构建时未读取附件 PDF 正文或既有 PDF JSON。每个 JSON 的 `steps[].sourceReferences[].excerpt` 明示对应的源步骤/表格行/小节，形成可检索的逐步映射；详见 `protocol-standard/link-vs-pdf-comparison.md`。
+- **助手判断**：概览页只在其直接官方链接明确指向具体说明书时下钻。PWP 因而使用 T-PER tissue lysis user guide 的 5 步，而没有把 RIPA、细胞与组织变体合成一个流程；GAM 未指定载体、MC 未指定限制酶，均保留来源所能支持的范围及 `needsReview`，不补写条件。
+
+### 现在真实状态（本次实跑）
+
+- 新 link 组共 **54 steps、37 materials、14 equipment、7 tables、9 sources**；按 `node protocol-standard/renderer/validate.mjs` 的递归统计，`needsReview` 分别为 EGB 2、GAM 11、MC 7、NAP 1、PCR 4、PWP 7、QQC 4（合计 **36**）。
+- `node protocol-standard/renderer/validate.mjs`：**46/46 protocols valid**。
+- `node protocol-standard/renderer/validate-schema.mjs`：**46/46 files pass full JSON Schema**。
+
+### 卡在哪
+
+- 无当前技术阻塞。
+
+### 还没验证的（下一个会话从这里怀疑）
+
+- 对照显示的是来源粒度/版本/产品范围的差异，尚不能单独归因于「PDF 转换压缩」。真正的一对一测试仍须让两个输入源指向同一版本、同一 kit 和同一变体。
+- GAM 的 Addgene 指南没有指定 gRNA 载体，MC 的 NEB 协议没有指定限制酶；它们不能安全地生成可直接执行的退火、连接或消化温度/时间。
+- PWP 的 link 侧只覆盖 T-PER 组织裂解。它不与 PDF 基线中混合的 RIPA/细胞裂解范围一一等价；比较文档已明确标注该边界。
+- 尚未逐项做 Viewer 的浏览器交互和视觉回归；本轮只完成 schema/引用校验，HTTP 可加载性将在提交前复核。
+
+### 要用户定的
+
+- 若需要严格的一对一 gRNA 克隆或限制酶消化对照，请指定实际载体/kit 和限制酶（或给出相应官方 user guide 链接）。
+
+## PDF 与官方链接的独立转化对照（初版，已由上节取代）（2026-08-22 / 本地）
 
 ### 这次做了什么
 

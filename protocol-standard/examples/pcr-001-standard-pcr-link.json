@@ -1,177 +1,46 @@
 {
   "schemaVersion": "0.3",
   "metadata": {
-    "title": "PCR using Q5 High-Fidelity DNA Polymerase",
+    "title": "PCR Using Q5 High-Fidelity DNA Polymerase",
     "protocolId": "pcr-001-link",
     "version": "0.1",
     "family": "PCR",
     "category": "DNA amplification",
     "discipline": "molecular biology",
-    "purpose": "Amplify a DNA template with Q5 High-Fidelity DNA Polymerase using the manufacturer's routine reaction setup and cycling program.",
-    "scope": "NEB Q5 25 µL or 50 µL reactions; primer sequences, template amount, annealing temperature, and cycle count are experiment-specific.",
+    "purpose": "Amplify DNA with Q5 High-Fidelity DNA Polymerase using the linked NEB protocol.",
+    "scope": "25 µL or 50 µL routine Q5 PCR; template, primers, annealing temperature, and cycle count remain assay-specific.",
     "createdAt": "2026-08-22",
     "modifiedAt": "2026-08-22",
-    "tags": ["PCR", "Q5", "high fidelity", "link-derived"]
+    "tags": ["PCR", "Q5", "link-derived", "source-step-mapped"]
   },
   "materials": [
-    {
-      "id": "m1",
-      "name": "DNA template",
-      "role": "sample",
-      "specification": "<1000 ng per reaction",
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m2",
-      "name": "5X Q5 Reaction Buffer",
-      "role": "buffer",
-      "specification": "5X stock",
-      "workingConcentration": "1X final",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m3",
-      "name": "dNTPs",
-      "role": "reagent",
-      "specification": "10 mM each stock",
-      "workingConcentration": "200 µM each final",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m4",
-      "name": "Forward and reverse primers",
-      "role": "reagent",
-      "specification": "10 µM each stock",
-      "workingConcentration": "0.5 µM each final",
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m5",
-      "name": "Q5 High-Fidelity DNA Polymerase",
-      "role": "enzyme",
-      "workingConcentration": "0.02 U/µL final",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m6",
-      "name": "5X Q5 High GC Enhancer",
-      "role": "reagent",
-      "workingConcentration": "1X final when used",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m7",
-      "name": "Nuclease-free water",
-      "role": "solvent",
-      "sourceReferences": [{"sourceId": "src1"}]
-    }
+    {"id":"m1","name":"DNA template","role":"sample","specification":"<1,000 ng per reaction","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m2","name":"5X Q5 Reaction Buffer","role":"buffer","specification":"5X stock","workingConcentration":"1X final","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m3","name":"dNTP mix","role":"reagent","specification":"10 mM each stock","workingConcentration":"200 µM each final","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m4","name":"Forward and reverse primers","role":"reagent","specification":"10 µM each stock","workingConcentration":"0.5 µM each final","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m5","name":"Q5 High-Fidelity DNA Polymerase","role":"enzyme","workingConcentration":"0.02 U/µL final","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m6","name":"5X Q5 High GC Enhancer","role":"reagent","workingConcentration":"1X final when used","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m7","name":"Nuclease-free water","role":"solvent","sourceReferences":[{"sourceId":"src1"}]}
   ],
   "equipment": [
-    {
-      "id": "e1",
-      "name": "Thermal cycler",
-      "sourceReferences": [{"sourceId": "src1"}]
-    }
+    {"id":"e1","name":"Sterile thin-walled PCR tube","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"e2","name":"Thermal cycler with heated lid","sourceReferences":[{"sourceId":"src1"}]}
   ],
-  "software": [],
-  "samples": [],
-  "containers": [],
+  "software": [], "samples": [], "containers": [],
   "tables": [
-    {
-      "id": "t1",
-      "title": "Q5 PCR reaction setup",
-      "kind": "recipe",
-      "columns": ["Component", "25 µL reaction", "50 µL reaction", "Final concentration"],
-      "rows": [
-        ["5X Q5 Reaction Buffer", "5 µL", "10 µL", "1X"],
-        ["10 mM dNTPs", "0.5 µL", "1 µL", "200 µM each"],
-        ["10 µM forward primer", "1.25 µL", "2.5 µL", "0.5 µM"],
-        ["10 µM reverse primer", "1.25 µL", "2.5 µL", "0.5 µM"],
-        ["DNA template", "variable", "variable", "<1000 ng"],
-        ["Q5 High-Fidelity DNA Polymerase", "0.25 µL", "0.5 µL", "0.02 U/µL"],
-        ["5X Q5 High GC Enhancer (optional)", "5 µL", "10 µL", "1X"],
-        ["Nuclease-free water", "to 25 µL", "to 50 µL", "—"]
-      ]
-    },
-    {
-      "id": "t2",
-      "title": "Routine Q5 PCR cycling program",
-      "kind": "program",
-      "columns": ["Stage", "Temperature", "Time", "Cycles"],
-      "rows": [
-        ["Initial denaturation", "98 °C", "30 s", "1"],
-        ["Denaturation", "98 °C", "5–10 s", "25–35"],
-        ["Annealing", "50–72 °C", "10–30 s", "25–35"],
-        ["Extension", "72 °C", "20–30 s/kb", "25–35"],
-        ["Final extension", "72 °C", "2 min", "1"],
-        ["Hold", "4–10 °C", "hold", "1"]
-      ],
-      "note": "The source specifies 25–35 cycles; select the count and annealing temperature for the assay.",
-      "needsReview": true
-    }
+    {"id":"t1","title":"NEB Q5 reaction setup","kind":"recipe","columns":["Component","25 µL reaction","50 µL reaction","Final concentration"],"rows":[["5X Q5 Reaction Buffer","5 µL","10 µL","1X"],["10 mM dNTPs","0.5 µL","1 µL","200 µM each"],["10 µM forward primer","1.25 µL","2.5 µL","0.5 µM"],["10 µM reverse primer","1.25 µL","2.5 µL","0.5 µM"],["Template DNA","variable","variable","<1,000 ng"],["Q5 polymerase","0.25 µL","0.5 µL","0.02 U/µL"],["5X High GC Enhancer (optional)","5 µL","10 µL","1X"],["Nuclease-free water","to 25 µL","to 50 µL","—"]]},
+    {"id":"t2","title":"Routine Q5 thermocycling conditions","kind":"program","columns":["Source table stage","Temperature","Time","Cycles"],"rows":[["Initial denaturation","98 °C","30 s","1"],["Denaturation","98 °C","5–10 s","25–35"],["Annealing","50–72 °C","10–30 s","25–35"],["Extension","72 °C","20–30 s/kb","25–35"],["Final extension","72 °C","2 min","1"],["Hold","4–10 °C","hold","1"]],"needsReview":true}
   ],
   "steps": [
-    {
-      "id": "s1",
-      "number": 1,
-      "phase": "Reaction setup",
-      "action": "Prepare a 25 µL or 50 µL Q5 PCR reaction according to table t1.",
-      "materialIds": ["m1", "m2", "m3", "m4", "m5", "m6", "m7"],
-      "tableIds": ["t1"],
-      "criticalNotes": "Template amount, primer sequences, and use of the optional High GC Enhancer require assay-specific selection.",
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "s2",
-      "number": 2,
-      "phase": "Amplification",
-      "action": "Run the routine Q5 PCR cycling program in table t2.",
-      "equipmentIds": ["e1"],
-      "tableIds": ["t2"],
-      "repeat": {
-        "count": null,
-        "over": "denaturation, annealing, and extension stages",
-        "notes": "Repeat for 25–35 cycles; the source leaves the selected cycle count assay-dependent."
-      },
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "s3",
-      "number": 3,
-      "phase": "Hold",
-      "action": "Hold the completed reaction at 4–10 °C.",
-      "equipmentIds": ["e1"],
-      "parameters": [
-        {
-          "type": "temperature",
-          "value": 4,
-          "valueMax": 10,
-          "unit": "°C",
-          "rawText": "Hold at 4–10°C",
-          "sourceReferences": [{"sourceId": "src1"}]
-        }
-      ],
-      "sourceReferences": [{"sourceId": "src1"}]
-    }
+    {"id":"s1","number":1,"phase":"Reaction setup","action":"Assemble all reaction components on ice in a sterile thin-walled PCR tube according to table t1.","materialIds":["m1","m2","m3","m4","m5","m6","m7"],"equipmentIds":["e1"],"tableIds":["t1"],"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source protocol step 1: assemble components on ice."}]},
+    {"id":"s2","number":2,"phase":"Reaction setup","action":"Gently mix the completed reaction and collect liquid at the bottom of the tube with a quick centrifuge spin if needed.","sourceReferences":[{"sourceId":"src1","excerpt":"Source protocol step 1: mix and quick-spin guidance."}]},
+    {"id":"s3","number":3,"phase":"Thermocycler transfer","action":"Quickly transfer reactions to a thermal cycler preheated to 98 °C.","equipmentIds":["e2"],"parameters":[{"type":"temperature","value":98,"unit":"°C","rawText":"Thermocycler preheated to 98°C","sourceReferences":[{"sourceId":"src1","excerpt":"Source protocol step 2."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source protocol step 2: transfer to preheated thermocycler."}]},
+    {"id":"s4","number":4,"phase":"Thermocycling","action":"Perform the initial denaturation stage in table t2.","equipmentIds":["e2"],"tableIds":["t2"],"sourceReferences":[{"sourceId":"src1","excerpt":"Source thermocycling table: Initial Denaturation."}]},
+    {"id":"s5","number":5,"phase":"Thermocycling","action":"Perform the denaturation, annealing, and extension stages in table t2 as one PCR cycle.","equipmentIds":["e2"],"tableIds":["t2"],"repeat":{"count":null,"over":"the denaturation, annealing, and extension rows of table t2","notes":"The source specifies 25–35 cycles; select the assay-specific count."},"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source thermocycling table: 25–35 cycle block."}]},
+    {"id":"s6","number":6,"phase":"Thermocycling","action":"Perform the final extension stage in table t2.","equipmentIds":["e2"],"tableIds":["t2"],"sourceReferences":[{"sourceId":"src1","excerpt":"Source thermocycling table: Final Extension."}]},
+    {"id":"s7","number":7,"phase":"Hold","action":"Hold the reactions at 4–10 °C.","equipmentIds":["e2"],"tableIds":["t2"],"sourceReferences":[{"sourceId":"src1","excerpt":"Source thermocycling table: Hold."}]}
   ],
-  "controls": [],
-  "expectedOutputs": [],
-  "troubleshooting": [],
-  "safety": [],
-  "biosafetyLevel": null,
-  "limitations": "This link-derived record does not choose primers, template input, annealing temperature, or cycle count.",
-  "sources": [
-    {
-      "id": "src1",
-      "kind": "url",
-      "title": "PCR Using Q5 High-Fidelity DNA Polymerase (M0491)",
-      "url": "https://www.neb.com/protocols/pcr-using-q5-high-fidelity-dna-polymerase-m0491",
-      "license": "Not stated",
-      "licenseVerified": false
-    }
-  ]
+  "controls": [], "expectedOutputs": [], "troubleshooting": [], "safety": [], "biosafetyLevel": null,
+  "limitations":"The linked protocol does not select primer sequences, template identity, annealing temperature, or a fixed cycle count.",
+  "sources":[{"id":"src1","kind":"url","title":"PCR Using Q5 High-Fidelity DNA Polymerase (NEB #M0491)","url":"https://www.neb.com/en/protocols/pcr-using-q5-high-fidelity-dna-polymerase-m0491","license":"Not stated","licenseVerified":false}]
 }

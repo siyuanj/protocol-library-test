@@ -7,241 +7,48 @@
     "family": "Gel electrophoresis",
     "category": "agarose gel electrophoresis",
     "discipline": "molecular biology",
-    "purpose": "Separate and visualize PCR DNA fragments using the linked Thermo Fisher UltraPure Agarose protocol.",
-    "scope": "Classic 1% agarose gel recipe and run conditions from the UltraPure Agarose section of the linked page.",
+    "purpose": "Separate and visualize PCR DNA fragments using the ten numbered UltraPure Agarose directions on the linked Thermo Fisher page.",
+    "scope": "Classic 1% agarose gel branch of the linked page.",
     "estimatedTime": "90 min",
     "createdAt": "2026-08-22",
     "modifiedAt": "2026-08-22",
-    "tags": ["agarose gel", "electrophoresis", "PCR products", "link-derived"]
+    "tags": ["agarose gel", "electrophoresis", "link-derived", "source-step-mapped"]
   },
   "materials": [
-    {
-      "id": "m1",
-      "name": "UltraPure Agarose",
-      "role": "reagent",
-      "amount": 1,
-      "unit": "g",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m2",
-      "name": "1X TBE buffer",
-      "role": "buffer",
-      "amount": 100,
-      "unit": "mL",
-      "workingConcentration": "1X",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m3",
-      "name": "Ethidium bromide stock",
-      "role": "reagent",
-      "specification": "10 mg/mL stock",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m4",
-      "name": "PCR DNA sample",
-      "role": "sample",
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m5",
-      "name": "10X BlueJuice Gel Loading Buffer",
-      "role": "buffer",
-      "workingConcentration": "source gives a 4 µL into 20 µL sample example",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m6",
-      "name": "TrackIt Kb Plus DNA ladder",
-      "role": "standard",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m7",
-      "name": "Water",
-      "role": "solvent",
-      "sourceReferences": [{"sourceId": "src1"}]
-    }
+    {"id":"m1","name":"UltraPure Agarose","role":"reagent","amount":1,"unit":"g","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m2","name":"1X TBE buffer","role":"buffer","workingConcentration":"1X","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m3","name":"Ethidium bromide stock","role":"reagent","specification":"10 mg/mL stock","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m4","name":"PCR DNA sample","role":"sample","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m5","name":"10X BlueJuice Gel Loading Buffer","role":"buffer","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m6","name":"TrackIt Kb Plus DNA ladder","role":"standard","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m7","name":"Water","role":"solvent","sourceReferences":[{"sourceId":"src1"}]}
   ],
   "equipment": [
-    {
-      "id": "e1",
-      "name": "Microwave",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "e2",
-      "name": "Water bath",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "e3",
-      "name": "Gel casting tray with 10-well comb",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "e4",
-      "name": "Electrophoresis chamber and power supply",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "e5",
-      "name": "Blue-light imaging system",
-      "sourceReferences": [{"sourceId": "src1"}]
-    }
+    {"id":"e1","name":"500 mL flask","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"e2","name":"Microwave","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"e3","name":"Water bath","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"e4","name":"Gel casting tray and 10-well comb","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"e5","name":"Electrophoresis chamber and power supply","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"e6","name":"Blue-light imaging system","sourceReferences":[{"sourceId":"src1"}]}
   ],
-  "software": [],
-  "samples": [],
-  "containers": [],
+  "software": [], "samples": [], "containers": [],
   "tables": [
-    {
-      "id": "t1",
-      "title": "UltraPure Agarose gel preparation",
-      "kind": "recipe",
-      "columns": ["Component", "Amount", "Note"],
-      "rows": [
-        ["UltraPure Agarose", "1 g", "Add to a 500 mL flask."],
-        ["1X TBE", "100 mL", "Total gel volume may vary with casting tray size."],
-        ["Ethidium bromide stock", "5 µL", "10 mg/mL stock; add after cooling."],
-        ["Gel", "1%", "Derived from 1 g agarose in 100 mL 1X TBE."]
-      ]
-    },
-    {
-      "id": "t2",
-      "title": "Sample and ladder loading",
-      "kind": "other",
-      "columns": ["Item", "Preparation", "Volume loaded"],
-      "rows": [
-        ["PCR sample", "Source example: 4 µL loading buffer into 20 µL sample; load 100–250 ng sample.", "20 µL per well"],
-        ["DNA ladder", "5 µL ladder plus 15 µL water.", "20 µL in first and last wells"]
-      ]
-    }
+    {"id":"t1","title":"UltraPure Agarose gel mixture","kind":"recipe","columns":["Component","Amount","Source direction"],"rows":[["UltraPure Agarose","1 g","Direction 1"],["1X TBE","100 mL","Direction 1"],["Ethidium bromide stock (10 mg/mL)","5 µL","Direction 5"]]},
+    {"id":"t2","title":"Loading setup","kind":"other","columns":["Item","Preparation","Loaded volume"],"rows":[["PCR sample","Add 0.2 volumes loading buffer; source example: 4 µL into 20 µL sample; load 100–250 ng.","20 µL per well"],["DNA ladder","5 µL ladder plus 15 µL water.","20 µL in first and last wells"]]}
   ],
   "steps": [
-    {
-      "id": "s1",
-      "number": 1,
-      "phase": "Gel preparation",
-      "action": "Combine agarose and 1X TBE according to table t1, then heat in a microwave until the agarose dissolves.",
-      "materialIds": ["m1", "m2"],
-      "equipmentIds": ["e1"],
-      "tableIds": ["t1"],
-      "criticalNotes": "Use short heating intervals and avoid prolonged boiling; the source advises replacing lost water if needed.",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "s2",
-      "number": 2,
-      "phase": "Gel preparation",
-      "action": "Cool the dissolved agarose in a water bath, swirling occasionally.",
-      "equipmentIds": ["e2"],
-      "parameters": [
-        {
-          "type": "temperature",
-          "value": 50,
-          "valueMax": 55,
-          "unit": "°C",
-          "rawText": "50–55°C",
-          "sourceReferences": [{"sourceId": "src1"}]
-        },
-        {
-          "type": "time",
-          "value": 10,
-          "unit": "min",
-          "rawText": "10 min",
-          "sourceReferences": [{"sourceId": "src1"}]
-        }
-      ],
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "s3",
-      "number": 3,
-      "phase": "Casting",
-      "action": "Prepare the casting tray and comb, add ethidium bromide to the cooled gel, pour the gel, and allow it to set.",
-      "materialIds": ["m3"],
-      "equipmentIds": ["e3"],
-      "parameters": [
-        {
-          "type": "volume",
-          "value": 5,
-          "unit": "µL",
-          "rawText": "5 µL ethidium bromide stock",
-          "sourceReferences": [{"sourceId": "src1"}]
-        },
-        {
-          "type": "time",
-          "value": 30,
-          "unit": "min",
-          "rawText": "Cool for 30 min at room temperature.",
-          "sourceReferences": [{"sourceId": "src1"}]
-        }
-      ],
-      "safetyNotes": "The linked source identifies ethidium bromide as a known carcinogen.",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "s4",
-      "number": 4,
-      "phase": "Setup and loading",
-      "action": "Place the gel in the chamber, cover it with 1X TBE, and load samples and ladder according to table t2.",
-      "materialIds": ["m2", "m4", "m5", "m6", "m7"],
-      "equipmentIds": ["e4"],
-      "tableIds": ["t2"],
-      "criticalNotes": "Cover the gel with approximately 2–3 mm of buffer.",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "s5",
-      "number": 5,
-      "phase": "Electrophoresis",
-      "action": "Electrophorese the gel and confirm that current runs in the correct direction.",
-      "equipmentIds": ["e4"],
-      "parameters": [
-        {
-          "type": "voltage",
-          "value": 100,
-          "unit": "V",
-          "rawText": "100 V",
-          "sourceReferences": [{"sourceId": "src1"}]
-        },
-        {
-          "type": "time",
-          "value": 40,
-          "unit": "min",
-          "rawText": "40 min",
-          "sourceReferences": [{"sourceId": "src1"}]
-        }
-      ],
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "s6",
-      "number": 6,
-      "phase": "Visualization",
-      "action": "Visualize PCR fragment bands using a blue-light source.",
-      "equipmentIds": ["e5"],
-      "expectedResult": "Visible PCR fragment bands.",
-      "sourceReferences": [{"sourceId": "src1"}]
-    }
+    {"id":"s1","number":1,"phase":"Gel preparation","action":"Weigh agarose into a 500 mL flask and add 100 mL 1X TBE.","materialIds":["m1","m2"],"equipmentIds":["e1"],"tableIds":["t1"],"sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 1."}]},
+    {"id":"s2","number":2,"phase":"Gel preparation","action":"Mix gently and heat in a microwave until the agarose is completely dissolved.","equipmentIds":["e2"],"criticalNotes":"Wear protective gloves; use short heating intervals and avoid prolonged boiling.","sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 2."}]},
+    {"id":"s3","number":3,"phase":"Gel preparation","action":"Cool the hot agarose in a water bath, swirling occasionally.","equipmentIds":["e3"],"parameters":[{"type":"temperature","value":50,"valueMax":55,"unit":"°C","rawText":"50–55°C","sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 3."}]},{"type":"time","value":10,"unit":"min","rawText":"10 min","sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 3."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 3."}]},
+    {"id":"s4","number":4,"phase":"Casting","action":"Seal the gel tray ends with tape and place the 10-well comb in the tray on a level surface.","equipmentIds":["e4"],"criticalNotes":"A non-level surface can cause uneven gel thickness and migration.","sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 4."}]},
+    {"id":"s5","number":5,"phase":"Casting","action":"Add ethidium bromide stock to the cooled gel, pour into the tray, remove bubbles, and allow the gel to cool at room temperature.","materialIds":["m3"],"equipmentIds":["e4"],"parameters":[{"type":"volume","value":5,"unit":"µL","rawText":"5 µL stock ethidium bromide","sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 5."}]},{"type":"time","value":30,"unit":"min","rawText":"30 min at room temperature","sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 5."}]}],"safetyNotes":"The linked source identifies ethidium bromide as a known carcinogen.","sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 5."}]},
+    {"id":"s6","number":6,"phase":"Chamber setup","action":"Remove the comb and tape, place the tray in the electrophoresis chamber, and cover the gel with 1X TBE.","materialIds":["m2"],"equipmentIds":["e5"],"criticalNotes":"Cover the gel with approximately 2–3 mm of buffer.","sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 6."}]},
+    {"id":"s7","number":7,"phase":"Sample preparation","action":"Add loading buffer to the PCR sample and prepare the requested sample mass and loading volume.","materialIds":["m4","m5"],"tableIds":["t2"],"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 7."}]},
+    {"id":"s8","number":8,"phase":"Loading","action":"Load diluted DNA ladder into the first and last wells, then load each prepared sample.","materialIds":["m4","m6","m7"],"tableIds":["t2"],"sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 8."}]},
+    {"id":"s9","number":9,"phase":"Electrophoresis","action":"Electrophorese the gel, ensuring that the current runs in the correct direction.","equipmentIds":["e5"],"parameters":[{"type":"voltage","value":100,"unit":"V","rawText":"100 V","sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 9."}]},{"type":"time","value":40,"unit":"min","rawText":"40 min","sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 9."}]}],"sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 9."}]},
+    {"id":"s10","number":10,"phase":"Visualization","action":"Remove the gel with its tray and visualize PCR fragment bands using an E-Gel Imager or another blue-light source.","equipmentIds":["e6"],"expectedResult":"Visible PCR fragment bands.","sourceReferences":[{"sourceId":"src1","excerpt":"Source direction 10."}]}
   ],
-  "controls": [],
-  "expectedOutputs": [],
-  "troubleshooting": [],
-  "safety": [],
-  "biosafetyLevel": null,
-  "limitations": "This record is limited to the UltraPure Agarose branch of the linked page; it does not specify a gel percentage selection rule for a target fragment size.",
-  "sources": [
-    {
-      "id": "src1",
-      "kind": "url",
-      "title": "Agarose Gel Electrophoresis Protocols: E-Gel EX Agarose Gel and UltraPure Agarose",
-      "url": "https://www.thermofisher.com/us/en/home/life-science/dna-rna-purification-analysis/nucleic-acid-gel-electrophoresis/dna-electrophoresis/agarose-gel-electrophoreis/agarose-gel-electrophoresis-protocols-e-gel-ex-agarose-gel-and-ultrapure-agarose.html",
-      "license": "Not stated",
-      "licenseVerified": false
-    }
-  ]
+  "controls": [], "expectedOutputs": [], "troubleshooting": [], "safety": [], "biosafetyLevel": null,
+  "limitations":"The linked instructions provide a 1% gel recipe but do not select a gel percentage for a particular fragment-size range.",
+  "sources":[{"id":"src1","kind":"url","title":"Agarose Gel Electrophoresis Protocols: E-Gel EX Agarose Gel and UltraPure Agarose","url":"https://www.thermofisher.com/us/en/home/life-science/dna-rna-purification-analysis/nucleic-acid-gel-electrophoresis/dna-electrophoresis/agarose-gel-electrophoreis/agarose-gel-electrophoresis-protocols-e-gel-ex-agarose-gel-and-ultrapure-agarose.html","license":"Not stated","licenseVerified":false}]
 }

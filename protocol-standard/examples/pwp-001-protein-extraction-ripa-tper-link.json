@@ -1,148 +1,33 @@
 {
   "schemaVersion": "0.3",
   "metadata": {
-    "title": "Mammalian Tissue Protein Extraction with T-PER Reagent",
+    "title": "T-PER Tissue Protein Extraction",
     "protocolId": "pwp-001-link",
     "version": "0.1",
     "family": "Protein extraction",
     "category": "tissue protein extraction",
     "discipline": "protein biochemistry",
-    "purpose": "Prepare a total-protein tissue lysate using the T-PER conditions described on the linked Thermo Fisher cell-lysis page.",
-    "scope": "Applies to mammalian tissue, including heart, liver, kidney, lung, and spleen, using T-PER with mechanical or manual homogenization.",
+    "purpose": "Extract total protein from tissue using the five numbered T-PER tissue-lysis steps in Thermo Fisher's directly linked user guide.",
+    "scope": "Tissue samples with T-PER reagent; optional protease inhibitor addition is preserved as optional.",
     "createdAt": "2026-08-22",
     "modifiedAt": "2026-08-22",
-    "tags": ["protein extraction", "T-PER", "tissue lysis", "link-derived"]
+    "tags": ["protein extraction", "T-PER", "tissue lysis", "link-derived", "source-step-mapped"]
   },
   "materials": [
-    {
-      "id": "m1",
-      "name": "T-PER Tissue Protein Extraction Reagent",
-      "role": "reagent",
-      "specification": "Non-denaturing detergent in 25 mM bicine and 150 mM NaCl, pH 7.6",
-      "workingConcentration": "1:10–1:20 (w/v) relative to tissue",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m2",
-      "name": "Mammalian tissue sample",
-      "role": "sample",
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "m3",
-      "name": "BCA protein assay reagents",
-      "role": "kit",
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src1"}]
-    }
+    {"id":"m1","name":"T-PER Tissue Protein Extraction Reagent","role":"reagent","storage":"Room temperature","specification":"Proprietary detergent in 25 mM bicine, 150 mM sodium chloride, pH 7.6","workingConcentration":"~20 mL per 1 g tissue","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m2","name":"Tissue sample","role":"sample","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m3","name":"Protease inhibitor cocktail","role":"reagent","specification":"Optional; add just before use if desired","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]}
   ],
-  "equipment": [
-    {
-      "id": "e1",
-      "name": "Chilled Dounce or benchtop tissue homogenizer",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "e2",
-      "name": "Centrifuge",
-      "sourceReferences": [{"sourceId": "src1"}]
-    }
-  ],
-  "software": [],
-  "samples": [],
-  "containers": [],
-  "tables": [
-    {
-      "id": "t1",
-      "title": "T-PER tissue extraction conditions stated on the linked page",
-      "kind": "recipe",
-      "columns": ["Operation", "Condition"],
-      "rows": [
-        ["Tissue resuspension", "1:10–1:20 (w/v) T-PER reagent"],
-        ["Disruption", "Chilled Dounce or benchtop tissue homogenizer"],
-        ["Clarification", "10,000 × g for 5 min"],
-        ["Protein assay", "BCA protein assay"]
-      ]
-    }
-  ],
+  "equipment": [{"id":"e1","name":"Tissue homogenizer","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},{"id":"e2","name":"Centrifuge","sourceReferences":[{"sourceId":"src1"}]}],
+  "software": [], "samples": [], "containers": [], "tables": [],
   "steps": [
-    {
-      "id": "s1",
-      "number": 1,
-      "phase": "Sample preparation",
-      "action": "Weigh the mammalian tissue and resuspend it in T-PER reagent.",
-      "materialIds": ["m1", "m2"],
-      "tableIds": ["t1"],
-      "parameters": [
-        {
-          "type": "ratio",
-          "valueText": "1:10–1:20",
-          "unit": "w/v",
-          "rawText": "Resuspend tissue in 1:10 to 1:20 w/v T-PER reagent.",
-          "sourceReferences": [{"sourceId": "src1"}]
-        }
-      ],
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "s2",
-      "number": 2,
-      "phase": "Homogenization",
-      "action": "Disrupt the tissue in the T-PER suspension using a chilled Dounce or benchtop tissue homogenizer.",
-      "equipmentIds": ["e1"],
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "s3",
-      "number": 3,
-      "phase": "Clarification",
-      "action": "Centrifuge the homogenate and collect the supernatant.",
-      "equipmentIds": ["e2"],
-      "parameters": [
-        {
-          "type": "speed",
-          "value": 10000,
-          "unit": "×g",
-          "rawText": "10,000 × g",
-          "sourceReferences": [{"sourceId": "src1"}]
-        },
-        {
-          "type": "time",
-          "value": 5,
-          "unit": "min",
-          "rawText": "5 min",
-          "sourceReferences": [{"sourceId": "src1"}]
-        }
-      ],
-      "expectedResult": "Clarified tissue protein supernatant.",
-      "sourceReferences": [{"sourceId": "src1"}]
-    },
-    {
-      "id": "s4",
-      "number": 4,
-      "phase": "Quantification",
-      "action": "Determine protein concentration in the collected supernatant using a BCA protein assay.",
-      "materialIds": ["m3"],
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src1"}]
-    }
+    {"id":"s1","number":1,"phase":"Reagent preparation","action":"If desired, add protease inhibitors to T-PER reagent immediately before use.","materialIds":["m1","m3"],"optional":true,"needsReview":true,"sourceReferences":[{"sourceId":"src1","page":1,"excerpt":"Source Procedure for Tissue Lysis step 1."}]},
+    {"id":"s2","number":2,"phase":"Sample preparation","action":"Weigh the tissue sample and determine the T-PER reagent amount.","materialIds":["m1","m2"],"parameters":[{"type":"ratio","valueText":"~1:20","unit":"g:mL","rawText":"~1 g tissue to 20 mL T-PER reagent","sourceReferences":[{"sourceId":"src1","page":1,"excerpt":"Source Procedure for Tissue Lysis step 2."}]}],"criticalNotes":"Use less reagent if a more concentrated protein extract is required.","needsReview":true,"sourceReferences":[{"sourceId":"src1","page":1,"excerpt":"Source Procedure for Tissue Lysis step 2."}]},
+    {"id":"s3","number":3,"phase":"Homogenization","action":"Add the determined volume of T-PER reagent to the tissue sample and homogenize.","materialIds":["m1","m2"],"equipmentIds":["e1"],"needsReview":true,"sourceReferences":[{"sourceId":"src1","page":1,"excerpt":"Source Procedure for Tissue Lysis step 3."}]},
+    {"id":"s4","number":4,"phase":"Clarification","action":"Centrifuge the homogenized sample to pellet cell and tissue debris.","equipmentIds":["e2"],"parameters":[{"type":"speed","value":10000,"unit":"×g","rawText":"10,000 × g","sourceReferences":[{"sourceId":"src1","page":1,"excerpt":"Source Procedure for Tissue Lysis step 4."}]},{"type":"time","value":5,"unit":"min","rawText":"5 min","sourceReferences":[{"sourceId":"src1","page":1,"excerpt":"Source Procedure for Tissue Lysis step 4."}]}],"sourceReferences":[{"sourceId":"src1","page":1,"excerpt":"Source Procedure for Tissue Lysis step 4."}]},
+    {"id":"s5","number":5,"phase":"Collection","action":"Collect the supernatant and continue with downstream analysis or further purification.","expectedResult":"Tissue protein lysate supernatant.","needsReview":true,"sourceReferences":[{"sourceId":"src1","page":1,"excerpt":"Source Procedure for Tissue Lysis step 5."}]}
   ],
-  "controls": [],
-  "expectedOutputs": [],
-  "troubleshooting": [],
-  "safety": [],
-  "biosafetyLevel": null,
-  "limitations": "The linked page supplies the T-PER extraction ratio and clarification conditions but does not specify tissue mass, inhibitor use, or assay setup.",
-  "sources": [
-    {
-      "id": "src1",
-      "kind": "url",
-      "title": "Cell Lysis Buffers",
-      "url": "https://www.thermofisher.com/us/en/home/life-science/protein-biology/protein-purification-isolation/cell-lysis-fractionation/cell-lysis-total-protein-extraction.html",
-      "license": "Not stated",
-      "licenseVerified": false
-    }
-  ]
+  "controls": [], "expectedOutputs": [], "troubleshooting": [], "safety": [], "biosafetyLevel": null,
+  "limitations":"The linked T-PER guide does not specify tissue identity, homogenization setting, inhibitor selection, or downstream assay method.",
+  "sources":[{"id":"src1","kind":"kit-insert","title":"T-PER Tissue Protein Extraction Reagent Instructions","url":"https://documents.thermofisher.com/TFS-Assets/LSG/manuals/MAN0011386_TPER_Tissue_Protein_Extract_Reag_UG.pdf","license":"Not stated","licenseVerified":false}]
 }

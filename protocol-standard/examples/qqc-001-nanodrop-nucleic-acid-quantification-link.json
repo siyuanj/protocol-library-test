@@ -7,156 +7,32 @@
     "family": "Nucleic acid quantification",
     "category": "UV absorbance measurement",
     "discipline": "molecular biology",
-    "purpose": "Measure purified dsDNA, ssDNA, or RNA concentration and absorbance purity ratios using a NanoDrop One instrument.",
-    "scope": "Pedestal or cuvette measurements using the NanoDrop One Nucleic Acids application; the linked user guide's microvolume procedure uses 1–2 µL.",
+    "purpose": "Measure purified dsDNA, ssDNA, or RNA concentration and purity ratios using all nine numbered steps in the linked NanoDrop One User Guide.",
+    "scope": "Pedestal or cuvette use of the Nucleic Acids application.",
     "createdAt": "2026-08-22",
     "modifiedAt": "2026-08-22",
-    "tags": ["NanoDrop", "nucleic acid", "quantification", "quality control", "link-derived"]
+    "tags": ["NanoDrop", "nucleic acid", "quality control", "link-derived", "source-step-mapped"]
   },
   "materials": [
-    {
-      "id": "m1",
-      "name": "Blanking solution",
-      "role": "buffer",
-      "specification": "Use the same buffer used to resuspend the analyte, with similar pH and ionic strength.",
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src2", "page": 28}]
-    },
-    {
-      "id": "m2",
-      "name": "Purified dsDNA, ssDNA, or RNA sample",
-      "role": "sample",
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src2", "page": 25}]
-    },
-    {
-      "id": "m3",
-      "name": "Laboratory wipe",
-      "role": "consumable",
-      "sourceReferences": [{"sourceId": "src2", "page": 26}]
-    }
+    {"id":"m1","name":"Blanking solution","role":"buffer","specification":"Use the same buffer used to resuspend the analyte, with similar pH and ionic strength.","needsReview":true,"sourceReferences":[{"sourceId":"src2","page":28}]},
+    {"id":"m2","name":"Purified dsDNA, ssDNA, or RNA sample","role":"sample","needsReview":true,"sourceReferences":[{"sourceId":"src2","page":25}]},
+    {"id":"m3","name":"Laboratory wipe","role":"consumable","sourceReferences":[{"sourceId":"src2","page":26}]}
   ],
-  "equipment": [
-    {
-      "id": "e1",
-      "name": "NanoDrop One microvolume UV-Vis spectrophotometer",
-      "sourceReferences": [{"sourceId": "src1"}]
-    }
-  ],
-  "software": [],
-  "samples": [],
-  "containers": [],
-  "tables": [
-    {
-      "id": "t1",
-      "title": "Values reported for dsDNA, ssDNA, and RNA measurements",
-      "kind": "results",
-      "columns": ["Reported value", "Description"],
-      "rows": [
-        ["Nucleic acid concentration", "Concentration reported for the selected application."],
-        ["A260/A280", "Absorbance purity ratio."],
-        ["A260/A230", "Absorbance purity ratio."],
-        ["A260 and A280", "Absorbance values."],
-        ["Factor and baseline correction", "Reported when applicable."]
-      ]
-    }
-  ],
+  "equipment": [{"id":"e1","name":"NanoDrop One microvolume UV-Vis spectrophotometer","sourceReferences":[{"sourceId":"src1"}]}],
+  "software": [], "samples": [], "containers": [],
+  "tables": [{"id":"t1","title":"Values reported by the nucleic acid application","kind":"results","columns":["Reported value","Source description"],"rows":[["Nucleic acid concentration","Selected dsDNA, ssDNA, or RNA application."],["A260/A280","Absorbance purity ratio."],["A260/A230","Absorbance purity ratio."],["A260 and A280","Absorbance values."],["Factor and baseline correction","Reported when applied."]]}],
   "steps": [
-    {
-      "id": "s1",
-      "number": 1,
-      "phase": "Instrument preparation",
-      "action": "Lift the NanoDrop One arm and clean the upper and lower pedestals with a new laboratory wipe.",
-      "materialIds": ["m3"],
-      "equipmentIds": ["e1"],
-      "safetyNotes": "Do not use a squirt or spray bottle near the instrument, and do not use hydrofluoric acid on the pedestals.",
-      "sourceReferences": [{"sourceId": "src2", "page": 25}]
-    },
-    {
-      "id": "s2",
-      "number": 2,
-      "phase": "Method selection",
-      "action": "From the Home screen, select the Nucleic Acids tab and select dsDNA, ssDNA, or RNA; specify baseline correction if desired.",
-      "equipmentIds": ["e1"],
-      "needsReview": true,
-      "sourceReferences": [{"sourceId": "src2", "page": 26}]
-    },
-    {
-      "id": "s3",
-      "number": 3,
-      "phase": "Blanking",
-      "action": "Apply blanking solution to the lower pedestal and lower the arm, then start the Blank measurement.",
-      "materialIds": ["m1"],
-      "equipmentIds": ["e1"],
-      "parameters": [
-        {
-          "type": "volume",
-          "value": 1,
-          "valueMax": 2,
-          "unit": "µL",
-          "rawText": "Pipette 1–2 µL blanking solution onto the lower pedestal.",
-          "sourceReferences": [{"sourceId": "src2", "page": 26}]
-        }
-      ],
-      "sourceReferences": [{"sourceId": "src2", "page": 26}]
-    },
-    {
-      "id": "s4",
-      "number": 4,
-      "phase": "Measurement",
-      "action": "Clean both pedestals, apply sample to the pedestal, lower the arm, and start measurement according to the Auto-Measure setting.",
-      "materialIds": ["m2", "m3"],
-      "equipmentIds": ["e1"],
-      "parameters": [
-        {
-          "type": "volume",
-          "value": 1,
-          "valueMax": 2,
-          "unit": "µL",
-          "rawText": "Pipette 1–2 µL sample solution onto the pedestal.",
-          "sourceReferences": [{"sourceId": "src2", "page": 26}]
-        }
-      ],
-      "repeat": {
-        "count": null,
-        "over": "each additional sample",
-        "notes": "Clean the pedestals before the next sample measurement."
-      },
-      "expectedResult": "The instrument displays the spectrum and reported values in table t1.",
-      "sourceReferences": [{"sourceId": "src2", "page": 26}]
-    },
-    {
-      "id": "s5",
-      "number": 5,
-      "phase": "Review and shutdown",
-      "action": "Review the reported values, end the experiment when measurements are complete, and clean both pedestals.",
-      "equipmentIds": ["e1"],
-      "tableIds": ["t1"],
-      "sourceReferences": [{"sourceId": "src2", "page": 26}]
-    }
+    {"id":"s1","number":1,"phase":"Method selection","action":"From the Home screen, select the Nucleic Acids tab and then select dsDNA, ssDNA, or RNA according to the sample.","equipmentIds":["e1"],"needsReview":true,"sourceReferences":[{"sourceId":"src2","page":26,"excerpt":"Source procedure step 1."}]},
+    {"id":"s2","number":2,"phase":"Method selection","action":"Specify a baseline correction if desired.","equipmentIds":["e1"],"optional":true,"needsReview":true,"sourceReferences":[{"sourceId":"src2","page":26,"excerpt":"Source procedure step 2."}]},
+    {"id":"s3","number":3,"phase":"Blanking","action":"Pipette blanking solution onto the lower pedestal and lower the arm, or insert the blanking cuvette into the holder.","materialIds":["m1"],"equipmentIds":["e1"],"parameters":[{"type":"volume","value":1,"valueMax":2,"unit":"µL","rawText":"1–2 µL blanking solution","sourceReferences":[{"sourceId":"src2","page":26,"excerpt":"Source procedure step 3."}]}],"sourceReferences":[{"sourceId":"src2","page":26,"excerpt":"Source procedure step 3."}]},
+    {"id":"s4","number":4,"phase":"Blanking","action":"Tap Blank and wait for the blank measurement to complete.","equipmentIds":["e1"],"sourceReferences":[{"sourceId":"src2","page":26,"excerpt":"Source procedure step 4."}]},
+    {"id":"s5","number":5,"phase":"Cleanup","action":"Lift the arm and clean both pedestals with a new laboratory wipe, or remove the blanking cuvette.","materialIds":["m3"],"equipmentIds":["e1"],"sourceReferences":[{"sourceId":"src2","page":26,"excerpt":"Source procedure step 5."}]},
+    {"id":"s6","number":6,"phase":"Sample loading","action":"Pipette sample solution onto the pedestal and lower the arm, or insert the sample cuvette into the holder.","materialIds":["m2"],"equipmentIds":["e1"],"parameters":[{"type":"volume","value":1,"valueMax":2,"unit":"µL","rawText":"1–2 µL sample solution","sourceReferences":[{"sourceId":"src2","page":26,"excerpt":"Source procedure step 6."}]}],"sourceReferences":[{"sourceId":"src2","page":26,"excerpt":"Source procedure step 6."}]},
+    {"id":"s7","number":7,"phase":"Measurement","action":"Start the sample measurement: on a pedestal, lower the arm if Auto-Measure is on or tap Measure if it is off; for a cuvette, tap Measure.","equipmentIds":["e1"],"expectedResult":"The spectrum and reported values are displayed.","sourceReferences":[{"sourceId":"src2","page":26,"excerpt":"Source procedure step 7."}]},
+    {"id":"s8","number":8,"phase":"Shutdown","action":"When measurements are finished, tap End Experiment.","equipmentIds":["e1"],"sourceReferences":[{"sourceId":"src2","page":26,"excerpt":"Source procedure step 8."}]},
+    {"id":"s9","number":9,"phase":"Cleanup","action":"Lift the arm and clean both pedestals with a new wipe, or remove the sample cuvette.","materialIds":["m3"],"equipmentIds":["e1"],"tableIds":["t1"],"sourceReferences":[{"sourceId":"src2","page":26,"excerpt":"Source procedure step 9."}]}
   ],
-  "controls": [],
-  "expectedOutputs": [],
-  "troubleshooting": [],
-  "safety": [],
-  "biosafetyLevel": null,
-  "limitations": "Sample identity, blank composition, and acceptance criteria are experiment-specific and are not selected in this link-derived record.",
-  "sources": [
-    {
-      "id": "src1",
-      "kind": "url",
-      "title": "NanoDrop One Operator Manual (Manual Repository)",
-      "url": "https://knowledge1.thermofisher.com/Manual_Repository/269-309102_-_EN_-_Rev_I_-_NanoDrop_One_Operator_Manual",
-      "license": "Not stated",
-      "licenseVerified": false
-    },
-    {
-      "id": "src2",
-      "kind": "url",
-      "title": "NanoDrop One User Guide",
-      "url": "https://documents.thermofisher.com/TFS-Assets/MSD/manuals/nanodrop-one-user-guide-EN-309102-REV-A.pdf",
-      "license": "Not stated",
-      "licenseVerified": false
-    }
-  ]
+  "controls": [], "expectedOutputs": [], "troubleshooting": [], "safety": [], "biosafetyLevel": null,
+  "limitations":"The linked guide does not select sample identity, blank composition, or an experiment-specific acceptance threshold.",
+  "sources":[{"id":"src1","kind":"url","title":"NanoDrop One Operator Manual (Manual Repository)","url":"https://knowledge1.thermofisher.com/Manual_Repository/269-309102_-_EN_-_Rev_I_-_NanoDrop_One_Operator_Manual","license":"Not stated","licenseVerified":false},{"id":"src2","kind":"url","title":"NanoDrop One User Guide","url":"https://documents.thermofisher.com/TFS-Assets/MSD/manuals/nanodrop-one-user-guide-EN-309102-REV-A.pdf","license":"Not stated","licenseVerified":false}]
 }
