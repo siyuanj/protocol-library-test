@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "Design and Clone a gRNA for a CRISPR Experiment",
+    "protocolId": "gam-001-link",
+    "version": "0.1",
+    "family": "Genome engineering",
+    "category": "CRISPR gRNA design and cloning",
+    "discipline": "molecular biology",
+    "purpose": "Plan a CRISPR experiment and gRNA cloning workflow using the ordered design sections in Addgene's linked guide.",
+    "scope": "This source is a design guide, not a protocol for one specified gRNA vector. The selected vector's protocol is required before executable cloning steps can be encoded.",
+    "createdAt": "2026-08-22",
+    "modifiedAt": "2026-08-22",
+    "tags": ["CRISPR", "Cas9", "gRNA", "design", "link-derived", "source-section-mapped"]
+  },
+  "materials": [
+    {"id":"m1","name":"Target genomic sequence","role":"sample","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m2","name":"gRNA targeting oligonucleotides","role":"reagent","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m3","name":"gRNA expression vector","role":"reagent","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m4","name":"Selected Cas system","role":"enzyme","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]}
+  ],
+  "equipment": [],
+  "software": [{"id":"sw1","name":"gRNA design software","needsReview":true}],
+  "samples": [], "containers": [],
+  "tables": [{"id":"t1","title":"Addgene manipulation-to-targeting guidance","kind":"other","columns":["Manipulation","Cas-system example","Guide instruction"],"rows":[["Knockout","Cas9 or Cas9 nickase","Target constitutively expressed regions, 5′ exons, or an essential protein domain."],["HDR","Cas9 or Cas9 fusion","Select a cut site as close as possible to the intended edit; ideally less than 10 bp away."],["CRISPRi","dCas9 or dCas9-repressor fusion","Target the promoter region."],["CRISPRa","dCas9-activator fusion","Target the transcription start-site region."]]}],
+  "steps": [
+    {"id":"s1","number":1,"phase":"Experiment definition","action":"Define the desired genetic manipulation and select a compatible Cas system using table t1.","materialIds":["m4"],"tableIds":["t1"],"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source section: Select Your Desired Genetic Manipulation."}]},
+    {"id":"s2","number":2,"phase":"Target selection","action":"Select the genomic element to target according to the intended manipulation.","materialIds":["m1"],"tableIds":["t1"],"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source section: Select Genetic Element to be Targeted."}]},
+    {"id":"s3","number":3,"phase":"Candidate guide design","action":"Use gRNA design software to generate candidate gRNAs for the selected target.","materialIds":["m1"],"softwareIds":["sw1"],"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source section: Design and Clone Your gRNA."}]},
+    {"id":"s4","number":4,"phase":"Candidate guide assessment","action":"Assess predicted on-target activity and off-target activity, then verify the target locus sequence in the actual sample.","materialIds":["m1"],"softwareIds":["sw1"],"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source section: Select gRNAs Based On Predicted On-Target and Off-Target Activity."}]},
+    {"id":"s5","number":5,"phase":"Vector-specific cloning plan","action":"Select a gRNA expression vector and obtain its associated protocol before designing the physical cloning workflow.","materialIds":["m3"],"criticalNotes":"The linked guide directs users to the protocol associated with the selected plasmid; the source does not identify a vector.","needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source section: Synthesize and Clone Desired gRNAs."}]},
+    {"id":"s6","number":6,"phase":"Conditional oligo cloning","action":"Where the selected vector protocol supports it, synthesize, anneal, and insert the targeting oligos by restriction-ligation cloning using that vector-specific procedure.","materialIds":["m2","m3"],"optional":true,"criticalNotes":"No selected vector, enzyme, volume, temperature, or duration is supplied by the linked guide.","needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source section: Synthesize and Clone Desired gRNAs."}]},
+    {"id":"s7","number":7,"phase":"Expression, delivery, and validation","action":"Select the Cas/gRNA expression and delivery system for the target cells, deliver the components, and validate the intended edit.","materialIds":["m4"],"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source section: Select Your Expression and Delivery System."}]}
+  ],
+  "controls": [], "expectedOutputs": [], "troubleshooting": [], "safety": [], "biosafetyLevel": null,
+  "limitations":"The official linked guide does not specify a gRNA vector. Without it, a vector-specific cloning recipe cannot be retrieved or safely inferred.",
+  "sources":[{"id":"src1","kind":"url","title":"Plan Your CRISPR Experiment","url":"https://www.addgene.org/guides/crispr/plan-your-experiment/","license":"Not stated","licenseVerified":false},{"id":"src2","kind":"article","title":"How to Design Your gRNA for CRISPR Genome Editing","url":"https://blog.addgene.org/how-to-design-your-grna-for-crispr-genome-editing","license":"Not stated","licenseVerified":false}]
+}

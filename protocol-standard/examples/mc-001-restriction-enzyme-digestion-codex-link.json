@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "Restriction Digest Protocol",
+    "protocolId": "mc-001-link",
+    "version": "0.1",
+    "family": "Molecular cloning",
+    "category": "restriction enzyme digestion",
+    "discipline": "molecular biology",
+    "purpose": "Digest DNA using the three numbered steps and conditional post-digest guidance in the linked NEB restriction-digest protocol.",
+    "scope": "NEB 50 µL typical reaction. Individual enzyme temperature and time are deliberately not selected by the source.",
+    "createdAt": "2026-08-22",
+    "modifiedAt": "2026-08-22",
+    "tags": ["restriction digest", "molecular cloning", "link-derived", "source-step-mapped"]
+  },
+  "materials": [
+    {"id":"m1","name":"DNA","role":"sample","amount":1,"unit":"µg","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m2","name":"10X NEBuffer","role":"buffer","workingConcentration":"1X final","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m3","name":"Restriction enzyme","role":"enzyme","specification":"5–10 units per µg DNA recommended; add last","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m4","name":"Nuclease-free water","role":"solvent","sourceReferences":[{"sourceId":"src1"}]},
+    {"id":"m5","name":"EDTA-containing stop solution or loading dye","role":"reagent","sourceReferences":[{"sourceId":"src1"}]}
+  ],
+  "equipment": [{"id":"e1","name":"Microcentrifuge","sourceReferences":[{"sourceId":"src1"}]},{"id":"e2","name":"Temperature-controlled incubator or heat block","needsReview":true,"sourceReferences":[{"sourceId":"src1"}]}],
+  "software": [], "samples": [], "containers": [],
+  "tables": [{"id":"t1","title":"NEB 50 µL restriction digest reaction","kind":"recipe","columns":["Component","Amount","Final concentration or note"],"rows":[["DNA","1 µg","—"],["10X NEBuffer","5 µL","1X"],["Restriction enzyme","1 µL","5–10 units per µg DNA recommended"],["Nuclease-free water","to 50 µL","—"]]}],
+  "steps": [
+    {"id":"s1","number":1,"phase":"Reaction setup","action":"Set up the 50 µL reaction on ice according to table t1, adding the restriction enzyme last.","materialIds":["m1","m2","m3","m4"],"tableIds":["t1"],"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source Reaction set-up section."}]},
+    {"id":"s2","number":2,"phase":"Digest","action":"Gently mix the reaction by pipetting up and down and microfuge briefly.","equipmentIds":["e1"],"sourceReferences":[{"sourceId":"src1","excerpt":"Source Digest protocol step 1."}]},
+    {"id":"s3","number":3,"phase":"Digest","action":"Incubate at the temperature and for the time recommended for the selected restriction endonuclease.","equipmentIds":["e2"],"criticalNotes":"The linked universal protocol states that enzyme-specific temperatures and times vary significantly.","needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source Digest protocol step 2."}]},
+    {"id":"s4","number":4,"phase":"Stop","action":"Stop the reaction if no further DNA manipulation is required by adding EDTA-containing stop solution or loading dye.","materialIds":["m5"],"parameters":[{"type":"volume","value":10,"unit":"µL","rawText":"10 µL per 50 µL reaction","sourceReferences":[{"sourceId":"src1","excerpt":"Source Digest protocol step 3."}]}],"optional":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source Digest protocol step 3."}]},
+    {"id":"s5","number":5,"phase":"Post-digest cleanup","action":"If further DNA manipulation is required, remove enzyme by an appropriate listed method: compatible heat inactivation, phenol/chloroform extraction, or spin-column purification.","equipmentIds":["e2"],"parameters":[{"type":"temperature","valueText":"65 or 80","unit":"°C","rawText":"Appropriate heat-inactivation temperature, 65°C or 80°C.","needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source General Guidelines step 1."}]},{"type":"time","value":20,"unit":"min","rawText":"20 min when heat inactivation is appropriate.","needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source General Guidelines step 1."}]}],"optional":true,"needsReview":true,"sourceReferences":[{"sourceId":"src1","excerpt":"Source General Guidelines step 1."}]}
+  ],
+  "controls": [], "expectedOutputs": [], "troubleshooting": [], "safety": [], "biosafetyLevel": null,
+  "limitations":"No particular restriction enzyme was identified in the linked source, so incubation conditions and heat-inactivation compatibility remain unresolved.",
+  "sources":[{"id":"src1","kind":"url","title":"Restriction Digest Protocol","url":"https://www.neb.com/en/protocols/restriction-digest-protocol","license":"Not stated","licenseVerified":false}]
+}

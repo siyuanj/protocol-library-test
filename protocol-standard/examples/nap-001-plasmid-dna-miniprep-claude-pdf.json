@@ -1,0 +1,412 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "NAP-001: Plasmid DNA Extraction - QIAGEN QIAprep Spin Miniprep Kit",
+    "protocolId": "NAP-001-claude-pdf",
+    "version": "0.1",
+    "family": "Nucleic Acid Extraction",
+    "category": "Nucleic Acid Extraction & Purification",
+    "discipline": "Biology",
+    "purpose": "Plasmid DNA extraction using the QIAGEN QIAprep Spin Miniprep Kit. Common miniprep kit for cloning, sequencing, ligation, transformation, and screening workflows.",
+    "scope": "Training/library SOP draft. Confirm against the current manufacturer protocol, SDS, and local EHS rules before bench use. For this PDF, the miniprep version is selected. Midiprep should become a separate PDF because buffer volumes and columns differ.",
+    "beforeYouBegin": [
+      "Use fresh selective culture. Avoid severely overgrown cultures, mixed colonies, or wrong antibiotic selection.",
+      "Check that RNase A has been added to Buffer P1 and ethanol has been added to Buffer PE.",
+      "Equilibrate Buffer P1 and N3 if precipitates are present; dissolve any SDS precipitate in Buffer P2 by warming and mixing before use.",
+      "For this PDF, the miniprep version is selected. Midiprep should become a separate PDF because buffer volumes and columns differ."
+    ],
+    "tags": ["plasmid DNA", "miniprep", "QIAprep", "QIAGEN", "spin column", "plasmid DNA extraction"]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Overnight E. coli culture carrying plasmid",
+      "role": "sample",
+      "specification": "Correct antibiotic selection",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m2",
+      "name": "QIAGEN Buffer P1 with RNase A",
+      "role": "buffer",
+      "specification": "Check that RNase A has been added to Buffer P1",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m3",
+      "name": "QIAGEN Buffer P2",
+      "role": "buffer",
+      "specification": "Dissolve any SDS precipitate in Buffer P2 by warming and mixing before use",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m4",
+      "name": "QIAGEN Buffer N3",
+      "role": "buffer",
+      "specification": "Equilibrate Buffer P1 and N3 if precipitates are present",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m5",
+      "name": "QIAGEN Buffer PB",
+      "role": "buffer",
+      "specification": "Buffer PB if used for optional wash",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "m6",
+      "name": "QIAGEN Buffer PE",
+      "role": "buffer",
+      "specification": "Buffer PE with ethanol added",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m7",
+      "name": "QIAGEN Buffer EB",
+      "role": "buffer",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m8",
+      "name": "Nuclease-free water",
+      "role": "solvent",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m9",
+      "name": "QIAprep spin column",
+      "role": "kit",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m10",
+      "name": "Collection tube",
+      "role": "consumable",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m11",
+      "name": "1.5 mL tube",
+      "role": "consumable",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m12",
+      "name": "LyseBlue reagent",
+      "role": "reagent",
+      "specification": "Optional: LyseBlue reagent if used in the lab to visually monitor lysis and neutralization",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m13",
+      "name": "Filtered tips",
+      "role": "consumable",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m14",
+      "name": "Purified plasmid DNA",
+      "role": "sample",
+      "storage": "Store plasmid DNA at -20 deg C for long-term storage, or 4 deg C for short-term use if lab policy allows",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Microcentrifuge",
+      "settings": "Capable of approximately 13,000 rpm / 17,900 x g",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "e2",
+      "name": "Pipettes",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    }
+  ],
+  "samples": [
+    {
+      "id": "sp1",
+      "name": "Bacterial pellet",
+      "role": "intermediate",
+      "kind": "physical",
+      "derivedFromMaterialId": "m1"
+    },
+    {
+      "id": "sp2",
+      "name": "Cleared lysate",
+      "role": "intermediate",
+      "kind": "physical"
+    },
+    {
+      "id": "sp3",
+      "name": "Eluted plasmid DNA",
+      "role": "output",
+      "kind": "physical",
+      "derivedFromMaterialId": "m14"
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Run Record Template",
+      "kind": "other",
+      "columns": ["Record item", "Entry"],
+      "rows": [
+        ["Date / operator", null],
+        ["Sample IDs and starting material", null],
+        ["Selected kit or method version", null],
+        ["Catalog, lot, expiration, and buffer prep notes", null],
+        ["Critical incubation and centrifuge settings", null],
+        ["Elution/resuspension volume", null],
+        ["Concentration and A260/A280 / A260/A230", null],
+        ["Integrity check or downstream assay", null],
+        ["Storage location", null],
+        ["Deviations / troubleshooting", null]
+      ],
+      "note": "Blank run-record template provided in the source PDF."
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Cell Harvest",
+      "action": "Pellet the recommended culture volume by centrifugation. Remove all supernatant so the pellet is not diluted before resuspension.",
+      "materialIds": ["m1"],
+      "equipmentIds": ["e1"],
+      "outputIds": ["sp1"],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 1 }]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Resuspension",
+      "action": "Resuspend the bacterial pellet completely in 250 uL Buffer P1. Pipette or vortex before lysis until no clumps remain.",
+      "materialUses": [{ "materialId": "m2", "amount": 250, "unit": "uL", "rawText": "250 uL Buffer P1" }],
+      "inputIds": ["sp1"],
+      "equipmentIds": ["e2"],
+      "criticalNotes": "Pipette or vortex before lysis until no clumps remain.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 2 }]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Alkaline Lysis",
+      "action": "Add 250 uL Buffer P2. Mix gently by inverting 4-6 times until the suspension becomes clear and viscous.",
+      "materialUses": [{ "materialId": "m3", "amount": 250, "unit": "uL", "rawText": "250 uL Buffer P2" }],
+      "repeat": { "count": null, "over": "tube inversions", "notes": "Inverting 4-6 times." },
+      "criticalNotes": "Do not vortex after adding P2.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 3 }]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Alkaline Lysis",
+      "action": "Incubate at room temperature only as allowed by the manufacturer protocol.",
+      "criticalNotes": "Do not exceed the lysis time limit.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 4 }]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Neutralization",
+      "action": "Add 350 uL Buffer N3. Immediately invert 4-6 times until the mixture is homogeneous and a white precipitate forms.",
+      "materialUses": [{ "materialId": "m4", "amount": 350, "unit": "uL", "rawText": "350 uL Buffer N3" }],
+      "repeat": { "count": null, "over": "tube inversions", "notes": "Immediately invert 4-6 times." },
+      "expectedResult": "The mixture is homogeneous and a white precipitate forms.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 5 }]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Clarification",
+      "action": "Centrifuge the lysate for 10 minutes at maximum microcentrifuge speed to pellet cellular debris and chromosomal DNA/protein/SDS precipitate.",
+      "equipmentIds": ["e1"],
+      "parameters": [
+        { "type": "time", "value": 10, "unit": "min", "rawText": "10 minutes" },
+        { "type": "speed", "comparator": "approx", "value": 13000, "unit": "rpm", "rawText": "maximum microcentrifuge speed; approximately 13,000 rpm / 17,900 x g" },
+        { "type": "speed", "comparator": "approx", "value": 17900, "unit": "x g", "rawText": "approximately 13,000 rpm / 17,900 x g" }
+      ],
+      "outputIds": ["sp2"],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 6 }]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Column Binding",
+      "action": "Transfer the cleared supernatant to a QIAprep spin column.",
+      "materialIds": ["m9", "m10"],
+      "inputIds": ["sp2"],
+      "criticalNotes": "Avoid disturbing or transferring the white pellet.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 7 }]
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Column Binding",
+      "action": "Centrifuge 30-60 seconds. Discard flow-through.",
+      "equipmentIds": ["e1"],
+      "parameters": [
+        { "type": "time", "comparator": "range", "value": 30, "valueMax": 60, "unit": "sec", "rawText": "30-60 seconds" }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 8 }]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "Optional Column Wash",
+      "action": "Optional for endA+ strains or nuclease-rich material: wash the column with 0.5 mL Buffer PB and centrifuge 30-60 seconds.",
+      "optional": true,
+      "materialUses": [{ "materialId": "m5", "amount": 0.5, "unit": "mL", "rawText": "0.5 mL Buffer PB" }],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        { "type": "time", "comparator": "range", "value": 30, "valueMax": 60, "unit": "sec", "rawText": "centrifuge 30-60 seconds" }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 9 }]
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "phase": "Column Wash",
+      "action": "Wash the column with 0.75 mL Buffer PE and centrifuge 30-60 seconds. Discard flow-through.",
+      "materialUses": [{ "materialId": "m6", "amount": 0.75, "unit": "mL", "rawText": "0.75 mL Buffer PE" }],
+      "equipmentIds": ["e1"],
+      "parameters": [
+        { "type": "time", "comparator": "range", "value": 30, "valueMax": 60, "unit": "sec", "rawText": "30-60 seconds" }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 10 }]
+    },
+    {
+      "id": "s11",
+      "number": 11,
+      "phase": "Column Drying",
+      "action": "Centrifuge the empty column for 1 minute to remove residual ethanol.",
+      "equipmentIds": ["e1"],
+      "parameters": [
+        { "type": "time", "value": 1, "unit": "min", "rawText": "1 minute" }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 11 }]
+    },
+    {
+      "id": "s12",
+      "number": 12,
+      "phase": "Elution",
+      "action": "Place the column in a clean microcentrifuge tube. Add 50 uL Buffer EB or nuclease-free water to the center of the membrane.",
+      "materialIds": ["m7", "m8", "m9", "m11"],
+      "parameters": [
+        { "type": "volume", "value": 50, "unit": "uL", "rawText": "50 uL Buffer EB or nuclease-free water" }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 12 }]
+    },
+    {
+      "id": "s13",
+      "number": 13,
+      "phase": "Elution",
+      "action": "Let stand 1 minute, then centrifuge 1 minute to elute plasmid DNA.",
+      "equipmentIds": ["e1"],
+      "outputIds": ["sp3"],
+      "parameters": [
+        { "type": "time", "value": 1, "unit": "min", "rawText": "Let stand 1 minute" },
+        { "type": "time", "value": 1, "unit": "min", "rawText": "centrifuge 1 minute" }
+      ],
+      "expectedResult": "Eluted plasmid DNA.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "stepNumber": 13 }]
+    },
+    {
+      "id": "s14",
+      "number": 14,
+      "phase": "QC and Storage",
+      "action": "Measure concentration and A260/A280 / A260/A230. Expected plasmid A260/A280 is often near 1.8. Run an analytical gel or diagnostic restriction digest for new clones. Submit for Sanger sequencing across insert/junctions before using the clone as a final validated construct. Store plasmid DNA at -20 deg C for long-term storage, or 4 deg C for short-term use if lab policy allows.",
+      "inputIds": ["sp3"],
+      "tableIds": ["t1"],
+      "acceptanceCriteria": [
+        {
+          "parameter": "A260/A280",
+          "comparator": "approx",
+          "value": 1.8,
+          "description": "Expected plasmid A260/A280 is often near 1.8."
+        }
+      ],
+      "expectedResult": "Concentration, A260/A280, A260/A230, and storage location are recorded.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "QC and Acceptance" }]
+    }
+  ],
+  "controls": [
+    {
+      "name": "Analytical gel or diagnostic restriction digest",
+      "description": "Run an analytical gel or diagnostic restriction digest for new clones."
+    },
+    {
+      "name": "Sanger sequencing across insert/junctions",
+      "description": "Submit for Sanger sequencing across insert/junctions before using the clone as a final validated construct."
+    }
+  ],
+  "expectedOutputs": [
+    "Eluted plasmid DNA.",
+    "Measure concentration and A260/A280 / A260/A230. Expected plasmid A260/A280 is often near 1.8.",
+    "Run an analytical gel or diagnostic restriction digest for new clones.",
+    "Submit for Sanger sequencing across insert/junctions before using the clone as a final validated construct.",
+    "Store plasmid DNA at -20 deg C for long-term storage, or 4 deg C for short-term use if lab policy allows."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "Low yield",
+      "cause": "Low-copy plasmid, poor growth, incomplete resuspension, overloaded column.",
+      "solution": "Use fresh colony, correct antibiotic, and kit-valid culture volume; fully resuspend before P2."
+    },
+    {
+      "problem": "Genomic DNA contamination",
+      "cause": "Vortexing after lysis or harsh handling of viscous lysate.",
+      "solution": "Invert gently after P2/N3; avoid scraping pellet when transferring supernatant."
+    },
+    {
+      "problem": "Poor A260/A230",
+      "cause": "Salt, ethanol, or wash-buffer carryover.",
+      "solution": "Use full PE wash and dry spin; avoid column tip touching flow-through."
+    },
+    {
+      "problem": "Poor sequencing",
+      "cause": "Template too dilute/dirty, primer issue, mixed colony.",
+      "solution": "Quantify, re-clean or repeat miniprep from single colony, verify primer."
+    }
+  ],
+  "safety": [
+    "Wear lab coat, gloves, and eye protection. Use a certified chemical fume hood for phenol, chloroform, TRIzol, guanidinium-containing reagents, and volatile alcohols.",
+    "Do not mix guanidinium-containing waste with bleach. Segregate phenol/chloroform/TRIzol waste from aqueous biological waste according to institutional EHS instructions.",
+    "Use nuclease-free tubes and filtered tips. For RNA work, use RNase-free consumables and decontaminate work surfaces before starting.",
+    "Confirm ethanol has been added to wash-buffer concentrates when required. Mark bottle labels with date, initials, and ethanol volume added.",
+    "Record sample input, reagent lot, elution/resuspension volume, concentration, purity ratios, storage location, and deviations."
+  ],
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "file",
+      "title": "NAP-001: Plasmid DNA Extraction - QIAGEN QIAprep Spin Miniprep Kit",
+      "file": "D:/大学/暑研/7-31 protocol library/tmp/pdfs/pcr-20260822/NAP-001_plasmid_dna_extraction_miniprep_midiprep.pdf",
+      "license": "Original SOP summary derived from linked official sources; no wholesale copying of third-party PDFs or manuals.",
+      "licenseVerified": false
+    },
+    {
+      "id": "src2",
+      "kind": "url",
+      "title": "QIAGEN QIAprep Spin Miniprep Kit product/resources page",
+      "url": "https://www.qiagen.com/us/products/discovery-and-translational-research/dna-rna-purification/dna-purification/plasmid-dna/qiaprep-spin-miniprep-kit",
+      "license": "Not specified in source PDF",
+      "licenseVerified": false
+    },
+    {
+      "id": "src3",
+      "kind": "url",
+      "title": "QIAGEN QIAprep Spin Miniprep High-Yield Protocol page",
+      "url": "https://www.qiagen.com/gb/resources/protocols/qiaprep-spin-miniprep-high-yield-protocol",
+      "license": "Not specified in source PDF",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

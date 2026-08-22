@@ -1,0 +1,462 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "GAM-001: CRISPR-Cas9 sgRNA Design & Cloning - Addgene Source Workflow",
+    "protocolId": "GAM-001-claude-pdf",
+    "version": "1.0",
+    "family": "Genome Editing",
+    "category": "Genome Editing & Advanced Molecular Biology",
+    "discipline": "Biology",
+    "purpose": "CRISPR-Cas9 sgRNA design and cloning using Addgene CRISPR experiment planning and gRNA design/cloning guidance. Single-guide design, oligo ordering, vector-specific annealing/ligation or Golden Gate-style cloning, and clone validation.",
+    "scope": "Training/library SOP draft. Confirm against the current manufacturer/source protocol, safety documentation, institutional biosafety approval, and local lab policy before bench use.",
+    "beforeYouBegin": [
+      "Define the editing goal: knockout, HDR, base editing, prime editing, CRISPRi, or CRISPRa. This SOP focuses on Cas9 knockout-style sgRNA vector cloning.",
+      "Confirm the PAM and guide length for the selected Cas enzyme and vector. Do not reuse overhangs from another vector without checking the plasmid map.",
+      "Sequence or verify the genomic region in the working cell line if polymorphisms may affect guide binding.",
+      "Design at least two to four independent guides per target for biological confidence."
+    ],
+    "tags": ["CRISPR", "Cas9", "sgRNA", "gRNA design", "guide cloning", "Addgene", "Golden Gate"]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Reference genome sequence",
+      "role": "other",
+      "specification": "for the exact cell line/organism",
+      "rawText": "Reference genome sequence for the exact cell line/organism, target gene annotation, and selected Cas9/PAM system.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1, "section": "Materials" }]
+    },
+    {
+      "id": "m2",
+      "name": "Target gene annotation",
+      "role": "other",
+      "rawText": "Reference genome sequence for the exact cell line/organism, target gene annotation, and selected Cas9/PAM system.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1, "section": "Materials" }]
+    },
+    {
+      "id": "m3",
+      "name": "Selected Cas9/PAM system",
+      "role": "other",
+      "rawText": "Reference genome sequence for the exact cell line/organism, target gene annotation, and selected Cas9/PAM system.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1, "section": "Materials" }]
+    },
+    {
+      "id": "m4",
+      "name": "CRISPR plasmid vector",
+      "role": "other",
+      "specification": "CRISPR plasmid map, cloning site information, and vector-specific cloning protocol",
+      "rawText": "gRNA design software or validated design portal, CRISPR plasmid map, cloning site information, and vector-specific cloning protocol.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1, "section": "Materials" }]
+    },
+    {
+      "id": "m5",
+      "name": "Ordered oligonucleotides with required overhangs",
+      "role": "reagent",
+      "specification": "Include required vector-specific overhangs",
+      "rawText": "Ordered oligonucleotides with required overhangs, annealing buffer, ligase or assembly reagents, competent cells, selective plates, miniprep kit, and Sanger sequencing primers.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1, "section": "Materials" }]
+    },
+    {
+      "id": "m6",
+      "name": "Nuclease-free water or TE",
+      "role": "buffer",
+      "rawText": "Order oligos and resuspend in nuclease-free water or TE according to lab convention.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 6 }]
+    },
+    {
+      "id": "m7",
+      "name": "Annealing buffer",
+      "role": "buffer",
+      "specification": "Compatible with the vector protocol and thermal program",
+      "rawText": "Ordered oligonucleotides with required overhangs, annealing buffer, ligase or assembly reagents, competent cells, selective plates, miniprep kit, and Sanger sequencing primers.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1, "section": "Materials" }]
+    },
+    {
+      "id": "m8",
+      "name": "Ligase or assembly reagents",
+      "role": "reagent",
+      "specification": "Use the vector-specific protocol",
+      "rawText": "Ordered oligonucleotides with required overhangs, annealing buffer, ligase or assembly reagents, competent cells, selective plates, miniprep kit, and Sanger sequencing primers.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1, "section": "Materials" }]
+    },
+    {
+      "id": "m9",
+      "name": "Restriction enzyme or Golden Gate-style digestion reagents",
+      "role": "enzyme",
+      "specification": "Use the restriction enzyme or Golden Gate-style digestion/ligation workflow specified for that plasmid",
+      "rawText": "Prepare the gRNA vector using the restriction enzyme or Golden Gate-style digestion/ligation workflow specified for that plasmid.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 8 }]
+    },
+    {
+      "id": "m10",
+      "name": "Competent E. coli",
+      "role": "sample",
+      "rawText": "Ordered oligonucleotides with required overhangs, annealing buffer, ligase or assembly reagents, competent cells, selective plates, miniprep kit, and Sanger sequencing primers.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1, "section": "Materials" }]
+    },
+    {
+      "id": "m11",
+      "name": "Selective plates",
+      "role": "medium",
+      "specification": "Use the correct antibiotic for the plasmid backbone",
+      "rawText": "Ordered oligonucleotides with required overhangs, annealing buffer, ligase or assembly reagents, competent cells, selective plates, miniprep kit, and Sanger sequencing primers.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1, "section": "Materials" }]
+    },
+    {
+      "id": "m12",
+      "name": "Miniprep kit",
+      "role": "kit",
+      "rawText": "Ordered oligonucleotides with required overhangs, annealing buffer, ligase or assembly reagents, competent cells, selective plates, miniprep kit, and Sanger sequencing primers.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1, "section": "Materials" }]
+    },
+    {
+      "id": "m13",
+      "name": "Sanger sequencing primers",
+      "role": "reagent",
+      "specification": "Use the vector primer",
+      "rawText": "Ordered oligonucleotides with required overhangs, annealing buffer, ligase or assembly reagents, competent cells, selective plates, miniprep kit, and Sanger sequencing primers.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1, "section": "Materials" }]
+    },
+    {
+      "id": "m14",
+      "name": "Bacterial glycerol stock",
+      "role": "sample",
+      "specification": "Archive after plasmid validation",
+      "rawText": "Archive validated plasmid sequence, map, bacterial glycerol stock, and guide-design record.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 12 }]
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Thermal cycler",
+      "settings": "Use the vector protocol-compatible buffer and thermal program",
+      "rawText": "Anneal oligos using the vector protocol-compatible buffer and thermal program.",
+      "needsReview": true
+    },
+    {
+      "id": "e2",
+      "name": "Incubator",
+      "settings": "Use conditions appropriate for the plasmid backbone",
+      "rawText": "Transform into competent E. coli, plate on correct antibiotic, and incubate under conditions appropriate for the plasmid backbone.",
+      "needsReview": true
+    }
+  ],
+  "software": [
+    {
+      "id": "sw1",
+      "name": "gRNA design software or validated design portal",
+      "rawText": "gRNA design software or validated design portal, CRISPR plasmid map, cloning site information, and vector-specific cloning protocol.",
+      "needsReview": true
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Selected Protocol",
+      "kind": "other",
+      "columns": ["Field", "Selection"],
+      "rows": [
+        ["Experiment", "CRISPR-Cas9 sgRNA design and cloning"],
+        ["Selected source", "Addgene CRISPR experiment planning and gRNA design/cloning guidance"],
+        ["Selected format", "Single-guide design, oligo ordering, vector-specific annealing/ligation or Golden Gate-style cloning, and clone validation"],
+        ["Why this choice", "Addgene is a common plasmid repository/source for CRISPR vectors and provides practical gRNA design and cloning decision guidance."]
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "t2",
+      "title": "Protocol-Specific Information Sources",
+      "kind": "other",
+      "columns": ["Source", "Use in this PDF", "Link"],
+      "rows": [
+        ["Addgene Plan Your CRISPR Experiment", "Primary guidance for experiment planning, gRNA design, cloning, delivery, and edit validation considerations.", "https://www.addgene.org/guides/crispr/plan-your-experiment/"],
+        ["Addgene How to Design Your gRNA", "Detailed guide-design considerations including on-target/off-target selection and validation thinking.", "https://blog.addgene.org/how-to-design-your-grna-for-crispr-genome-editing"],
+        ["Addgene Genome Engineering Guide", "Genome engineering overview and CRISPR plasmid-resource context.", "https://www.addgene.org/genome-engineering/"]
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "t3",
+      "title": "Document Control",
+      "kind": "other",
+      "columns": ["Field", "Value"],
+      "rows": [
+        ["Library section", "Genome Editing & Advanced Molecular Biology"],
+        ["Version", "v1.0 source-specific SOP draft"],
+        ["Date prepared", "2026-08-22"],
+        ["Use status", "Training/library SOP draft. Confirm against the current manufacturer/source protocol, safety documentation, institutional biosafety approval, and local lab policy before bench use."],
+        ["Copyright approach", "Original SOP summary derived from linked official sources; no wholesale copying of third-party PDFs or manuals."]
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "t4",
+      "title": "Troubleshooting",
+      "kind": "other",
+      "columns": ["Observation", "Likely cause", "Action"],
+      "rows": [
+        ["No colonies", "Wrong overhangs, inactive ligase/enzyme, poor competent cells.", "Check vector map, use fresh reagents, include transformation control."],
+        ["Many empty vectors", "Incomplete vector digestion or high background.", "Gel-purify digested vector and use negative control."],
+        ["Low editing", "Weak guide, inaccessible locus, poor delivery.", "Test additional guides and verify Cas9/gRNA expression."],
+        ["Unexpected phenotype", "Off-target effect or clonal artifact.", "Use multiple independent guides and rescue/orthogonal validation."]
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "t5",
+      "title": "Run Record Template",
+      "kind": "other",
+      "columns": ["Record item", "Entry"],
+      "rows": [
+        ["Date / operator", null],
+        ["Experiment ID and sample/construct IDs", null],
+        ["Selected source / kit / system", null],
+        ["Critical reagents, lots, and expiration", null],
+        ["Input amount, volume, and incubation/cycling conditions", null],
+        ["Controls included", null],
+        ["QC readout and acceptance decision", null],
+        ["Exported file / image / report name", null],
+        ["Storage or next-step location", null],
+        ["Deviations / troubleshooting", null]
+      ],
+      "note": "Blank run-record template provided in the source PDF.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }, { "sourceId": "src1", "page": 3 }]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Guide Design",
+      "action": "Select the target region based on biological goal. For knockout, prioritize constitutive early coding exons or essential protein domains.",
+      "materialIds": ["m1", "m2", "m3"],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 1 }]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Guide Design",
+      "action": "Use gRNA design software to identify candidate guides with high predicted on-target activity and acceptable off-target profile.",
+      "softwareIds": ["sw1"],
+      "parameters": [
+        {
+          "type": "count",
+          "comparator": "range",
+          "value": 2,
+          "valueMax": 4,
+          "unit": "guides per target",
+          "rawText": "Design at least two to four independent guides per target for biological confidence."
+        }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 2 }]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Guide Design",
+      "action": "Exclude guides overlapping common variants, repeats, splice ambiguity, or unintended homologous sequences when possible.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 3 }]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Guide Design",
+      "action": "Choose final guides and record genomic coordinate, strand, PAM, exon number, predicted score, and top off-target sites.",
+      "tableIds": ["t5"],
+      "expectedResult": "Final guide-design record is complete.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 4 }]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Oligo Preparation",
+      "action": "Design forward and reverse oligos with the exact vector-required overhangs and any required leading base for U6 or other promoter expression.",
+      "materialIds": ["m4", "m5"],
+      "criticalNotes": "Do not reuse overhangs from another vector without checking the plasmid map.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 5 }]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Oligo Preparation",
+      "action": "Order oligos and resuspend in nuclease-free water or TE according to lab convention.",
+      "materialIds": ["m5", "m6"],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 6 }]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Oligo Annealing",
+      "action": "Anneal oligos using the vector protocol-compatible buffer and thermal program.",
+      "materialIds": ["m5", "m7"],
+      "equipmentIds": ["e1"],
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 7 }]
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Vector Preparation",
+      "action": "Prepare the gRNA vector using the restriction enzyme or Golden Gate-style digestion/ligation workflow specified for that plasmid.",
+      "materialIds": ["m4", "m9"],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 8 }]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "Vector Assembly",
+      "action": "Combine annealed oligo duplex with prepared vector and ligation/assembly reagents according to the vector-specific protocol.",
+      "materialIds": ["m4", "m5", "m8"],
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 9 }]
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "phase": "Bacterial Transformation",
+      "action": "Transform into competent E. coli, plate on correct antibiotic, and incubate under conditions appropriate for the plasmid backbone.",
+      "materialIds": ["m10", "m11"],
+      "equipmentIds": ["e2"],
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 10 }]
+    },
+    {
+      "id": "s11",
+      "number": 11,
+      "phase": "Clone Validation",
+      "action": "Pick colonies, miniprep plasmid DNA, and verify guide insert by Sanger sequencing using the vector primer.",
+      "materialIds": ["m12", "m13"],
+      "acceptanceCriteria": [
+        {
+          "parameter": "Sanger sequencing",
+          "description": "Sanger sequencing must confirm correct guide sequence, orientation, and no mutation in guide scaffold/flanking region."
+        }
+      ],
+      "expectedResult": "Validated guide-insert plasmid sequence.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 11 }]
+    },
+    {
+      "id": "s12",
+      "number": 12,
+      "phase": "Archiving",
+      "action": "Archive validated plasmid sequence, map, bacterial glycerol stock, and guide-design record.",
+      "materialIds": ["m14"],
+      "tableIds": ["t5"],
+      "expectedResult": "Validated construct and its documentation are archived.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Detailed Procedure", "step": 12 }]
+    }
+  ],
+  "controls": [
+    {
+      "name": "Empty-vector or no-insert cloning control",
+      "description": "Include empty-vector or no-insert cloning control to estimate background.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "QC and Acceptance" }]
+    },
+    {
+      "name": "Delivery control",
+      "description": "Before cell editing, plan delivery control, Cas9 expression control, and edit-validation assay.",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "QC and Acceptance" }]
+    },
+    {
+      "name": "Cas9 expression control",
+      "description": "Before cell editing, plan delivery control, Cas9 expression control, and edit-validation assay.",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "QC and Acceptance" }]
+    },
+    {
+      "name": "Edit-validation assay",
+      "description": "Validate edits by amplicon sequencing, Sanger/TIDE-style analysis, genotyping, protein loss, or phenotype as appropriate.",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "QC and Acceptance" }]
+    }
+  ],
+  "expectedOutputs": [
+    "Validated plasmid sequence and map.",
+    "Bacterial glycerol stock.",
+    "Guide-design record and final validation status."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "No colonies",
+      "cause": "Wrong overhangs, inactive ligase/enzyme, poor competent cells.",
+      "solution": "Check vector map, use fresh reagents, include transformation control.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Troubleshooting" }]
+    },
+    {
+      "problem": "Many empty vectors",
+      "cause": "Incomplete vector digestion or high background.",
+      "solution": "Gel-purify digested vector and use negative control.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Troubleshooting" }]
+    },
+    {
+      "problem": "Low editing",
+      "cause": "Weak guide, inaccessible locus, poor delivery.",
+      "solution": "Test additional guides and verify Cas9/gRNA expression.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Troubleshooting" }]
+    },
+    {
+      "problem": "Unexpected phenotype",
+      "cause": "Off-target effect or clonal artifact.",
+      "solution": "Use multiple independent guides and rescue/orthogonal validation.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2, "section": "Troubleshooting" }]
+    }
+  ],
+  "safety": [
+    "Wear lab coat, gloves, and eye protection. Follow local biosafety, chemical safety, and waste rules for live cells, yeast, chromatin, formaldehyde, nucleases, enzymes, probes, and sequencing reagents.",
+    "For genome editing or viral-vector workflows, confirm institutional approval, organism/cell-line restrictions, containment level, and waste decontamination before starting.",
+    "Use nuclease-free and contamination-controlled workflows for guide RNA, ChIP DNA, IVT/IVTT templates, and NGS libraries.",
+    "Physically separate pre-PCR and post-PCR/library-amplification areas when possible to reduce carryover contamination.",
+    "Record sample identity, construct/library ID, reagent lot, incubation program, controls, QC results, and final validation status."
+  ],
+  "biosafetyLevel": "not specified",
+  "compliance": {
+    "notes": "Training/library SOP draft. Confirm against the current manufacturer/source protocol, safety documentation, institutional biosafety approval, and local lab policy before bench use. Original SOP summary derived from linked official sources; no wholesale copying of third-party PDFs or manuals."
+  },
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "file",
+      "title": "GAM-001: CRISPR-Cas9 sgRNA Design & Cloning - Addgene Source Workflow",
+      "file": "D:/大学/暑研/7-31 protocol library/tmp/pdfs/pcr-20260822/GAM-001_crispr_cas9_sgrna_design_cloning_addgene.pdf",
+      "license": "Original SOP summary derived from linked official sources; no wholesale copying of third-party PDFs or manuals.",
+      "licenseVerified": false
+    },
+    {
+      "id": "src2",
+      "kind": "url",
+      "title": "Addgene Plan Your CRISPR Experiment",
+      "url": "https://www.addgene.org/guides/crispr/plan-your-experiment/",
+      "description": "Primary guidance for experiment planning, gRNA design, cloning, delivery, and edit validation considerations.",
+      "license": "Not specified in source PDF",
+      "licenseVerified": false
+    },
+    {
+      "id": "src3",
+      "kind": "url",
+      "title": "Addgene How to Design Your gRNA",
+      "url": "https://blog.addgene.org/how-to-design-your-grna-for-crispr-genome-editing",
+      "description": "Detailed guide-design considerations including on-target/off-target selection and validation thinking.",
+      "license": "Not specified in source PDF",
+      "licenseVerified": false
+    },
+    {
+      "id": "src4",
+      "kind": "url",
+      "title": "Addgene Genome Engineering Guide",
+      "url": "https://www.addgene.org/genome-engineering/",
+      "description": "Genome engineering overview and CRISPR plasmid-resource context.",
+      "license": "Not specified in source PDF",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft",
+    "conversionAgent": "claude-pdf",
+    "sourceFormat": "PDF",
+    "dateConverted": "2026-08-22"
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "PWP-001: Protein Extraction - Thermo Fisher Pierce RIPA / T-PER Lysis",
+    "protocolId": "PWP-001-claude-pdf",
+    "version": "0.1",
+    "family": "Protein Extraction",
+    "category": "Protein Work & Purification",
+    "discipline": "Biology",
+    "purpose": "Common protein extraction workflow compatible with BCA assay, SDS-PAGE, western blotting, ELISA, and downstream purification planning.",
+    "scope": "Training/library SOP draft. Confirm against the current manufacturer protocol, SDS, and local EHS rules before bench use.",
+    "beforeYouBegin": [
+      "Choose lysis reagent based on downstream use. RIPA is strong and useful for total protein/western; IP Lysis Buffer or M-PER is gentler for complexes or activity assays.",
+      "Keep all samples and buffers cold. Add inhibitors immediately before use.",
+      "Remove culture medium, serum, and debris by washing cells with cold PBS when compatible.",
+      "Plan aliquots to avoid repeated freeze-thaw cycles."
+    ],
+    "tags": ["protein extraction", "RIPA", "T-PER", "cell lysis", "tissue lysis", "Pierce"]
+  },
+  "materials": [
+    {
+      "id": "m1",
+      "name": "Cultured cell pellet or adherent cells",
+      "role": "sample",
+      "storage": "Keep cold",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m2",
+      "name": "Fresh or frozen tissue sample",
+      "role": "sample",
+      "storage": "Keep cold",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m3",
+      "name": "Pierce RIPA Buffer",
+      "role": "buffer",
+      "specification": "for total cell protein extraction",
+      "storage": "Keep cold",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m4",
+      "name": "Pierce T-PER Tissue Protein Extraction Reagent",
+      "role": "buffer",
+      "specification": "for tissue",
+      "storage": "Keep cold",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m5",
+      "name": "Halt Protease Inhibitor Cocktail",
+      "role": "reagent",
+      "specification": "Add immediately before use",
+      "storage": "Keep cold",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m6",
+      "name": "Phosphatase inhibitor cocktail",
+      "role": "reagent",
+      "specification": "if phosphorylation must be preserved",
+      "storage": "Keep cold",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m7",
+      "name": "Cold PBS",
+      "role": "buffer",
+      "storage": "Keep cold",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m8",
+      "name": "Protein assay reagents",
+      "role": "reagent",
+      "specification": "BCA or another compatible assay",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "m9",
+      "name": "Protein lysate",
+      "role": "sample",
+      "storage": "Aliquot and store at -80 deg C, or proceed directly to downstream application",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    }
+  ],
+  "equipment": [
+    {
+      "id": "e1",
+      "name": "Ice bucket",
+      "settings": "Keep samples and buffers cold",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "e2",
+      "name": "Cell scraper",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    },
+    {
+      "id": "e3",
+      "name": "Homogenizer",
+      "settings": "For tissue homogenization on ice",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "e4",
+      "name": "Refrigerated centrifuge",
+      "settings": "High speed, cold temperature, for the selected reagent/sample workflow",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "e5",
+      "name": "Pipettes",
+      "sourceReferences": [{ "sourceId": "src1", "page": 1 }]
+    }
+  ],
+  "containers": [
+    {
+      "id": "c1",
+      "name": "Pre-chilled microcentrifuge tube",
+      "type": "microcentrifuge tube"
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Run Record Template",
+      "kind": "other",
+      "columns": ["Record item", "Entry"],
+      "rows": [
+        ["Date / operator", null],
+        ["Sample IDs and target protein", null],
+        ["Selected kit/system/source", null],
+        ["Buffer, inhibitor, resin, antibody, or plate details", null],
+        ["Input amount, volume, and incubation conditions", null],
+        ["Controls and standards", null],
+        ["Fractions, readings, or image file name", null],
+        ["Yield, concentration, purity, or signal result", null],
+        ["Storage condition", null],
+        ["Deviations / troubleshooting", null]
+      ],
+      "note": "Blank run-record template from the source PDF."
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "number": 1,
+      "phase": "Lysis Buffer Preparation",
+      "action": "Prepare cold lysis buffer with freshly added protease and phosphatase inhibitors.",
+      "materialIds": ["m3", "m4", "m5", "m6"],
+      "equipmentIds": ["e1"],
+      "criticalNotes": "Choose lysis reagent based on downstream use. RIPA is strong and useful for total protein/western; IP Lysis Buffer or M-PER is gentler for complexes or activity assays. Add inhibitors immediately before use.",
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "phase": "Cell Lysis",
+      "action": "For adherent cells, place plate on ice, wash with cold PBS, remove PBS, and add enough lysis buffer to cover the monolayer.",
+      "optional": true,
+      "materialIds": ["m1", "m3", "m7"],
+      "equipmentIds": ["e1"],
+      "branches": [{ "condition": "Use for adherent cells", "targetStepId": "s3" }],
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "phase": "Cell Lysis",
+      "action": "Scrape cells thoroughly and transfer lysate to a pre-chilled microcentrifuge tube.",
+      "optional": true,
+      "equipmentIds": ["e2"],
+      "containerIds": ["c1"],
+      "branches": [{ "condition": "Use after s2 for adherent cells", "targetStepId": "s6" }],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "phase": "Cell Lysis",
+      "action": "For cell pellets, resuspend pellet completely in cold lysis buffer and mix by pipetting or gentle vortexing.",
+      "optional": true,
+      "materialIds": ["m1", "m3"],
+      "equipmentIds": ["e1", "e5"],
+      "branches": [{ "condition": "Use for cell pellets", "targetStepId": "s6" }],
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "phase": "Tissue Lysis",
+      "action": "For tissue, weigh tissue, add T-PER or selected lysis reagent at the validated weight-to-volume ratio, and homogenize on ice.",
+      "optional": true,
+      "materialIds": ["m2", "m4"],
+      "equipmentIds": ["e1", "e3"],
+      "branches": [{ "condition": "Use for tissue", "targetStepId": "s6" }],
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "phase": "Lysis Incubation",
+      "action": "Incubate lysate on ice for 5-30 minutes depending on sample type and reagent.",
+      "equipmentIds": ["e1"],
+      "parameters": [
+        {
+          "type": "time",
+          "comparator": "range",
+          "value": 5,
+          "valueMax": 30,
+          "unit": "min",
+          "rawText": "Incubate lysate on ice for 5-30 minutes depending on sample type and reagent."
+        }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "phase": "Lysate Clarification",
+      "action": "Clarify lysate by centrifugation at high speed, cold temperature, for the selected reagent/sample workflow.",
+      "equipmentIds": ["e4"],
+      "parameters": [
+        {
+          "type": "speed",
+          "valueText": "high speed",
+          "needsReview": true,
+          "rawText": "Clarify lysate by centrifugation at high speed, cold temperature, for the selected reagent/sample workflow."
+        },
+        {
+          "type": "temperature",
+          "valueText": "cold temperature",
+          "needsReview": true,
+          "rawText": "Clarify lysate by centrifugation at high speed, cold temperature, for the selected reagent/sample workflow."
+        }
+      ],
+      "needsReview": true,
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "phase": "Lysate Clarification",
+      "action": "Transfer the supernatant to a clean pre-chilled tube without disturbing the pellet.",
+      "containerIds": ["c1"],
+      "expectedResult": "Clarified protein lysate.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "phase": "Protein Quantification",
+      "action": "Measure protein concentration using BCA or another compatible assay.",
+      "materialIds": ["m8"],
+      "equipmentIds": ["e5"],
+      "acceptanceCriteria": [
+        {
+          "parameter": "Lysis-buffer compatibility",
+          "description": "Confirm lysis buffer compatibility with BCA/Bradford, IP, ELISA, or activity assay before committing samples.",
+          "needsReview": true
+        }
+      ],
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "phase": "Aliquoting and Storage",
+      "action": "Aliquot lysate and store at -80 deg C, or proceed directly to SDS-PAGE, western blot, ELISA, IP, or purification.",
+      "materialIds": ["m9"],
+      "tableIds": ["t1"],
+      "parameters": [
+        {
+          "type": "temperature",
+          "value": -80,
+          "unit": "deg C",
+          "rawText": "store at -80 deg C"
+        }
+      ],
+      "expectedResult": "Aliquoted lysate stored at -80 deg C or used in downstream workflow.",
+      "sourceReferences": [{ "sourceId": "src1", "page": 2 }]
+    }
+  ],
+  "controls": [
+    {
+      "name": "Loading-control protein",
+      "description": "Check lysate quality by SDS-PAGE or western blot for target and loading-control proteins."
+    }
+  ],
+  "expectedOutputs": [
+    "Record total protein concentration and total recovery per sample.",
+    "Check lysate quality by SDS-PAGE or western blot for target and loading-control proteins.",
+    "Avoid viscous DNA-rich lysates; shear or clarify if viscosity interferes with pipetting or assays.",
+    "Confirm lysis buffer compatibility with BCA/Bradford, IP, ELISA, or activity assay before committing samples."
+  ],
+  "troubleshooting": [
+    {
+      "problem": "Low yield",
+      "cause": "Incomplete lysis, insufficient homogenization, poor sample storage.",
+      "solution": "Increase lysis time within compatibility, homogenize better, keep samples cold."
+    },
+    {
+      "problem": "Viscous lysate",
+      "cause": "Genomic DNA release.",
+      "solution": "Clarify more thoroughly or shear gently if compatible."
+    },
+    {
+      "problem": "Protein degradation",
+      "cause": "Protease activity or warm handling.",
+      "solution": "Use fresh inhibitors and keep workflow cold."
+    },
+    {
+      "problem": "Assay interference",
+      "cause": "Detergent, reducing agent, salt, or inhibitor incompatibility.",
+      "solution": "Choose compatible assay or dilute/dialyze/cleanup sample."
+    }
+  ],
+  "safety": [
+    "Wear lab coat, gloves, and eye protection. Treat biological lysates, animal tissue, antibodies, resins, imidazole, TMB, acids, reducing agents, and preservatives according to local EHS rules.",
+    "Keep proteins and antibody complexes cold unless the selected assay step specifically requires room temperature or incubation at a defined temperature.",
+    "Use protease and phosphatase inhibitors when preserving abundance or phosphorylation state matters.",
+    "Clarify lysates before assays or binding steps to reduce clogging, background, and nonspecific binding.",
+    "Record sample input, buffer composition, inhibitor lot, incubation time, spin speed, protein concentration, fractions, plate map, and downstream validation."
+  ],
+  "sources": [
+    {
+      "id": "src1",
+      "kind": "file",
+      "title": "PWP-001: Protein Extraction - Thermo Fisher Pierce RIPA / T-PER Lysis",
+      "file": "D:/大学/暑研/7-31 protocol library/tmp/pdfs/pcr-20260822/PWP-001_protein_extraction_thermo_pierce_lysis.pdf",
+      "license": "Original SOP summary derived from linked official sources; no wholesale copying of third-party PDFs or manuals.",
+      "licenseVerified": false
+    },
+    {
+      "id": "src2",
+      "kind": "url",
+      "title": "Thermo Fisher Cell Lysis Buffers",
+      "url": "https://www.thermofisher.com/us/en/home/life-science/protein-biology/protein-purification-isolation/cell-lysis-fractionation/cell-lysis-total-protein-extraction.html",
+      "license": "Not specified in source PDF",
+      "licenseVerified": false
+    }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}
