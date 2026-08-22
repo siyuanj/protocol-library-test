@@ -1,5 +1,33 @@
 # 当前交接状态
 
+## Link vs PDF 信息丢失分析 + 转化规范（2026-08-22 / 本地 23:30 CST）
+
+### 这次做了什么
+
+- **用户决定**：协议转化应尽可能使用原文，不改写，因为自己概括容易信息丢失。要求对全部 7 份 link JSON 做系统性信息丢失分析。
+- **助手执行**：逐一对比 7 份 `*-link.json` 与对应原始 PDF（PCR-001、EGB-001、NAP-001、MC-001、QQC-001、GAM-001、PWP-001），发现两类系统性信息丢失。
+- **助手执行**：编写 `protocol-standard/CONVERSION-SPEC.md` 转化规范文档，规定原文保留、必填章节、参数规则、质量检查清单等。
+
+### 现在真实状态
+
+- **整节丢失**（所有 7 份 link JSON）：`safety: []`、`troubleshooting: []`、`controls: []`、`expectedOutputs: []`、`beforeYouBegin` 未收录。PDF 版本都有这些内容。
+- **Action 文本改写**：关键限定词在改写中丢失（如 NAP-001 的 "Do not vortex after adding P2"、MC-001 的 "For cloning-scale digests"）。
+- **后续步骤截断**：MC-001 link 仅 5 步（PDF 有 8 步），PWP-001 link 仅 5 步（PDF 有 10 步）。
+- 新增文件：`protocol-standard/CONVERSION-SPEC.md`
+
+### 卡在哪
+
+- 无技术阻塞。
+
+### 还没验证的
+
+- 转化规范尚未在实际 PDF→JSON 转化中使用验证。下一批转化（PCR-002~006 或修正现有 link JSON）应按此规范执行并检查效果。
+- 现有 7 份 link JSON 和 pcr-001-standard-pcr.json 均未按此规范重做，仍含改写文本。
+
+### 要用户定的
+
+- 是否要按新规范重做现有 JSON（优先修哪些），还是先用新规范转化新协议。
+
 ## Link 组原子步骤重做与字段级对照（2026-08-22 / 本地）
 
 > 本节取代下一节中 link 组的初版 **38 steps** 统计；PDF 基线本身未改动。
