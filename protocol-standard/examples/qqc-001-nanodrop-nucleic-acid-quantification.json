@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "QQC-001: NanoDrop Nucleic Acid Quantification with Thermo Fisher NanoDrop One",
+    "protocolId": "QQC-001",
+    "version": "0.1",
+    "family": "Quantification & QC",
+    "category": "Quantification & QC",
+    "discipline": "Biology",
+    "purpose": "Measure DNA or RNA concentration and A260/A280 and A260/A230 purity ratios by NanoDrop One pedestal measurement.",
+    "scope": "Training/library SOP draft for a NanoDrop One microvolume UV-Vis spectrophotometer. Use NanoDrop as a purity screen and confirm against the current instrument manual, kit insert, SDS, and local laboratory policy before bench use.",
+    "beforeYouBegin": [
+      "Use the blank solution that best matches the sample matrix, such as elution buffer or nuclease-free water.",
+      "Mix samples well and briefly spin down; avoid bubbles, particulates, and sample droplets on tube caps.",
+      "Clean the pedestal before blanking and between samples; residue causes carryover and abnormal ratios.",
+      "UV absorbance cannot distinguish target nucleic acid from free nucleotides, phenol, RNA/DNA mixture, or other absorbers."
+    ],
+    "tags": ["NanoDrop", "NanoDrop One", "nucleic acid quantification", "A260/A280", "A260/A230", "quality control"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Purified DNA or RNA sample", "role": "sample", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m2", "name": "Matched blank solution", "role": "buffer", "specification": "Use the same solution that best matches the sample matrix, such as elution buffer or nuclease-free water", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m3", "name": "Nuclease-free water", "role": "solvent", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m4", "name": "Lint-free wipe", "role": "consumable", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m5", "name": "Qubit assay", "role": "kit", "specification": "Optional orthogonal concentration confirmation; more target-specific for low-concentration samples or library preparation", "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }] },
+    { "id": "m6", "name": "Gel, Bioanalyzer, or TapeStation assay", "role": "kit", "specification": "Optional orthogonal concentration or integrity confirmation", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Thermo Scientific NanoDrop One microvolume UV-Vis spectrophotometer", "settings": "Pedestal measurement for nucleic-acid concentration and purity ratios", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] }
+  ],
+  "tables": [
+    { "id": "t1", "title": "Run Record Template", "kind": "other", "columns": ["Record item", "Entry"], "rows": [["Date / operator", null], ["Sample IDs and sample type", null], ["Selected instrument / assay / source", null], ["Blank, standard, ladder, or control details", null], ["Dilution and input volume", null], ["Instrument settings or assay mode", null], ["Replicate readings", null], ["Calculated result and QC status", null], ["Exported file / image / report name", null], ["Deviations / troubleshooting", null]], "note": "Blank run-record template provided in the source PDF." }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Instrument Setup", "action": "Open the appropriate nucleic-acid application on the NanoDrop One instrument.", "equipmentIds": ["e1"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s2", "number": 2, "phase": "Instrument Setup", "action": "Clean upper and lower pedestals with nuclease-free water and a lint-free wipe, then dry fully.", "materialIds": ["m3", "m4"], "equipmentIds": ["e1"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s3", "number": 3, "phase": "Blanking", "action": "Load the matched blank solution onto the lower pedestal using the instrument-recommended volume.", "materialIds": ["m2"], "equipmentIds": ["e1"], "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s4", "number": 4, "phase": "Blanking", "action": "Lower the arm and perform the blank measurement.", "equipmentIds": ["e1"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s5", "number": 5, "phase": "Blanking", "action": "Wipe both pedestals clean and dry.", "materialIds": ["m4"], "equipmentIds": ["e1"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s6", "number": 6, "phase": "Sample Measurement", "action": "Mix the sample gently and load it onto the pedestal without introducing bubbles.", "materialIds": ["m1"], "equipmentIds": ["e1"], "parameters": [{ "type": "volume", "comparator": "range", "value": 1, "valueMax": 2, "unit": "uL", "rawText": "Common quick QC method requiring 1-2 uL sample" }], "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }] },
+    { "id": "s7", "number": 7, "phase": "Sample Measurement", "action": "Lower the arm and measure the sample.", "equipmentIds": ["e1"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s8", "number": 8, "phase": "Data Review", "action": "Review concentration, A260/A280, A260/A230, and absorbance spectrum shape.", "equipmentIds": ["e1"], "acceptanceCriteria": [{ "parameter": "DNA A260/A280", "comparator": "approx", "value": 1.8, "description": "DNA A260/A280 is often near 1.8; interpret with extraction chemistry and sample type." }, { "parameter": "RNA A260/A280", "comparator": "approx", "value": 2.0, "description": "RNA A260/A280 is often near 2.0; interpret with extraction chemistry and sample type." }, { "parameter": "A260/A230", "description": "Low A260/A230 suggests salts, phenol, guanidinium, carbohydrates, ethanol, or other contaminants." }], "expectedResult": "Concentration, purity ratios, and spectrum shape are reviewed in sample context.", "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s9", "number": 9, "phase": "Technical Replication", "action": "Wipe pedestals between samples and repeat measurement for a technical replicate if accuracy is important.", "materialIds": ["m4"], "equipmentIds": ["e1"], "repeat": { "count": null, "over": "technical replicate measurements", "notes": "Perform a technical replicate if accuracy is important; the source gives no fixed replicate count." }, "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s10", "number": 10, "phase": "Documentation and QC", "action": "Export or record sample ID, application type, concentration, purity ratios, and any alert flags.", "tableIds": ["t1"], "expectedResult": "Measurement and QC record retained.", "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s11", "number": 11, "phase": "Orthogonal Confirmation", "action": "For low-concentration samples or library preparation, confirm concentration with Qubit; use an orthogonal integrity assay when indicated.", "optional": true, "materialIds": ["m5", "m6"], "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }] }
+  ],
+  "controls": [{ "name": "Matched blank", "description": "Use the same solution that best matches the sample matrix." }, { "name": "Technical replicate", "description": "Repeat measurement if accuracy is important; fixed replicate count is not specified.", "needsReview": true }],
+  "expectedOutputs": ["DNA or RNA concentration.", "A260/A280 and A260/A230 purity ratios.", "Absorbance spectrum, alert flags, and completed measurement record."],
+  "troubleshooting": [
+    { "problem": "High concentration versus Qubit", "cause": "Contaminants or mixed nucleic acid absorbing at 260 nm.", "solution": "Use a Qubit-specific assay and inspect A230/A280/spectrum." },
+    { "problem": "Poor replicate precision", "cause": "Dirty pedestal, bubbles, evaporation, or poor mixing.", "solution": "Clean/reblank, mix sample, and reload carefully." },
+    { "problem": "Low A260/A230", "cause": "Salt, phenol, guanidinium, or ethanol carryover.", "solution": "Repeat cleanup or precipitation and dry the sample appropriately." },
+    { "problem": "Negative or unstable reading", "cause": "Wrong blank or pedestal residue.", "solution": "Use a matched blank and clean the instrument." }
+  ],
+  "safety": ["Wear a lab coat, gloves, and eye protection; handle nucleic acids and associated materials according to local EHS and biosafety rules.", "Avoid contaminating shared instruments; clean pedestals and work surfaces according to instrument-compatible guidance.", "Use nuclease-free consumables for RNA/DNA QC and RNase-free handling for RNA integrity checks."],
+  "sources": [
+    { "id": "src1", "kind": "file", "title": "QQC-001: NanoDrop Nucleic Acid Quantification - Thermo Fisher NanoDrop One", "file": "D:/xwechat_files/wxid_ec0voiz90gf022_8d10/msg/file/2026-08/protocol_pdfs.zip#protocol_pdfs/quantification_qc/QQC-001_nanodrop_nucleic_acid_quantification_thermo.pdf", "license": "Training/library SOP draft; linked official sources not license-verified", "licenseVerified": false },
+    { "id": "src2", "kind": "url", "title": "Thermo Fisher NanoDrop One Operator Manual", "url": "https://knowledge1.thermofisher.com/Manual_Repository/269-309102_-_EN_-_Rev_I_-_NanoDrop_One_Operator_Manual", "license": "Not specified in source PDF", "licenseVerified": false },
+    { "id": "src3", "kind": "url", "title": "Thermo Fisher NanoDrop Applications", "url": "https://www.thermofisher.com/sg/en/home/industrial/spectroscopy-elemental-isotope-analysis/molecular-spectroscopy/uv-vis-spectrophotometry/instruments/nanodrop/applications.html", "license": "Not specified in source PDF", "licenseVerified": false }
+  ],
+  "provenance": { "library": "public", "owner": "LabRecord", "status": "draft" }
+}

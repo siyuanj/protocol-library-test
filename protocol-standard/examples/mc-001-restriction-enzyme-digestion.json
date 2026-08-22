@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "MC-001: Restriction Enzyme Digestion with NEB Standard Digest",
+    "protocolId": "MC-001",
+    "version": "0.1",
+    "family": "Molecular Cloning",
+    "category": "Molecular Cloning",
+    "discipline": "Biology",
+    "purpose": "Perform a 50 uL analytical or preparative restriction digest using a selected NEB restriction enzyme and matching NEBuffer.",
+    "scope": "Training/library SOP draft. Select enzyme-specific buffer, temperature, units, methylation sensitivity, star-activity risk, and heat-inactivation condition from NEB guidance before bench use.",
+    "beforeYouBegin": [
+      "Use NEBcloner or the enzyme product page to confirm buffer, incubation temperature, methylation sensitivity, star-activity risk, and heat-inactivation option.",
+      "Use high-quality DNA free of ethanol, phenol, salts, SDS, or guanidinium carryover.",
+      "For double digests, confirm both enzymes have compatible buffer and temperature conditions.",
+      "Keep restriction enzymes on ice or a cold block and add them last."
+    ],
+    "tags": ["restriction digestion", "NEB", "NEBuffer", "molecular cloning", "DNA preparation"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Purified DNA substrate", "role": "sample", "specification": "Plasmid, PCR product, or genomic DNA compatible with the selected restriction enzyme", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m2", "name": "Selected NEB restriction enzyme", "role": "enzyme", "storage": "Keep on ice or a cold block during setup; return to -20 deg C promptly and minimize freeze-thaw cycles", "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }] },
+    { "id": "m3", "name": "Matching NEBuffer", "role": "buffer", "workingConcentration": "10X", "specification": "Use buffer selected for the enzyme or compatible double digest", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m4", "name": "Required enzyme-specific additive", "role": "reagent", "specification": "Such as rAlbumin, ATP, DTT, or activator; use only if specified", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m5", "name": "Nuclease-free water", "role": "solvent", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m6", "name": "6X loading dye or stop solution", "role": "reagent", "specification": "Optional for direct agarose-gel analysis", "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }] },
+    { "id": "m7", "name": "DNA cleanup column or gel extraction kit", "role": "kit", "specification": "Optional cleanup after digestion", "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }] }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Ice bucket or cold block", "settings": "Keep reaction tubes and enzymes cold during setup", "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }] },
+    { "id": "e2", "name": "Thermocycler or heat block", "settings": "Set to enzyme-specific temperature", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "e3", "name": "Microcentrifuge", "settings": "Briefly collect liquid after mixing", "sourceReferences": [{ "sourceId": "src1", "page": 2 }] }
+  ],
+  "tables": [
+    { "id": "t1", "title": "50 uL Restriction Digest Setup", "kind": "recipe", "columns": ["Component", "Amount", "Notes"], "rows": [["Purified DNA substrate", "1 ug", "Common starting point paired with 1 uL enzyme; follow enzyme-specific unit recommendations"], ["10X NEBuffer", "5 uL", "For a typical 50 uL reaction"], ["Selected NEB restriction enzyme", "about 1 uL", "Add last; follow enzyme-specific unit recommendations"], ["Nuclease-free water", "to near-final volume", "Bring the reaction to the typical 50 uL volume"], ["Required additive", "if specified", "Examples given: rAlbumin, ATP, DTT, or activator"]], "note": "Typical reaction information from the source PDF; enzyme-specific recommendations take precedence." },
+    { "id": "t2", "title": "Run Record Template", "kind": "other", "columns": ["Record item", "Entry"], "rows": [["Date / operator", null], ["Construct or sample ID", null], ["Selected kit / enzyme / method", null], ["Reagent catalog, lot, and expiration", null], ["DNA amounts, molar ratio, and reaction volume", null], ["Incubation / cycling / transformation conditions", null], ["Controls included", null], ["Colony count or screen result", null], ["Sequence or diagnostic validation result", null], ["Deviations / troubleshooting", null]], "note": "Blank run-record template provided in the source PDF." }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Reaction Setup", "action": "Label reaction tubes and keep them on ice during setup.", "equipmentIds": ["e1"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s2", "number": 2, "phase": "Reaction Setup", "action": "For a typical reaction, combine DNA, 10X NEBuffer, nuclease-free water to near-final volume, and any required additive.", "materialUses": [{ "materialId": "m3", "amount": 5, "unit": "uL", "rawText": "5 uL 10X NEBuffer" }], "materialIds": ["m1", "m4", "m5"], "tableIds": ["t1"], "parameters": [{ "type": "volume", "value": 50, "unit": "uL", "rawText": "Typical 50 uL reaction" }], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s3", "number": 3, "phase": "Reaction Setup", "action": "Add restriction enzyme last and follow enzyme-specific unit recommendations.", "materialUses": [{ "materialId": "m2", "amount": 1, "unit": "uL", "rawText": "A common starting point is about 1 uL enzyme for 1 ug DNA", "needsReview": true }], "parameters": [{ "type": "mass", "value": 1, "unit": "ug DNA", "rawText": "about 1 uL enzyme for 1 ug DNA", "needsReview": true }], "criticalNotes": "The source calls this a common starting point; follow enzyme-specific unit recommendations.", "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s4", "number": 4, "phase": "Reaction Setup", "action": "Mix gently by pipetting and briefly collect liquid by microcentrifugation.", "equipmentIds": ["e3"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s5", "number": 5, "phase": "Digestion", "action": "Incubate at the enzyme-specific temperature and time; for cloning-scale digests, use the manufacturer-recommended condition for complete digestion.", "equipmentIds": ["e2"], "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s6", "number": 6, "phase": "Optional Direct Analysis", "action": "If the digest will be analyzed directly, add appropriate loading dye or stop solution and load an aliquot on an agarose gel.", "optional": true, "materialIds": ["m6"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s7", "number": 7, "phase": "Optional Cleanup", "action": "If digested DNA will be ligated or assembled, remove enzyme by heat inactivation if allowed, column cleanup, gel extraction, or phenol/chloroform cleanup.", "optional": true, "materialIds": ["m7"], "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s8", "number": 8, "phase": "Vector Preparation", "action": "For vector preparation, gel-purify the correctly cut backbone when undigested vector or wrong-size products could create background.", "optional": true, "materialIds": ["m7"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s9", "number": 9, "phase": "QC and Documentation", "action": "Confirm expected band sizes from a plasmid map or in silico digest, quantify purified vector and insert for cloning, and record the run.", "tableIds": ["t2"], "acceptanceCriteria": [{ "parameter": "Expected band sizes", "description": "Confirm from a plasmid map or in silico digest." }, { "parameter": "No-cut result", "description": "If no cut is observed, check methylation sensitivity, buffer choice, enzyme activity, DNA purity, and site presence." }], "expectedResult": "Digest result and validation record are available.", "sourceReferences": [{ "sourceId": "src1", "page": 2 }] }
+  ],
+  "controls": [{ "name": "Undigested DNA control", "description": "Run on an agarose gel when interpretation matters." }],
+  "expectedOutputs": ["Restriction-digested DNA with expected band sizes.", "Quantified purified vector and insert after digestion/cleanup for cloning where applicable.", "Completed reaction and validation record."],
+  "troubleshooting": [
+    { "problem": "Incomplete digestion", "cause": "Wrong buffer, methylated site, too little enzyme, or poor DNA purity.", "solution": "Check the enzyme page, use fresh buffer, clean DNA, and extend incubation within NEB guidance." },
+    { "problem": "Star activity", "cause": "Too much enzyme, wrong buffer, high glycerol, or long incubation.", "solution": "Keep enzyme volume low, use recommended buffer, and avoid overdigestion." },
+    { "problem": "Unexpected bands", "cause": "Partial digest, plasmid conformation, or wrong construct map.", "solution": "Compare to an undigested control and verify sequence/map." },
+    { "problem": "Poor ligation after digest", "cause": "Enzyme/salt carryover or unphosphorylated ends.", "solution": "Clean up digested DNA and confirm compatible phosphorylated ends." }
+  ],
+  "safety": ["Wear a lab coat, gloves, and eye protection.", "Keep enzymes cold as specified; minimize freeze-thaw cycles and return enzymes to -20 deg C promptly.", "Handle UV transilluminators and DNA stains according to local EHS guidance."],
+  "biosafetyLevel": "needsReview",
+  "sources": [
+    { "id": "src1", "kind": "file", "title": "MC-001: Restriction Enzyme Digestion - NEB Standard Digest", "file": "D:/xwechat_files/wxid_ec0voiz90gf022_8d10/msg/file/2026-08/protocol_pdfs.zip#protocol_pdfs/molecular_cloning/MC-001_restriction_enzyme_digestion_neb.pdf", "license": "Training/library SOP draft; linked official sources not license-verified", "licenseVerified": false },
+    { "id": "src2", "kind": "url", "title": "NEB Restriction Digest Protocol", "url": "https://www.neb.com/en/protocols/restriction-digest-protocol", "license": "Not specified in source PDF", "licenseVerified": false },
+    { "id": "src3", "kind": "url", "title": "NEB Restriction Enzyme Digestion overview", "url": "https://www.neb.com/en-us/applications/cloning-and-synthetic-biology/dna-preparation/restriction-enzyme-digestion", "license": "Not specified in source PDF", "licenseVerified": false }
+  ],
+  "provenance": { "library": "public", "owner": "LabRecord", "status": "draft" }
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "EGB-001: Agarose Gel Electrophoresis with Thermo Fisher UltraPure Agarose",
+    "protocolId": "EGB-001",
+    "version": "0.1",
+    "family": "Electrophoresis",
+    "category": "Electrophoresis, Blotting & Gel Analysis",
+    "discipline": "Biology",
+    "purpose": "Analyze PCR products, plasmid digests, or restriction fragments by agarose gel electrophoresis.",
+    "scope": "Training/library SOP draft for casting an UltraPure agarose gel with 1X TAE/TBE-style buffer, DNA ladder, and DNA stain. Confirm the current manufacturer protocol, SDS, and local EHS rules before bench use.",
+    "beforeYouBegin": [
+      "Select agarose percentage based on expected fragment size: higher agarose resolves smaller fragments and lower agarose resolves larger fragments.",
+      "Use the same buffer for gel casting and running to avoid distorted migration.",
+      "Confirm stain compatibility with downstream cloning; use safer alternatives or blue light when extracting DNA.",
+      "Check that the gel is level, wells are intact, and buffer covers the gel by a thin layer."
+    ],
+    "tags": ["agarose gel", "DNA electrophoresis", "UltraPure agarose", "TAE", "TBE", "DNA ladder"]
+  },
+  "materials": [
+    { "id": "m1", "name": "UltraPure agarose", "role": "reagent", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m2", "name": "Electrophoresis buffer", "role": "buffer", "workingConcentration": "1X", "specification": "Use TAE or TBE-style buffer; use the same buffer for casting and running", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m3", "name": "DNA samples", "role": "sample", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m4", "name": "DNA ladder", "role": "standard", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m5", "name": "Loading dye", "role": "reagent", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m6", "name": "DNA stain", "role": "reagent", "specification": "Compatible with the imaging system", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "m7", "name": "Filtered tips", "role": "consumable", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Heating device", "settings": "Dissolve agarose completely; avoid boil-over", "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "e2", "name": "Electrophoresis chamber", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] },
+    { "id": "e3", "name": "Power supply", "settings": "Use the selected voltage; confirm electrode orientation before starting", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }] },
+    { "id": "e4", "name": "Gel imaging system", "settings": "Use correct excitation and emission settings", "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 1 }, { "sourceId": "src1", "page": 2 }] },
+    { "id": "e5", "name": "Blue-light transilluminator", "settings": "Optional; use to reduce DNA damage when bands will be excised", "sourceReferences": [{ "sourceId": "src1", "page": 1 }] }
+  ],
+  "containers": [
+    { "id": "c1", "name": "Gel casting tray with comb", "type": "agarose-gel casting assembly" }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Run Record Template",
+      "kind": "other",
+      "columns": ["Record item", "Entry"],
+      "rows": [
+        ["Date / operator", null], ["Sample IDs and target", null], ["Selected kit/system/source", null], ["Gel/membrane/buffer details", null], ["Voltage/current, run/transfer time, temperature", null], ["Stain/probe/antibody/detection reagent", null], ["Controls and ladder/marker", null], ["Image/exposure file name", null], ["Acceptance notes", null], ["Deviations / troubleshooting", null]
+      ],
+      "note": "Blank run-record template provided in the source PDF."
+    }
+  ],
+  "steps": [
+    { "id": "s1", "number": 1, "phase": "Gel Preparation", "action": "Prepare agarose in the selected 1X running buffer and dissolve completely by heating.", "materialIds": ["m1", "m2"], "equipmentIds": ["e1"], "criticalNotes": "Avoid boil-over.", "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s2", "number": 2, "phase": "Gel Preparation", "action": "Cool molten agarose before adding stain when using in-gel stain.", "materialIds": ["m6"], "parameters": [{ "type": "temperature", "comparator": "range", "value": 50, "valueMax": 60, "unit": "deg C", "rawText": "Cool molten agarose to about 50-60 deg C before adding stain if using in-gel stain." }], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s3", "number": 3, "phase": "Gel Casting", "action": "Pour gel into the casting tray with comb installed, remove bubbles, and allow the gel to solidify fully.", "containerIds": ["c1"], "expectedResult": "Level, fully solidified gel with intact wells.", "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s4", "number": 4, "phase": "Electrophoresis Setup", "action": "Place the gel in the electrophoresis chamber and cover it with 1X running buffer.", "materialIds": ["m2"], "equipmentIds": ["e2"], "containerIds": ["c1"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s5", "number": 5, "phase": "Sample Loading", "action": "Mix DNA samples with loading dye unless already prepared in loading buffer.", "materialIds": ["m3", "m5"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s6", "number": 6, "phase": "Sample Loading", "action": "Load DNA ladder into at least one lane and load samples carefully without puncturing wells.", "materialIds": ["m3", "m4"], "containerIds": ["c1"], "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s7", "number": 7, "phase": "Electrophoresis Setup", "action": "Confirm that wells are near the negative electrode so DNA migrates toward the positive electrode.", "equipmentIds": ["e2", "e3"], "criticalNotes": "Confirm electrode orientation before starting electrophoresis.", "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s8", "number": 8, "phase": "Electrophoresis", "action": "Run at the selected voltage until the dye front reaches the appropriate distance.", "equipmentIds": ["e2", "e3"], "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s9", "number": 9, "phase": "Imaging", "action": "Image the gel using the correct excitation and emission settings.", "equipmentIds": ["e4"], "needsReview": true, "sourceReferences": [{ "sourceId": "src1", "page": 2 }] },
+    { "id": "s10", "number": 10, "phase": "Documentation and QC", "action": "Save the image file with date, gel ID, ladder, sample map, and exposure settings.", "tableIds": ["t1"], "acceptanceCriteria": [{ "parameter": "DNA ladder", "description": "Expected ladder bands should be sharp and in correct order." }, { "parameter": "Sample migration", "description": "Samples should migrate in the expected direction with minimal smiling or lane leakage." }], "expectedResult": "Gel image can be used for size estimation, purity assessment, or band-excision notes.", "sourceReferences": [{ "sourceId": "src1", "page": 2 }] }
+  ],
+  "controls": [
+    { "name": "DNA ladder", "description": "Load into at least one lane; its expected bands should be sharp and in correct order." }
+  ],
+  "expectedOutputs": ["Saved gel image with gel ID, ladder, sample map, and exposure settings.", "Size-estimation, purity-assessment, or band-excision notes."],
+  "troubleshooting": [
+    { "problem": "No migration", "cause": "Electrodes reversed, power off, or wrong chamber setup.", "solution": "Check leads, voltage, buffer level, and sample loading direction." },
+    { "problem": "Smiling bands", "cause": "Excess voltage, overheating, or uneven gel.", "solution": "Lower voltage, use fresh buffer, and cast the gel level." },
+    { "problem": "Diffuse bands", "cause": "Too much DNA, degraded sample, or wrong agarose percentage.", "solution": "Load less DNA, use fresh sample, and adjust gel percentage." },
+    { "problem": "Weak signal", "cause": "Low DNA amount, wrong stain/filter, or short exposure.", "solution": "Check stain and imager settings; load more DNA or image longer." }
+  ],
+  "safety": [
+    "Wear a lab coat, gloves, and eye protection; treat gels, stains, UV exposure, and probes according to local EHS rules.",
+    "Use a fume hood for powdered stains and hazardous probe or detection reagents when required.",
+    "For cloning-grade DNA, minimize UV exposure and document excision band size."
+  ],
+  "sources": [
+    { "id": "src1", "kind": "file", "title": "EGB-001: Agarose Gel Electrophoresis - Thermo Fisher UltraPure Agarose", "file": "D:/xwechat_files/wxid_ec0voiz90gf022_8d10/msg/file/2026-08/protocol_pdfs.zip#protocol_pdfs/electrophoresis_blotting_gel_analysis/EGB-001_agarose_gel_electrophoresis_thermo_fisher.pdf", "license": "Training/library SOP draft; linked official source not license-verified", "licenseVerified": false },
+    { "id": "src2", "kind": "url", "title": "Thermo Fisher Agarose Gel Electrophoresis Protocols", "url": "https://www.thermofisher.com/hk/en/home/life-science/dna-rna-purification-analysis/nucleic-acid-gel-electrophoresis/dna-electrophoresis/agarose-gel-electrophoreis/agarose-gel-electrophoresis-protocols-e-gel-ex-agarose-gel-and-ultrapure-agarose.html", "license": "Not specified in source PDF", "licenseVerified": false }
+  ],
+  "provenance": { "library": "public", "owner": "LabRecord", "status": "draft" }
+}

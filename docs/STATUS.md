@@ -1,5 +1,42 @@
 # 当前交接状态
 
+## 压缩包各分类 001 协议转化 + Viewer 接入（2026-08-22 / 本地）
+
+### 这次做了什么
+
+- **用户决定**：将目标从 PCR-002 至 PCR-006 调整为 `protocol_pdfs.zip` 中每个分类的 `001` 协议；要求遵循 LabRecord canonical schema v0.3、更新 Viewer 并推送 GitHub。
+- **助手执行**：完整阅读 `protocol-standard/canonical-schema.json` 和既有 PCR-001 样例后，从压缩包逐份提取文本并渲染页面目检；新增 6 份 v0.3 JSON：
+  - `examples/gam-001-crispr-cas9-sgrna-design-cloning.json`
+  - `examples/egb-001-agarose-gel-electrophoresis.json`
+  - `examples/nap-001-plasmid-dna-miniprep.json`
+  - `examples/pwp-001-protein-extraction-ripa-tper.json`
+  - `examples/mc-001-restriction-enzyme-digestion.json`
+  - `examples/qqc-001-nanodrop-nucleic-acid-quantification.json`
+- **助手判断**：压缩包的 `PCR-001_standard_pcr.pdf` SHA-256 为 `083D242F...C7E31E625`，与既有 JSON 所引本地 PDF SHA-256 `919CF20C...8608A33F` 不同；为保持此批来源一致，已重写 `examples/pcr-001-standard-pcr.json` 为压缩包中的 NEB Q5 高保真 PCR 版本，而不是保留旧 Taq 通用版。
+- **助手执行**：`renderer/viewer.html` 的 protocols 数组新增/更新 7 个以 `codex/` 开头的条目（PCR/GAM/EGB/NAP/PWP/MC/QQC 001）。所有温度、时间、体积、浓度仅在 PDF 明示时编码；未选定的试剂、仪器条件和分支均以 `needsReview` 或省略处理。表格采用 `tables`（8 张，包括运行记录模板及 MC-001 反应设置）；循环用 `step.repeat`。
+
+### 现在真实状态（本次实跑）
+
+- 7 份目标 JSON：共 **76 steps、65 materials、8 tables、20 sources、30 needsReview**；逐份明细来自本次脚本输出：EGB-001 (10/7/1/2/4)、GAM-001 (12/14/1/4/7)、MC-001 (9/7/2/3/5)、NAP-001 (14/13/1/3/3)、PCR-001 (10/9/1/3/3)、PWP-001 (10/9/1/2/6)、QQC-001 (11/6/1/3/2)，字段顺序为 steps/materials/tables/sources/needsReview。
+- `node protocol-standard/renderer/validate.mjs`：**39/39 protocols valid**（包含新 7 份的引用完整性校验）。
+- `node protocol-standard/renderer/validate-schema.mjs`：**39/39 files pass full JSON Schema**（Draft 2020-12）。
+- 本地 HTTP 验证：`http://127.0.0.1:4173/renderer/viewer.html` 返回 **HTTP 200**，含 **7** 个 `codex/` 条目；7 个新增/重写 JSON 均返回 **HTTP 200** 且可解析。
+
+### 卡在哪
+
+- 无当前技术阻塞。待本次变更提交并推送后，远端 GitHub Pages 是否已刷新需要另行访问核验。
+
+### 还没验证的（下一个会话从这里怀疑）
+
+- 未逐个访问 PDF 中列出的厂商 URL 核对当前网页/手册版本；JSON 的可执行数值只以本次压缩包 PDF 为证据，外链均 `licenseVerified:false`。
+- PDF 本身未指定的条件不能直接上机：例如 Q5 的具体反应配方与循环时长、限制酶选择/温度/时间、RIPA/T-PER 的裂解及澄清条件、NanoDrop 推荐上样体积、载体特异 sgRNA 退火/连接条件，均须在具体实验前按选定试剂或仪器说明书复核。
+- Viewer 已经以 HTTP 200 确认文件可加载，尚未对 7 个下拉选项逐个进行浏览器交互与视觉回归。
+
+### 要用户定的
+
+- 若要将这些 `draft` 协议升级为可执行/发布版本，需要逐份指定实际 kit、载体、仪器、样品以及机构生物安全/EHS 要求，并回填所有 `needsReview`。
+
+
 ## PCR-001 转化 + Viewer 更新 + GitHub Pages 部署（2026-08-21 / 本地 20:38 CST）
 
 （工作线：**Viewer UI 完善 + 新测试数据转化 + GitHub Pages 部署**。与下方 v0.3 in-vivo 验证、v0.2 压力测试是不同工作线。）
