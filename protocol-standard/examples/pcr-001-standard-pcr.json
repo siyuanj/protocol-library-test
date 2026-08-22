@@ -1,0 +1,199 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "PCR-001: Standard PCR",
+    "protocolId": "PCR-001",
+    "version": "0.1",
+    "family": "PCR",
+    "category": "PCR & Amplification",
+    "discipline": "Biology",
+    "purpose": "Amplify a defined DNA segment from plasmid DNA, genomic DNA, cDNA, or purified PCR product using endpoint PCR. Written for a 50 uL Taq-style reaction; adaptable to high-fidelity polymerases by following enzyme-specific instructions.",
+    "scope": "Standalone SOP for endpoint PCR. Not validated for qPCR quantitation, RT-PCR, or high-fidelity cloning workflows — see PCR-002 and PCR-003 for those.",
+    "estimatedTime": "~2-3 hours (setup + cycling + gel analysis)",
+    "beforeYouBegin": [
+      "Use a clean pre-PCR workspace, fresh gloves, aerosol-resistant tips, and dedicated pre-PCR pipettes where possible.",
+      "Keep enzymes, master mixes, primers, dNTPs, and template on ice unless the manufacturer explicitly permits room-temperature setup.",
+      "Prepare a master mix for all shared components and add 5-10% excess volume for pipetting loss.",
+      "Add template last. For contamination-sensitive assays, load no-template controls last and keep amplified DNA away from setup areas.",
+      "Briefly centrifuge tubes or plates before cycling so liquid is collected at the bottom and bubbles are removed."
+    ],
+    "tags": ["PCR", "endpoint PCR", "DNA amplification", "Taq", "thermal cycling"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Template DNA", "role": "sample", "specification": "Plasmid, genomic DNA, cDNA, purified amplicon, or validated control template", "storage": "Keep on ice during setup", "needsReview": true },
+    { "id": "m2", "name": "Forward primer", "role": "reagent", "workingConcentration": "10 uM stock", "amount": 2.5, "unit": "uL", "specification": "18-24 nt, 40-60% GC, Tm within 5°C of reverse primer", "storage": "Store at -20°C; keep on ice during use" },
+    { "id": "m3", "name": "Reverse primer", "role": "reagent", "workingConcentration": "10 uM stock", "amount": 2.5, "unit": "uL", "specification": "18-24 nt, 40-60% GC, Tm within 5°C of forward primer", "storage": "Store at -20°C; keep on ice during use" },
+    { "id": "m4", "name": "10X PCR buffer with MgCl2", "role": "buffer", "amount": 5.0, "unit": "uL", "specification": "Compatible with the polymerase used", "storage": "Store at -20°C; keep on ice during use" },
+    { "id": "m5", "name": "dNTP mix", "role": "reagent", "workingConcentration": "10 mM each", "amount": 1.0, "unit": "uL", "specification": "Final concentration 200 uM each in reaction", "storage": "Store at -20°C; avoid repeated freeze-thaw" },
+    { "id": "m6", "name": "Taq DNA polymerase", "role": "enzyme", "workingConcentration": "5 U/uL", "amount": 0.2, "unit": "uL", "specification": "1 U per 50 uL reaction", "storage": "Store at -20°C; keep on ice; do NOT vortex" },
+    { "id": "m7", "name": "Nuclease-free water", "role": "solvent", "specification": "Molecular biology grade", "storage": "Room temperature" }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Thermal cycler", "settings": "See cycling program table" },
+    { "id": "e2", "name": "Agarose gel electrophoresis apparatus", "settings": "For post-run QC" },
+    { "id": "e3", "name": "Gel documentation system", "settings": "UV or blue-light imaging" },
+    { "id": "e4", "name": "Microcentrifuge", "settings": "Brief spin to collect liquid" },
+    { "id": "e5", "name": "Ice bucket / cold block", "settings": "Keep reagents cold during setup" }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "50 uL Reaction Setup",
+      "kind": "recipe",
+      "columns": ["Component", "Stock", "Volume", "Final condition"],
+      "rows": [
+        ["10X PCR buffer with MgCl2", "10X", "5.0 uL", "1X"],
+        ["dNTP mix", "10 mM each", "1.0 uL", "200 uM each"],
+        ["Forward primer", "10 uM", "2.5 uL", "0.5 uM"],
+        ["Reverse primer", "10 uM", "2.5 uL", "0.5 uM"],
+        ["Template DNA", "Variable", "1-2 uL", "Plasmid: 1-10 ng; gDNA: 10-500 ng"],
+        ["Taq DNA polymerase", "5 U/uL", "0.2 uL", "1 U per reaction"],
+        ["Nuclease-free water", "—", "To 50 uL", "Bring final volume to 50 uL"]
+      ]
+    },
+    {
+      "id": "t2",
+      "title": "Cycling Program",
+      "kind": "program",
+      "columns": ["Step", "Temperature", "Time", "Cycles", "Purpose"],
+      "rows": [
+        ["Initial denaturation", "94-98°C", "2 min", "1", "Denature template and activate enzyme"],
+        ["Denaturation", "94-98°C", "30 sec", "25-35", "Separate DNA strands"],
+        ["Annealing", "Tm − 3 to 5°C", "20-30 sec", "25-35", "Optimize by gradient if weak or nonspecific"],
+        ["Extension", "72°C", "30-60 sec/kb", "25-35", "Use polymerase-specific extension rate"],
+        ["Final extension", "72°C", "5 min", "1", "Complete partially extended products"],
+        ["Hold", "4-10°C", "∞", "1", "Short-term hold only"]
+      ]
+    },
+    {
+      "id": "t3",
+      "title": "Primer Design Checklist",
+      "kind": "other",
+      "columns": ["Parameter", "Recommendation", "Notes"],
+      "rows": [
+        ["Primer length", "18-24 nt", "Longer primers may be required for cloning tails; calculate Tm from the annealing region"],
+        ["GC content", "40-60%", "Avoid very low GC, long single-base runs, and strong hairpins"],
+        ["Primer-pair Tm", "Within 5°C", "Use one consistent Tm calculator for both primers"],
+        ["3′ end", "Target-specific and stable", "Avoid 3′ complementarity between primers; a weak GC clamp can help"],
+        ["Amplicon size", "Assay dependent", "Routine endpoint PCR: 100 bp to several kb; long products need enzyme-specific optimization"]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1", "number": 1, "phase": "Reaction Setup",
+      "action": "Thaw buffer, dNTPs, primers, water, and template on ice. Mix compatible reagents gently and briefly spin down.",
+      "materialIds": ["m4", "m5", "m2", "m3", "m7", "m1"],
+      "equipmentIds": ["e5"],
+      "criticalNotes": "Do NOT vortex enzyme. Mix by gentle flicking or pipetting.",
+      "expectedResult": "All reagents thawed and collected at tube bottom."
+    },
+    {
+      "id": "s2", "number": 2, "phase": "Reaction Setup",
+      "action": "Label tubes or plate wells. Include an NTC and a positive control before starting the run.",
+      "expectedResult": "Labeled reaction vessels with clear sample map."
+    },
+    {
+      "id": "s3", "number": 3, "phase": "Reaction Setup",
+      "action": "Calculate master mix volumes for all shared components except template. Add 5-10% overage.",
+      "tableIds": ["t1"],
+      "expectedResult": "Master mix calculation complete for N + 1 reactions."
+    },
+    {
+      "id": "s4", "number": 4, "phase": "Reaction Setup",
+      "action": "Add water, buffer, dNTPs, primers, and polymerase to the master mix tube. Mix gently without foaming.",
+      "materialIds": ["m7", "m4", "m5", "m2", "m3", "m6"],
+      "criticalNotes": "Add polymerase last to the master mix. Do NOT vortex — mix by gentle pipetting.",
+      "expectedResult": "Homogeneous master mix ready for aliquoting."
+    },
+    {
+      "id": "s5", "number": 5, "phase": "Reaction Setup",
+      "action": "Dispense master mix into tubes/wells. Add template DNA last. Add nuclease-free water instead of template to the NTC.",
+      "materialIds": ["m1", "m7"],
+      "parameters": [
+        { "type": "volume", "value": 1, "valueMax": 2, "unit": "uL", "rawText": "1-2 uL template" }
+      ],
+      "criticalNotes": "Add template last. Load NTC last to minimize contamination risk.",
+      "expectedResult": "All reactions and controls loaded."
+    },
+    {
+      "id": "s6", "number": 6, "phase": "Thermal Cycling",
+      "action": "Seal tubes/plate, briefly centrifuge, and place in the thermal cycler.",
+      "equipmentIds": ["e4", "e1"],
+      "expectedResult": "Liquid collected at bottom, no bubbles, tubes seated in cycler block."
+    },
+    {
+      "id": "s7", "number": 7, "phase": "Thermal Cycling",
+      "action": "Run the cycling program (or enzyme-specific program).",
+      "equipmentIds": ["e1"],
+      "tableIds": ["t2"],
+      "parameters": [
+        { "type": "temperature", "value": 94, "valueMax": 98, "unit": "°C", "rawText": "Initial denaturation 94-98°C, 2 min" },
+        { "type": "temperature", "comparator": "range", "value": null, "unit": "°C", "valueText": "Tm − 3 to 5°C", "rawText": "Annealing: Tm − 3 to 5°C, 20-30 sec" },
+        { "type": "temperature", "value": 72, "unit": "°C", "rawText": "Extension 72°C, 30-60 sec/kb" }
+      ],
+      "repeat": {
+        "count": 30,
+        "over": "thermocycles",
+        "notes": "25-35 cycles typical; adjust by template abundance"
+      },
+      "expectedResult": "Cycling complete; products amplified."
+    },
+    {
+      "id": "s8", "number": 8, "phase": "Post-run QC",
+      "action": "Analyze 2-5 uL product on agarose gel with a DNA ladder covering the expected product size.",
+      "equipmentIds": ["e2", "e3"],
+      "parameters": [
+        { "type": "volume", "value": 2, "valueMax": 5, "unit": "uL", "rawText": "2-5 uL product" }
+      ],
+      "expectedResult": "Single band at expected size in sample lanes."
+    },
+    {
+      "id": "s9", "number": 9, "phase": "Post-run QC",
+      "action": "Accept a run when the expected sample band appears, the positive control works, and the NTC has no target-size band.",
+      "acceptanceCriteria": [
+        { "parameter": "Sample band", "description": "Single band at expected molecular weight", "comparator": "exact" },
+        { "parameter": "Positive control", "description": "Expected band present" },
+        { "parameter": "NTC", "description": "No target-size band" }
+      ],
+      "expectedResult": "Run accepted; proceed to downstream use."
+    },
+    {
+      "id": "s10", "number": 10, "phase": "Post-run QC",
+      "action": "If the product will be cloned or sequenced, purify by PCR cleanup or gel extraction depending on specificity.",
+      "optional": true,
+      "expectedResult": "Purified PCR product ready for downstream application."
+    }
+  ],
+  "controls": [
+    { "name": "No-template control (NTC)", "description": "Detect reagent, water, primer, or setup contamination. No target-size band expected." },
+    { "name": "Positive control", "description": "Verify that the assay, master mix, template handling, cycling program, and detection method work. Expected band should appear." },
+    { "name": "Replicates", "description": "Assess precision and pipetting consistency. Consistent band pattern expected across replicates." }
+  ],
+  "expectedOutputs": [
+    "Single band at the expected amplicon size on agarose gel.",
+    "Clean NTC (no target-size band).",
+    "Positive control band at expected size.",
+    "Complete run record with sample map, reagent lots, cycling program, and gel image."
+  ],
+  "troubleshooting": [
+    { "problem": "No band", "cause": "Wrong annealing temperature, missing component, degraded template, inhibitors, insufficient extension", "solution": "Verify setup map; lower annealing or run gradient; increase extension time; dilute template to reduce inhibitors; use fresh enzyme" },
+    { "problem": "Multiple bands", "cause": "Annealing too low, excess template/primer, nonspecific primer binding", "solution": "Raise annealing temperature; reduce template or primer; use hot-start polymerase; redesign primers" },
+    { "problem": "Smear", "cause": "Overcycling, degraded template, nonspecific amplification, overloaded gel", "solution": "Reduce cycles; improve template quality; optimize annealing; load less product" },
+    { "problem": "Primer dimer", "cause": "Primer complementarity or high primer concentration", "solution": "Reduce primer to 0.2-0.3 uM or redesign primers" }
+  ],
+  "safety": [
+    "Ethidium bromide or alternative DNA stains may be mutagenic — wear gloves when handling gels and follow institutional disposal rules.",
+    "UV transilluminators emit UV radiation — use eye and skin protection."
+  ],
+  "sources": [
+    { "id": "src1", "kind": "url", "title": "Addgene PCR Protocol", "url": "https://www.addgene.org/protocols/pcr/", "license": "Addgene educational use", "licenseVerified": false },
+    { "id": "src2", "kind": "url", "title": "Addgene Primer Design Protocol", "url": "https://www.addgene.org/protocols/primer-design/", "license": "Addgene educational use", "licenseVerified": false },
+    { "id": "src3", "kind": "file", "title": "PCR-001 Standard PCR SOP (LabOS Protocol Library)", "file": "test_protocol/pcr_amplification/pcr_amplification/PCR-001_standard_pcr.pdf", "license": "Internal draft", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft"
+  }
+}

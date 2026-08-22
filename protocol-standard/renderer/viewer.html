@@ -612,14 +612,13 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
   };
 
   var protocols = [
+    { label: "PCR-001: Standard PCR", file: "../examples/pcr-001-standard-pcr.json" },
     { label: "Western Blot", file: "../examples/western-blot.json" },
     { label: "RT-qPCR (MIQE)", file: "../examples/qpcr.json" },
     { label: "Cell Culture", file: "../examples/cell-culture.json" },
     { label: "Gel Filtration", file: "../examples/gel-filtration.json" },
     { label: "Protein Concentration", file: "../examples/protein-concentration.json" }
   ];
-  var stressFiles = ["sds-page","reverse-transcription","rna-extraction-trizol","gibson-assembly","phage-display-biopanning","checkerboard-synergy","rnaseq-pipeline"];
-  stressFiles.forEach(function(name){ protocols.push({ label: name.replace(/-/g," "), file: "../stress-test/" + name + ".json" }) });
 
   var select = document.getElementById("proto-select");
   var headerArea = document.getElementById("header-area");
