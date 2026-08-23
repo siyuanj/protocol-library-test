@@ -170,9 +170,7 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <div class="sub-card"><span class="sk">repeat</span> count · untilCondition · over</div>
 <div class="sub-card"><span class="sk">acceptanceCriteria[]</span> parameter · comparator · value</div>
 <div class="sub-card"><span class="sk">branches[]</span> condition · targetStepId · action</div>
-<div class="sub-card"><span class="sk">materialIds</span> → materials<i class="info-icon">i<span class="tip">ID array referencing materials[]<br>(incl. samples)</span></i></div>
-<div class="sub-card"><span class="sk">equipmentIds</span> → equipment<i class="info-icon">i<span class="tip">ID array referencing equipment[]<br>(incl. software, containers)</span></i></div>
-<div class="sub-card"><span class="sk">dependsOn</span> → steps<i class="info-icon">i<span class="tip">Step numbers this step depends on<br>(for non-linear workflows)</span></i></div>
+<div class="sub-card"><span class="sk">refs</span> ID pointers to other sections<i class="info-icon">i<span class="tip"><div class="tf"><span class="tfk">materialIds</span> <span class="tft">→ materials[] (incl. samples)</span></div><div class="tf"><span class="tfk">equipmentIds</span> <span class="tft">→ equipment[] (incl. software)</span></div><div class="tf"><span class="tfk">dependsOn</span> <span class="tft">→ step numbers</span></div></span></i></div>
 </div>
 <div class="hub-refs">
 <span style="font-size:11px;color:var(--text-muted);margin-right:4px">Parameter types:</span>
@@ -186,8 +184,15 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <span class="ref-pill">pressure</span>
 <span class="ref-pill">wavelength</span>
 <span class="ref-pill">current</span>
+<span class="ref-pill">voltage</span>
+<span class="ref-pill">ratio</span>
+<span class="ref-pill">count</span>
+<span class="ref-pill">percentage</span>
+<span class="ref-pill">distance</span>
+<span class="ref-pill">flowRate</span>
+<span class="ref-pill">power</span>
+<span class="ref-pill">frequency</span>
 <span class="ref-pill">config</span>
-<span class="ref-pill">+8 more</span>
 </div>
 </div>
 </div>
