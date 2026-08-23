@@ -26,6 +26,14 @@ Every conversion MUST populate ALL of the following. If the source does not prov
 | `safety` | "Safety", "Handling Rules", "Hazards" | Legal and physical safety obligation |
 | `sources` | "References", "Source URLs" | Traceability back to authoritative source |
 
+## `needsReview` Rules
+
+`needsReview: true` signals that **the source document is genuinely missing or ambiguous** about this item and a human must verify it. It is NOT a flag for "the converter found this tricky to structure."
+
+1. **Use `needsReview`** when the source does not provide the information at all (e.g., no controls section, no troubleshooting table, no safety warnings). These are real gaps the operator needs to fill.
+
+2. **Do NOT use `needsReview`** on items that the source states clearly, even if the structured representation is complex. If the source says "Add 0.2 µL volume of loading buffer to samples; e.g., 4 µL of 20 µL sample", the parameter type and value may be non-trivial to extract, but the source text is unambiguous — do not mark it `needsReview`. Similarly, user-provided samples listed in the source (e.g., "PCR DNA sample") are not ambiguous — do not mark them `needsReview`.
+
 ## Action Text Rules
 
 1. **Copy the source sentence.** If the source says "Pellet the recommended culture volume by centrifugation. Remove all supernatant so the pellet is not diluted before resuspension." — that is the `action` value, verbatim.
