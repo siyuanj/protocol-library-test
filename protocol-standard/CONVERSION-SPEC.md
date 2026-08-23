@@ -44,6 +44,11 @@ Every conversion MUST populate ALL of the following. If the source does not prov
 
 3. **Do not invent values.** If the source says "enzyme-specific temperature", do not fill in `"value": 37`. Set `"valueText": "enzyme-specific"` and `"needsReview": true`.
 
+4. **Every parameter value MUST appear in the step's `action` text.** `parameters[]` is a structured extraction of values already present in `action` — it must never contain information absent from the action text. If the source document provides a quantitative detail (e.g., "10 µL per 50 µL reaction") that is relevant to a step, include that detail in the `action` text first, then extract it into `parameters[]`. A parameter whose `value` cannot be found anywhere in the step's `action` is a conversion defect.
+
+   **Wrong:** `"action": "Stop the reaction by adding stop solution."` + `parameter: volume=10, unit=µL`
+   **Right:** `"action": "Stop the reaction by adding 10 µL of stop solution per 50 µL reaction."` + `parameter: volume=10, unit=µL, rawText="10 µL per 50 µL reaction"`
+
 ## Critical Notes and Safety Notes
 
 1. **Warnings in the source → `criticalNotes`.** Examples: "Do NOT vortex", "Do not allow lysis to proceed for more than 5 min", "Avoid prolonged boiling".
@@ -59,6 +64,8 @@ Every conversion MUST populate ALL of the following. If the source does not prov
 2. **Set `kind`** to the most specific applicable value: `"recipe"`, `"program"`, `"checklist"`, `"results"`, or `"other"`.
 
 3. **Referenced tables in steps** must use `tableIds` to link step → table.
+
+4. **Each table should be referenced from exactly one step** — the step most directly associated with that table's content. Do not attach the same `tableId` to multiple steps; this causes the viewer to render the same table repeatedly. If two steps both relate to a table, reference it only from the step that introduces or prepares the data, not the step that merely executes it.
 
 ## Source References
 
@@ -93,6 +100,8 @@ Every conversion MUST populate ALL of the following. If the source does not prov
 | Merge source steps | Combining "seal tubes" + "centrifuge" + "place in cycler" into one step | Harder to follow, loses granularity for tracking |
 | Invent parameters | Adding `"value": 37` when source says "enzyme-specific" | False precision, potentially wrong |
 | Drop post-procedure | Skipping gel analysis, purification, documentation steps | Incomplete SOP |
+| Parameter not in action | `action` says "add stop solution" but `parameter` has `volume=10 µL` | Viewer shows orphaned parameters; action text is incomplete |
+| Duplicate table reference | Steps 7 and 8 both have `tableIds: ["t3"]` | Same table rendered twice in viewer |
 
 ## Quality Checklist
 
@@ -108,3 +117,5 @@ Before marking a conversion complete, verify:
 - [ ] All numerical values have `rawText` preserving original wording
 - [ ] `sources` has at least one entry with URL or file path
 - [ ] No action text was paraphrased — spot-check 3 random steps against source
+- [ ] Every `parameter.value` appears in its step's `action` text — no orphaned parameters
+- [ ] No table ID appears in more than one step's `tableIds`
