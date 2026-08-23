@@ -425,14 +425,14 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
         if(x.smiles) spec+=(spec?' · ':'')+'SMILES: '+esc(x.smiles);
         if(x.hazard) spec+=(spec?' ':'')+' <span class="haz">⚠ '+esc(norm(x.hazard))+'</span>';
         if(x.storage) spec+=(spec?' · ':'')+esc(norm(x.storage));
-        h.push('<tr'+(x.needsReview?' class="row-review"':'')+'><td>'+esc(x.name)+reviewMark(x.needsReview)+'</td><td>'+esc(norm(amt))+'</td><td>'+spec+'</td><td>'+esc(vendor)+'</td></tr>');
+        h.push('<tr'+(x.needsReview?' class="row-review"':'')+'><td>'+esc(norm(x.name))+reviewMark(x.needsReview)+'</td><td>'+esc(norm(amt))+'</td><td>'+spec+'</td><td>'+esc(vendor)+'</td></tr>');
       });
       h.push('</tbody></table>');
     }
     if(p.equipment&&p.equipment.length){
       h.push('<h2 id="sec-equipment">Equipment and Settings</h2>');
       h.push('<table class="tbl"><thead><tr><th>Name</th><th>Model</th><th>Settings</th></tr></thead><tbody>');
-      p.equipment.forEach(function(x){h.push('<tr'+(x.needsReview?' class="row-review"':'')+'><td>'+esc(x.name)+reviewMark(x.needsReview)+'</td><td>'+esc(x.model||"")+'</td><td>'+esc(norm(x.settings||""))+'</td></tr>')});
+      p.equipment.forEach(function(x){h.push('<tr'+(x.needsReview?' class="row-review"':'')+'><td>'+esc(norm(x.name))+reviewMark(x.needsReview)+'</td><td>'+esc(x.model||"")+'</td><td>'+esc(norm(x.settings||""))+'</td></tr>')});
       h.push('</tbody></table>');
     }
     if(p.software&&p.software.length){
