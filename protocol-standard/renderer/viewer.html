@@ -335,8 +335,9 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
         if(s.safetyNotes) h.push('<div class="step-callout step-danger"><span class="step-callout-icon">☣</span><span>'+esc(s.safetyNotes)+'</span></div>');
         /* -- parameters not matched inline (fallback) -- */
         if(s.parameters&&s.parameters.length){
+          var hasTables=s.tableIds&&s.tableIds.length>0;
           var unmatched=s.parameters.filter(function(pr){return !pr._matched&&pr.value!=null});
-          if(unmatched.length){
+          if(unmatched.length&&!hasTables){
             h.push('<div class="step-section"><div class="step-label">Parameters</div>');
             unmatched.forEach(function(pr){h.push('<div style="margin:2px 0">'+fmtParam(pr)+'</div>')});
             h.push('</div>');
