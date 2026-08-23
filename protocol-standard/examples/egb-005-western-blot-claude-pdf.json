@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "0.3",
+  "metadata": {
+    "title": "Western Blot - Thermo Fisher Chemiluminescent Transfer and Detection",
+    "protocolId": "EGB-005-claude-pdf",
+    "version": "0.1",
+    "family": "Electrophoresis, Blotting & Gel Analysis",
+    "category": "Western blot",
+    "discipline": "Biology",
+    "purpose": "SDS-PAGE to membrane transfer, blocking, primary/secondary antibody incubation, HRP chemiluminescent detection.",
+    "scope": "Thermo Fisher Scientific western blot protocols and recipes. SDS-PAGE to membrane transfer, blocking, primary/secondary antibody incubation, HRP chemiluminescent detection.",
+    "estimatedTime": "6-24 hours (depending on primary antibody incubation)",
+    "beforeYouBegin": [
+      "Choose membrane: PVDF often for hydrophobic/stripping needs; nitrocellulose for low background/ease. Activate PVDF in alcohol before equilibration.",
+      "Match transfer buffer and method to gel chemistry, protein size, and transfer apparatus.",
+      "Plan antibody dilutions empirically and include positive, negative, and loading controls.",
+      "Avoid sodium azide with HRP-labeled antibodies."
+    ],
+    "tags": ["western blot", "immunoblot", "chemiluminescence", "HRP", "protein detection", "membrane transfer"]
+  },
+  "materials": [
+    { "id": "m1", "name": "Protein gel after electrophoresis", "role": "sample" },
+    { "id": "m2", "name": "PVDF or nitrocellulose membrane", "role": "consumable" },
+    { "id": "m3", "name": "Transfer buffer", "role": "buffer" },
+    { "id": "m4", "name": "Filter papers/sponges", "role": "consumable" },
+    { "id": "m5", "name": "Transfer apparatus", "role": "equipment" },
+    { "id": "m6", "name": "Blocking buffer", "role": "buffer" },
+    { "id": "m7", "name": "TBST or PBST wash buffer", "role": "buffer" },
+    { "id": "m8", "name": "Primary antibody", "role": "reagent" },
+    { "id": "m9", "name": "HRP-conjugated secondary antibody", "role": "reagent" },
+    { "id": "m10", "name": "Chemiluminescent substrate", "role": "reagent" },
+    { "id": "m11", "name": "Prestained marker", "role": "standard" },
+    { "id": "m12", "name": "Methanol or ethanol", "role": "solvent", "specification": "For PVDF membrane activation" },
+    { "id": "m13", "name": "Reversible stain", "role": "reagent", "specification": "Optional, for total protein transfer documentation" }
+  ],
+  "equipment": [
+    { "id": "e1", "name": "Forceps", "settings": "For membrane handling" },
+    { "id": "e2", "name": "Trays", "settings": "For blocking and antibody incubation" },
+    { "id": "e3", "name": "Rocker", "settings": "For agitation during blocking and incubation" },
+    { "id": "e4", "name": "Blot roller", "settings": "For removing bubbles from transfer stack" },
+    { "id": "e5", "name": "Imaging system or film", "settings": "For chemiluminescent detection" },
+    { "id": "e6", "name": "Clear wrap/sheet", "settings": "For protecting blot during imaging" }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "title": "Troubleshooting",
+      "kind": "other",
+      "columns": ["Observation", "Likely cause", "Action"],
+      "rows": [
+        ["No signal", "Transfer failure, antibody mismatch, inactive substrate.", "Check marker transfer, antibody species, HRP compatibility, and substrate freshness."],
+        ["High background", "Insufficient blocking/washing or too much antibody.", "Optimize blocker, increase washes, dilute antibodies."],
+        ["Weak high-MW transfer", "Transfer too short or methanol too high.", "Extend transfer and optimize methanol/SDS per system guidance."],
+        ["Patchy signal", "Bubbles or dry membrane.", "Roll out bubbles and keep membrane wet during incubations."]
+      ]
+    },
+    {
+      "id": "t2",
+      "title": "Run Record Template",
+      "kind": "other",
+      "columns": ["Record item", "Entry"],
+      "rows": [
+        ["Date / operator", ""],
+        ["Sample IDs and target", ""],
+        ["Selected kit/system/source", ""],
+        ["Gel/membrane/buffer details", ""],
+        ["Voltage/current, run/transfer time, temperature", ""],
+        ["Stain/probe/antibody/detection reagent", ""],
+        ["Controls and ladder/marker", ""],
+        ["Image/exposure file name", ""],
+        ["Acceptance notes", ""],
+        ["Deviations / troubleshooting", ""]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1", "number": 1, "phase": "Transfer preparation",
+      "action": "After SDS-PAGE, equilibrate gel in transfer buffer if required.",
+      "materialIds": ["m1", "m3"],
+      "optional": false
+    },
+    {
+      "id": "s2", "number": 2, "phase": "Transfer preparation",
+      "action": "Prepare membrane. Wet PVDF in methanol or ethanol briefly, rinse in water, then equilibrate in transfer buffer; equilibrate nitrocellulose directly in transfer buffer.",
+      "materialIds": ["m2", "m12", "m3"]
+    },
+    {
+      "id": "s3", "number": 3, "phase": "Transfer assembly",
+      "action": "Assemble transfer stack in correct orientation with no trapped bubbles.",
+      "materialIds": ["m4"],
+      "equipmentIds": ["e4"],
+      "criticalNotes": "Confirm electrode orientation before starting electrophoresis or transfer. DNA/RNA generally migrates toward the positive electrode; SDS-coated proteins migrate toward the anode."
+    },
+    {
+      "id": "s4", "number": 4, "phase": "Transfer",
+      "action": "Run wet, semi-dry, or dry transfer according to the selected Thermo apparatus instructions.",
+      "materialIds": ["m5"]
+    },
+    {
+      "id": "s5", "number": 5, "phase": "Transfer verification",
+      "action": "After transfer, rinse membrane and optionally document total protein transfer with reversible stain.",
+      "materialIds": ["m2", "m13"],
+      "expectedResult": "Prestained marker should transfer and be visible in expected orientation."
+    },
+    {
+      "id": "s6", "number": 6, "phase": "Blocking",
+      "action": "Block membrane for 30-60 minutes at room temperature with agitation.",
+      "materialIds": ["m6"],
+      "equipmentIds": ["e2", "e3"],
+      "parameters": [
+        { "type": "time", "value": 30, "valueMax": 60, "unit": "min", "rawText": "30-60 minutes at room temperature" },
+        { "type": "temperature", "valueText": "room temperature", "rawText": "room temperature with agitation" }
+      ]
+    },
+    {
+      "id": "s7", "number": 7, "phase": "Primary antibody",
+      "action": "Dilute primary antibody in appropriate blocking or wash buffer and incubate 1 hour at room temperature or overnight at 2-8 deg C.",
+      "materialIds": ["m8", "m6", "m7"],
+      "equipmentIds": ["e2", "e3"],
+      "parameters": [
+        { "type": "time", "value": 1, "unit": "h", "rawText": "1 hour at room temperature or overnight at 2-8 deg C" },
+        { "type": "temperature", "value": 2, "valueMax": 8, "unit": "°C", "rawText": "2-8 deg C" }
+      ]
+    },
+    {
+      "id": "s8", "number": 8, "phase": "Wash",
+      "action": "Wash membrane 3 times for about 10 minutes each in wash buffer.",
+      "materialIds": ["m7"],
+      "equipmentIds": ["e2", "e3"],
+      "repeat": {
+        "count": 3,
+        "over": "washes",
+        "notes": "About 10 minutes each in wash buffer"
+      },
+      "parameters": [
+        { "type": "count", "value": 3, "rawText": "3 times" },
+        { "type": "time", "value": 10, "unit": "min", "rawText": "about 10 minutes each" }
+      ]
+    },
+    {
+      "id": "s9", "number": 9, "phase": "Secondary antibody",
+      "action": "Incubate with HRP-conjugated secondary antibody for about 1 hour at room temperature with agitation.",
+      "materialIds": ["m9"],
+      "equipmentIds": ["e2", "e3"],
+      "parameters": [
+        { "type": "time", "value": 1, "unit": "h", "rawText": "about 1 hour at room temperature" },
+        { "type": "temperature", "valueText": "room temperature", "rawText": "room temperature with agitation" }
+      ]
+    },
+    {
+      "id": "s10", "number": 10, "phase": "Wash",
+      "action": "Wash thoroughly, commonly multiple short washes, to reduce unbound secondary antibody.",
+      "materialIds": ["m7"],
+      "equipmentIds": ["e2", "e3"]
+    },
+    {
+      "id": "s11", "number": 11, "phase": "Detection",
+      "action": "Prepare chemiluminescent substrate working solution and incubate membrane for the substrate-specific time.",
+      "materialIds": ["m10"]
+    },
+    {
+      "id": "s12", "number": 12, "phase": "Imaging",
+      "action": "Drain excess substrate, protect blot in clear wrap/sheet, remove bubbles, and image using film or digital imager.",
+      "equipmentIds": ["e5", "e6"],
+      "expectedResult": "Target protein bands visible at expected molecular weight."
+    }
+  ],
+  "controls": [
+    { "name": "Positive control", "description": "Positive control should show expected band." },
+    { "name": "Negative control", "description": "Negative control should lack target signal." },
+    { "name": "Loading control", "description": "Loading control or total protein normalization should be documented for comparisons." },
+    { "name": "Prestained marker", "description": "Prestained marker should transfer and be visible in expected orientation." }
+  ],
+  "expectedOutputs": [
+    "Prestained marker should transfer and be visible in expected orientation.",
+    "Positive control should show expected band; negative control should lack target signal.",
+    "Loading control or total protein normalization should be documented for comparisons.",
+    "Capture non-saturated exposure for quantification."
+  ],
+  "troubleshooting": [
+    { "problem": "No signal", "cause": "Transfer failure, antibody mismatch, inactive substrate.", "solution": "Check marker transfer, antibody species, HRP compatibility, and substrate freshness." },
+    { "problem": "High background", "cause": "Insufficient blocking/washing or too much antibody.", "solution": "Optimize blocker, increase washes, dilute antibodies." },
+    { "problem": "Weak high-MW transfer", "cause": "Transfer too short or methanol too high.", "solution": "Extend transfer and optimize methanol/SDS per system guidance." },
+    { "problem": "Patchy signal", "cause": "Bubbles or dry membrane.", "solution": "Roll out bubbles and keep membrane wet during incubations." }
+  ],
+  "safety": [
+    "Wear lab coat, gloves, and eye protection. Treat gels, membranes, stains, acrylamide, methanol, formaldehyde, UV exposure, and radioactive/nonradioactive probes according to local EHS rules.",
+    "Use a fume hood for formaldehyde, methanol, chloroform-like solvents, powdered stains, and hazardous probe/detection reagents when required.",
+    "Acrylamide monomer is neurotoxic before polymerization. Use appropriate PPE and dispose of unpolymerized acrylamide waste correctly.",
+    "Confirm electrode orientation before starting electrophoresis or transfer. DNA/RNA generally migrates toward the positive electrode; SDS-coated proteins migrate toward the anode.",
+    "Record gel percentage, buffer system, voltage/current, run time, stain/probe/antibody details, membrane type, exposure, image file, and deviations."
+  ],
+  "sources": [
+    { "id": "src1", "kind": "file", "title": "EGB-005 Western Blot Thermo Fisher Chemiluminescent (LabOS Protocol Library)", "file": "tmp/pdfs/wb/protocol_pdfs/electrophoresis_blotting_gel_analysis/EGB-005_western_blot_thermo_chemiluminescent.pdf", "license": "Internal draft", "licenseVerified": false },
+    { "id": "src2", "kind": "url", "title": "Thermo Fisher Western Blot Protocols and Recipes", "url": "https://www.thermofisher.com/us/en/home/life-science/protein-biology/protein-biology-learning-center/protein-gel-electrophoresis-information/western-blot-protocols.html?open=tab3", "license": "Not stated", "licenseVerified": false },
+    { "id": "src3", "kind": "url", "title": "Thermo Fisher Western Blotting Overview", "url": "https://www.thermofisher.com/us/en/home/life-science/protein-biology/protein-biology-learning-center/protein-biology-resource-library/pierce-protein-methods/overview-western-blotting.html", "license": "Not stated", "licenseVerified": false }
+  ],
+  "provenance": {
+    "library": "public",
+    "owner": "LabRecord",
+    "status": "draft",
+    "convertedBy": "claude-pdf",
+    "convertedDate": "2026-08-23"
+  }
+}
