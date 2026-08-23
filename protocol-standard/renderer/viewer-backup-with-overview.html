@@ -279,6 +279,7 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
     if(p.provenance&&p.provenance.status) h.push('<span class="badge badge-status">'+esc(p.provenance.status)+'</span>');
     h.push('</div>');
     h.push('<div class="tabs-row"><div class="tabs" id="tabs">');
+    h.push('<button'+(currentTab==="overview"?' class="active"':'')+' data-tab="overview">Overview</button>');
     h.push('<button'+(currentTab==="procedure"?' class="active"':'')+' data-tab="procedure">Procedure</button>');
     h.push('<button'+(currentTab==="materials"?' class="active"':'')+' data-tab="materials">Materials &amp; Setup</button>');
     h.push('<button'+(currentTab==="reference"?' class="active"':'')+' data-tab="reference">Notes &amp; Safety</button>');
@@ -287,7 +288,73 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
   }
 
   /* ================================================================
-   *  Procedure (info header + timeline)
+   *  TAB 1: Overview (compact two-column)
+   * ================================================================ */
+  function renderOverview(p) {
+    var L=lookups(p),ph=byPhase(p),h=[];
+    h.push('<p style="color:#33414f;margin:0 0 4px">'+esc(p.metadata.purpose)+'</p>');
+    h.push('<div class="ov-cols">');
+    h.push('<aside class="ov-side">');
+    var sd=p.studyDesign;
+    if(sd&&(sd.groups||sd.randomization||sd.blinding||sd.statisticalPlan)){
+      h.push('<h4 id="ov-study-design">Study Design</h4>');
+      if(sd.groups&&sd.groups.length){h.push('<ul class="ov-list">');sd.groups.forEach(function(g){h.push('<li><b>'+esc(g.name)+'</b>'+(g.n!=null?' (n='+esc(g.n)+')':'')+(g.treatment?': '+esc(g.treatment):'')+'</li>')});h.push('</ul>')}
+    }
+    if(p.materials&&p.materials.length){
+      h.push('<h4 id="ov-materials">Materials</h4><ul class="ov-list">');
+      p.materials.forEach(function(x){var amt=x.amount!=null?x.amount+(x.unit?' '+x.unit:''):(x.workingConcentration||'');h.push('<li>'+esc(x.name)+(amt?' <b>'+esc(amt)+'</b>':'')+(x.needsReview?' <span class="flag">review</span>':'')+'</li>')});
+      h.push('</ul>');
+    }
+    if(p.equipment&&p.equipment.length){
+      h.push('<h4 id="ov-equipment">Equipment</h4><ul class="ov-list">');
+      p.equipment.forEach(function(x){h.push('<li>'+esc(x.name)+(x.model?' ('+esc(x.model)+')':'')+'</li>')});
+      h.push('</ul>');
+    }
+    if(p.software&&p.software.length){
+      h.push('<h4 id="ov-software">Software</h4><ul class="ov-list">');
+      p.software.forEach(function(x){h.push('<li>'+esc(x.name)+(x.version?' v'+esc(x.version):'')+'</li>')});
+      h.push('</ul>');
+    }
+    if(p.controls&&p.controls.length){
+      h.push('<h4 id="ov-controls">Controls</h4><ul class="ov-list">');
+      p.controls.forEach(function(c){h.push('<li>'+esc(c.name)+'</li>')});
+      h.push('</ul>');
+    }
+    h.push('</aside><main class="ov-main">');
+    ph.order.forEach(function(key){
+      if(key) h.push('<div class="ov-phase" id="ov-phase-'+slug(key)+'">'+esc(key)+'</div>');
+      h.push('<ol class="ov-steps">');
+      ph.g[key].forEach(function(s){
+        var params=(s.parameters||[]).map(fmtParam).join(" ");
+        var extra="";
+        if(s.repeat){var r=s.repeat.count?"↺×"+s.repeat.count:(s.repeat.untilCondition?"until "+s.repeat.untilCondition:"↺");extra+=' <span class="tl-repeat">'+esc(r)+'</span>'}
+        if(s.command) extra+=' <code style="background:#0f1720;color:#d7e2ec;padding:1px 6px;border-radius:4px;font-size:11px">'+esc(s.command)+'</code>';
+        if((s.inputIds&&s.inputIds.length)||(s.outputIds&&s.outputIds.length)){
+          extra+=' ';
+          if(s.inputIds&&s.inputIds.length) extra+=s.inputIds.map(function(id){return chip(nmeOf(id,L),"chip-in")}).join(" ");
+          extra+=' → ';
+          if(s.outputIds&&s.outputIds.length) extra+=s.outputIds.map(function(id){return chip(nmeOf(id,L),"chip-out")}).join(" ");
+        }
+        var acc="";
+        (s.acceptanceCriteria||[]).forEach(function(a){
+          var pre=a.comparator==="min"?"≥ ":a.comparator==="max"?"≤ ":"";
+          acc+=' <span class="tl-accept">✓ '+esc(a.parameter||a.description||"")+(a.value!=null?": "+pre+a.value+(a.unit?" "+a.unit:""):"")+'</span>';
+        });
+        h.push('<li value="'+esc(s.number||"")+'"'+(s.needsReview?' style="background:#fff8ef"':'')+'>'+
+          (s.optional?'<span class="tl-opt">optional</span> ':'')+esc(s.action)+extra+
+          (s.expectedResult?' <span class="ov-expect">→ '+esc(s.expectedResult)+'</span>':'')+
+          acc+
+          (params?'<div class="ov-params">'+params+'</div>':'')+
+          '</li>');
+      });
+      h.push('</ol>');
+    });
+    h.push('</main></div>');
+    return h.join("");
+  }
+
+  /* ================================================================
+   *  TAB 2: Procedure (info header + timeline)
    * ================================================================ */
   function renderProcedure(p) {
     var L=lookups(p),ph=byPhase(p),h=[];
@@ -527,6 +594,19 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
     outlineEl.classList.remove("hidden");
     var items = [];
 
+    if (currentTab === "overview") {
+      var sideH4 = content.querySelectorAll("h4[id]");
+      if (sideH4.length) {
+        items.push({group:"Summary"});
+        sideH4.forEach(function(el){ items.push({id:el.id, label:el.textContent.trim()}) });
+      }
+      var phases = content.querySelectorAll(".ov-phase[id]");
+      if (phases.length) {
+        items.push({group:"Steps"});
+        phases.forEach(function(el){ items.push({id:el.id, label:el.textContent.trim()}) });
+      }
+    }
+
     if (currentTab === "procedure") {
       var phases = content.querySelectorAll(".tl-phase[id]");
       if (phases.length) {
@@ -582,6 +662,7 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
    *  Tab dispatch & rendering
    * ================================================================ */
   var renderers = {
+    overview: renderOverview,
     procedure: renderProcedure,
     materials: renderMaterials,
     reference: renderReference
@@ -612,7 +693,7 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
   var select = document.getElementById("proto-select");
   var headerArea = document.getElementById("header-area");
   var content = document.getElementById("content");
-  var currentTab = "procedure";
+  var currentTab = "overview";
   var currentProto = null;
 
   protocols.forEach(function(p, i) {
