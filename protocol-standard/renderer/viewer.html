@@ -185,6 +185,19 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
     if (s == null) return "";
     return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
   }
+  function norm(s){
+    if(!s)return s;
+    return s
+      .replace(/\bdeg(?:rees)?\.?\s*C\b/g,'°C')
+      .replace(/(\d)\s*degrees?\s*C\b/g,'$1 °C')
+      .replace(/(\d)\s*x\s*g\b/g,'$1 × g')
+      .replace(/(\d)\s*X\s*g\b/g,'$1 × g')
+      .replace(/>=/g,'≥').replace(/<=/g,'≤')
+      .replace(/\+\/-/g,'±').replace(/\+-/g,'±')
+      .replace(/\bcm\^2\b/g,'cm²').replace(/\bmm\^2\b/g,'mm²')
+      .replace(/([\d\/\s])uL\b/g,'$1µL').replace(/([\d\/\s])uM\b/g,'$1µM')
+      .replace(/([\d\/\s])ug\b/g,'$1µg').replace(/([\d\/\s])um\b/g,'$1µm');
+  }
   function reviewMark(n) { return n ? ' <span class="review">needs review</span>' : ""; }
   function chip(name, cls) { return '<span class="chip ' + (cls||"chip-mat") + '">' + esc(name) + '</span>'; }
   function slug(s) { return s.replace(/[^a-zA-Z0-9一-鿿]+/g, "-").replace(/^-|-$/g, "").toLowerCase(); }
@@ -202,7 +215,7 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
       } else t = p.unit || p.type || "";
     }
     var f = p.formula ? ' <span class="pill-formula" title="' + esc(p.formula) + '">ƒ</span>' : "";
-    return '<span class="pill' + (p.needsReview ? " pill-review" : "") + '">' + (p.type ? '<i>' + esc(p.type) + '</i> ' : '') + esc(t) + f + '</span>';
+    return '<span class="pill' + (p.needsReview ? " pill-review" : "") + '">' + (p.type ? '<i>' + esc(p.type) + '</i> ' : '') + esc(norm(t)) + f + '</span>';
   }
 
   function lookups(p) {
@@ -300,7 +313,7 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
         h.push('<div class="tl-dot">'+esc(s.number||"")+'</div>');
         h.push('<div class="tl-card">');
         /* -- action + repeat (with inline parameter highlights) -- */
-        var actionHtml = esc(s.action);
+        var actionHtml = esc(norm(s.action));
         if(s.parameters&&s.parameters.length){
           s.parameters.forEach(function(pr){
             var needles = [];
@@ -327,12 +340,12 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
           });
         }
         h.push('<div class="tl-action">'+(s.optional?'<span class="tl-opt">optional</span> ':'')+actionHtml);
-        if(s.repeat){var rp=s.repeat.count?"×"+s.repeat.count:(s.repeat.untilCondition?"until "+s.repeat.untilCondition:"");var rn=s.repeat.notes?' '+esc(s.repeat.notes):'';h.push(' <span class="tl-repeat">↺'+esc(rp)+rn+'</span>')}
+        if(s.repeat){var rp=s.repeat.count?"×"+s.repeat.count:(s.repeat.untilCondition?"until "+norm(s.repeat.untilCondition):"");var rn=s.repeat.notes?' '+esc(norm(s.repeat.notes)):'';h.push(' <span class="tl-repeat">↺'+esc(rp)+rn+'</span>')}
         h.push('</div>');
         /* -- critical notes (warning callout) -- */
-        if(s.criticalNotes) h.push('<div class="step-callout step-warning"><span class="step-callout-icon">⚠</span><span>'+esc(s.criticalNotes)+'</span></div>');
+        if(s.criticalNotes) h.push('<div class="step-callout step-warning"><span class="step-callout-icon">⚠</span><span>'+esc(norm(s.criticalNotes))+'</span></div>');
         /* -- safety notes (danger callout) -- */
-        if(s.safetyNotes) h.push('<div class="step-callout step-danger"><span class="step-callout-icon">☣</span><span>'+esc(s.safetyNotes)+'</span></div>');
+        if(s.safetyNotes) h.push('<div class="step-callout step-danger"><span class="step-callout-icon">☣</span><span>'+esc(norm(s.safetyNotes))+'</span></div>');
         /* -- parameters not matched inline (fallback) -- */
         if(s.parameters&&s.parameters.length){
           var hasTables=s.tableIds&&s.tableIds.length>0;
@@ -347,11 +360,11 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
         if(s.tableIds&&s.tableIds.length){
           s.tableIds.forEach(function(tid){
             var t=L.tbl[tid];if(!t)return;
-            h.push('<div class="step-section"><div class="step-label">'+esc(t.title)+(t.kind?' <span class="step-tbl-kind">'+esc(t.kind)+'</span>':'')+'</div>');
+            h.push('<div class="step-section"><div class="step-label">'+esc(norm(t.title))+(t.kind?' <span class="step-tbl-kind">'+esc(t.kind)+'</span>':'')+'</div>');
             h.push('<table class="step-tbl"><thead><tr>');
-            (t.columns||[]).forEach(function(c){h.push('<th>'+esc(c)+'</th>')});
+            (t.columns||[]).forEach(function(c){h.push('<th>'+esc(norm(c))+'</th>')});
             h.push('</tr></thead><tbody>');
-            (t.rows||[]).forEach(function(row){h.push('<tr>');row.forEach(function(cell){h.push('<td>'+esc(cell)+'</td>')});h.push('</tr>')});
+            (t.rows||[]).forEach(function(row){h.push('<tr>');row.forEach(function(cell){h.push('<td>'+esc(norm(cell))+'</td>')});h.push('</tr>')});
             h.push('</tbody></table></div>');
           });
         }
@@ -366,7 +379,7 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
         /* -- command -- */
         if(s.command) h.push('<div class="tl-cmd"><code>'+esc(s.command)+'</code></div>');
         /* -- branches -- */
-        if(s.branches&&s.branches.length){s.branches.forEach(function(b){var expandS=function(t){return t.replace(/\bs(\d+)/g,'step $1')};var tgt=b.targetStepId?expandS(String(b.targetStepId)):'';var cond=b.condition?expandS(esc(b.condition)):'';if(cond)cond=cond.charAt(0).toLowerCase()+cond.slice(1);h.push('<div class="tl-branch">⑂ If '+cond+(tgt?' → go to '+tgt:'')+(b.action?': '+esc(b.action):'')+'</div>')})}
+        if(s.branches&&s.branches.length){s.branches.forEach(function(b){var expandS=function(t){return t.replace(/\bs(\d+)/g,'step $1')};var tgt=b.targetStepId?expandS(String(b.targetStepId)):'';var cond=b.condition?expandS(esc(norm(b.condition))):'';if(cond)cond=cond.charAt(0).toLowerCase()+cond.slice(1);h.push('<div class="tl-branch">⑂ If '+cond+(tgt?' → go to '+tgt:'')+(b.action?': '+esc(norm(b.action)):'')+'</div>')})}
         /* -- acceptance criteria -- */
         if(s.acceptanceCriteria&&s.acceptanceCriteria.length){
           h.push('<div class="step-section"><div class="step-label">Acceptance Criteria</div>');
@@ -386,7 +399,7 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
           h.push('</div>');
         }
         /* -- expected result -- */
-        if(s.expectedResult) h.push('<div class="tl-expect">✓ '+esc(s.expectedResult)+'</div>');
+        if(s.expectedResult) h.push('<div class="tl-expect">✓ '+esc(norm(s.expectedResult))+'</div>');
         h.push('</div></div>');
       });
     });
@@ -407,19 +420,19 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
         if(x.amount!=null){amt=String(x.amount);if(x.amountMax!=null&&x.amountMax!==x.amount)amt+="–"+x.amountMax;if(x.unit)amt+=" "+x.unit}
         else if(x.workingConcentration) amt=x.workingConcentration;
         var vendor=[x.vendor,x.catalogNumber].filter(Boolean).join(" ");
-        var spec=esc(x.specification||"");
+        var spec=esc(norm(x.specification||""));
         if(x.casNumber) spec+=(spec?' · ':'')+'CAS: '+esc(x.casNumber);
         if(x.smiles) spec+=(spec?' · ':'')+'SMILES: '+esc(x.smiles);
-        if(x.hazard) spec+=(spec?' ':'')+' <span class="haz">⚠ '+esc(x.hazard)+'</span>';
-        if(x.storage) spec+=(spec?' · ':'')+esc(x.storage);
-        h.push('<tr'+(x.needsReview?' class="row-review"':'')+'><td>'+esc(x.name)+reviewMark(x.needsReview)+'</td><td>'+esc(amt)+'</td><td>'+spec+'</td><td>'+esc(vendor)+'</td></tr>');
+        if(x.hazard) spec+=(spec?' ':'')+' <span class="haz">⚠ '+esc(norm(x.hazard))+'</span>';
+        if(x.storage) spec+=(spec?' · ':'')+esc(norm(x.storage));
+        h.push('<tr'+(x.needsReview?' class="row-review"':'')+'><td>'+esc(x.name)+reviewMark(x.needsReview)+'</td><td>'+esc(norm(amt))+'</td><td>'+spec+'</td><td>'+esc(vendor)+'</td></tr>');
       });
       h.push('</tbody></table>');
     }
     if(p.equipment&&p.equipment.length){
       h.push('<h2 id="sec-equipment">Equipment and Settings</h2>');
       h.push('<table class="tbl"><thead><tr><th>Name</th><th>Model</th><th>Settings</th></tr></thead><tbody>');
-      p.equipment.forEach(function(x){h.push('<tr'+(x.needsReview?' class="row-review"':'')+'><td>'+esc(x.name)+reviewMark(x.needsReview)+'</td><td>'+esc(x.model||"")+'</td><td>'+esc(x.settings||"")+'</td></tr>')});
+      p.equipment.forEach(function(x){h.push('<tr'+(x.needsReview?' class="row-review"':'')+'><td>'+esc(x.name)+reviewMark(x.needsReview)+'</td><td>'+esc(x.model||"")+'</td><td>'+esc(norm(x.settings||""))+'</td></tr>')});
       h.push('</tbody></table>');
     }
     if(p.software&&p.software.length){
@@ -453,16 +466,16 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
     if(p.tables&&p.tables.length){
       h.push('<h2 id="sec-tables">Tables</h2>');
       p.tables.forEach(function(t){
-        h.push('<h3>'+esc(t.title||t.id)+(t.kind?' <span class="badge">'+esc(t.kind)+'</span>':'')+'</h3>');
-        h.push('<table class="tbl"><thead><tr>'+(t.columns||[]).map(function(c){return '<th>'+esc(c)+'</th>'}).join("")+'</tr></thead><tbody>');
-        (t.rows||[]).forEach(function(row){h.push('<tr>'+(row||[]).map(function(c){return '<td>'+esc(c)+'</td>'}).join("")+'</tr>')});
+        h.push('<h3>'+esc(norm(t.title||t.id))+(t.kind?' <span class="badge">'+esc(t.kind)+'</span>':'')+'</h3>');
+        h.push('<table class="tbl"><thead><tr>'+(t.columns||[]).map(function(c){return '<th>'+esc(norm(c))+'</th>'}).join("")+'</tr></thead><tbody>');
+        (t.rows||[]).forEach(function(row){h.push('<tr>'+(row||[]).map(function(c){return '<td>'+esc(norm(c))+'</td>'}).join("")+'</tr>')});
         h.push('</tbody></table>');
-        if(t.note) h.push('<p style="color:#5b6b7b;font-size:12px;margin:2px 0 12px">'+esc(t.note)+'</p>');
+        if(t.note) h.push('<p style="color:#5b6b7b;font-size:12px;margin:2px 0 12px">'+esc(norm(t.note))+'</p>');
       });
     }
     if(p.controls&&p.controls.length){
       h.push('<h2 id="sec-controls">Controls</h2><ul>');
-      p.controls.forEach(function(c){h.push('<li><strong>'+esc(c.name)+'</strong>'+(c.description?': '+esc(c.description):'')+reviewMark(c.needsReview)+'</li>')});
+      p.controls.forEach(function(c){h.push('<li><strong>'+esc(c.name)+'</strong>'+(c.description?': '+esc(norm(c.description)):'')+reviewMark(c.needsReview)+'</li>')});
       h.push('</ul>');
     }
     return h.join("");
@@ -476,13 +489,13 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
     if(p.troubleshooting&&p.troubleshooting.length){
       h.push('<h2 id="sec-troubleshooting">Troubleshooting</h2>');
       h.push('<table class="tbl"><thead><tr><th>Problem</th><th>Likely Cause</th><th>Solution</th></tr></thead><tbody>');
-      p.troubleshooting.forEach(function(t){h.push('<tr><td>'+esc(t.problem)+'</td><td>'+esc(t.cause||"")+'</td><td>'+esc(t.solution||"")+'</td></tr>')});
+      p.troubleshooting.forEach(function(t){h.push('<tr><td>'+esc(norm(t.problem))+'</td><td>'+esc(norm(t.cause||""))+'</td><td>'+esc(norm(t.solution||""))+'</td></tr>')});
       h.push('</tbody></table>');
     }
     if((p.safety&&p.safety.length)||(p.biosafetyLevel&&p.biosafetyLevel!=="not specified")){
       h.push('<h2 id="sec-safety">Safety</h2>');
       if(p.biosafetyLevel&&p.biosafetyLevel!=="not specified") h.push('<p><span class="badge badge-bsl">'+esc(p.biosafetyLevel)+'</span></p>');
-      if(p.safety&&p.safety.length){h.push('<ul>');p.safety.forEach(function(s){h.push('<li>'+esc(s)+'</li>')});h.push('</ul>')}
+      if(p.safety&&p.safety.length){h.push('<ul>');p.safety.forEach(function(s){h.push('<li>'+esc(norm(s))+'</li>')});h.push('</ul>')}
     }
     var sd=p.studyDesign;
     if(sd&&(sd.groups||sd.randomization||sd.blinding||sd.statisticalPlan||(sd.timepoints&&sd.timepoints.length))){
