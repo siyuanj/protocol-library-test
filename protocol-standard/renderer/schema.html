@@ -261,10 +261,11 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <div class="legend-item"><span class="tag tag-new">new</span> Added in v0.4</div>
 <div class="legend-item"><span class="tag tag-merged">merged</span> Consolidated</div>
 </div>
-<div class="print-note">Click any card to expand fields. Print (Ctrl+P) auto-expands all cards.</div>
+<div class="print-note">Click any card to collapse fields.</div>
 
 <script>
 function toggle(el){el.classList.toggle('expanded')}
+document.querySelectorAll('.card').forEach(function(c){c.classList.add('expanded')});
 </script>
 </body>
 </html>
