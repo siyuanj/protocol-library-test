@@ -106,7 +106,7 @@ h3{font-size:14px;color:#5b6b7b;margin:16px 0 6px;text-transform:uppercase;lette
 .tl-repeat{display:inline;background:#f0ecfb;color:#5b4b9f;border-radius:6px;padding:2px 8px;font-size:inherit;font-weight:inherit}
 .tl-cmd{margin-top:5px}
 .tl-cmd code{display:inline-block;background:#0f1720;color:#d7e2ec;padding:3px 8px;border-radius:5px;font-size:12px;font-family:"SFMono-Regular",Consolas,monospace;max-width:100%;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
-.tl-branch{margin-top:4px;font-size:12.5px;color:#6a4bb0}
+.tl-branch{margin-top:4px;font-size:inherit;color:#6a4bb0}
 .tl-accept{color:#2f6f8f;font-size:12.5px;margin-top:3px}
 .tl-flow{margin-top:5px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .tl-arrow{color:#5b6b7b;font-weight:700;font-size:14px}
@@ -366,7 +366,7 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
         /* -- command -- */
         if(s.command) h.push('<div class="tl-cmd"><code>'+esc(s.command)+'</code></div>');
         /* -- branches -- */
-        if(s.branches&&s.branches.length){s.branches.forEach(function(b){h.push('<div class="tl-branch">⎋ '+esc(b.condition)+(b.targetStepId?' → '+esc(b.targetStepId):'')+(b.action?': '+esc(b.action):'')+'</div>')})}
+        if(s.branches&&s.branches.length){s.branches.forEach(function(b){var expandS=function(t){return t.replace(/\bs(\d+)/g,'step $1')};var tgt=b.targetStepId?expandS(String(b.targetStepId)):'';var cond=b.condition?expandS(esc(b.condition)):'';h.push('<div class="tl-branch">⑂ '+cond+(tgt?' → '+tgt:'')+(b.action?': '+esc(b.action):'')+'</div>')})}
         /* -- acceptance criteria -- */
         if(s.acceptanceCriteria&&s.acceptanceCriteria.length){
           h.push('<div class="step-section"><div class="step-label">Acceptance Criteria</div>');
