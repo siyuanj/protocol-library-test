@@ -74,11 +74,9 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <div class="changes-grid">
 <div class="chg"><span class="chg-tag chg-mg">merged</span> containers → equipment</div>
 <div class="chg"><span class="chg-tag chg-sm">simplified</span> step: 26 → 16 fields</div>
-<div class="chg"><span class="chg-tag chg-rm">removed</span> studyDesign → extension</div>
 <div class="chg"><span class="chg-tag chg-sm">simplified</span> material: 17 → 8 fields</div>
-<div class="chg"><span class="chg-tag chg-rm">removed</span> compliance → extension</div>
 <div class="chg"><span class="chg-tag chg-sm">simplified</span> parameter: 10 → 5 fields</div>
-<div class="chg"><span class="chg-tag chg-rm">removed</span> provenance (use sources)</div>
+<div class="chg"><span class="chg-tag chg-rm">removed</span> provenance, studyDesign, compliance</div>
 <div class="chg"><span class="chg-tag chg-mg">merged</span> criticalNotes + safetyNotes</div>
 <div class="chg"><span class="chg-tag chg-rm">removed</span> materialUses (use materialIds)</div>
 <div class="chg"><span class="chg-tag chg-mg">merged</span> step.id → just use number</div>
@@ -285,28 +283,6 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 </div>
 </div>
 
-<div class="group">
-<div class="group-label" style="color:#D85A30">Extensions (optional, domain-specific)</div>
-<div class="row">
-<div class="card" onclick="toggle(this)" style="opacity:.7">
-<div class="card-hd"><span class="dot" style="background:#D85A30"></span><span class="nm">studyDesign</span><span class="tag" style="background:#fce4ec;color:#c62828">extension</span><span class="arr-icon">&#9654;</span></div>
-<div class="fields">
-<div class="f"><span class="fk">groups[]</span><span class="ft">name · n · treatment</span></div>
-<div class="f"><span class="fk">randomization / blinding</span><span class="ft">string</span></div>
-<div class="f"><span class="fk">timepoints</span><span class="ft">string[]</span></div>
-<div class="f"><span class="fk">statisticalPlan</span><span class="ft">string</span></div>
-</div>
-</div>
-<div class="card" onclick="toggle(this)" style="opacity:.7">
-<div class="card-hd"><span class="dot" style="background:#D85A30"></span><span class="nm">compliance</span><span class="tag" style="background:#fce4ec;color:#c62828">extension</span><span class="arr-icon">&#9654;</span></div>
-<div class="fields">
-<div class="f"><span class="fk">iacuc / irb</span><span class="ft">approval references</span></div>
-<div class="f"><span class="fk">consent</span><span class="ft">string</span></div>
-<div class="f"><span class="fk">wasteDisposal</span><span class="ft">string</span></div>
-</div>
-</div>
-</div>
-</div>
 
 <div class="legend">
 <div class="legend-item"><span class="dot" style="background:#1D9E75"></span> Document info</div>
