@@ -88,6 +88,8 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <div class="chg"><span class="chg-tag chg-sm">simplified</span> parameter: 10 → 5 fields</div>
 <div class="chg"><span class="chg-tag chg-rm">removed</span> provenance, studyDesign, compliance</div>
 <div class="chg"><span class="chg-tag chg-mg">merged</span> criticalNotes + safetyNotes → notes</div>
+<div class="chg"><span class="chg-tag chg-mg">merged</span> repeat + branches → flow</div>
+<div class="chg"><span class="chg-tag chg-rm">removed</span> acceptanceCriteria → notes</div>
 </div>
 </div>
 
@@ -167,9 +169,7 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <div class="sub-cards">
 <div class="sub-card"><span class="sk">parameters[]</span> type · value · unit · rawText</div>
 <div class="sub-card"><span class="sk">table</span> inline tabular data<i class="info-icon">i<span class="tip"><div class="tf"><span class="tfk">title</span> <span class="tft">string</span></div><div class="tf"><span class="tfk">kind</span> <span class="tft">recipe | program | series | layout | results</span></div><div class="tf"><span class="tfk">columns</span> <span class="treq">*</span> <span class="tft">string[]</span></div><div class="tf"><span class="tfk">rows</span> <span class="treq">*</span> <span class="tft">(string | number | null)[][]</span></div><div class="tf"><span class="tfk">note</span> <span class="tft">string</span></div></span></i></div>
-<div class="sub-card"><span class="sk">repeat</span> count · untilCondition · over</div>
-<div class="sub-card"><span class="sk">acceptanceCriteria[]</span> parameter · comparator · value</div>
-<div class="sub-card"><span class="sk">branches[]</span> condition · targetStepId · action</div>
+<div class="sub-card"><span class="sk">flow</span> control flow<i class="info-icon">i<span class="tip" style="white-space:normal;min-width:280px"><div class="tf"><span class="tfk">type</span> <span class="tft">repeat | branch</span></div><div class="tf"><span class="tfk">count</span> <span class="tft">number — repeat N times</span></div><div class="tf"><span class="tfk">untilCondition</span> <span class="tft">string — repeat until</span></div><div class="tf"><span class="tfk">over</span> <span class="tft">string — iterate over</span></div><div class="tf"><span class="tfk">condition</span> <span class="tft">string — branch if</span></div><div class="tf"><span class="tfk">targetStep</span> <span class="tft">number — go to step</span></div><div class="tf"><span class="tfk">action</span> <span class="tft">string — what to do</span></div></span></i></div>
 <div class="sub-card"><span class="sk">refs</span> ID pointers to other sections<i class="info-icon">i<span class="tip"><div class="tf"><span class="tfk">materialIds</span> <span class="tft">→ materials[] (incl. samples)</span></div><div class="tf"><span class="tfk">equipmentIds</span> <span class="tft">→ equipment[] (incl. software)</span></div><div class="tf"><span class="tfk">dependsOn</span> <span class="tft">→ step numbers</span></div></span></i></div>
 </div>
 <div class="hub-refs">
