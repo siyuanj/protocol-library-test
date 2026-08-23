@@ -72,14 +72,14 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <div class="changes">
 <h2>Changes from v0.3</h2>
 <div class="changes-grid">
+<div class="chg"><span class="chg-tag chg-mg">merged</span> software → equipment</div>
+<div class="chg"><span class="chg-tag chg-mg">merged</span> samples → materials</div>
 <div class="chg"><span class="chg-tag chg-mg">merged</span> containers → equipment</div>
-<div class="chg"><span class="chg-tag chg-sm">simplified</span> step: 26 → 16 fields</div>
-<div class="chg"><span class="chg-tag chg-sm">simplified</span> material: 17 → 8 fields</div>
+<div class="chg"><span class="chg-tag chg-sm">simplified</span> step: 26 → 14 fields</div>
+<div class="chg"><span class="chg-tag chg-rm">removed</span> metadata.doi / license / category</div>
 <div class="chg"><span class="chg-tag chg-sm">simplified</span> parameter: 10 → 5 fields</div>
 <div class="chg"><span class="chg-tag chg-rm">removed</span> provenance, studyDesign, compliance</div>
-<div class="chg"><span class="chg-tag chg-mg">merged</span> criticalNotes + safetyNotes</div>
-<div class="chg"><span class="chg-tag chg-rm">removed</span> materialUses (use materialIds)</div>
-<div class="chg"><span class="chg-tag chg-mg">merged</span> step.id → just use number</div>
+<div class="chg"><span class="chg-tag chg-mg">merged</span> criticalNotes + safetyNotes → notes</div>
 </div>
 </div>
 
@@ -87,20 +87,17 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <div class="group-label">Document info</div>
 <div class="row">
 <div class="card" onclick="toggle(this)">
-<div class="card-hd"><span class="dot" style="background:#1D9E75"></span><span class="nm">metadata</span><span class="cnt">12 fields</span><span class="arr-icon">&#9654;</span></div>
+<div class="card-hd"><span class="dot" style="background:#1D9E75"></span><span class="nm">metadata</span><span class="cnt">9 fields</span><span class="arr-icon">&#9654;</span></div>
 <div class="fields">
 <div class="f"><span class="fk">title</span><span class="req">*</span><span class="ft">string</span></div>
 <div class="f"><span class="fk">version</span><span class="ft">string</span></div>
 <div class="f"><span class="fk">family</span><span class="ft">string — e.g. PCR</span></div>
-<div class="f"><span class="fk">category</span><span class="ft">string</span></div>
 <div class="f"><span class="fk">purpose</span><span class="req">*</span><span class="ft">string</span></div>
 <div class="f"><span class="fk">scope</span><span class="ft">string</span></div>
 <div class="f"><span class="fk">estimatedTime</span><span class="ft">string</span></div>
 <div class="f"><span class="fk">authors</span><span class="ft">author[] — name, orcid, affiliation</span></div>
-<div class="f"><span class="fk">license</span><span class="ft">string</span></div>
-<div class="f"><span class="fk">doi</span><span class="ft">string | null</span></div>
 <div class="f"><span class="fk">createdAt / modifiedAt</span><span class="ft">date</span></div>
-<div class="f"><span class="fk">tags</span><span class="ft">string[]</span></div>
+<div class="f"><span class="fk">tags</span><span class="ft">string[] — includes category</span></div>
 </div>
 </div>
 </div>
@@ -110,11 +107,11 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <div class="group-label">Resources — referenced by steps via IDs</div>
 <div class="row">
 <div class="card" onclick="toggle(this)">
-<div class="card-hd"><span class="dot" style="background:#378ADD"></span><span class="nm">materials[]</span><span class="cnt">8</span><span class="arr-icon">&#9654;</span></div>
+<div class="card-hd"><span class="dot" style="background:#378ADD"></span><span class="nm">materials[]</span><span class="cnt">8</span><span class="tag tag-merged">+samples</span><span class="arr-icon">&#9654;</span></div>
 <div class="fields">
 <div class="f"><span class="fk">id</span><span class="req">*</span><span class="ft">m1, m2...</span></div>
 <div class="f"><span class="fk">name</span><span class="req">*</span><span class="ft">string</span></div>
-<div class="f"><span class="fk">role</span><span class="ft">reagent | buffer | enzyme | antibody...</span></div>
+<div class="f"><span class="fk">role</span><span class="ft">reagent | buffer | enzyme | input | output...</span></div>
 <div class="f"><span class="fk">amount / unit</span><span class="ft">prep amount</span></div>
 <div class="f"><span class="fk">workingConcentration</span><span class="ft">string</span></div>
 <div class="f"><span class="fk">specification</span><span class="ft">string</span></div>
@@ -123,37 +120,17 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 </div>
 </div>
 <div class="card" onclick="toggle(this)">
-<div class="card-hd"><span class="dot" style="background:#378ADD"></span><span class="nm">equipment[]</span><span class="cnt">8</span><span class="tag tag-merged">+containers</span><span class="arr-icon">&#9654;</span></div>
+<div class="card-hd"><span class="dot" style="background:#378ADD"></span><span class="nm">equipment[]</span><span class="cnt">9</span><span class="tag tag-merged">+containers +software</span><span class="arr-icon">&#9654;</span></div>
 <div class="fields">
 <div class="f"><span class="fk">id</span><span class="req">*</span><span class="ft">e1, e2...</span></div>
 <div class="f"><span class="fk">name</span><span class="req">*</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">type</span><span class="ft">instrument | container | software | consumable</span></div>
 <div class="f"><span class="fk">model</span><span class="ft">string</span></div>
 <div class="f"><span class="fk">settings</span><span class="ft">string</span></div>
-<div class="f"><span class="fk">type</span><span class="ft">instrument | container | consumable</span><span class="tag tag-new">new</span></div>
-<div class="f"><span class="fk">wells</span><span class="ft">integer — plate wells</span><span class="tag tag-merged">from containers</span></div>
-<div class="f"><span class="fk">layout[]</span><span class="ft">well + sample + factor</span><span class="tag tag-merged">from containers</span></div>
+<div class="f"><span class="fk">version / url</span><span class="ft">string — for software</span><span class="tag tag-merged">from software</span></div>
+<div class="f"><span class="fk">command</span><span class="ft">string — CLI invocation</span><span class="tag tag-merged">from software</span></div>
+<div class="f"><span class="fk">wells / layout[]</span><span class="ft">plate geometry</span><span class="tag tag-merged">from containers</span></div>
 <div class="f"><span class="fk">needsReview</span><span class="ft">boolean</span></div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="card" onclick="toggle(this)">
-<div class="card-hd"><span class="dot" style="background:#378ADD"></span><span class="nm">software[]</span><span class="cnt">6</span><span class="arr-icon">&#9654;</span></div>
-<div class="fields">
-<div class="f"><span class="fk">id</span><span class="req">*</span><span class="ft">sw1...</span></div>
-<div class="f"><span class="fk">name</span><span class="req">*</span><span class="ft">string</span></div>
-<div class="f"><span class="fk">version / vendor</span><span class="ft">string</span></div>
-<div class="f"><span class="fk">url</span><span class="ft">string — homepage or repo</span></div>
-<div class="f"><span class="fk">command</span><span class="ft">invocation / entrypoint</span></div>
-</div>
-</div>
-<div class="card" onclick="toggle(this)">
-<div class="card-hd"><span class="dot" style="background:#378ADD"></span><span class="nm">samples[]</span><span class="cnt">7</span><span class="arr-icon">&#9654;</span></div>
-<div class="fields">
-<div class="f"><span class="fk">id</span><span class="req">*</span><span class="ft">sp1...</span></div>
-<div class="f"><span class="fk">name / role</span><span class="req">*</span><span class="ft">input | intermediate | output</span></div>
-<div class="f"><span class="fk">kind</span><span class="ft">physical | dataset | organism</span></div>
-<div class="f"><span class="fk">organism / dataType</span><span class="ft">string</span></div>
 </div>
 </div>
 </div>
@@ -179,7 +156,7 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <div class="group">
 <div class="group-label">Procedure — the hub</div>
 <div class="hub">
-<div class="hub-title"><span class="dot" style="background:#7F77DD;width:10px;height:10px;border-radius:50%;display:inline-block"></span> steps[] <span style="font-size:12px;color:var(--text-muted);font-weight:400">— 16 fields (was 26)</span></div>
+<div class="hub-title"><span class="dot" style="background:#7F77DD;width:10px;height:10px;border-radius:50%;display:inline-block"></span> steps[] <span style="font-size:12px;color:var(--text-muted);font-weight:400">— 14 fields (was 26)</span></div>
 <div class="row">
 <div class="card" onclick="toggle(this)" style="flex:2;min-width:200px">
 <div class="card-hd"><span class="nm">Core fields</span><span class="arr-icon">&#9654;</span></div>
@@ -198,11 +175,9 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <div class="card" onclick="toggle(this)" style="flex:1;min-width:140px">
 <div class="card-hd"><span class="nm">ID references</span><span class="arr-icon">&#9654;</span></div>
 <div class="fields">
-<div class="f"><span class="fk">materialIds</span><span class="ref">→ materials</span></div>
-<div class="f"><span class="fk">equipmentIds</span><span class="ref">→ equipment (incl. containers)</span></div>
-<div class="f"><span class="fk">softwareIds</span><span class="ref">→ software</span></div>
+<div class="f"><span class="fk">materialIds</span><span class="ref">→ materials (incl. samples)</span></div>
+<div class="f"><span class="fk">equipmentIds</span><span class="ref">→ equipment (incl. software)</span></div>
 <div class="f"><span class="fk">tableIds</span><span class="ref">→ tables</span></div>
-<div class="f"><span class="fk">inputIds / outputIds</span><span class="ref">→ samples</span></div>
 <div class="f"><span class="fk">dependsOn</span><span class="ref">→ steps</span></div>
 </div>
 </div>
@@ -290,7 +265,7 @@ body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-p
 <div class="legend-item"><span class="dot" style="background:#BA7517"></span> Data</div>
 <div class="legend-item"><span class="dot" style="background:#7F77DD"></span> Procedure</div>
 <div class="legend-item"><span class="dot" style="background:#639922"></span> Quality & safety</div>
-<div class="legend-item"><span class="dot" style="background:#D85A30"></span> Sources & extensions</div>
+<div class="legend-item"><span class="dot" style="background:#D85A30"></span> Sources</div>
 <div class="legend-item"><span class="req" style="color:var(--text-danger)">*</span> Required</div>
 <div class="legend-item"><span class="tag tag-new">new</span> Added in v0.4</div>
 <div class="legend-item"><span class="tag tag-merged">merged</span> Consolidated</div>
