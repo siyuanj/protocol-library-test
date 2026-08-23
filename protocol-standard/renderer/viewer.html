@@ -12,7 +12,7 @@ body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sa
 .topbar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e0e4ea;display:flex;align-items:center;padding:0 24px;height:48px;gap:16px}
 .brand{font-size:17px;font-weight:800;color:#2f6f8f;white-space:nowrap}
 .brand span{font-weight:400;color:#8a9bae;font-size:13px;margin-left:6px}
-#proto-select{font:inherit;font-size:13px;padding:5px 10px;border:1px solid #cdd6df;border-radius:8px;background:#fff;max-width:320px}
+#proto-select{font:inherit;font-size:13px;padding:5px 10px;border:1px solid #cdd6df;border-radius:8px;background:#fff;max-width:320px;min-width:0;flex:1}
 
 /* ---- header area (title + badges + tabs) ---- */
 .header-area{max-width:1100px;margin:0 auto;padding:20px 24px 0;text-align:center}
@@ -69,7 +69,7 @@ h3{font-size:14px;color:#5b6b7b;margin:16px 0 6px;text-transform:uppercase;lette
 .chip-review{background:#fff4e5;color:#a15c00}
 
 /* ---- parameters ---- */
-.pill{display:inline-block;background:#e7f1f6;color:#2f6f8f;border-radius:6px;padding:1px 8px;margin:2px 3px 2px 0;font-size:12.5px;white-space:nowrap}
+.pill{display:inline-block;background:#e7f1f6;color:#2f6f8f;border-radius:6px;padding:1px 8px;margin:2px 3px 2px 0;font-size:12.5px;white-space:normal;word-break:break-word}
 .pill i{font-style:normal;font-size:9.5px;text-transform:uppercase;color:#86a2b1;margin-right:4px}
 .pill-review{background:#fff4e5;color:#a15c00}
 .pill-formula{color:#6a4bb0;font-size:10px;margin-left:2px;cursor:help}
@@ -81,11 +81,12 @@ h3{font-size:14px;color:#5b6b7b;margin:16px 0 6px;text-transform:uppercase;lette
 .ov-side h4:first-child{margin-top:0}
 .ov-list{margin:0;padding-left:16px}
 .ov-list li{margin:2px 0}
-.ov-main{flex:1}
+.ov-main{flex:1;min-width:0}
 .ov-phase{margin:14px 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#2f6f8f;font-weight:700}
 .ov-steps{margin:0 0 8px;padding-left:26px}
-.ov-steps li{margin:5px 0;font-size:13.5px}
+.ov-steps li{margin:5px 0;font-size:13.5px;overflow-wrap:break-word;word-wrap:break-word}
 .ov-expect{color:#3a6b3a;font-size:12px}
+.ov-params{margin-top:3px;display:flex;flex-wrap:wrap;gap:2px 4px}
 .flag{background:#fff4e5;color:#a15c00;font-size:10px;padding:0 4px;border-radius:3px}
 
 /* ---- timeline ---- */
@@ -341,9 +342,10 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
         });
         h.push('<li value="'+esc(s.number||"")+'"'+(s.needsReview?' style="background:#fff8ef"':'')+'>'+
           (s.optional?'<span class="tl-opt">optional</span> ':'')+esc(s.action)+extra+
-          (params?' '+params:'')+
           (s.expectedResult?' <span class="ov-expect">→ '+esc(s.expectedResult)+'</span>':'')+
-          acc+'</li>');
+          acc+
+          (params?'<div class="ov-params">'+params+'</div>':'')+
+          '</li>');
       });
       h.push('</ol>');
     });
@@ -356,20 +358,6 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
    * ================================================================ */
   function renderProcedure(p) {
     var L=lookups(p),ph=byPhase(p),h=[];
-    h.push('<div class="info-card">');
-    if(p.metadata.purpose) h.push('<div class="info-section" id="sec-purpose"><p><span class="info-label">Purpose: </span>'+esc(p.metadata.purpose)+'</p></div>');
-    if(p.metadata.scope) h.push('<div class="info-section" id="sec-scope"><p><span class="info-label">Scope: </span>'+esc(p.metadata.scope)+'</p></div>');
-    if(p.metadata.beforeYouBegin&&p.metadata.beforeYouBegin.length){
-      h.push('<div class="info-section" id="sec-before"><p><span class="info-label">Before You Begin:</span></p><ul>');
-      p.metadata.beforeYouBegin.forEach(function(b){h.push('<li>'+esc(b)+'</li>')});
-      h.push('</ul></div>');
-    }
-    if(p.expectedOutputs&&p.expectedOutputs.length){
-      h.push('<div class="info-section" id="sec-expected"><p><span class="info-label">Expected Outputs:</span></p><ul>');
-      p.expectedOutputs.forEach(function(o){h.push('<li>'+esc(o)+'</li>')});
-      h.push('</ul></div>');
-    }
-    h.push('</div>');
     h.push('<div class="tl">');
     ph.order.forEach(function(key){
       if(key) h.push('<div class="tl-phase" id="sec-phase-'+slug(key)+'"><span>'+esc(key)+'</span></div>');
@@ -385,34 +373,6 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
         if(s.criticalNotes) h.push('<div class="step-callout step-warning"><span class="step-callout-icon">⚠</span><span>'+esc(s.criticalNotes)+'</span></div>');
         /* -- safety notes (danger callout) -- */
         if(s.safetyNotes) h.push('<div class="step-callout step-danger"><span class="step-callout-icon">☣</span><span>'+esc(s.safetyNotes)+'</span></div>');
-        /* -- materials -- */
-        var mats=stepMats(s,L);
-        if(mats.length){
-          h.push('<div class="step-section"><div class="step-label">Materials</div>');
-          if(mats.length>=3){
-            h.push('<table class="step-tbl"><thead><tr><th>Reagent</th><th>Amount</th><th>Specification</th><th>Storage / Handling</th></tr></thead><tbody>');
-            mats.forEach(function(m){
-              var amt=m.amount!=null?esc(m.amount+(m.unit?" "+m.unit:"")):(m.workingConcentration?esc(m.workingConcentration):"—");
-              h.push('<tr'+(m.needsReview?' class="row-review"':'')+'><td>'+esc(m.name)+(m.needsReview?' <span class="review">review</span>':'')+'</td><td>'+amt+'</td><td>'+esc(m.specification||"")+'</td><td>'+esc(m.storage||"")+'</td></tr>');
-            });
-            h.push('</tbody></table>');
-          }else{
-            h.push('<ul class="step-list">');
-            mats.forEach(function(m){
-              var d=[];if(m.amount!=null)d.push(m.amount+(m.unit?" "+m.unit:""));else if(m.workingConcentration)d.push(m.workingConcentration);if(m.specification)d.push(m.specification);if(m.storage)d.push(m.storage);
-              h.push('<li><b>'+esc(m.name)+'</b>'+(d.length?' — '+esc(d.join(" · ")):'')+(m.needsReview?' <span class="review">review</span>':'')+'</li>');
-            });
-            h.push('</ul>');
-          }
-          h.push('</div>');
-        }
-        /* -- equipment -- */
-        var eqs=stepEquips(s,L);
-        if(eqs.length){
-          h.push('<div class="step-section"><div class="step-label">Equipment</div><ul class="step-list">');
-          eqs.forEach(function(e){h.push('<li><b>'+esc(e.name)+'</b>'+(e.settings?' — '+esc(e.settings):'')+(e.model?' ('+esc(e.model)+')':'')+'</li>')});
-          h.push('</ul></div>');
-        }
         /* -- parameters -- */
         if(s.parameters&&s.parameters.length){
           var hasRepeat=!!(s.repeat&&(s.repeat.count||s.repeat.untilCondition));
@@ -648,16 +608,6 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
     }
 
     if (currentTab === "procedure") {
-      // info sections
-      var infoIds = [
-        {id:"sec-purpose",label:"Purpose"},
-        {id:"sec-scope",label:"Scope"},
-        {id:"sec-before",label:"Before You Begin"},
-        {id:"sec-expected",label:"Expected Outputs"}
-      ];
-      items.push({group:"Info"});
-      infoIds.forEach(function(x){ if(document.getElementById(x.id)) items.push(x) });
-      // phases
       var phases = content.querySelectorAll(".tl-phase[id]");
       if (phases.length) {
         items.push({group:"Steps"});

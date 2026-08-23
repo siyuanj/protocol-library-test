@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schema Architecture — LabRecord</title>
+<style>
+:root{--font-sans:system-ui,-apple-system,sans-serif;--surface-2:#fff;--surface-1:#f8f9fa;--surface-0:#f1f3f5;--text-primary:#1a1a1a;--text-secondary:#555;--text-muted:#999;--border:#e0e0e0;--border-strong:#ccc;--bg-accent:#e8f0fe;--text-accent:#1a73e8;--text-danger:#c62828;--radius:8px}
+@media(prefers-color-scheme:dark){:root{--surface-2:#1a1a1a;--surface-1:#242424;--surface-0:#2c2c2c;--text-primary:#e0e0e0;--text-secondary:#aaa;--text-muted:#777;--border:#3a3a3a;--border-strong:#555;--bg-accent:#1a2744;--text-accent:#8ab4f8;--text-danger:#ef9a9a}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:var(--surface-2);color:var(--text-primary);padding:24px 28px;max-width:760px;margin:0 auto}
+.hdr{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.hdr h1{font-size:20px;font-weight:500}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:10px;margin-left:4px}
+.badge-v{background:var(--bg-accent);color:var(--text-accent)}
+.sub{font-size:13px;color:var(--text-secondary);margin-bottom:20px}
+
+.changes{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:22px}
+.changes h2{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em}
+.changes-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}
+.chg{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text-secondary)}
+.chg-tag{font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;flex-shrink:0}
+.chg-rm{background:#fce4ec;color:#c62828}
+.chg-mg{background:#e8f0fe;color:#1a73e8}
+.chg-sm{background:#e8f5e9;color:#2e7d32}
+@media(prefers-color-scheme:dark){.chg-rm{background:#501313;color:#ef9a9a}.chg-mg{background:#1a2744;color:#8ab4f8}.chg-sm{background:#1b4332;color:#81c784}}
+
+.group{margin-bottom:16px}
+.group-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:6px;padding-left:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row+.row{margin-top:8px}
+.card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:border-color .15s;flex:1;min-width:140px;background:var(--surface-2)}
+.card:hover{border-color:var(--border-strong)}
+.card.expanded .fields{display:block}
+.card-hd{padding:8px 10px;display:flex;align-items:center;gap:6px}
+.card-hd .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.card-hd .nm{font-size:13px;font-weight:500;color:var(--text-primary)}
+.card-hd .arr-icon{font-size:10px;color:var(--text-muted);margin-left:auto;transition:transform .15s}
+.card.expanded .arr-icon{transform:rotate(90deg)}
+.card-hd .cnt{font-size:11px;color:var(--text-muted);margin-left:auto;margin-right:4px}
+.fields{display:none;padding:0 10px 8px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.fields .f{display:flex;gap:4px;align-items:baseline}
+.fields .fk{color:var(--text-primary);font-weight:500;white-space:nowrap}
+.fields .ft{color:var(--text-muted);font-size:11px}
+.fields .req{color:var(--text-danger);font-size:10px}
+.fields .ref{color:var(--text-accent);font-size:11px;font-style:italic}
+.tag{font-size:10px;padding:1px 5px;border-radius:4px;font-weight:500}
+.tag-new{background:#e8f5e9;color:#2e7d32}
+.tag-merged{background:#e8f0fe;color:#1a73e8}
+@media(prefers-color-scheme:dark){.tag-new{background:#1b4332;color:#81c784}.tag-merged{background:#1a2744;color:#8ab4f8}}
+.hub{border:2px solid var(--text-accent);border-radius:12px;padding:12px;margin-bottom:14px}
+.hub-title{font-size:14px;font-weight:500;color:var(--text-primary);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.hub-refs{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.hub-refs .ref-pill{font-size:11px;padding:2px 8px;border-radius:10px;border:1px solid var(--border);color:var(--text-secondary)}
+.sub-cards{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sub-card{font-size:11px;padding:4px 8px;border-radius:6px;background:var(--surface-1);border:1px solid var(--border);color:var(--text-secondary)}
+.sub-card .sk{font-weight:500;color:var(--text-primary)}
+.legend{margin-top:16px;display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--text-muted);padding-top:12px;border-top:1px solid var(--border)}
+.legend-item{display:flex;align-items:center;gap:4px}
+.legend-item .dot{width:8px;height:8px;border-radius:50%}
+.print-note{margin-top:12px;font-size:11px;color:var(--text-muted);text-align:center}
+@media print{body{padding:12px}.card.expanded .fields,.fields{display:block!important}.arr-icon{display:none}}
+</style>
+</head>
+<body>
+<div class="hdr">
+<h1>LabRecord canonical protocol schema</h1>
+<span class="badge badge-v">v0.4 golden standard</span>
+</div>
+<p class="sub">Intersection-first design: define what every protocol needs. Empty fields don't display; extensions handle specialized domains.</p>
+
+<div class="changes">
+<h2>Changes from v0.3</h2>
+<div class="changes-grid">
+<div class="chg"><span class="chg-tag chg-mg">merged</span> containers → equipment</div>
+<div class="chg"><span class="chg-tag chg-sm">simplified</span> step: 26 → 16 fields</div>
+<div class="chg"><span class="chg-tag chg-rm">removed</span> studyDesign → extension</div>
+<div class="chg"><span class="chg-tag chg-sm">simplified</span> material: 17 → 8 fields</div>
+<div class="chg"><span class="chg-tag chg-rm">removed</span> compliance → extension</div>
+<div class="chg"><span class="chg-tag chg-sm">simplified</span> parameter: 10 → 5 fields</div>
+<div class="chg"><span class="chg-tag chg-rm">removed</span> provenance (use sources)</div>
+<div class="chg"><span class="chg-tag chg-mg">merged</span> criticalNotes + safetyNotes</div>
+<div class="chg"><span class="chg-tag chg-rm">removed</span> materialUses (use materialIds)</div>
+<div class="chg"><span class="chg-tag chg-mg">merged</span> step.id → just use number</div>
+</div>
+</div>
+
+<div class="group">
+<div class="group-label">Document info</div>
+<div class="row">
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#1D9E75"></span><span class="nm">metadata</span><span class="cnt">12 fields</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">title</span><span class="req">*</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">version</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">family</span><span class="ft">string — e.g. PCR</span></div>
+<div class="f"><span class="fk">category</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">purpose</span><span class="req">*</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">scope</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">estimatedTime</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">authors</span><span class="ft">author[] — name, orcid, affiliation</span></div>
+<div class="f"><span class="fk">license</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">doi</span><span class="ft">string | null</span></div>
+<div class="f"><span class="fk">createdAt / modifiedAt</span><span class="ft">date</span></div>
+<div class="f"><span class="fk">tags</span><span class="ft">string[]</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="group">
+<div class="group-label">Resources — referenced by steps via IDs</div>
+<div class="row">
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#378ADD"></span><span class="nm">materials[]</span><span class="cnt">8</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">id</span><span class="req">*</span><span class="ft">m1, m2...</span></div>
+<div class="f"><span class="fk">name</span><span class="req">*</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">role</span><span class="ft">reagent | buffer | enzyme | antibody...</span></div>
+<div class="f"><span class="fk">amount / unit</span><span class="ft">prep amount</span></div>
+<div class="f"><span class="fk">workingConcentration</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">specification</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">vendor / catalogNumber</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">storage / hazard</span><span class="ft">string</span></div>
+</div>
+</div>
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#378ADD"></span><span class="nm">equipment[]</span><span class="cnt">8</span><span class="tag tag-merged">+containers</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">id</span><span class="req">*</span><span class="ft">e1, e2...</span></div>
+<div class="f"><span class="fk">name</span><span class="req">*</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">model</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">settings</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">type</span><span class="ft">instrument | container | consumable</span><span class="tag tag-new">new</span></div>
+<div class="f"><span class="fk">wells</span><span class="ft">integer — plate wells</span><span class="tag tag-merged">from containers</span></div>
+<div class="f"><span class="fk">layout[]</span><span class="ft">well + sample + factor</span><span class="tag tag-merged">from containers</span></div>
+<div class="f"><span class="fk">needsReview</span><span class="ft">boolean</span></div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#378ADD"></span><span class="nm">software[]</span><span class="cnt">6</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">id</span><span class="req">*</span><span class="ft">sw1...</span></div>
+<div class="f"><span class="fk">name</span><span class="req">*</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">version / vendor</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">url</span><span class="ft">string — homepage or repo</span></div>
+<div class="f"><span class="fk">command</span><span class="ft">invocation / entrypoint</span></div>
+</div>
+</div>
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#378ADD"></span><span class="nm">samples[]</span><span class="cnt">7</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">id</span><span class="req">*</span><span class="ft">sp1...</span></div>
+<div class="f"><span class="fk">name / role</span><span class="req">*</span><span class="ft">input | intermediate | output</span></div>
+<div class="f"><span class="fk">kind</span><span class="ft">physical | dataset | organism</span></div>
+<div class="f"><span class="fk">organism / dataType</span><span class="ft">string</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="group">
+<div class="group-label">Data</div>
+<div class="row">
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#BA7517"></span><span class="nm">tables[]</span><span class="cnt">6</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">id</span><span class="req">*</span><span class="ft">t1, t2...</span></div>
+<div class="f"><span class="fk">title</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">kind</span><span class="ft">recipe | program | series | layout | results</span></div>
+<div class="f"><span class="fk">columns</span><span class="req">*</span><span class="ft">string[]</span></div>
+<div class="f"><span class="fk">rows</span><span class="req">*</span><span class="ft">(string | number | null)[][]</span></div>
+<div class="f"><span class="fk">note</span><span class="ft">string</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="group">
+<div class="group-label">Procedure — the hub</div>
+<div class="hub">
+<div class="hub-title"><span class="dot" style="background:#7F77DD;width:10px;height:10px;border-radius:50%;display:inline-block"></span> steps[] <span style="font-size:12px;color:var(--text-muted);font-weight:400">— 16 fields (was 26)</span></div>
+<div class="row">
+<div class="card" onclick="toggle(this)" style="flex:2;min-width:200px">
+<div class="card-hd"><span class="nm">Core fields</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">number</span><span class="req">*</span><span class="ft">integer — step number</span><span class="tag tag-new">was id+number</span></div>
+<div class="f"><span class="fk">phase</span><span class="ft">string — group steps</span></div>
+<div class="f"><span class="fk">action</span><span class="req">*</span><span class="ft">string — what to do</span></div>
+<div class="f"><span class="fk">optional</span><span class="ft">boolean</span></div>
+<div class="f"><span class="fk">pausePoint</span><span class="ft">boolean</span></div>
+<div class="f"><span class="fk">expectedResult</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">notes</span><span class="ft">string — critical/safety combined</span><span class="tag tag-merged">merged</span></div>
+<div class="f"><span class="fk">noteLevel</span><span class="ft">warning | danger</span><span class="tag tag-new">new</span></div>
+<div class="f"><span class="fk">command</span><span class="ft">string — CLI/code</span></div>
+</div>
+</div>
+<div class="card" onclick="toggle(this)" style="flex:1;min-width:140px">
+<div class="card-hd"><span class="nm">ID references</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">materialIds</span><span class="ref">→ materials</span></div>
+<div class="f"><span class="fk">equipmentIds</span><span class="ref">→ equipment (incl. containers)</span></div>
+<div class="f"><span class="fk">softwareIds</span><span class="ref">→ software</span></div>
+<div class="f"><span class="fk">tableIds</span><span class="ref">→ tables</span></div>
+<div class="f"><span class="fk">inputIds / outputIds</span><span class="ref">→ samples</span></div>
+<div class="f"><span class="fk">dependsOn</span><span class="ref">→ steps</span></div>
+</div>
+</div>
+</div>
+<div class="sub-cards">
+<div class="sub-card"><span class="sk">parameters[]</span> type · value · unit · rawText</div>
+<div class="sub-card"><span class="sk">repeat</span> count · untilCondition · over</div>
+<div class="sub-card"><span class="sk">acceptanceCriteria[]</span> parameter · comparator · value</div>
+<div class="sub-card"><span class="sk">branches[]</span> condition · targetStepId · action</div>
+</div>
+<div class="hub-refs">
+<span style="font-size:11px;color:var(--text-muted);margin-right:4px">Parameter types:</span>
+<span class="ref-pill">temperature</span>
+<span class="ref-pill">time</span>
+<span class="ref-pill">volume</span>
+<span class="ref-pill">speed</span>
+<span class="ref-pill">concentration</span>
+<span class="ref-pill">mass</span>
+<span class="ref-pill">pH</span>
+<span class="ref-pill">pressure</span>
+<span class="ref-pill">wavelength</span>
+<span class="ref-pill">current</span>
+<span class="ref-pill">config</span>
+<span class="ref-pill">+8 more</span>
+</div>
+</div>
+</div>
+
+<div class="group">
+<div class="group-label">Quality & safety</div>
+<div class="row">
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#639922"></span><span class="nm">controls[]</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">name</span><span class="req">*</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">description</span><span class="ft">string</span></div>
+</div>
+</div>
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#639922"></span><span class="nm">expectedOutputs[]</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="ft">string[] — what a successful run produces</span></div>
+</div>
+</div>
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#639922"></span><span class="nm">troubleshooting[]</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">problem</span><span class="req">*</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">cause</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">solution</span><span class="ft">string</span></div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#639922"></span><span class="nm">safety[]</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields"><div class="f"><span class="ft">string[] — safety warnings</span></div></div>
+</div>
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#639922"></span><span class="nm">biosafetyLevel</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields"><div class="f"><span class="ft">BSL-1 | BSL-2 | BSL-3 | BSL-4 | null</span></div></div>
+</div>
+</div>
+</div>
+
+<div class="group">
+<div class="group-label">Sources</div>
+<div class="row">
+<div class="card" onclick="toggle(this)">
+<div class="card-hd"><span class="dot" style="background:#D85A30"></span><span class="nm">sources[]</span><span class="cnt">7</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">id</span><span class="req">*</span><span class="ft">src1...</span></div>
+<div class="f"><span class="fk">kind</span><span class="req">*</span><span class="ft">file | article | url | kit-insert...</span></div>
+<div class="f"><span class="fk">title / doi / url</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">license / licenseVerified</span><span class="ft">string / boolean</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="group">
+<div class="group-label" style="color:#D85A30">Extensions (optional, domain-specific)</div>
+<div class="row">
+<div class="card" onclick="toggle(this)" style="opacity:.7">
+<div class="card-hd"><span class="dot" style="background:#D85A30"></span><span class="nm">studyDesign</span><span class="tag" style="background:#fce4ec;color:#c62828">extension</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">groups[]</span><span class="ft">name · n · treatment</span></div>
+<div class="f"><span class="fk">randomization / blinding</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">timepoints</span><span class="ft">string[]</span></div>
+<div class="f"><span class="fk">statisticalPlan</span><span class="ft">string</span></div>
+</div>
+</div>
+<div class="card" onclick="toggle(this)" style="opacity:.7">
+<div class="card-hd"><span class="dot" style="background:#D85A30"></span><span class="nm">compliance</span><span class="tag" style="background:#fce4ec;color:#c62828">extension</span><span class="arr-icon">&#9654;</span></div>
+<div class="fields">
+<div class="f"><span class="fk">iacuc / irb</span><span class="ft">approval references</span></div>
+<div class="f"><span class="fk">consent</span><span class="ft">string</span></div>
+<div class="f"><span class="fk">wasteDisposal</span><span class="ft">string</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="legend">
+<div class="legend-item"><span class="dot" style="background:#1D9E75"></span> Document info</div>
+<div class="legend-item"><span class="dot" style="background:#378ADD"></span> Resources</div>
+<div class="legend-item"><span class="dot" style="background:#BA7517"></span> Data</div>
+<div class="legend-item"><span class="dot" style="background:#7F77DD"></span> Procedure</div>
+<div class="legend-item"><span class="dot" style="background:#639922"></span> Quality & safety</div>
+<div class="legend-item"><span class="dot" style="background:#D85A30"></span> Sources & extensions</div>
+<div class="legend-item"><span class="req" style="color:var(--text-danger)">*</span> Required</div>
+<div class="legend-item"><span class="tag tag-new">new</span> Added in v0.4</div>
+<div class="legend-item"><span class="tag tag-merged">merged</span> Consolidated</div>
+</div>
+<div class="print-note">Click any card to expand fields. Print (Ctrl+P) auto-expands all cards.</div>
+
+<script>
+function toggle(el){el.classList.toggle('expanded')}
+</script>
+</body>
+</html>
