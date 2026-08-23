@@ -70,6 +70,7 @@ h3{font-size:14px;color:#5b6b7b;margin:16px 0 6px;text-transform:uppercase;lette
 
 /* ---- parameters ---- */
 .pill{display:inline-block;background:#e7f1f6;color:#2f6f8f;border-radius:6px;padding:1px 8px;margin:2px 3px 2px 0;font-size:12.5px;white-space:normal;word-break:break-word}
+.param-hl{background:#e7f1f6;border-radius:4px;padding:0 4px}
 .pill i{font-style:normal;font-size:9.5px;text-transform:uppercase;color:#86a2b1;margin-right:4px}
 .pill-review{background:#fff4e5;color:#a15c00}
 .pill-formula{color:#6a4bb0;font-size:10px;margin-left:2px;cursor:help}
@@ -314,12 +315,11 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
             } else if(v){
               needles.push(v);
             }
-            var typeLbl = pr.type?'<i>'+esc(pr.type)+'</i> ':"";
             for(var ni=0;ni<needles.length;ni++){
               var escaped = needles[ni].replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
               var re = new RegExp("("+escaped+")");
               if(re.test(actionHtml)){
-                actionHtml = actionHtml.replace(re,'<span class="pill">'+typeLbl+'$1</span>');
+                actionHtml = actionHtml.replace(re,'<span class="param-hl">$1</span>');
                 pr._matched=true;
                 break;
               }
