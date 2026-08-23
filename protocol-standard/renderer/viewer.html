@@ -327,7 +327,7 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
           });
         }
         h.push('<div class="tl-action">'+(s.optional?'<span class="tl-opt">optional</span> ':'')+actionHtml);
-        if(s.repeat){var rp=s.repeat.count?"×"+s.repeat.count:(s.repeat.untilCondition?"until "+s.repeat.untilCondition:"↺");h.push(' <span class="tl-repeat">↺ '+esc(rp)+'</span>');if(s.repeat.notes)h.push(' <span style="font-size:12px;color:#5b6b7b">'+esc(s.repeat.notes)+'</span>')}
+        if(s.repeat){var rp=s.repeat.count?"×"+s.repeat.count:(s.repeat.untilCondition?"until "+s.repeat.untilCondition:"");h.push(' <span class="tl-repeat">↺'+esc(rp)+'</span>');if(s.repeat.notes)h.push(' '+esc(s.repeat.notes))}
         h.push('</div>');
         /* -- critical notes (warning callout) -- */
         if(s.criticalNotes) h.push('<div class="step-callout step-warning"><span class="step-callout-icon">⚠</span><span>'+esc(s.criticalNotes)+'</span></div>');
