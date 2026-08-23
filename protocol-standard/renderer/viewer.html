@@ -366,7 +366,7 @@ h2[id],h3[id],h4[id],.tl-phase[id],.info-section[id],.ov-phase[id]{scroll-margin
         /* -- command -- */
         if(s.command) h.push('<div class="tl-cmd"><code>'+esc(s.command)+'</code></div>');
         /* -- branches -- */
-        if(s.branches&&s.branches.length){s.branches.forEach(function(b){var expandS=function(t){return t.replace(/\bs(\d+)/g,'step $1')};var tgt=b.targetStepId?expandS(String(b.targetStepId)):'';var cond=b.condition?expandS(esc(b.condition)):'';h.push('<div class="tl-branch">⑂ '+cond+(tgt?' → '+tgt:'')+(b.action?': '+esc(b.action):'')+'</div>')})}
+        if(s.branches&&s.branches.length){s.branches.forEach(function(b){var expandS=function(t){return t.replace(/\bs(\d+)/g,'step $1')};var tgt=b.targetStepId?expandS(String(b.targetStepId)):'';var cond=b.condition?expandS(esc(b.condition)):'';if(cond)cond=cond.charAt(0).toLowerCase()+cond.slice(1);h.push('<div class="tl-branch">⑂ If '+cond+(tgt?' → go to '+tgt:'')+(b.action?': '+esc(b.action):'')+'</div>')})}
         /* -- acceptance criteria -- */
         if(s.acceptanceCriteria&&s.acceptanceCriteria.length){
           h.push('<div class="step-section"><div class="step-label">Acceptance Criteria</div>');
